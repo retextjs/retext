@@ -1,0 +1,33 @@
+{
+  "name": "retext",
+  "version": "0.0.2",
+  "description": "Extensible natural language system for analysing and manipulating natural language",
+  "keywords": [
+    "natural",
+    "language",
+    "parser",
+    "analyse",
+    "manipule",
+    "parse-english",
+    "textom"
+  ],
+  "author": "Titus Wormer <tituswormer@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "parse-english": "~0.0.8"
+  },
+  "devDependencies": {
+    "complexity-report": "~1.0.3",
+    "istanbul": "~0.2.10",
+    "jscs": "^1.4.5",
+    "jshint": "~2.5.1",
+    "mocha": "~1.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/retext.git"
+  },
+  "scripts": {
+    "test": "make test"
+  }
+}
