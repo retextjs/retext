@@ -1,13 +1,13 @@
 {
   "name": "retext",
   "version": "0.0.2",
-  "description": "Extensible natural language system for analysing and manipulating natural language",
+  "description": "Extensible system for analysing and manipulating natural language",
   "keywords": [
     "natural",
     "language",
     "parser",
     "analyse",
-    "manipule",
+    "manipulate",
     "parse-english",
     "textom"
   ],
