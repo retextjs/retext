@@ -49,23 +49,22 @@ Plugins used: [retext-emoji](https://github.com/wooorm/retext-emoji) and [retext
 
 ### Retext(parser)
 
-Return a new `Retext` instance with the given parser.
-
-Takes a parser (Object, String, or null), or its name to use. Defaults to `"parse-english"`. When a string, requires the module.
+Return a new `Retext` instance with the given parser (defaults to `"parse-english"`).
 
 ### Retext.prototype.use(plugin)
 
-Attaches a plugin. Returns self.
-
-Takes a plugin—a humble function—and when the `parse` method of the Retext instance is called, the plugin will be called with the parsed tree, and the Retext instance as arguments. Plugins can also have an `attach` method, which will be only called once (when the plugin is `use`d).
+Takes a plugin—a humble function. When `Retext#parse` is called, the plugin will be invoked with the parsed tree, and the Retext instance as arguments. Returns self.
 
 ### Retext.prototype.parse(source)
 
-Parses the given source (using the to the constructor given parser), and returns the—by `use`d plugins, modified—tree.
+Parses the given source and returns the (by `use`d plugins, modified) tree.
 
-Note that, during the parsing stage, when the `use` method is called by a plugin, the nested plugin is immediately called, before continuing on with its parent plugin—this enabled plugins to depend on other plugins.
+## Plugins
 
-Returns a RootNode.
+  * [retext-visit](https://github.com/wooorm/retext-visit) — visit nodes, optionally by type;
+  * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
+  * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
+  * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
 
 ## Related
 
