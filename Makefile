@@ -9,7 +9,7 @@ watch:
 lint:
 	# Lint (passes when empty):
 	@./node_modules/.bin/jshint index.js spec/*.spec*.js
-	@./node_modules/.bin/jscs ./index.js --reporter=inline
+	@./node_modules/.bin/jscs index.js spec/*.spec*.js --reporter=inline
 	
 
 complexity:
