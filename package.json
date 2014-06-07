@@ -14,7 +14,7 @@
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "parse-english": "~0.0.10"
+    "parse-english": "~0.0.12"
   },
   "devDependencies": {
     "complexity-report": "~1.0.3",
