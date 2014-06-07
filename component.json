@@ -1,0 +1,22 @@
+{
+  "name": "retext",
+  "repository": "wooorm/parse-retext",
+  "description": "Extensible system for analysing and manipulating natural language",
+  "version": "0.0.4",
+  "keywords": [
+    "natural",
+    "language",
+    "parser",
+    "analyse",
+    "manipulate",
+    "parse-english",
+    "textom"
+  ],
+  "dependencies": {
+    "wooorm/parse-english": "^0.0.12"
+  },
+  "scripts" : [
+    "index.js"
+  ],
+  "license": "MIT"
+}
