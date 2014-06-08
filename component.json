@@ -13,7 +13,7 @@
     "textom"
   ],
   "dependencies": {
-    "wooorm/parse-english": "^0.0.12"
+    "wooorm/parse-english": "^0.0.13"
   },
   "scripts" : [
     "index.js"
