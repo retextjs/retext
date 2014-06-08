@@ -34,20 +34,17 @@ describe('Retext()', function () {
         }
     );
 
-    /* istanbul ignore else: Node always has a `cache` property */
-    if (require.cache) {
-        it('should create a new context/parser/textom when required, thus ' +
-            'not requiring from memory', function () {
-                var rootNode1 = new Retext().parse(),
-                    rootNode2 = new Retext().parse();
+    it('should create a new context/parser/textom when required, thus ' +
+        'not requiring from memory', function () {
+            var rootNode1 = new Retext().parse(),
+                rootNode2 = new Retext().parse();
 
-                assert(rootNode1 instanceof rootNode1.constructor);
-                assert(!(rootNode1 instanceof rootNode2.constructor));
-                assert(rootNode2 instanceof rootNode2.constructor);
-                assert(!(rootNode2 instanceof rootNode1.constructor));
-            }
-        );
-    }
+            assert(rootNode1 instanceof rootNode1.constructor);
+            assert(!(rootNode1 instanceof rootNode2.constructor));
+            assert(rootNode2 instanceof rootNode2.constructor);
+            assert(!(rootNode2 instanceof rootNode1.constructor));
+        }
+    );
 
     it('should set the `plugins` attribute to an empty array', function () {
         var retext = new Retext();
