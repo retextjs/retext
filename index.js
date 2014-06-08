@@ -50,18 +50,18 @@
             attribute;
 
         if (!parser) {
-            /* istanbul ignore if: Not all `require` providers support dynamic
-             * loading, needed for the next step, thus we skip the next
-             * branch early. */
-            if (require.client || require.component) {
-                parser = require('parse-english')();
-            } else {
-                parser = 'parse-english';
-            }
+            parser = 'parse-english';
         }
 
         if (typeof parser === 'string') {
-            parser = require(parser)();
+            /* Load the parser for vendors without dynamic-require's */
+            if (parser === 'parse-english') {
+                parser = require('parse-english');
+            } else {
+                parser = require(parser);
+            }
+
+            parser = parser();
         }
 
         self.parser = parser;
