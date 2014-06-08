@@ -54,6 +54,7 @@
         }
 
         if (typeof parser === 'string') {
+            /* istanbul ignore else: TODO / TOSPEC */
             /* Load the parser for vendors without dynamic-require's */
             if (parser === 'parse-english') {
                 parser = require('parse-english');
