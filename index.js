@@ -54,29 +54,14 @@
              * loading, needed for the next step, thus we skip the next
              * branch early. */
             if (require.client || require.component) {
-                parser = require('parse-english');
+                parser = require('parse-english')();
             } else {
                 parser = 'parse-english';
             }
         }
 
         if (typeof parser === 'string') {
-            /* istanbul ignore if: Node always has a `cache`. Other `require`
-             * vendors however don't support this feature. */
-            if (!cache) {
-                throw new TypeError(
-                    'Illegal invocation: \'Retext\' in this environment ' +
-                    'can\'t require from scratch'
-                );
-            } else {
-                for (attribute in cache) {
-                    if (attribute.indexOf('/' + parser + '/') !== -1) {
-                        delete cache[attribute];
-                    }
-                }
-
-                parser = require(parser);
-            }
+            parser = require(parser)();
         }
 
         self.parser = parser;
