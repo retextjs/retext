@@ -1,4 +1,8 @@
-# retext [![Build Status](https://travis-ci.org/wooorm/retext.png)](https://travis-ci.org/wooorm/retext)
+# retext [![Build Status](https://travis-ci.org/wooorm/retext.svg?branch=master)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg)](https://coveralls.io/r/wooorm/retext?branch=master)
+
+[![browser support](https://ci.testling.com/wooorm/retext.png) ](https://ci.testling.com/wooorm/retext)
+
+---
 
 **retext** is a extensible natural language parser system—by default using [parse-english](https://github.com/wooorm/parse-english) as a parser and [textom](https://github.com/wooorm/textom/) as the object model. Provides a plugin-system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
 
