@@ -1,3 +1,4 @@
+'use strict';
 
 var Retext = require('..'),
     assert = require('assert');
@@ -179,7 +180,6 @@ describe('Retext#parse', function () {
         'Retext, when `parse` is called', function () {
             var retext = new Retext(),
                 args = null,
-                isCalled = false,
                 tree;
 
             function plugin () {
