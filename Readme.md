@@ -4,8 +4,14 @@
 
 ## Installation
 
+NPM:
 ```sh
 $ npm install retext
+```
+
+Component.js:
+```sh
+$ component install wooorm/retext
 ```
 
 ## Usage
