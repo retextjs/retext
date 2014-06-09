@@ -19,20 +19,6 @@ function useImmediately(rootNode, use) {
  * Define `Retext`. Exported above, and used to instantiate a new
  * `Retext`.
  *
- * Note that, when parser is a string or not given, the to-require module
- * is first removed from the Require cache. This results in a completly
- * new parser module, and a new TextOM object, thus clearing any changes
- * made to TextOM or the parser and that, for example, the following is
- * true:
- *
- *   !(new Retext().parse() instanceof new Retext().parse().constructor);
- *
- * The following however, is also true:
- *
- *   var retext = new Retext();
- *   retext.parse() instanceof retext.parse().constructor;
- *
- *
  * @param {(Object|String)?} parser - the parser, or its name, to use.
  *                                    Defaults to "parse-english".
  * @api public
