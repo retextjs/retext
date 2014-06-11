@@ -6,7 +6,7 @@ See [Browser Support](#browser-support) for more information (a.k.a. don’t wor
 
 ---
 
-**retext** is a extensible natural language parser system—by default using [parse-english](https://github.com/wooorm/parse-english) as a parser and [textom](https://github.com/wooorm/textom/) as the object model. Provides a plugin-system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
+**retext** is a extensible natural language system—by default using [parse-english](https://github.com/wooorm/parse-english) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
 
 ## Installation
 
