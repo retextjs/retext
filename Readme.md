@@ -2,6 +2,8 @@
 
 [![browser support](https://ci.testling.com/wooorm/retext.png) ](https://ci.testling.com/wooorm/retext)
 
+See [Browser Support](#browser-support) for more information (a.k.a. don’t worry about those grey icons above).
+
 ---
 
 **retext** is a extensible natural language parser system—by default using [parse-english](https://github.com/wooorm/parse-english) as a parser and [textom](https://github.com/wooorm/textom/) as the object model. Provides a plugin-system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
@@ -75,6 +77,9 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
+
+## Browser Support
+Pretty much every browser (available through browserstack) runs all retext unit tests.
 
 ## Related
 
