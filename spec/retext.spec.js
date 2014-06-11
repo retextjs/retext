@@ -73,23 +73,23 @@ describe('Retext#use', function () {
 
             assert.throws(function () {
                 retext.use();
-            }, /undefined/);
+            }, 'undefined');
 
             assert.throws(function () {
                 retext.use(null);
-            }, /null/);
+            }, 'null');
 
             assert.throws(function () {
                 retext.use(undefined);
-            }, /undefined/);
+            }, 'undefined');
 
             assert.throws(function () {
                 retext.use(true);
-            }, /true/);
+            }, 'true');
 
             assert.throws(function () {
                 retext.use({});
-            }, /object Object/);
+            }, 'object Object');
         }
     );
 
