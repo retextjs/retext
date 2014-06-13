@@ -73,6 +73,8 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
 ## Plugins
 
+  * [retext-ast](https://github.com/wooorm/retext-ast) — encoding and decoding between AST (JSON) and TextOM object model;
+  * [retext-content](https://github.com/wooorm/retext-content) — Append, prepend, remove, and replace content into/from Retext nodes;
   * [retext-visit](https://github.com/wooorm/retext-visit) — visit nodes, optionally by type;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
