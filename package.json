@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Extensible system for analysing and manipulating natural language",
   "keywords": [
     "natural",
