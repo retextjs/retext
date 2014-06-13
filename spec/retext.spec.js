@@ -22,7 +22,6 @@ describe('Retext()', function () {
             var retext = new Retext();
             assert('parser' in retext);
             assert(typeof retext.parser === 'function');
-            assert('fromAST' in retext.parser);
             assert('TextOM' in retext.parser);
         }
     );
