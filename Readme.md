@@ -78,6 +78,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-directionality](https://github.com/wooorm/retext-directionality) — Detect the direction text is written in;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
+  * [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-visit](https://github.com/wooorm/retext-visit) — visit nodes, optionally by type;
 
