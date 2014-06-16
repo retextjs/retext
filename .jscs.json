@@ -63,39 +63,30 @@
         "<",
         "<="
     ],
-    "disallowLeftStickedOperators": [
-        "?",
+    "requireSpaceBeforeBinaryOperators": [
+        "=",
+        ",",
         "+",
+        "-",
         "/",
         "*",
-        "=",
         "==",
         "===",
         "!=",
-        "!==",
-        ">",
-        ">=",
-        "<",
-        "<="
+        "!=="
     ],
-    "requireRightStickedOperators": ["!"],
-    "disallowRightStickedOperators": [
-        "?",
+    "requireSpaceAfterBinaryOperators": [
+        "=",
+        ",",
         "+",
+        "-",
         "/",
         "*",
-        ":",
-        "=",
         "==",
         "===",
         "!=",
-        "!==",
-        ">",
-        ">=",
-        "<",
-        "<="
+        "!=="
     ],
-    "requireLeftStickedOperators": [","],
     "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
     "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
     "requireSpaceBeforeBinaryOperators": [
@@ -129,6 +120,7 @@
     "validateQuoteMarks": "'",
     "disallowMixedSpacesAndTabs": true,
     "disallowTrailingWhitespace": true,
+    "disallowTrailingComma": true,
     "disallowKeywordsOnNewLine": ["else"],
     "requireLineFeedAtFileEnd": true,
     "maximumLineLength": 78,
