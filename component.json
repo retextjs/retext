@@ -2,7 +2,7 @@
   "name": "retext",
   "repository": "wooorm/retext",
   "description": "Extensible system for analysing and manipulating natural language",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "keywords": [
     "natural",
     "language",
@@ -13,7 +13,7 @@
     "textom"
   ],
   "dependencies": {
-    "wooorm/parse-english": "^0.0.21"
+    "wooorm/parse-english": "^0.0.22"
   },
   "scripts" : [
     "index.js"
