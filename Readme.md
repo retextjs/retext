@@ -1,4 +1,6 @@
-# retext [![Build Status](https://travis-ci.org/wooorm/retext.svg?branch=master)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg)](https://coveralls.io/r/wooorm/retext?branch=master)
+# ![Retext logo](http://i58.tinypic.com/5xpx5z.png)
+
+[![Build Status](https://travis-ci.org/wooorm/retext.svg?branch=master)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg)](https://coveralls.io/r/wooorm/retext?branch=master)
 
 [![browser support](https://ci.testling.com/wooorm/retext.png) ](https://ci.testling.com/wooorm/retext)
 
