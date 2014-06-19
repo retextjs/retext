@@ -34,7 +34,7 @@
     "lint-api": "node_modules/.bin/eslint index.js --env node --env browser --rule 'quotes: [2, single]'",
     "lint-test": "node_modules/.bin/eslint spec/retext.spec.js --env node --env mocha --rule 'quotes: [2, single]'",
     "lint-style": "node_modules/.bin/jscs index.js spec/retext.spec.js --reporter=inline",
-    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- spec spec/retext.spec.js",
+    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- spec/retext.spec.js",
     "complexity": "node_modules/.bin/cr -l --maxcyc 20 --format minimal --silent index.js",
     "make": "npm run-script lint && npm run-script complexity && npm run-script coverage"
   },
