@@ -30,7 +30,10 @@
   "scripts": {
     "test": "node_modules/.bin/_mocha --reporter spec --check-leaks -u exports spec/retext.spec.js",
     "test-travis": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly -- --reporter spec --check-leaks -u exports spec/retext.spec.js",
-    "lint": "node_modules/.bin/eslint index.js --env node --env browser --rule 'quotes: [2, single]' && node_modules/.bin/eslint spec/retext.spec.js --env node --env mocha --rule 'quotes: [2, single]' && node_modules/.bin/jscs index.js spec/retext.spec.js --reporter=inline",
+    "lint": "npm run-script lint-api && npm run-script lint-test && npm run-script lint-style",
+    "lint-api": "node_modules/.bin/eslint index.js --env node --env browser --rule 'quotes: [2, single]'",
+    "lint-test": "node_modules/.bin/eslint spec/retext.spec.js --env node --env mocha --rule 'quotes: [2, single]'",
+    "lint-style": "node_modules/.bin/jscs index.js spec/retext.spec.js --reporter=inline",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- spec spec/retext.spec.js",
     "complexity": "node_modules/.bin/cr -l --maxcyc 20 --format minimal --silent index.js",
     "make": "npm run-script lint && npm run-script complexity && npm run-script coverage"
