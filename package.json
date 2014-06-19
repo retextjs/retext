@@ -17,6 +17,7 @@
     "parse-english": "~0.0.23"
   },
   "devDependencies": {
+    "browserify": "^4.1.11",
     "complexity-report": "~1.0.3",
     "eslint": "^0.6.2",
     "istanbul": "~0.2.11",
@@ -34,9 +35,11 @@
     "lint-api": "node_modules/.bin/eslint index.js --env node --env browser --rule 'quotes: [2, single]'",
     "lint-test": "node_modules/.bin/eslint spec/retext.spec.js --env node --env mocha --rule 'quotes: [2, single]'",
     "lint-style": "node_modules/.bin/jscs index.js spec/retext.spec.js --reporter=inline",
+    "prepublish": "npm run-script build-browser",
+    "build-browser": "node_modules/.bin/browserify spec/retext.spec.js -o spec/browser.spec.js",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- spec/retext.spec.js",
     "complexity": "node_modules/.bin/cr -l --maxcyc 20 --format minimal --silent index.js",
-    "make": "npm run-script lint && npm run-script complexity && npm run-script coverage"
+    "make": "npm run-script build-browser && npm run-script lint && npm run-script complexity && npm run-script coverage"
   },
   "testling": {
     "files": "spec/retext.spec.js",
