@@ -92,6 +92,7 @@ Pretty much every browser (available through browserstack) runs all retext unit 
 ## Benchmark
 
 On a MacBook Air:
+
 ![Retext benchmarks](http://i62.tinypic.com/30wqaoi.png)
 
 Note: Run the benchmarks yourself with `npm run-script benchmark`
