@@ -89,6 +89,13 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 ## Browser Support
 Pretty much every browser (available through browserstack) runs all retext unit tests.
 
+## Benchmark
+
+On a MacBook Air:
+![Retext benchmarks](http://i62.tinypic.com/30wqaoi.png)
+
+Note: Run the benchmarks yourself with `npm run-script benchmark`
+
 ## Related
 
   * [parse-english](https://github.com/wooorm/parse-english "Parse English")
