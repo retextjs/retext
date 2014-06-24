@@ -16,7 +16,7 @@ medium = Array(11).join(small);
 large = Array(11).join(medium);
 
 /* Benchmarks */
-suite('retext.parse(); // Reuses the same TextOM object', function () {
+suite('retext.parse(source); // Reuse instance', function () {
     set('iterations', 20);
 
     var retext = new Retext();
@@ -27,24 +27,21 @@ suite('retext.parse(); // Reuses the same TextOM object', function () {
         }
     );
 
-    retext = new Retext();
-    bench('small (10 paragraphs, 50 sentences, 300 words, 2.08 kB)',
+    bench('small (10 paragraphs, 50 sentences, 300 words, 2 kB)',
         function (done) {
             retext.parse(small);
             done();
         }
     );
 
-    retext = new Retext();
-    bench('medium (100 paragraphs, 500 sentences, 3000 words, 20.80 kB)',
+    bench('medium (100 paragraphs, 500 sentences, 3000 words, 21 kB)',
         function (done) {
             retext.parse(medium);
             done();
         }
     );
 
-    retext = new Retext();
-    bench('large (1000 paragraphs, 5000 sentences, 30000 words, 208.00 kB)',
+    bench('large (1000 paragraphs, 5000 sentences, 30000 words, 208 kB)',
         function (done) {
             retext.parse(large);
             done();
@@ -52,7 +49,7 @@ suite('retext.parse(); // Reuses the same TextOM object', function () {
     );
 });
 
-suite('new Retext().parse(); // Creates a new TextOM object', function () {
+suite('new Retext().parse(source); // Create new instance', function () {
     set('iterations', 20);
 
     bench('tiny (1 paragraph, 5 sentences, 30 words, 208 B)',
@@ -62,21 +59,21 @@ suite('new Retext().parse(); // Creates a new TextOM object', function () {
         }
     );
 
-    bench('small (10 paragraphs, 50 sentences, 300 words, 2.08 kB)',
+    bench('small (10 paragraphs, 50 sentences, 300 words, 2 kB)',
         function (done) {
             new Retext().parse(small);
             done();
         }
     );
 
-    bench('medium (100 paragraphs, 500 sentences, 3000 words, 20.80 kB)',
+    bench('medium (100 paragraphs, 500 sentences, 3000 words, 21 kB)',
         function (done) {
             new Retext().parse(medium);
             done();
         }
     );
 
-    bench('large (1000 paragraphs, 5000 sentences, 30000 words, 208.00 kB)',
+    bench('large (1000 paragraphs, 5000 sentences, 30000 words, 208 kB)',
         function (done) {
             new Retext().parse(large);
             done();
