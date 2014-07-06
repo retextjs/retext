@@ -17,7 +17,6 @@
     "parse-english": "~0.0.24"
   },
   "devDependencies": {
-    "complexity-report": "~1.0.3",
     "eslint": "^0.6.2",
     "istanbul": "~0.2.16",
     "jscs": "^1.5.8",
@@ -39,9 +38,8 @@
     "install-browser-test": "npm install browserify",
     "build-browser-test": "node_modules/.bin/browserify spec/retext.spec.js -o spec/browser.spec.js",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- spec/retext.spec.js",
-    "complexity": "node_modules/.bin/cr -l --maxcyc 20 --format minimal --silent index.js",
     "benchmark" : "node_modules/.bin/matcha",
-    "make": "npm run-script lint && npm run-script complexity && npm run-script coverage"
+    "make": "npm run-script lint && npm run-script coverage"
   },
   "testling": {
     "files": "spec/retext.spec.js",
