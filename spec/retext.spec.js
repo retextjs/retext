@@ -228,4 +228,13 @@ describe('Retext#parse', function () {
             retext.use(nestedPlugin).use(plugin).parse();
         }
     );
+
+    it('should parse something into a Text Object Model', function () {
+        var root = new Retext().parse('Something something');
+
+        assert('head' in root);
+        assert('tail' in root);
+        assert(root.head.parent === root);
+        assert('TextOM' in root);
+    });
 });
