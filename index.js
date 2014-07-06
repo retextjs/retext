@@ -1,5 +1,27 @@
 'use strict';
 
+var TextOMConstructor = require('TextOM');
+
+function fromAST(TextOM, ast) {
+    var iterator = -1,
+        children, node;
+
+    node = new TextOM[ast.type]();
+
+    if ('children' in ast) {
+        iterator = -1;
+        children = ast.children;
+
+        while (children[++iterator]) {
+            node.append(fromAST(TextOM, children[iterator]));
+        }
+    } else {
+        node.fromString(ast.value);
+    }
+
+    return node;
+}
+
 function useImmediately(rootNode, use) {
     return function (plugin) {
         var self = this,
@@ -44,6 +66,7 @@ function Retext(parser) {
     }
 
     self.parser = parser;
+    self.TextOM = parser.TextOM = new TextOMConstructor();
     self.plugins = [];
 }
 
@@ -103,7 +126,7 @@ Retext.prototype.parse = function (source) {
         plugins = self.plugins.concat(),
         iterator = -1,
         use = self.use,
-        rootNode = parser(source);
+        rootNode = fromAST(self.TextOM, parser.tokenizeRoot(source));
 
     self.use = useImmediately(rootNode, use);
 
