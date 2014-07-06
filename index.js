@@ -20,7 +20,7 @@ function useImmediately(rootNode, use) {
  * `Retext`.
  *
  * @param {(Object|String)?} parser - the parser, or its name, to use.
- *                                    Defaults to "parse-english".
+ *                                    Defaults to "parse-latin".
  * @api public
  * @constructor
  */
@@ -28,14 +28,14 @@ function Retext(parser) {
     var self = this;
 
     if (!parser) {
-        parser = 'parse-english';
+        parser = 'parse-latin';
     }
 
     if (typeof parser === 'string') {
         /* istanbul ignore else: TODO / TOSPEC */
         /* Load the parser for vendors without dynamic-require's */
-        if (parser === 'parse-english') {
-            parser = require('parse-english');
+        if (parser === 'parse-latin') {
+            parser = require('parse-latin');
         } else {
             parser = require(parser);
         }

@@ -14,7 +14,8 @@
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "parse-english": "~0.0.24"
+    "parse-latin": "^0.1.0",
+    "textom": "^0.1.0"
   },
   "devDependencies": {
     "eslint": "^0.6.2",

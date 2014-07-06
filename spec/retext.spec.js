@@ -17,11 +17,10 @@ describe('Retext()', function () {
         }
     );
 
-    it('should set the `parser` attribute to `parse-english`, when invoked ' +
+    it('should set the `parser` attribute to `parse-latin`, when invoked ' +
         'without arguments', function () {
             var retext = new Retext();
             assert('parser' in retext);
-            assert(typeof retext.parser === 'function');
             assert('TextOM' in retext.parser);
         }
     );
