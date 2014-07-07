@@ -1,4 +1,24 @@
 
+n.n.n / 2014-07-07
+==================
+
+ * Fixed a typo
+ * Fixed functionality removed/added in new parsers
+ * Now depending on parse-latin rather vs parse-englsih
+ * Added a unit test to detect if the API actually parses
+ * Removed complexity-report
+ * Removed functionality to browserify unit tests by default
+ * Updated parse-english, browserify, jscs, and istanbul
+ * Added retext-dom to plugins
+ * Add retext-search to plugins
+ * Fix new line
+ * Added Benchmark to Readme
+ * Modified wording in benchmark
+ * Updated dependency version of jscs
+ * Added benchmark
+ * Added Double Metaphone to plugins
+ * Added retext-metaphone to plugins
+
 0.0.12 / 2014-06-19
 ==================
 
