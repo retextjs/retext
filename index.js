@@ -1,6 +1,6 @@
 'use strict';
 
-var TextOMConstructor = require('TextOM');
+var TextOMConstructor = require('textom');
 
 function fromAST(TextOM, ast) {
     var iterator = -1,
