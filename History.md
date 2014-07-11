@@ -1,4 +1,10 @@
 
+n.n.n / 2014-07-11
+==================
+
+ * Updated parse-latin, textom
+ * Updated eslint, istanbul
+
 0.1.0-rc.1 / 2014-07-07
 ==================
 
