@@ -18,8 +18,8 @@
     "textom": "^0.1.0"
   },
   "devDependencies": {
-    "eslint": "^0.6.2",
-    "istanbul": "~0.2.16",
+    "eslint": "^0.7.4",
+    "istanbul": "^0.3.0",
     "jscs": "^1.5.8",
     "matcha": "^0.5.0",
     "mocha": "~1.20.1"
