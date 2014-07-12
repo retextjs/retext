@@ -1,6 +1,7 @@
 'use strict';
 
-var TextOMConstructor = require('textom');
+var TextOMConstructor = require('textom'),
+    ParseLatin = require('parse-latin');
 
 function fromAST(TextOM, ast) {
     var iterator = -1,
@@ -41,8 +42,7 @@ function useImmediately(rootNode, use) {
  * Define `Retext`. Exported above, and used to instantiate a new
  * `Retext`.
  *
- * @param {(Object|String)?} parser - the parser, or its name, to use.
- *                                    Defaults to "parse-latin".
+ * @param {Function?} parser - the parser to use. Defaults to parse-latin.
  * @api public
  * @constructor
  */
@@ -50,19 +50,7 @@ function Retext(parser) {
     var self = this;
 
     if (!parser) {
-        parser = 'parse-latin';
-    }
-
-    if (typeof parser === 'string') {
-        /* istanbul ignore else: TODO / TOSPEC */
-        /* Load the parser for vendors without dynamic-require's */
-        if (parser === 'parse-latin') {
-            parser = require('parse-latin');
-        } else {
-            parser = require(parser);
-        }
-
-        parser = parser();
+        parser = new ParseLatin();
     }
 
     self.parser = parser;
