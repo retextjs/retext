@@ -237,3 +237,10 @@ describe('Retext#parse', function () {
         assert('TextOM' in root);
     });
 });
+
+describe('Retext#applyPlugins', function () {
+    it('should be of type `function`', function () {
+        assert(typeof Retext.prototype.applyPlugins === 'function');
+        assert(typeof (new Retext()).applyPlugins === 'function');
+    });
+});
