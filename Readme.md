@@ -39,7 +39,7 @@ input = 'The three wise monkeys [. . .] sometimes called the ' +
         'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
         'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
         'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
-        'covering his mouth, who speaks no evil.'
+        'covering his mouth, who speaks no evil.';
 
 var text = new Retext()
   .use(emoji({
