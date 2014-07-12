@@ -55,6 +55,7 @@ function Retext(parser) {
 
     self.parser = parser;
     self.TextOM = parser.TextOM = new TextOMConstructor();
+    self.TextOM.parser = parser;
     self.plugins = [];
 }
 
