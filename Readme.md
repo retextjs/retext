@@ -62,8 +62,14 @@ Plugins used: [retext-emoji](https://github.com/wooorm/retext-emoji) and [retext
 ## API
 
 ### Retext(parser)
+```js
+var Retext = require('retext'),
+    ParseEnglish = require('parse-english');
 
-Return a new `Retext` instance with the given parser (defaults to `"parse-english"`).
+var retext = new Retext(new ParseEnglish()).parse(/* ...some english... */);
+```
+
+Return a new `Retext` instance with the given parser (defaults to parse-latin).
 
 ### Retext.prototype.use(plugin)
 
