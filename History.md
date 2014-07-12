@@ -1,5 +1,5 @@
 
-n.n.n / 2014-07-12
+0.1.0-rc.4 / 2014-07-12
 ==================
 
  * Retext now exposes the used parser on the TextOM instance
