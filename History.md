@@ -1,4 +1,14 @@
 
+n.n.n / 2014-07-12
+==================
+
+ * Update dependencies in component.json
+ * Removed functionality to pass strings to the Retext constructor
+ * Added an example to the Retext docs on how to use custom parsers
+ * Added a missing semicolon
+ * Retext now exposes an `applyPlugins` method (fixes #8)
+ * Added unit tests for Retext#applyPlugins
+
 0.1.0-rc.2 / 2014-07-11
 ==================
 
