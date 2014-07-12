@@ -112,31 +112,43 @@ Retext.prototype.use = function (plugin) {
  * Then, `parse` iterates over all plugins, and allows them to modify the
  * TextOM tree created by the parser.
  *
- * Note that, during the parsing stage, when the `use` plugin is called
- * by a plugin, the nested plugin is immediately called, before continuing
- * on with its parent plugin.
- *
- * @param {(String|Node)?} source - The source to convert.
+ * @param {String?} source - The source to convert.
  * @return {Node} - A RootNode containing the tokenised source.
  * @api public
  */
 Retext.prototype.parse = function (source) {
     var self = this,
-        parser = self.parser,
+        rootNode = fromAST(self.TextOM, self.parser.tokenizeRoot(source));
+
+    self.applyPlugins(rootNode);
+
+    return rootNode;
+};
+
+/**
+ * `Retext#applyPlugins` applies the plugins bound to the retext instance to a
+ * given tree.
+ *
+ * Note that, during the parsing stage, when the `use` plugin is called
+ * by a plugin, the nested plugin is immediately called, before continuing
+ * on with its parent plugin.
+ *
+ * @param {Node} tree - The tree to apply plugins to.
+ * @api public
+ */
+Retext.prototype.applyPlugins = function (tree) {
+    var self = this,
         plugins = self.plugins.concat(),
         iterator = -1,
-        use = self.use,
-        rootNode = fromAST(self.TextOM, parser.tokenizeRoot(source));
+        use = self.use;
 
-    self.use = useImmediately(rootNode, use);
+    self.use = useImmediately(tree, use);
 
     while (plugins[++iterator]) {
-        plugins[iterator](rootNode, this);
+        plugins[iterator](tree, this);
     }
 
     self.use = use;
-
-    return rootNode;
 };
 
 /**
