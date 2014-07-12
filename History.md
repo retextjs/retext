@@ -1,4 +1,10 @@
 
+n.n.n / 2014-07-12
+==================
+
+ * Retext now exposes the used parser on the TextOM instance
+ * Added Sauce Labs to travis
+
 0.1.0-rc.3 / 2014-07-12
 ==================
 
