@@ -89,6 +89,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — Implementation of the Metaphone algorithm;
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
+  * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
   * [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
   * [retext-search](https://github.com/wooorm/retext-search) — Search in a TextOM tree;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
@@ -103,7 +104,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * retext-language — Detect the language of text;
   * retext-date — detect time and date in text;
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
-  * retext-pos — Part-of-speech;
   * retraverse — like Estraverse;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
   * retext-standard — Standardise diacritics-n-stuff;
