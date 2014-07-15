@@ -8,7 +8,7 @@ See [Browser Support](#browser-support) for more information (a.k.a. don’t wor
 
 ---
 
-**retext** is a extensible natural language system—by default using [parse-english](https://github.com/wooorm/parse-english) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
+**retext** is a extensible natural language system—by default using [parse-latin](https://github.com/wooorm/parse-latin) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
 
 ## Installation
 
@@ -107,6 +107,7 @@ Note: Run the benchmarks yourself with `npm run-script benchmark`
 
 ## Related
 
+  * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin")
   * [parse-english](https://github.com/wooorm/parse-english "Parse English")
   * [textom](https://github.com/wooorm/textom "TextOM")
 
