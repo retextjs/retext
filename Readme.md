@@ -97,17 +97,17 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
 ## Desired Plugins
 
-  * retext-summary — Summarise text;
-  * retext-sentiment — Detect sentiment;
-  * retext-keywords — Extract “important” terms;
-  * retext-profanity — Censor profane words;
-  * retext-language — Detect the language of text;
   * retext-date — detect time and date in text;
-  * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
-  * retraverse — like Estraverse;
-  * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
-  * retext-standard — Standardise diacritics-n-stuff;
+  * retext-keywords — Extract “important” terms;
+  * retext-language — Detect the language of text;
   * retext-link — Detect hyperlinks.
+  * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
+  * retext-profanity — Censor profane words;
+  * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
+  * retext-sentiment — Detect sentiment;
+  * retext-standard — Standardise diacritics-n-stuff;
+  * retext-summary — Summarise text;
+  * retraverse — like Estraverse;
 
 ## Parsers
 
