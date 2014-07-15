@@ -109,6 +109,12 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * retext-standard — Standardise diacritics-n-stuff;
   * retext-link — Detect hyperlinks.
 
+## Parsers
+
+  * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin") (default);
+  * [parse-english](https://github.com/wooorm/parse-english "Parse English") — Specifically for English;
+  * [parse-dutch](https://github.com/wooorm/parse-dutch "Parse Dutch") — Specifically for Dutch;
+
 ## Browser Support
 Pretty much every browser (available through browserstack) runs all retext unit tests.
 
@@ -122,8 +128,6 @@ Note: Run the benchmarks yourself with `npm run-script benchmark`
 
 ## Related
 
-  * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin")
-  * [parse-english](https://github.com/wooorm/parse-english "Parse English")
   * [textom](https://github.com/wooorm/textom "TextOM")
 
 ## License
