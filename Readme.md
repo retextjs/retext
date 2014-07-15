@@ -94,6 +94,21 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-visit](https://github.com/wooorm/retext-visit) — Visit nodes, optionally by type;
 
+## Desired Plugins
+
+  * retext-summary — Summarise text;
+  * retext-sentiment — Detect sentiment;
+  * retext-keywords — Extract “important” terms;
+  * retext-profanity — Censor profane words;
+  * retext-language — Detect the language of text;
+  * retext-date — detect time and date in text;
+  * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
+  * retext-pos — Part-of-speech;
+  * retraverse — like Estraverse;
+  * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
+  * retext-standard — Standardise diacritics-n-stuff;
+  * retext-link — Detect hyperlinks.
+
 ## Browser Support
 Pretty much every browser (available through browserstack) runs all retext unit tests.
 
