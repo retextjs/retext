@@ -105,7 +105,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * retext-profanity — Censor profane words;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
   * retext-sentiment — Detect sentiment;
-  * retext-standard — Standardise diacritics-n-stuff;
   * retext-summary — Summarise text;
   * retraverse — like Estraverse;
 
