@@ -87,6 +87,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-dom](https://github.com/wooorm/retext-dom) — Create a (living) DOM tree from a TextOM tree;
   * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
+  * [retext-keywords](https://github.com/wooorm/retext-keywords) — Extract keywords and keyphrases;
   * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — Implementation of the Metaphone algorithm;
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
   * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
@@ -98,7 +99,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 ## Desired Plugins
 
   * retext-date — detect time and date in text;
-  * retext-keywords — Extract “important” terms;
   * retext-language — Detect the language of text;
   * retext-link — Detect hyperlinks.
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
