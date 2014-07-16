@@ -1,4 +1,16 @@
 
+n.n.n / 2014-07-16
+==================
+
+ * Added support for including data properties set by parser (-plugins) on object model
+ * Removed retext-standard from Desired Plugins
+ * Added retext-keywords to Plugins
+ * Fixed ordering of Desired Plugins
+ * Added retext-pos to Plugins
+ * Mentioned parse-dutch; Added “Parsers” section
+ * Add a list of desired plugins (fixes #7)
+ * Fix incorrect reference to the default parser
+
 0.1.0-rc.4 / 2014-07-12
 ==================
 
