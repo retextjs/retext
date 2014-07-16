@@ -1,5 +1,5 @@
 
-n.n.n / 2014-07-16
+0.1.0-rc.5 / 2014-07-16
 ==================
 
  * Added support for including data properties set by parser (-plugins) on object model
