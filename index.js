@@ -5,7 +5,7 @@ var TextOMConstructor = require('textom'),
 
 function fromAST(TextOM, ast) {
     var iterator = -1,
-        children, node;
+        children, node, data, attribute;
 
     node = new TextOM[ast.type]();
 
@@ -18,6 +18,17 @@ function fromAST(TextOM, ast) {
         }
     } else {
         node.fromString(ast.value);
+    }
+
+    /* istanbul ignore if: TODO, Untestable, will change soon. */
+    if ('data' in ast) {
+        data = ast.data;
+
+        for (attribute in data) {
+            if (data.hasOwnProperty(attribute)) {
+                node.data[attribute] = data[attribute];
+            }
+        }
     }
 
     return node;
