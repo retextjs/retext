@@ -88,6 +88,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-keywords](https://github.com/wooorm/retext-keywords) — Extract keywords and keyphrases;
+  * [retext-link](https://github.com/wooorm/retext-link) — Detect links in text;
   * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — Implementation of the Metaphone algorithm;
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
   * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
@@ -100,7 +101,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
   * retext-date — detect time and date in text;
   * retext-language — Detect the language of text;
-  * retext-link — Detect hyperlinks.
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
   * retext-profanity — Censor profane words;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
