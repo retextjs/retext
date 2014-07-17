@@ -71,7 +71,7 @@ function Retext(parser) {
 }
 
 /**
- * `Retext#use` takes a plugin—a humble function—and when the parse
+ * `Retext#use` takes a plugin-a humble function-and when the parse
  * method of the Retext instance is called, the plugin will be called
  * with the parsed tree, and the retext instance as arguments.
  *
