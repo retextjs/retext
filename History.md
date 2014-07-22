@@ -1,5 +1,5 @@
 
-n.n.n / 2014-07-22
+0.1.0-rc.6 / 2014-07-22
 ==================
 
  * Fixed component dependency names
