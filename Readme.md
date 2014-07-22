@@ -83,7 +83,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
   * [retext-ast](https://github.com/wooorm/retext-ast) — Encoding and decoding between AST (JSON) and TextOM object model;
   * [retext-content](https://github.com/wooorm/retext-content) — Append, prepend, remove, and replace content into/from Retext nodes;
-  * [retext-directionality](https://github.com/wooorm/retext-directionality) — Detect the direction text is written in;
+  * [retext-directionality](https://github.com/wooorm/retext-directionality) — (**[demo](http://wooorm.github.io/retext-directionality/)**) — Detect the direction text is written in;
   * [retext-dom](https://github.com/wooorm/retext-dom) — Create a (living) DOM tree from a TextOM tree;
   * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — Encode or decode [Gemojis](https://github.com/github/gemoji);
@@ -94,7 +94,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
   * [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
   * [retext-search](https://github.com/wooorm/retext-search) — Search in a TextOM tree;
-  * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
+  * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — (**[demo](http://wooorm.github.io/retext-smartypants/)**) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-visit](https://github.com/wooorm/retext-visit) — Visit nodes, optionally by type;
 
 ## Desired Plugins
