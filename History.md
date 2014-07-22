@@ -1,4 +1,12 @@
 
+n.n.n / 2014-07-22
+==================
+
+ * Fixed component dependency names
+ * Added codeclimate badge
+ * Replaced unicode characters in API with their ASCII equivalents
+ * Added retext-link to plugins
+
 0.1.0-rc.5 / 2014-07-16
 ==================
 
