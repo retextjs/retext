@@ -1,4 +1,19 @@
 
+n.n.n / 2014-07-24
+==================
+
+ * Fixed incorrect JSDoc comments
+ * Update benchmark in Readme
+ * Refactored benchmark
+ * Add spec/browser.spec.js git gitignore
+ * Add components to gitignore
+ * Update mocha
+ * Add demo’s for retext-dom, retext-visit
+ * Add demos for retext-double-metaphone, retext-link, retext-metaphone, retext-search
+ * Add mention of retexts goals and why its useful
+ * Add demo for retext-porter-stemmer, retext-emoji
+ * Add URIs to demos for retext-directionality, retext-smartypants
+
 0.1.0-rc.6 / 2014-07-22
 ==================
 
