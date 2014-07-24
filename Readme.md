@@ -122,11 +122,20 @@ Pretty much every browser (available through browserstack) runs all retext unit 
 
 ## Benchmark
 
-On a MacBook Air:
+Run the benchmark yourself:
 
-![Retext benchmarks](http://i62.tinypic.com/30wqaoi.png)
+```sh
+$ npm run benchmark
+```
 
-Note: Run the benchmarks yourself with `npm run-script benchmark`
+On a MacBook Air, it parser about 2 big articles, 24 sections, or 218 paragraphs per second.
+
+```
+              retext.parse(source);
+ 218 op/s » A paragraph (5 sentences, 100 words)
+  24 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
+   2 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
+```
 
 ## Related
 
