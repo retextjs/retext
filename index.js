@@ -54,7 +54,7 @@ function useImmediately(rootNode, use) {
  * `Retext`.
  *
  * @param {Function?} parser - the parser to use. Defaults to parse-latin.
- * @api public
+ * @public
  * @constructor
  */
 function Retext(parser) {
@@ -85,7 +85,7 @@ function Retext(parser) {
  *                                    modifying TextOM or a parser, do it
  *                                    in this method.
  * @return this
- * @api public
+ * @public
  */
 Retext.prototype.use = function (plugin) {
     if (typeof plugin !== 'function') {
@@ -114,7 +114,7 @@ Retext.prototype.use = function (plugin) {
  *
  * @param {String?} source - The source to convert.
  * @return {Node} - A RootNode containing the tokenised source.
- * @api public
+ * @public
  */
 Retext.prototype.parse = function (source) {
     var self = this,
@@ -134,7 +134,7 @@ Retext.prototype.parse = function (source) {
  * on with its parent plugin.
  *
  * @param {Node} tree - The tree to apply plugins to.
- * @api public
+ * @public
  */
 Retext.prototype.applyPlugins = function (tree) {
     var self = this,
