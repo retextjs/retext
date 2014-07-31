@@ -8,6 +8,11 @@ See [Browser Support](#browser-support) for more information (a.k.a. don’t wor
 
 ---
 
+> Hey all! First, thanks a lot for watching, starring, and forking retext!
+Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@gmail.com) or [issues](https://github.com/wooorm/retext/issues) you might have, to help me make retext even cooler :smile:.
+
+---
+
 **retext** is a extensible natural language system—by default using [parse-latin](https://github.com/wooorm/parse-latin) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
 
 > Rather than being a do-all library for Natural Language Processing (e.g., [NLTK](http://www.nltk.org) or [OpenNLP](https://opennlp.apache.org)), **retext** aims to be useful for more practical use cases (such as censoring profane words or decoding emoticons, but the possibilities are endless) instead of more academic goals (research purposes).
