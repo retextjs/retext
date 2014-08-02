@@ -107,6 +107,9 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
 ## Desired Plugins
 
+> Hey! Want to create one of the following, or any other plugin, for retext but not sure where to start? I suggest to read retext-visit’s source code to see how it’s build first (it’s probably the most straight forward to learn), and go from there.
+> Let me know if you still have any questions, go ahead and send me [feedback](mailto:tituswormer@gmail.com) or [raise an issue](https://github.com/wooorm/retext/issues).
+
   * retext-date — detect time and date in text;
   * retext-language — Detect the language of text;
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
