@@ -136,7 +136,7 @@ Run the benchmark yourself:
 $ npm run benchmark
 ```
 
-On a MacBook Air, it parser about 2 big articles, 24 sections, or 218 paragraphs per second.
+On a MacBook Air, it parses about 2 big articles, 24 sections, or 218 paragraphs per second.
 
 ```
               retext.parse(source);
