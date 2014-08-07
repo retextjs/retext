@@ -13,10 +13,10 @@ Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@
 
 ---
 
-**retext** is a extensible natural language system—by default using [parse-latin](https://github.com/wooorm/parse-latin) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language. In JavaScript. NodeJS, and the browser. Tests provide 100% coverage.
+**retext** is an extensible natural language system—by default using [parse-latin](https://github.com/wooorm/parse-latin) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language in JavaScript, NodeJS, and the browser. Tests provide 100% coverage.
 
 > Rather than being a do-all library for Natural Language Processing (e.g., [NLTK](http://www.nltk.org) or [OpenNLP](https://opennlp.apache.org)), **retext** aims to be useful for more practical use cases (such as censoring profane words or decoding emoticons, but the possibilities are endless) instead of more academic goals (research purposes).
-> **retext** is inherently modular—it uses plugins (similar to [rework](https://github.com/reworkcss/rework/) for CSS) instead of providing everything out of the box (e.g., [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a viable tool for use on the web.
+> **retext** is inherently modular — it uses plugins (similar to [rework](https://github.com/reworkcss/rework/) for CSS) instead of providing everything out of the box (e.g., [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a viable tool for use on the web.
 
 ## Installation
 
