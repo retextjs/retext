@@ -106,6 +106,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**)  — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — (**[demo](http://wooorm.github.io/retext-emoji/)**) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-keywords](https://github.com/wooorm/retext-keywords) — Extract keywords and keyphrases;
+  * [retext-language](https://github.com/wooorm/retext-language) — Detect the language of text;
   * [retext-link](https://github.com/wooorm/retext-link) — (**[demo](http://wooorm.github.io/retext-link/)**)  — Detect links in text;
   * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — (**[demo](http://wooorm.github.io/retext-metaphone/)**)  — Implementation of the Metaphone algorithm;
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — (**[demo](http://wooorm.github.io/retext-porter-stemmer/)**) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
