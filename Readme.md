@@ -122,7 +122,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 > Let me know if you still have any questions, go ahead and send me [feedback](mailto:tituswormer@gmail.com) or [raise an issue](https://github.com/wooorm/retext/issues).
 
   * retext-date — detect time and date in text;
-  * retext-language — Detect the language of text;
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
   * retext-profanity — Censor profane words;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
