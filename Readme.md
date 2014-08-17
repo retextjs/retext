@@ -103,16 +103,17 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-content](https://github.com/wooorm/retext-content) — Append, prepend, remove, and replace content into/from Retext nodes;
   * [retext-directionality](https://github.com/wooorm/retext-directionality) — (**[demo](http://wooorm.github.io/retext-directionality/)**) — Detect the direction text is written in;
   * [retext-dom](https://github.com/wooorm/retext-dom) — (**[demo](http://wooorm.github.io/retext-dom/)**) — Create a (living) DOM tree from a TextOM tree;
-  * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**)  — Implementation of the Double Metaphone algorithm;
+  * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**) — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — (**[demo](http://wooorm.github.io/retext-emoji/)**) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-keywords](https://github.com/wooorm/retext-keywords) — Extract keywords and keyphrases;
   * [retext-language](https://github.com/wooorm/retext-language) — (**[demo](http://wooorm.github.io/retext-language/)**) — Detect the language of text;
-  * [retext-link](https://github.com/wooorm/retext-link) — (**[demo](http://wooorm.github.io/retext-link/)**)  — Detect links in text;
-  * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — (**[demo](http://wooorm.github.io/retext-metaphone/)**)  — Implementation of the Metaphone algorithm;
+  * [retext-link](https://github.com/wooorm/retext-link) — (**[demo](http://wooorm.github.io/retext-link/)**) — Detect links in text;
+  * [retext-metaphone](https://github.com/wooorm/retext-metaphone) — (**[demo](http://wooorm.github.io/retext-metaphone/)**) — Implementation of the Metaphone algorithm;
   * [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — (**[demo](http://wooorm.github.io/retext-porter-stemmer/)**) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
   * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
   * [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
-  * [retext-search](https://github.com/wooorm/retext-search) — (**[demo](http://wooorm.github.io/retext-search/)**)  — Search in a TextOM tree;
+  * [retext-search](https://github.com/wooorm/retext-search) — (**[demo](http://wooorm.github.io/retext-search/)**) — Search in a TextOM tree;
+  * [retext-sentiment](https://github.com/wooorm/retext-sentiment) — Detect sentiment in text;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — (**[demo](http://wooorm.github.io/retext-smartypants/)**) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-visit](https://github.com/wooorm/retext-visit) — (**[demo](http://wooorm.github.io/retext-visit/)**) — Visit nodes, optionally by type;
 
@@ -125,7 +126,6 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
   * retext-profanity — Censor profane words;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
-  * retext-sentiment — Detect sentiment;
   * retext-summary — Summarise text;
   * retraverse — like Estraverse;
 
