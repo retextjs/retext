@@ -113,7 +113,7 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
   * [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
   * [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
   * [retext-search](https://github.com/wooorm/retext-search) — (**[demo](http://wooorm.github.io/retext-search/)**) — Search in a TextOM tree;
-  * [retext-sentiment](https://github.com/wooorm/retext-sentiment) — Detect sentiment in text;
+  * [retext-sentiment](https://github.com/wooorm/retext-sentiment) — (**[demo](http://wooorm.github.io/retext-sentiment/)**) — Detect sentiment in text;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — (**[demo](http://wooorm.github.io/retext-smartypants/)**) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
   * [retext-visit](https://github.com/wooorm/retext-visit) — (**[demo](http://wooorm.github.io/retext-visit/)**) — Visit nodes, optionally by type;
 
