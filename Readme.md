@@ -131,9 +131,9 @@ Parses the given source and returns the (by `use`d plugins, modified) tree.
 
 ## Parsers
 
-  * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin") (default);
-  * [parse-english](https://github.com/wooorm/parse-english "Parse English") — Specifically for English;
-  * [parse-dutch](https://github.com/wooorm/parse-dutch "Parse Dutch") — Specifically for Dutch;
+  * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin") (**[demo](http://wooorm.github.io/parse-latin/)**) — default;
+  * [parse-english](https://github.com/wooorm/parse-english "Parse English") (**[demo](http://wooorm.github.io/parse-english/)**) — Specifically for English;
+  * [parse-dutch](https://github.com/wooorm/parse-dutch "Parse Dutch") (**[demo](http://wooorm.github.io/parse-dutch/)**) — Specifically for Dutch;
 
 ## Browser Support
 Pretty much every browser (available through browserstack) runs all retext unit tests.
