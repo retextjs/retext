@@ -15,7 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "parse-latin": "^0.1.0-rc.6",
-    "textom": "^0.1.0-rc.3"
+    "textom": "^0.1.0-rc.3",
+    "ware": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^0.8.0",

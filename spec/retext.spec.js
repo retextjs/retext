@@ -34,24 +34,19 @@ describe('Retext()', function () {
     );
 
     it('should create a new context/parser/textom when required, thus ' +
-        'not requiring from memory', function () {
-            var rootNode1 = new Retext().parse(),
-                rootNode2 = new Retext().parse();
+        'not requiring from memory', function (done) {
+            new Retext().parse(null, function (err, rootNode1) {
+                new Retext().parse(null, function (err, rootNode2) {
+                    assert(rootNode1 instanceof rootNode1.constructor);
+                    assert(!(rootNode1 instanceof rootNode2.constructor));
+                    assert(rootNode2 instanceof rootNode2.constructor);
+                    assert(!(rootNode2 instanceof rootNode1.constructor));
 
-            assert(rootNode1 instanceof rootNode1.constructor);
-            assert(!(rootNode1 instanceof rootNode2.constructor));
-            assert(rootNode2 instanceof rootNode2.constructor);
-            assert(!(rootNode2 instanceof rootNode1.constructor));
+                    done(err);
+                });
+            });
         }
     );
-
-    it('should set the `plugins` attribute to an empty array', function () {
-        var retext = new Retext();
-        assert('plugins' in retext);
-        assert(retext.plugins instanceof Array);
-        assert(retext.hasOwnProperty('plugins'));
-        assert(retext.plugins.length === 0);
-    });
 });
 
 describe('Retext#use', function () {
@@ -93,17 +88,17 @@ describe('Retext#use', function () {
 
     it('should attach `use`d plugins', function () {
         var retext = new Retext();
-        assert(retext.plugins.length === 0);
+        assert(retext.ware.fns.length === 0);
         retext.use(noop);
-        assert(retext.plugins.length === 1);
+        assert(retext.ware.fns.length === 1);
     });
 
     it('should not attach `use`d plugins multiple times', function () {
         var retext = new Retext();
         retext.use(noop);
-        assert(retext.plugins.length === 1);
+        assert(retext.ware.fns.length === 1);
         retext.use(noop);
-        assert(retext.plugins.length === 1);
+        assert(retext.ware.fns.length === 1);
     });
 });
 
@@ -113,9 +108,14 @@ describe('Retext#parse', function () {
         assert(typeof (new Retext()).parse === 'function');
     });
 
-    it('should return an instance of RootNode', function () {
+    it('should return an instance of RootNode', function (done) {
         var retext = new Retext();
-        assert(retext.parse() instanceof retext.parser.TextOM.RootNode);
+
+        retext.parse(null, function (err, rootNode) {
+            assert(rootNode instanceof retext.parser.TextOM.RootNode);
+
+            done(err);
+        });
     });
 
     it('should immediately call the `attach` method on a plugin, when ' +
@@ -137,7 +137,7 @@ describe('Retext#parse', function () {
     );
 
     it('should not call the `attach` method, when `parse` is called',
-        function () {
+        function (done) {
             var retext = new Retext(),
                 isCalled = false;
 
@@ -151,13 +151,15 @@ describe('Retext#parse', function () {
 
             isCalled = false;
 
-            retext.parse();
+            retext.parse(null, function (err) {
+                assert(isCalled === false);
 
-            assert(isCalled === false);
+                done(err);
+            });
         }
     );
 
-    it('should call `use`d plugins, when `parse` is called', function () {
+    it('should call `use`d plugins, when `parse` is called', function (done) {
         var retext = new Retext(),
             isCalled = false;
 
@@ -169,16 +171,17 @@ describe('Retext#parse', function () {
 
         assert(isCalled === false);
 
-        retext.parse();
+        retext.parse(null, function (err) {
+            assert(isCalled === true);
 
-        assert(isCalled === true);
+            done(err);
+        });
     });
 
     it('should call `use`d plugins with an instance of RootNode and ' +
-        'Retext, when `parse` is called', function () {
+        'Retext, when `parse` is called', function (done) {
             var retext = new Retext(),
-                args = null,
-                tree;
+                args;
 
             function plugin () {
                 args = arguments;
@@ -186,55 +189,41 @@ describe('Retext#parse', function () {
 
             retext.use(plugin);
 
-            tree = retext.parse();
-
-            assert(args[0] === tree);
-            assert(args[1] === retext);
-        }
-    );
-
-    it('should immediately call (during parsing) `use`d plugins, with ' +
-        'an instance of RootNode and Retext', function () {
-            var retext = new Retext(),
-                args = null;
-
-            function nestedPlugin () {
-                args = arguments;
-            }
-
-            function plugin (tree, retext) {
-                retext.use(nestedPlugin);
+            retext.parse(null, function (err, tree) {
                 assert(args[0] === tree);
                 assert(args[1] === retext);
-            }
+                assert(args.length === 2);
 
-            retext.use(plugin).parse();
+                done(err);
+            });
         }
     );
 
     it('should not call (during parsing) `use`d plugins, when already used',
-        function () {
+        function (done) {
             var retext = new Retext();
 
             function nestedPlugin () {}
 
             function plugin (tree, retext) {
-                var length = retext.plugins.length;
+                var length = retext.ware.fns.length;
                 retext.use(nestedPlugin);
-                assert(length === retext.plugins.length);
+                assert(length === retext.ware.fns.length);
             }
 
-            retext.use(nestedPlugin).use(plugin).parse();
+            retext.use(nestedPlugin).use(plugin).parse(null, done);
         }
     );
 
-    it('should parse something into a Text Object Model', function () {
-        var root = new Retext().parse('Something something');
+    it('should parse something into a Text Object Model', function (done) {
+        new Retext().parse('Something something', function (err, root) {
+            assert('head' in root);
+            assert('tail' in root);
+            assert(root.head.parent === root);
+            assert('TextOM' in root);
 
-        assert('head' in root);
-        assert('tail' in root);
-        assert(root.head.parent === root);
-        assert('TextOM' in root);
+            done(err);
+        });
     });
 });
 

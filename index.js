@@ -1,7 +1,8 @@
 'use strict';
 
 var TextOMConstructor = require('textom'),
-    ParseLatin = require('parse-latin');
+    ParseLatin = require('parse-latin'),
+    Ware = require('ware');
 
 function fromAST(TextOM, ast) {
     var iterator = -1,
@@ -34,21 +35,6 @@ function fromAST(TextOM, ast) {
     return node;
 }
 
-function useImmediately(rootNode, use) {
-    return function (plugin) {
-        var self = this,
-            length = self.plugins.length;
-
-        use.apply(self, arguments);
-
-        if (length !== self.plugins.length) {
-            plugin(rootNode, self);
-        }
-
-        return self;
-    };
-}
-
 /**
  * Define `Retext`. Exported above, and used to instantiate a new
  * `Retext`.
@@ -64,10 +50,10 @@ function Retext(parser) {
         parser = new ParseLatin();
     }
 
+    self.ware = new Ware();
     self.parser = parser;
     self.TextOM = parser.TextOM = new TextOMConstructor();
     self.TextOM.parser = parser;
-    self.plugins = [];
 }
 
 /**
@@ -94,14 +80,14 @@ Retext.prototype.use = function (plugin) {
     }
 
     var self = this,
-        plugins = self.plugins;
+        ware = self.ware;
 
-    if (plugins.indexOf(plugin) === -1) {
+    if (ware.fns.indexOf(plugin) === -1) {
         if (plugin.attach) {
             plugin.attach(self);
         }
 
-        plugins.push(plugin);
+        ware.use(plugin);
     }
 
     return self;
@@ -113,16 +99,15 @@ Retext.prototype.use = function (plugin) {
  * TextOM tree created by the parser.
  *
  * @param {String?} source - The source to convert.
- * @return {Node} - A RootNode containing the tokenised source.
+ * @param {Function<Error, Node>} done - Callback with a RootNode containing
+ *                                       the tokenized source.
  * @public
  */
-Retext.prototype.parse = function (source) {
+Retext.prototype.parse = function (source, done) {
     var self = this,
         rootNode = fromAST(self.TextOM, self.parser.tokenizeRoot(source));
 
-    self.applyPlugins(rootNode);
-
-    return rootNode;
+    self.applyPlugins(rootNode, done);
 };
 
 /**
@@ -134,21 +119,14 @@ Retext.prototype.parse = function (source) {
  * on with its parent plugin.
  *
  * @param {Node} tree - The tree to apply plugins to.
+ * @param {Function<Error, Node>} done - Callback with the result of
+ *                                       parsing the tree.
  * @public
  */
-Retext.prototype.applyPlugins = function (tree) {
-    var self = this,
-        plugins = self.plugins.concat(),
-        iterator = -1,
-        use = self.use;
+Retext.prototype.applyPlugins = function (tree, done) {
+    var self = this;
 
-    self.use = useImmediately(tree, use);
-
-    while (plugins[++iterator]) {
-        plugins[iterator](tree, this);
-    }
-
-    self.use = use;
+    self.ware.run(tree, self, done);
 };
 
 /**
