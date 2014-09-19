@@ -1,5 +1,5 @@
 
-n.n.n / 2014-09-19
+0.2.0-rc.1 / 2014-09-19
 ==================
 
  * Fix either istanbul or eslint failing in spec
