@@ -36,6 +36,11 @@ describe('Retext()', function () {
     it('should create a new context/parser/textom when required, thus ' +
         'not requiring from memory', function (done) {
             new Retext().parse(null, function (err, rootNode1) {
+                /* istanbul ignore if: won't error. */
+                if (err) {
+                    done(err);
+                }
+
                 new Retext().parse(null, function (err, rootNode2) {
                     assert(rootNode1 instanceof rootNode1.constructor);
                     assert(!(rootNode1 instanceof rootNode2.constructor));
