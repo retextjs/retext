@@ -1,4 +1,27 @@
 
+0.2.0-rc.1 / 2014-09-19
+==================
+
+ * Fix either istanbul or eslint failing in spec
+ * Use ware to support async parsing
+ * Add retext-syllable to Plugins
+ * Add retext-soundex to Plugins
+ * Update eslint to 0.8.0
+ * Add retext-lancaster-stemmer to Plugins
+ * Add demo for retext-sentiment
+ * Add demos for parse-latin, parse-english, parse-dutch
+ * Add retext-sentiment to Plugins
+ * Add demo for retext-language
+ * Remove retext-language from desired plugins
+ * Add retext-language to plugins
+ * Merge pull request #13 from joshWyatt/patch-2
+ * Update Readme.md
+ * Add a section on flashy demos
+ * Merge pull request #11 from jlburkhead/patch-1
+ * Spelling fix in README
+ * Add mention on where to start for building plugins
+ * Add personal note
+
 0.1.1 / 2014-07-25
 ==================
 
