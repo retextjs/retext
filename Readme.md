@@ -38,36 +38,73 @@ $ bower install retext
 ## Usage
 
 ```js
-var Retext = require('retext'),
-    emoji = require('retext-emoji'),
-    smartypants = require('retext-smartypants'),
+var Retext,
+    retext,
+    emoji,
+    smartypants,
     input;
 
-// Modified first paragraph from: 
-//   http://en.wikipedia.org/wiki/Three_wise_monkeys
-input = 'The three wise monkeys [. . .] sometimes called the ' +
-        'three mystic apes--are a pictorial maxim. Together ' +
-        'they embody the proverbial principle to ("see no evil, ' +
-        'hear no evil, speak no evil"). The three monkeys are ' +
-        'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
-        'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
-        'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
-        'covering his mouth, who speaks no evil.';
+/**
+ * Dependencies.
+ *
+ * - retext-emoji transforms short-codes into emoji.
+ * - retext-smartypants transforms dumb quotes and such
+ *   into smart punctuation.
+ */
 
-var text = new Retext()
+Retext = require('retext');
+emoji = require('retext-emoji');
+smartypants = require('retext-smartypants');
+
+/**
+ * The source to analyse and manipulate, a (modified)
+ * first paragraph from WikiPedia:
+ *   http://en.wikipedia.org/wiki/Three_wise_monkeys
+ */
+
+input = 'The three wise monkeys [. . .] sometimes called the ' +
+  'three mystic apes--are a pictorial maxim. Together ' +
+  'they embody the proverbial principle to ("see no evil, ' +
+  'hear no evil, speak no evil"). The three monkeys are ' +
+  'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
+  'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
+  'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
+  'covering his mouth, who speaks no evil.';
+
+/**
+ * Create a retext instance which uses retext-emoji and -smartypants.
+ */
+
+retext = new Retext()
   .use(emoji({
       'convert' : 'encode'
   }))
-  .use(smartypants())
-  .parse(input)
-  .toString();
-// The three wise monkeys […] sometimes called the three
-// mystic apes—are a pictorial maxim. Together they
-// embody the proverbial principle to (“see no evil,
-// hear no evil, speak no evil”). The three monkeys are
-// Mizaru (🙈), covering his eyes, who sees no evil;
-// Kikazaru (🙉), covering his ears, who hears no evil;
-// and Iwazaru (🙊), covering his mouth, who speaks no evil.
+  .use(smartypants());
+
+retext.parse(input, function (err, tree) {
+  /**
+   * Handle errors.
+   */
+
+  if (err) {
+      throw err;
+  }
+
+  /**
+   * Log the text content of the tree (the transformed input).
+   *
+   * This logs the following:
+   *   The three wise monkeys […] sometimes called the three
+   *   mystic apes—are a pictorial maxim. Together they
+   *   embody the proverbial principle to (“see no evil,
+   *   hear no evil, speak no evil”). The three monkeys are
+   *   Mizaru (🙈), covering his eyes, who sees no evil;
+   *   Kikazaru (🙉), covering his ears, who hears no evil;
+   *   and Iwazaru (🙊), covering his mouth, who speaks no evil.
+   */
+
+  console.log(tree.toString());
+});
 ```
 
 Plugins used: [retext-emoji](https://github.com/wooorm/retext-emoji) and [retext-smartypants](https://github.com/wooorm/retext-smartypants).
@@ -76,21 +113,40 @@ Plugins used: [retext-emoji](https://github.com/wooorm/retext-emoji) and [retext
 
 ### Retext(parser)
 ```js
-var Retext = require('retext'),
-    ParseEnglish = require('parse-english');
+var Retext,
+    ParseEnglish,
+    retext;
 
-var retext = new Retext(new ParseEnglish()).parse(/* ...some english... */);
+/**
+ * parse-english works better on English input.
+ */
+
+Retext = require('./');
+ParseEnglish = require('parse-english');
+
+/**
+ * Create a retext instance which uses an instance
+ * of parse-english.
+ */
+
+retext = new Retext(new ParseEnglish());
+
+/**
+ * There, ol' chap.
+ */
+
+retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
 ```
 
-Return a new `Retext` instance with the given parser (defaults to parse-latin).
+Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of parse-latin).
 
 ### Retext.prototype.use(plugin)
 
 Takes a plugin—a humble function. When `Retext#parse` is called, the plugin will be invoked with the parsed tree, and the Retext instance as arguments. Returns self.
 
-### Retext.prototype.parse(source)
+### Retext.prototype.parse(source, callback)
 
-Parses the given source and returns the (by `use`d plugins, modified) tree.
+Parses the given source and when done passes either an error (the first argument), or the (by `use`d plugins, modified) tree (the second argument) to the callback.
 
 ## Plugins
 
