@@ -1,18 +1,34 @@
 'use strict';
 
-var Retext, sentence, paragraph, section, article;
+var Retext,
+    sentence,
+    paragraph,
+    section,
+    article;
+
+/**
+ * Module dependencies (retext).
+ */
 
 Retext = require('..');
 
-/* Test data */
+/**
+ * Test data.
+ *
+ * This includes:
+ *
+ * - An average sentence (w/ 20 words);
+ * - An average paragraph (w/ 5 sentences);
+ * - A (big?) section (w/ 10 paragraphs);
+ * - A (big?) article (w/ 10 sections);
+ *
+ * Source:
+ *   http://www.gutenberg.org/files/10745/10745-h/10745-h.htm
+ */
 
-/* Source: http://www.gutenberg.org/files/10745/10745-h/10745-h.htm */
-
-/* A sentence, 20 words. */
 sentence = 'Where she had stood was clear, and she was gone since Sir ' +
     'Kay does not choose to assume my quarrel.';
 
-/* A paragraph, 5 sentences, 100 words. */
 paragraph = 'Thou art a churlish knight to so affront a lady ' +
     'he could not sit upon his horse any longer. ' +
     'For methinks something hath befallen my lord and that he ' +
@@ -23,27 +39,42 @@ paragraph = 'Thou art a churlish knight to so affront a lady ' +
     'so the Lady of the Lake vanished away, everything behind. ' +
     sentence;
 
-/* A section, 10 paragraphs, 50 sentences, 1,000 words. */
 section = paragraph + Array(10).join('\n\n' + paragraph);
 
-/* An article, 100 paragraphs, 500 sentences, 10,000 words. */
 article = section + Array(10).join('\n\n' + section);
 
-/* Benchmarks */
+/**
+ * Benchmark suite.
+ */
+
 suite('retext.parse(source);', function () {
-    var retext = new Retext();
+    var retext;
+
+    retext = new Retext();
 
     set('mintime', 100);
+
+    /**
+     * Benchmark a paragraph.
+     */
 
     bench('A paragraph (5 sentences, 100 words)', function () {
         retext.parse(paragraph);
     });
+
+    /**
+     * Benchmark a section.
+     */
 
     bench('A section (10 paragraphs, 50 sentences, 1,000 words)',
         function () {
             retext.parse(section);
         }
     );
+
+    /**
+     * Benchmark an article.
+     */
 
     bench('An article (100 paragraphs, 500 sentences, 10,000 words)',
         function () {
