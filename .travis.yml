@@ -6,9 +6,3 @@ node_js:
 - '0.10'
 - '0.11'
 after_script: 'npm install coveralls@2.10.0 && cat ./coverage/lcov.info | coveralls'
-addons:
-  sauce_connect: true
-env:
-  global:
-  - secure: JcLinB42azrwmweWkSbCgzh3DZup1knxEZYWLeympmgOmR1jGy4AZftQ6qZKuKO+gSwjT02QzlMYB+jjKBRRrIyBZFzHiRNvJZCqNRfzUAZlsRwL/6tww2TNrIMDBZ8qthV1S0ghPubzmWGLQP4uAR7c69RPMhR6Fzmcf6Y8fEk=
-  - secure: hFymXDRv+KlcxrE7cg/+GzqZQuhywXv5dNSboS+MQAaPeeWdh8Baz5CcYZxgGyLU61ESEpWAsXRD7MVfJDuEVS/gEKMO3zoqywUAX6BxtzPAygl9QfecMW23CMJaW2D0Gxu8FrQZp6tEZSv0nuXquN4imcuSxN8l4ivF4luTtj0=
