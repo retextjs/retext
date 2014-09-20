@@ -20,14 +20,19 @@ Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@
 
 ## Installation
 
-NPM:
+npm:
 ```sh
 $ npm install retext
 ```
 
-Component.js:
+Component:
 ```sh
 $ component install wooorm/retext
+```
+
+Bower:
+```sh
+$ bower install retext
 ```
 
 ## Flashy demos
