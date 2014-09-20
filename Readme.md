@@ -35,16 +35,6 @@ Bower:
 $ bower install retext
 ```
 
-## Flashy demos
-
-Most [plugins](https://github.com/wooorm/retext#plugins) have working examples. All available demos are listed under the plugins section, but some of the coolest include:
-
-- [retext-smartypants](http://wooorm.github.io/retext-smartypants/);
-- [retext-emoji](http://wooorm.github.io/retext-emoji/);
-- [retext-double-metaphone](http://wooorm.github.io/retext-double-metaphone/);
-- [retext-search](http://wooorm.github.io/retext-search/);
-- [retext-porter-stemmer](http://wooorm.github.io/retext-porter-stemmer/);
-
 ## Usage
 
 ```js
