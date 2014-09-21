@@ -282,6 +282,14 @@ describe('Retext#parse(value, done)', function () {
         assert(typeof (new Retext()).parse === 'function');
     });
 
+    it('should return self', function (done) {
+        var retext;
+
+        retext = new Retext();
+
+        assert(retext.parse(null, done) === retext);
+    });
+
     it('should invoke `done` with a `RootNode`', function (done) {
         var retext;
 
@@ -502,6 +510,16 @@ describe('Retext#applyPlugins(tree, done)', function () {
     it('should be a `function`', function () {
         assert(typeof Retext.prototype.applyPlugins === 'function');
         assert(typeof (new Retext()).applyPlugins === 'function');
+    });
+
+    it('should return self', function (done) {
+        var retext,
+            root;
+
+        retext = new Retext();
+        root = new retext.TextOM.RootNode();
+
+        assert(retext.applyPlugins(root, done) === retext);
     });
 
     it('should invoke `done` with `tree`', function (done) {

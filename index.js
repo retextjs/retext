@@ -101,6 +101,7 @@ Retext.prototype.use = function (plugin) {
  * @param {String?} source - The source to convert.
  * @param {Function<Error, Node>} done - Callback with a RootNode containing
  *                                       the tokenized source.
+ * @return this
  * @public
  */
 Retext.prototype.parse = function (source, done) {
@@ -108,6 +109,8 @@ Retext.prototype.parse = function (source, done) {
         rootNode = fromAST(self.TextOM, self.parser.tokenizeRoot(source));
 
     self.applyPlugins(rootNode, done);
+
+    return self;
 };
 
 /**
@@ -121,12 +124,15 @@ Retext.prototype.parse = function (source, done) {
  * @param {Node} tree - The tree to apply plugins to.
  * @param {Function<Error, Node>} done - Callback with the result of
  *                                       parsing the tree.
+ * @return this
  * @public
  */
 Retext.prototype.applyPlugins = function (tree, done) {
     var self = this;
 
     self.ware.run(tree, self, done);
+
+    return self;
 };
 
 /**
