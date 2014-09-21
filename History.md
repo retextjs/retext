@@ -1,5 +1,5 @@
 
-n.n.n / 2014-09-21
+0.2.0-rc.2 / 2014-09-21
 ==================
 
  * Merge branch 'feature/rename-apply-plugins-to-run'

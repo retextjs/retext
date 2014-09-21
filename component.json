@@ -2,7 +2,7 @@
   "name": "retext",
   "repository": "wooorm/retext",
   "description": "Extensible system for analysing and manipulating natural language",
-  "version": "0.2.0-rc.1",
+  "version": "0.2.0-rc.2",
   "keywords": [
     "natural",
     "language",
