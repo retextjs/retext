@@ -170,7 +170,7 @@ describe('Retext#use(plugin)', function () {
 
         retext.use(plugin);
 
-        retext.applyPlugins(root, function (err) {
+        retext.run(root, function (err) {
             assert(args[0] === retext);
             assert(args.length === 1);
 
@@ -529,13 +529,13 @@ describe('Retext#parse(value, done)', function () {
 });
 
 /**
- * Test Retext#applyPlugins(tree, done).
+ * Test Retext#run(tree, done).
  */
 
-describe('Retext#applyPlugins(tree, done)', function () {
+describe('Retext#run(tree, done)', function () {
     it('should be a `function`', function () {
-        assert(typeof Retext.prototype.applyPlugins === 'function');
-        assert(typeof (new Retext()).applyPlugins === 'function');
+        assert(typeof Retext.prototype.run === 'function');
+        assert(typeof (new Retext()).run === 'function');
     });
 
     it('should return self', function (done) {
@@ -545,7 +545,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
         retext = new Retext();
         root = new retext.TextOM.RootNode();
 
-        assert(retext.applyPlugins(root, done) === retext);
+        assert(retext.run(root, done) === retext);
     });
 
     it('should throw when `done` is not a `function`', function () {
@@ -556,23 +556,23 @@ describe('Retext#applyPlugins(tree, done)', function () {
         root = new retext.TextOM.RootNode();
 
         assert.throws(function () {
-            retext.applyPlugins(root);
+            retext.run(root);
         }, 'undefined');
 
         assert.throws(function () {
-            retext.applyPlugins(root, null);
+            retext.run(root, null);
         }, 'null');
 
         assert.throws(function () {
-            retext.applyPlugins(root, undefined);
+            retext.run(root, undefined);
         }, 'undefined');
 
         assert.throws(function () {
-            retext.applyPlugins(root, true);
+            retext.run(root, true);
         }, 'true');
 
         assert.throws(function () {
-            retext.applyPlugins(root, {});
+            retext.run(root, {});
         }, 'object Object');
     });
 
@@ -583,7 +583,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
         retext = new Retext();
         root = new retext.TextOM.RootNode();
 
-        retext.applyPlugins(root, function (err, tree) {
+        retext.run(root, function (err, tree) {
             assert(root === tree);
 
             done(err);
@@ -610,7 +610,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
 
         isInvoked = false;
 
-        retext.applyPlugins(root, function (err) {
+        retext.run(root, function (err) {
             assert(isInvoked !== true);
 
             done(err);
@@ -633,7 +633,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
 
         assert(isInvoked !== true);
 
-        retext.applyPlugins(root, function (err) {
+        retext.run(root, function (err) {
             assert(isInvoked === true);
 
             done(err);
@@ -654,7 +654,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
 
         retext.use(plugin);
 
-        retext.applyPlugins(root, function (err) {
+        retext.run(root, function (err) {
             assert(args[0] === root);
             assert(args[1] === retext);
             assert(args.length === 2);
@@ -687,7 +687,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
         retext
             .use(firstPlugin)
             .use(secondPlugin)
-            .applyPlugins(root, done);
+            .run(root, done);
     });
 
     it('should invoke dependencies in order', function (done) {
@@ -737,7 +737,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
             .use(firstPlugin)
             .use(secondPlugin)
             .use(thirdPlugin)
-            .applyPlugins(root, done);
+            .run(root, done);
     });
 
     it('should not re-invoke an attached plugin', function (done) {
@@ -761,7 +761,7 @@ describe('Retext#applyPlugins(tree, done)', function () {
         retext
             .use(nestedPlugin)
             .use(plugin)
-            .applyPlugins(root, done);
+            .run(root, done);
     });
 
     it('should not re-attach an attached plugin', function (done) {
@@ -786,6 +786,6 @@ describe('Retext#applyPlugins(tree, done)', function () {
         retext
             .use(nestedPlugin)
             .use(plugin)
-            .applyPlugins(root, done);
+            .run(root, done);
     });
 });
