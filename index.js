@@ -105,6 +105,15 @@ Retext.prototype.use = function (plugin) {
  * @public
  */
 Retext.prototype.parse = function (source, done) {
+    if (typeof done !== 'function') {
+        throw new TypeError(
+            'Illegal invocation: \'' + done +
+            '\' is not a valid argument for \'Retext.prototype.parse\'.\n' +
+            'This breaking change occured in 0.2.0-rc.1, see GitHub for ' +
+            'more information.'
+        );
+    }
+
     var self = this,
         rootNode = fromAST(self.TextOM, self.parser.tokenizeRoot(source));
 
@@ -128,6 +137,16 @@ Retext.prototype.parse = function (source, done) {
  * @public
  */
 Retext.prototype.applyPlugins = function (tree, done) {
+    if (typeof done !== 'function') {
+        throw new TypeError(
+            'Illegal invocation: \'' + done +
+            '\' is not a valid argument for ' +
+            '\'Retext.prototype.applyPlugins\'.\n' +
+            'This breaking change occured in 0.2.0-rc.1, see GitHub for ' +
+            'more information.'
+        );
+    }
+
     var self = this;
 
     self.ware.run(tree, self, done);
