@@ -290,6 +290,32 @@ describe('Retext#parse(value, done)', function () {
         assert(retext.parse(null, done) === retext);
     });
 
+    it('should throw when `done` is not a `function`', function () {
+        var retext;
+
+        retext = new Retext();
+
+        assert.throws(function () {
+            retext.parse(null);
+        }, 'undefined');
+
+        assert.throws(function () {
+            retext.parse(null, null);
+        }, 'null');
+
+        assert.throws(function () {
+            retext.parse(null, undefined);
+        }, 'undefined');
+
+        assert.throws(function () {
+            retext.parse(null, true);
+        }, 'true');
+
+        assert.throws(function () {
+            retext.parse(null, {});
+        }, 'object Object');
+    });
+
     it('should invoke `done` with a `RootNode`', function (done) {
         var retext;
 
@@ -520,6 +546,34 @@ describe('Retext#applyPlugins(tree, done)', function () {
         root = new retext.TextOM.RootNode();
 
         assert(retext.applyPlugins(root, done) === retext);
+    });
+
+    it('should throw when `done` is not a `function`', function () {
+        var retext,
+            root;
+
+        retext = new Retext();
+        root = new retext.TextOM.RootNode();
+
+        assert.throws(function () {
+            retext.applyPlugins(root);
+        }, 'undefined');
+
+        assert.throws(function () {
+            retext.applyPlugins(root, null);
+        }, 'null');
+
+        assert.throws(function () {
+            retext.applyPlugins(root, undefined);
+        }, 'undefined');
+
+        assert.throws(function () {
+            retext.applyPlugins(root, true);
+        }, 'true');
+
+        assert.throws(function () {
+            retext.applyPlugins(root, {});
+        }, 'object Object');
     });
 
     it('should invoke `done` with `tree`', function (done) {
