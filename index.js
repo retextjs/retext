@@ -110,7 +110,7 @@ function Retext(parser) {
 /**
  * Attaches `plugin`: a humble function.
  *
- * When `parse` or `applyPlugins` is invoked, `plugin` is
+ * When `parse` or `run` is invoked, `plugin` is
  * invoked with `node` and a `retext` instance.
  *
  * If `plugin` contains asynchronous functionality, it
@@ -186,7 +186,7 @@ Retext.prototype.parse = function (value, done) {
 
     cst = self.parser.parse(value);
 
-    self.applyPlugins(fromCST(self.TextOM, cst), done);
+    self.run(fromCST(self.TextOM, cst), done);
 
     return self;
 };
@@ -203,14 +203,14 @@ Retext.prototype.parse = function (value, done) {
  * @return this
  */
 
-Retext.prototype.applyPlugins = function (node, done) {
+Retext.prototype.run = function (node, done) {
     var self;
 
     if (typeof done !== 'function') {
         throw new TypeError(
             'Illegal invocation: `' + done + '` ' +
             'is not a valid argument for ' +
-            '`Retext#applyPlugins(node, done)`.\n' +
+            '`Retext#run(node, done)`.\n' +
             'This breaking change occurred in 0.2.0-rc.1, see GitHub for ' +
             'more information.'
         );
