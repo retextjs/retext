@@ -83,11 +83,11 @@ Retext.prototype.use = function (plugin) {
         ware = self.ware;
 
     if (ware.fns.indexOf(plugin) === -1) {
+        ware.use(plugin);
+
         if (plugin.attach) {
             plugin.attach(self);
         }
-
-        ware.use(plugin);
     }
 
     return self;
