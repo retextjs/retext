@@ -207,6 +207,56 @@ describe('Retext#use(plugin)', function () {
             .parse(null, done);
     });
 
+    it('should invoke `attach` on dependencies in order', function (done) {
+        var retext,
+            invokeCount;
+
+        function firstPlugin() {}
+
+        function secondPlugin() {}
+
+        function thirdPlugin() {}
+
+        retext = new Retext();
+        invokeCount = 0;
+
+        thirdPlugin.attach = function () {
+            assert(invokeCount === 2);
+
+            retext
+                .use(firstPlugin)
+                .use(secondPlugin);
+
+            invokeCount++;
+        };
+
+        secondPlugin.attach = function () {
+            assert(invokeCount === 1);
+
+            invokeCount++;
+
+            retext
+                .use(firstPlugin)
+                .use(thirdPlugin);
+        };
+
+        firstPlugin.attach = function () {
+            assert(invokeCount === 0);
+
+            invokeCount++;
+
+            retext
+                .use(secondPlugin)
+                .use(thirdPlugin);
+        };
+
+        retext
+            .use(firstPlugin)
+            .use(secondPlugin)
+            .use(thirdPlugin)
+            .parse(null, done);
+    });
+
     it('should not re-attach an attached plugin', function () {
         var retext;
 
