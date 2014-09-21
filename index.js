@@ -1,32 +1,73 @@
 'use strict';
 
-var TextOMConstructor = require('textom'),
-    ParseLatin = require('parse-latin'),
-    Ware = require('ware');
+var TextOMConstructor,
+    ParseLatin,
+    Ware,
+    has;
 
-function fromAST(TextOM, ast) {
-    var iterator = -1,
-        children, node, data, attribute;
+/**
+ * Module dependencies.
+ */
 
-    node = new TextOM[ast.type]();
+TextOMConstructor = require('textom');
+ParseLatin = require('parse-latin');
+Ware = require('ware');
 
-    if ('children' in ast) {
-        iterator = -1;
-        children = ast.children;
+/**
+ * Cached, fast, secure existence test.
+ */
 
-        while (children[++iterator]) {
-            node.append(fromAST(TextOM, children[iterator]));
+has = Object.prototype.hasOwnProperty;
+
+/**
+ * Transform a concrete syntax tree into a tree constructed
+ * from a given object model.
+ *
+ * @param {Object} TextOM - the object model.
+ * @param {Object} cst - the concrete syntax tree to
+ *   transform.
+ * @return {Node} the node constructed from the
+ *   CST and the object model.
+ */
+
+function fromCST(TextOM, cst) {
+    var index,
+        node,
+        children,
+        data,
+        attribute;
+
+    node = new TextOM[cst.type]();
+
+    if ('children' in cst) {
+        index = -1;
+        children = cst.children;
+
+        while (children[++index]) {
+            node.append(fromCST(TextOM, children[index]));
         }
     } else {
-        node.fromString(ast.value);
+        node.fromString(cst.value);
     }
 
+    /**
+     * Currently, `data` properties are not really
+     * specified or documented. Therefore, the following
+     * branch is ignored by Istanbul.
+     *
+     * The idea is that plugins and parsers can each
+     * attach data to nodes, in a similar fashion to the
+     * DOMs dataset, which can be stringified and parsed
+     * back and forth between the concrete syntax tree
+     * and the node.
+     */
+
     /* istanbul ignore if: TODO, Untestable, will change soon. */
-    if ('data' in ast) {
-        data = ast.data;
+    if ('data' in cst) {
+        data = cst.data;
 
         for (attribute in data) {
-            if (data.hasOwnProperty(attribute)) {
+            if (has.call(data, attribute)) {
                 node.data[attribute] = data[attribute];
             }
         }
@@ -36,54 +77,77 @@ function fromAST(TextOM, ast) {
 }
 
 /**
- * Define `Retext`. Exported above, and used to instantiate a new
- * `Retext`.
+ * Construct an instance of `Retext`.
  *
- * @param {Function?} parser - the parser to use. Defaults to parse-latin.
- * @public
+ * @param {Function?} parser - the parser to use. Defaults
+ *   to a new instance of `parse-latin`.
  * @constructor
  */
+
 function Retext(parser) {
-    var self = this;
+    var self,
+        TextOM;
 
     if (!parser) {
         parser = new ParseLatin();
     }
 
+    self = this;
+    TextOM = new TextOMConstructor();
+
     self.ware = new Ware();
     self.parser = parser;
-    self.TextOM = parser.TextOM = new TextOMConstructor();
-    self.TextOM.parser = parser;
+    self.TextOM = TextOM;
+
+    /**
+     * Expose `TextOM` on `parser`, and vice versa.
+     */
+
+    parser.TextOM = TextOM;
+    TextOM.parser = parser;
 }
 
 /**
- * `Retext#use` takes a plugin-a humble function-and when the parse
- * method of the Retext instance is called, the plugin will be called
- * with the parsed tree, and the retext instance as arguments.
+ * Attaches `plugin`: a humble function.
  *
- * Note that, during the parsing stage, when the `use` method is called
- * by a plugin, the nested plugin is immediately called, before continuing
- * on with its parent plugin.
+ * When `parse` or `applyPlugins` is invoked, `plugin` is
+ * invoked with `node` and a `retext` instance.
  *
- * @param {Function} plugin - the plugin to call when parsing.
- * @param {Function?} plugin.attach - called only once with a Retext
- *                                    instance. If you're planning on
- *                                    modifying TextOM or a parser, do it
- *                                    in this method.
+ * If `plugin` contains asynchronous functionality, it
+ * should accept a third argument (`next`) and invoke
+ * it on completion.
+ *
+ * `plugin.attach` is invoked with a `retext` instance
+ * when attached, enabling `plugin` to depend on other
+ * plugins.
+ *
+ * Code to initialize `plugin` should go into its `attach`
+ * method, such as functionality to modify the object model
+ * (TextOM), the parser (e.g., `parse-latin`), or the
+ * `retext` instance. `plugin.attach` is invoked when
+ * `plugin` is attached to a `retext` instance.
+ *
+ * @param {function(Node, Retext, Function?)} plugin -
+ *   functionality to analyze and manipulate a node.
+ * @param {function(Retext)} plugin.attach - functionality
+ *   to initialize `plugin`.
  * @return this
- * @public
  */
+
 Retext.prototype.use = function (plugin) {
+    var self;
+
     if (typeof plugin !== 'function') {
-        throw new TypeError('Illegal invocation: \'' + plugin +
-            '\' is not a valid argument for \'Retext.prototype.use\'');
+        throw new TypeError(
+            'Illegal invocation: `' + plugin + '` ' +
+            'is not a valid argument for `Retext#use(plugin)`'
+        );
     }
 
-    var self = this,
-        ware = self.ware;
+    self = this;
 
-    if (ware.fns.indexOf(plugin) === -1) {
-        ware.use(plugin);
+    if (self.ware.fns.indexOf(plugin) === -1) {
+        self.ware.use(plugin);
 
         if (plugin.attach) {
             plugin.attach(self);
@@ -94,67 +158,73 @@ Retext.prototype.use = function (plugin) {
 };
 
 /**
- * `Retext#parse` takes a source to be given (and parsed) by the parser.
- * Then, `parse` iterates over all plugins, and allows them to modify the
- * TextOM tree created by the parser.
+ * Transform a given value into a node, applies attached
+ * plugins to the node, and invokes `done` with either an
+ * error (first argument) or the transformed node (second
+ * argument).
  *
- * @param {String?} source - The source to convert.
- * @param {Function<Error, Node>} done - Callback with a RootNode containing
- *                                       the tokenized source.
+ * @param {string?} value - The value to transform.
+ * @param {function(Error, Node)} done - Callback to
+ *   invoke when the transformations have completed.
  * @return this
- * @public
  */
-Retext.prototype.parse = function (source, done) {
+
+Retext.prototype.parse = function (value, done) {
+    var self,
+        cst;
+
     if (typeof done !== 'function') {
         throw new TypeError(
-            'Illegal invocation: \'' + done +
-            '\' is not a valid argument for \'Retext.prototype.parse\'.\n' +
-            'This breaking change occured in 0.2.0-rc.1, see GitHub for ' +
+            'Illegal invocation: `' + done + '` ' +
+            'is not a valid argument for `Retext#parse(value, done)`.\n' +
+            'This breaking change occurred in 0.2.0-rc.1, see GitHub for ' +
             'more information.'
         );
     }
 
-    var self = this,
-        rootNode = fromAST(self.TextOM, self.parser.tokenizeRoot(source));
+    self = this;
 
-    self.applyPlugins(rootNode, done);
+    cst = self.parser.parse(value);
+
+    self.applyPlugins(fromCST(self.TextOM, cst), done);
 
     return self;
 };
 
 /**
- * `Retext#applyPlugins` applies the plugins bound to the retext instance to a
- * given tree.
+ * Applies attached plugins to `node` and invokes `done`
+ * with either an error (first argument) or the transformed
+ * `node` (second argument).
  *
- * Note that, during the parsing stage, when the `use` plugin is called
- * by a plugin, the nested plugin is immediately called, before continuing
- * on with its parent plugin.
- *
- * @param {Node} tree - The tree to apply plugins to.
- * @param {Function<Error, Node>} done - Callback with the result of
- *                                       parsing the tree.
+ * @param {Node} node - The node to apply attached
+ *   plugins to.
+ * @param {function(Error, Node)} done - Callback to
+ *   invoke when the transformations have completed.
  * @return this
- * @public
  */
-Retext.prototype.applyPlugins = function (tree, done) {
+
+Retext.prototype.applyPlugins = function (node, done) {
+    var self;
+
     if (typeof done !== 'function') {
         throw new TypeError(
-            'Illegal invocation: \'' + done +
-            '\' is not a valid argument for ' +
-            '\'Retext.prototype.applyPlugins\'.\n' +
-            'This breaking change occured in 0.2.0-rc.1, see GitHub for ' +
+            'Illegal invocation: `' + done + '` ' +
+            'is not a valid argument for ' +
+            '`Retext#applyPlugins(node, done)`.\n' +
+            'This breaking change occurred in 0.2.0-rc.1, see GitHub for ' +
             'more information.'
         );
     }
 
-    var self = this;
+    self = this;
 
-    self.ware.run(tree, self, done);
+    self.ware.run(node, self, done);
 
     return self;
 };
 
 /**
- * Expose `Retext`. Used to instantiate a new Retext object.
+ * Expose `Retext`.
  */
-exports = module.exports = Retext;
+
+module.exports = Retext;
