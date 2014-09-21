@@ -1,4 +1,28 @@
 
+n.n.n / 2014-09-21
+==================
+
+ * Merge branch 'feature/rename-apply-plugins-to-run'
+ * Rename `applyPlugins` > `run`
+ * Merge branch 'refactor/api'
+ * Refactor API
+ * Merge branch 'feature/fail-without-callback'
+ * Add interface for error on omitted `done` for `parse`
+ * Add spec for error on omitted `done` for `parse`
+ * Merge branch 'feature/chainable-parse'
+ * Add chainable `parse` and `applyPlugins`
+ * Add spec for chainable `parse` and `applyPlugins`
+ * Fix throwing interdependent plugins
+ * Add spec for throwing interdependent plugins
+ * Refactor spec
+ * Refactor benchmark
+ * Update benchmark results in docs
+ * Update docs for async changes in 27dbfd7
+ * Remove flashy demos from docs
+ * Update and fix Installation in docs
+ * Remove sauce labs from travis
+ * Merge branch 'feature/async'
+
 0.2.0-rc.1 / 2014-09-19
 ==================
 
