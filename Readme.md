@@ -127,7 +127,7 @@ Parses the given source and when done passes either an error (the first argument
   * [retext-search](https://github.com/wooorm/retext-search) — (**[demo](http://wooorm.github.io/retext-search/)**) — Search in a TextOM tree;
   * [retext-sentiment](https://github.com/wooorm/retext-sentiment) — (**[demo](http://wooorm.github.io/retext-sentiment/)**) — Detect sentiment in text;
   * [retext-smartypants](https://github.com/wooorm/retext-smartypants) — (**[demo](http://wooorm.github.io/retext-smartypants/)**) — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
-  * [retext-soundex](https://github.com/wooorm/retext-soundex) — Implementation of the Soundex algorithm;
+  * [retext-soundex](https://github.com/wooorm/retext-soundex) — (**[demo](http://wooorm.github.io/retext-soundex/)**) — Implementation of the Soundex algorithm;
   * [retext-syllable](https://github.com/wooorm/retext-syllable) — Syllable count;
   * [retext-visit](https://github.com/wooorm/retext-visit) — (**[demo](http://wooorm.github.io/retext-visit/)**) — Visit nodes, optionally by type;
 
