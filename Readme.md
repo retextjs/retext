@@ -2,12 +2,6 @@
 
 [![Build Status](https://img.shields.io/travis/wooorm/retext.svg)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg)](https://coveralls.io/r/wooorm/retext?branch=master) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg)](https://codeclimate.com/github/wooorm/retext)
 
-[![browser support](https://ci.testling.com/wooorm/retext.png) ](https://ci.testling.com/wooorm/retext)
-
-See [Browser Support](#browser-support) for more information (a.k.a. don’t worry about those grey icons above).
-
----
-
 > Hey all! First, thanks a lot for watching, starring, and forking retext!
 Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@gmail.com) or [issues](https://github.com/wooorm/retext/issues) you might have, to help me make retext even cooler :smile:.
 
@@ -188,9 +182,6 @@ Parses the given source and when done passes either an error (the first argument
   * [parse-latin](https://github.com/wooorm/parse-latin "Parse Latin") (**[demo](http://wooorm.github.io/parse-latin/)**) — default;
   * [parse-english](https://github.com/wooorm/parse-english "Parse English") (**[demo](http://wooorm.github.io/parse-english/)**) — Specifically for English;
   * [parse-dutch](https://github.com/wooorm/parse-dutch "Parse Dutch") (**[demo](http://wooorm.github.io/parse-dutch/)**) — Specifically for Dutch;
-
-## Browser Support
-Pretty much every browser (available through browserstack) runs all retext unit tests.
 
 ## Benchmark
 
