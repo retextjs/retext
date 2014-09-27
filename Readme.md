@@ -206,4 +206,4 @@ On a MacBook Air, it parses about 2 big articles, 22 sections, or 206 paragraphs
 
 ## License
 
-  MIT
+MIT © Titus Wormer
