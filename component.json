@@ -13,9 +13,9 @@
     "textom"
   ],
   "dependencies": {
-    "segmentio/ware": "^1.0.1",
-    "wooorm/parse-latin": "^0.1.0-rc.6",
-    "wooorm/textom": "^0.1.0-rc.3"
+    "segmentio/ware": "^1.2.0",
+    "wooorm/parse-latin": "^0.1.3",
+    "wooorm/textom": "^0.1.0"
   },
   "scripts" : [
     "index.js"

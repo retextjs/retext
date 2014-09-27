@@ -19,9 +19,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "parse-latin": "^0.1.0-rc.6",
-    "textom": "^0.1.0-rc.3",
-    "ware": "git@github.com:segmentio/ware.git#1.0.1"
+    "parse-latin": "^0.1.3",
+    "textom": "^0.1.0",
+    "ware": "git@github.com:segmentio/ware.git#1.2.0"
   },
   "main": "index.js",
   "ignore": [
