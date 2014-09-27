@@ -161,7 +161,7 @@ On a MacBook Air, it parses about 2 big articles, 22 sections, or 206 paragraphs
 
 ```
               retext.parse(source);
-  206 op/s » A paragraph (5 sentences, 100 words)
+  202 op/s » A paragraph (5 sentences, 100 words)
    22 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
     2 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
 ```

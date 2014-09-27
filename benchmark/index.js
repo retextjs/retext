@@ -47,28 +47,28 @@ article = section + Array(10).join('\n\n' + section);
  * Benchmark suite.
  */
 
-suite('retext.parse(source);', function () {
+suite('retext.parse(value, callback);', function () {
     var retext;
 
     retext = new Retext();
-
-    set('mintime', 100);
 
     /**
      * Benchmark a paragraph.
      */
 
-    bench('A paragraph (5 sentences, 100 words)', function () {
-        retext.parse(paragraph);
-    });
+    bench('A paragraph (5 sentences, 100 words)',
+        function (done) {
+            retext.parse(paragraph, done);
+        }
+    );
 
     /**
      * Benchmark a section.
      */
 
     bench('A section (10 paragraphs, 50 sentences, 1,000 words)',
-        function () {
-            retext.parse(section);
+        function (done) {
+            retext.parse(section, done);
         }
     );
 
@@ -77,8 +77,8 @@ suite('retext.parse(source);', function () {
      */
 
     bench('An article (100 paragraphs, 500 sentences, 10,000 words)',
-        function () {
-            retext.parse(article);
+        function (done) {
+            retext.parse(article, done);
         }
     );
 });
