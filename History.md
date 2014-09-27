@@ -1,5 +1,5 @@
 
-n.n.n / 2014-09-27
+0.2.0-rc.3 / 2014-09-27
 ==================
 
  * Fix benchmarks failing benchmarks
