@@ -2,15 +2,15 @@
 
 [![Build Status](https://img.shields.io/travis/wooorm/retext.svg)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg)](https://coveralls.io/r/wooorm/retext?branch=master) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg)](https://codeclimate.com/github/wooorm/retext)
 
-> Hey all! First, thanks a lot for watching, starring, and forking retext!
-Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@gmail.com) or [issues](https://github.com/wooorm/retext/issues) you might have, to help me make retext even cooler :smile:.
+> Hey all! First, thanks a lot for watching, starring, and forking **retext**!
+Secondly, I wanted to invite you all to leave any [feedback](mailto:tituswormer@gmail.com) or [issues](https://github.com/wooorm/retext/issues) you might have, to help me make **retext** even cooler :smile:.
 
 ---
 
-**retext** is an extensible natural language system—by default using [parse-latin](https://github.com/wooorm/parse-latin) to transform natural language into a [TextOM](https://github.com/wooorm/textom/) object model. Retext provides a pluggable system for analysing and manipulating natural language in JavaScript, NodeJS, and the browser. Tests provide 100% coverage.
+**retext** is an extensible natural language system—by default using **[parse-latin](https://github.com/wooorm/parse-latin)** to transform natural language into a **[TextOM](https://github.com/wooorm/textom/)** object model. **Retext** provides a pluggable system for analysing and manipulating natural language in JavaScript. NodeJS and the browser. Tests provide 100% coverage.
 
-> Rather than being a do-all library for Natural Language Processing (e.g., [NLTK](http://www.nltk.org) or [OpenNLP](https://opennlp.apache.org)), **retext** aims to be useful for more practical use cases (such as censoring profane words or decoding emoticons, but the possibilities are endless) instead of more academic goals (research purposes).
-> **retext** is inherently modular—it uses plugins (similar to [rework](https://github.com/reworkcss/rework/) for CSS) instead of providing everything out of the box (e.g., [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a viable tool for use on the web.
+> Rather than being a do-all library for Natural Language Processing (such as [NLTK](http://www.nltk.org) or [OpenNLP](https://opennlp.apache.org)), **retext** aims to be useful for more practical use cases (such as censoring profane words or decoding emoticons, but the possibilities are endless) instead of more academic goals (research purposes).
+> **retext** is inherently modular—it uses plugins (similar to [rework](https://github.com/reworkcss/rework/) for CSS) instead of providing everything out of the box (such as [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a viable tool for use on the web.
 
 ## Installation
 
@@ -31,97 +31,63 @@ $ bower install retext
 
 ## Usage
 
+The following example uses **[retext-emoji](https://github.com/wooorm/retext-emoji)** (to show emoji) and **[retext-smartypants](https://github.com/wooorm/retext-smartypants)** (for smart punctuation).
+
 ```js
-var Retext,
-    retext,
-    emoji,
-    smartypants,
-    input;
+/* Require dependencies. */
+var Retext = require('retext'),
+    emoji = require('retext-emoji'),
+    smartypants = require('retext-smartypants'),
+    input,
+    retext;
 
-/**
- * Dependencies.
- *
- * - retext-emoji transforms short-codes into emoji.
- * - retext-smartypants transforms dumb quotes and such
- *   into smart punctuation.
- */
-
-Retext = require('retext');
-emoji = require('retext-emoji');
-smartypants = require('retext-smartypants');
-
-/**
- * The source to analyse and manipulate, a (modified)
- * first paragraph from WikiPedia:
- *   http://en.wikipedia.org/wiki/Three_wise_monkeys
- */
-
-input = 'The three wise monkeys [. . .] sometimes called the ' +
-  'three mystic apes--are a pictorial maxim. Together ' +
-  'they embody the proverbial principle to ("see no evil, ' +
-  'hear no evil, speak no evil"). The three monkeys are ' +
-  'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
-  'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
-  'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
-  'covering his mouth, who speaks no evil.';
-
-/**
- * Create a retext instance which uses retext-emoji and -smartypants.
- */
-
+/* Create an instance using retext-emoji and -smartypants. */
 retext = new Retext()
   .use(emoji({
       'convert' : 'encode'
   }))
   .use(smartypants());
 
-retext.parse(input, function (err, tree) {
-  /**
-   * Handle errors.
-   */
+/* Read a document. */
+retext.parse(
+  'The three wise monkeys [. . .] sometimes called the ' +
+  'three mystic apes--are a pictorial maxim. Together ' +
+  'they embody the proverbial principle to ("see no evil, ' +
+  'hear no evil, speak no evil"). The three monkeys are ' +
+  'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
+  'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
+  'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
+  'covering his mouth, who speaks no evil.',
+  function (err, tree) {
+    /* Handle errors. */
+    if (err) {
+        throw err;
+    }
 
-  if (err) {
-      throw err;
+    /* Log the text content of the tree (the transformed input). */
+    console.log(tree.toString());
+    /**
+     * This logs the following:
+     *   The three wise monkeys […] sometimes called the three
+     *   mystic apes—are a pictorial maxim. Together they
+     *   embody the proverbial principle to (“see no evil,
+     *   hear no evil, speak no evil”). The three monkeys are
+     *   Mizaru (🙈), covering his eyes, who sees no evil;
+     *   Kikazaru (🙉), covering his ears, who hears no evil;
+     *   and Iwazaru (🙊), covering his mouth, who speaks no evil.
+     */
   }
-
-  /**
-   * Log the text content of the tree (the transformed input).
-   *
-   * This logs the following:
-   *   The three wise monkeys […] sometimes called the three
-   *   mystic apes—are a pictorial maxim. Together they
-   *   embody the proverbial principle to (“see no evil,
-   *   hear no evil, speak no evil”). The three monkeys are
-   *   Mizaru (🙈), covering his eyes, who sees no evil;
-   *   Kikazaru (🙉), covering his ears, who hears no evil;
-   *   and Iwazaru (🙊), covering his mouth, who speaks no evil.
-   */
-
-  console.log(tree.toString());
-});
+);
 ```
-
-Plugins used: [retext-emoji](https://github.com/wooorm/retext-emoji) and [retext-smartypants](https://github.com/wooorm/retext-smartypants).
 
 ## API
 
-### Retext(parser)
+### Retext(parser?)
+
 ```js
-var Retext,
-    ParseEnglish,
+var Retext = require('./'),
+    ParseEnglish = require('parse-english'),
     retext;
-
-/**
- * parse-english works better on English input.
- */
-
-Retext = require('./');
-ParseEnglish = require('parse-english');
-
-/**
- * Create a retext instance which uses an instance
- * of parse-english.
- */
 
 retext = new Retext(new ParseEnglish());
 
@@ -132,13 +98,13 @@ retext = new Retext(new ParseEnglish());
 retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
 ```
 
-Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of parse-latin).
+Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of **parse-latin**).
 
 ### Retext.prototype.use(plugin)
 
-Takes a plugin—a humble function. When `Retext#parse` is called, the plugin will be invoked with the parsed tree, and the Retext instance as arguments. Returns self.
+Takes a plugin—a humble function. When `Retext#parse` is invoked, the plugin will be invoked with the parsed tree, and the **Retext** instance as arguments. Returns self.
 
-### Retext.prototype.parse(source, callback)
+### Retext.prototype.parse(value, callback)
 
 Parses the given source and when done passes either an error (the first argument), or the (by `use`d plugins, modified) tree (the second argument) to the callback.
 
@@ -167,11 +133,11 @@ Parses the given source and when done passes either an error (the first argument
 
 ## Desired Plugins
 
-> Hey! Want to create one of the following, or any other plugin, for retext but not sure where to start? I suggest to read retext-visit’s source code to see how it’s build first (it’s probably the most straight forward to learn), and go from there.
+> Hey! Want to create one of the following, or any other plugin, for **retext** but not sure where to start? I suggest to read **retext-visit**’s source code to see how it’s build first (it’s probably the most straight forward to learn), and go from there.
 > Let me know if you still have any questions, go ahead and send me [feedback](mailto:tituswormer@gmail.com) or [raise an issue](https://github.com/wooorm/retext/issues).
 
   * retext-date — detect time and date in text;
-  * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a retext tree, let plugins modify the content, and sync the diffs back to the textarea;
+  * retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
   * retext-profanity — Censor profane words;
   * retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
   * retext-summary — Summarise text;
