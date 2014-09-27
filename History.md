@@ -1,4 +1,16 @@
 
+n.n.n / 2014-09-27
+==================
+
+ * Fix benchmarks failing benchmarks
+ * Refactor Readme.md
+ * Remove `npm update npm` from travis
+ * Fix property order in manifest files
+ * Update .gitignore, .npmignore
+ * Update copyright in Readme.md
+ * Remove testling
+ * Update dependencies
+
 0.2.0-rc.2 / 2014-09-21
 ==================
 
