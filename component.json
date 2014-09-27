@@ -1,8 +1,8 @@
 {
   "name": "retext",
-  "repository": "wooorm/retext",
-  "description": "Extensible system for analysing and manipulating natural language",
   "version": "0.2.0-rc.2",
+  "description": "Extensible system for analysing and manipulating natural language",
+  "license": "MIT",
   "keywords": [
     "natural",
     "language",
@@ -13,12 +13,12 @@
     "textom"
   ],
   "dependencies": {
-    "segmentio/ware": "^1.2.0",
     "wooorm/parse-latin": "^0.1.3",
-    "wooorm/textom": "^0.1.0"
+    "wooorm/textom": "^0.1.0",
+    "segmentio/ware": "^1.2.0"
   },
+  "repository": "wooorm/retext",
   "scripts" : [
     "index.js"
-  ],
-  "license": "MIT"
+  ]
 }
