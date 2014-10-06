@@ -117,6 +117,7 @@ Parses the given source and when done passes either an error (the first argument
   * [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**) — Implementation of the Double Metaphone algorithm;
   * [retext-emoji](https://github.com/wooorm/retext-emoji) — (**[demo](http://wooorm.github.io/retext-emoji/)**) — Encode or decode [Gemojis](https://github.com/github/gemoji);
   * [retext-find](https://github.com/wooorm/retext-find) — Easily find nodes;
+  * [retext-inspect](https://github.com/wooorm/retext-inspect) — Nicely display nodes in `console.log` calls;
   * [retext-keywords](https://github.com/wooorm/retext-keywords) — Extract keywords and keyphrases;
   * [retext-lancaster-stemmer](https://github.com/wooorm/retext-lancaster-stemmer) — (**[demo](http://wooorm.github.io/retext-lancaster-stemmer/)**) — Implementation of [the Lancaster (Paice/Husk) algorithm](http://www.comp.lancs.ac.uk/computing/research/stemming/index.htm);
   * [retext-language](https://github.com/wooorm/retext-language) — (**[demo](http://wooorm.github.io/retext-language/)**) — Detect the language of text;
