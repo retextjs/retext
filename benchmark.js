@@ -10,7 +10,7 @@ var Retext,
  * Module dependencies (retext).
  */
 
-Retext = require('..');
+Retext = require('./');
 
 /**
  * Test data.
