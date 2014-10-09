@@ -1,7 +1,11 @@
-node_modules
-bower_components
-components
-.DS_Store
-coverage
+.*
 *.log
-.travis.yml
+benchmark/
+build/
+components/
+coverage/
+node_modules/
+test.js
+bower.json
+component.json
+History.md
