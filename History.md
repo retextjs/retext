@@ -1,4 +1,19 @@
 
+n.n.n / 2014-10-09
+==================
+
+ * Replace parse-english with NLCST in package keywords
+ * Update .gitignore, .npmignore, bower ignore
+ * Update textom, parse-latin for component, bower
+ * Move spec to test.js
+ * Refactor indent in .jscs.json
+ * Remove browser test
+ * Update textom, parse-latin
+ * Add retext-inspect to plugins in Readme.md
+ * Add retext-find to plugins in Readme.md
+ * Add demo for retext-lancaster-stemmer
+ * Add demo for retext-soundex
+
 0.2.0-rc.3 / 2014-09-27
 ==================
 
