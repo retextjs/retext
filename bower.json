@@ -9,7 +9,7 @@
     "parser",
     "analyse",
     "manipulate",
-    "parse-english",
+    "nlcst",
     "textom"
   ],
   "dependencies": {
