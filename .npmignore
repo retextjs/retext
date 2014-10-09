@@ -1,6 +1,7 @@
 .*
 *.log
 build/
+bower_components/
 components/
 coverage/
 node_modules/
