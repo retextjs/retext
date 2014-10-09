@@ -7,7 +7,7 @@ var Retext,
  * Module dependencies (retext, assert).
  */
 
-Retext = require('..');
+Retext = require('./');
 assert = require('assert');
 
 /**
