@@ -137,6 +137,7 @@ Parses the given source and when done passes either an error (the first argument
 - retext-emoticon — Like **retext-emoji**, but for general emoticons;
 - retext-frequent-words — Like **retext-keywords**, but based on frequency and stop-words instead of a POS-tagger;
 - retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
+- retext-no-pants — Opposite of **retext-smartypants**;
 - retext-profanity — Censor profane words;
 - retext-punctuation-pair — Detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
 - retext-summary — Summarise text;
