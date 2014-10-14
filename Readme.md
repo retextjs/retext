@@ -133,12 +133,13 @@ Parses the given source and when done passes either an error (the first argument
 > Hey! Want to create one of the following, or any other plugin, for **retext** but not sure where to start? I suggest to read **retext-visit**’s source code to see how it’s build first (it’s probably the most straight forward to learn), and go from there.
 > Let me know if you still have any questions, go ahead and send me [feedback](mailto:tituswormer@gmail.com) or [raise an issue](https://github.com/wooorm/retext/issues).
 
-- retext-date — detect time and date in text;
+- retext-date — Detect time and date in text;
+- retext-emoticon — Like **retext-emoji**, but for general emoticons;
 - retext-live — Detect changes in a textarea (contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
 - retext-profanity — Censor profane words;
-- retext-punctuation-pair — detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
+- retext-punctuation-pair — Detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
 - retext-summary — Summarise text;
-- retraverse — like Estraverse;
+- retraverse — Like Estraverse;
 
 ## Parsers
 
