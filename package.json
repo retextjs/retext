@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "parse-latin": "^0.2.0-rc.3",
-    "textom": "^0.2.0",
+    "textom": "^0.2.1",
     "ware": "^1.2.0"
   },
   "repository": {

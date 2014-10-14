@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "wooorm/parse-latin": "^0.2.0-rc.3",
-    "wooorm/textom": "^0.2.0",
+    "wooorm/textom": "^0.2.1",
     "segmentio/ware": "^1.2.0"
   },
   "repository": "wooorm/retext",
