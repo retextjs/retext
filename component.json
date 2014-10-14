@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "version": "0.2.0-rc.5",
+  "version": "0.2.0",
   "description": "Extensible system for analysing and manipulating natural language",
   "license": "MIT",
   "keywords": [
