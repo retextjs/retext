@@ -1,4 +1,12 @@
 
+n.n.n / 2014-10-14
+==================
+
+ * Add retext-no-pants to desired plugins in Readme.md
+ * Add retext-frequent-words to desired plugins in Readme.md
+ * Add retext-emoticon to desired plugins in Readme.md
+ * Refactor Readme.md
+
 0.2.0-rc.5 / 2014-10-14
 ==================
 
