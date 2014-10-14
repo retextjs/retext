@@ -1,4 +1,12 @@
 
+n.n.n / 2014-10-14
+==================
+
+ * Update textom
+ * Add retext-walk to plugins in Readme.md
+ * Add `bower_components/` to .npmignore
+ * Move `benchmark/index.js` to `benchmark.js`
+
 0.2.0-rc.4 / 2014-10-09
 ==================
 
