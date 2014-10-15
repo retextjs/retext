@@ -13,12 +13,13 @@
     "textom"
   ],
   "dependencies": {
+    "wooorm/nlcst-to-textom": "^0.0.1",
     "wooorm/parse-latin": "^0.2.0",
     "wooorm/textom": "^0.2.1",
     "segmentio/ware": "^1.2.0"
   },
   "repository": "wooorm/retext",
-  "scripts" : [
+  "scripts": [
     "index.js"
   ]
 }

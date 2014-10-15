@@ -13,6 +13,7 @@
     "textom"
   ],
   "dependencies": {
+    "nlcst-to-textom": "^0.0.1",
     "parse-latin": "^0.2.0",
     "textom": "^0.2.1",
     "ware": "^1.2.0"
