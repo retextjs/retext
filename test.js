@@ -38,6 +38,19 @@ describe('new Retext()', function () {
 
         assert('parser' in retext);
         assert('TextOM' in retext.parser);
+
+        assert('parse' in retext.parser);
+    });
+
+    it('should set `TextOM` to an instance of `TextOM`', function () {
+        var retext;
+
+        retext = new Retext();
+
+        assert('TextOM' in retext);
+        assert('parser' in retext.TextOM);
+
+        assert('Node' in retext.TextOM);
     });
 
     /**
