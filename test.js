@@ -105,23 +105,23 @@ describe('Retext#use(plugin)', function () {
 
         assert.throws(function () {
             retext.use();
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.use(null);
-        }, 'null');
+        }, /null/);
 
         assert.throws(function () {
             retext.use(undefined);
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.use(true);
-        }, 'true');
+        }, /true/);
 
         assert.throws(function () {
             retext.use({});
-        }, 'object Object');
+        }, /object Object/);
     });
 
     it('should attach a plugin', function () {
@@ -297,23 +297,23 @@ describe('Retext#parse(value, done)', function () {
 
         assert.throws(function () {
             retext.parse(null);
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.parse(null, null);
-        }, 'null');
+        }, /null/);
 
         assert.throws(function () {
             retext.parse(null, undefined);
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.parse(null, true);
-        }, 'true');
+        }, /true/);
 
         assert.throws(function () {
             retext.parse(null, {});
-        }, 'object Object');
+        }, /object Object/);
     });
 
     it('should invoke `done` with a `RootNode`', function (done) {
@@ -557,23 +557,23 @@ describe('Retext#run(tree, done)', function () {
 
         assert.throws(function () {
             retext.run(root);
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.run(root, null);
-        }, 'null');
+        }, /null/);
 
         assert.throws(function () {
             retext.run(root, undefined);
-        }, 'undefined');
+        }, /undefined/);
 
         assert.throws(function () {
             retext.run(root, true);
-        }, 'true');
+        }, /true/);
 
         assert.throws(function () {
             retext.run(root, {});
-        }, 'object Object');
+        }, /object Object/);
     });
 
     it('should invoke `done` with `tree`', function (done) {
