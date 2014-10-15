@@ -13,7 +13,7 @@
     "textom"
   ],
   "dependencies": {
-    "parse-latin": "^0.2.0-rc.3",
+    "parse-latin": "^0.2.0",
     "textom": "^0.2.1",
     "ware": "^1.2.0"
   },
@@ -25,7 +25,7 @@
   "devDependencies": {
     "eslint": "^0.8.0",
     "istanbul": "^0.3.0",
-    "jscs": "^1.6.0",
+    "jscs": "^1.7.0",
     "matcha": "^0.5.0",
     "mocha": "^1.21.0"
   },
