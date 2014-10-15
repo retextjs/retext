@@ -1,4 +1,13 @@
 
+n.n.n / 2014-10-15
+==================
+
+ * Add test for `TextOM` on retext instances
+ * Change exception-assertions in tests
+ * Add nlcst-to-textom implementation to API
+ * Add nlcst-to-textom as a dependency
+ * Update parse-latin
+
 0.2.0 / 2014-10-14
 ==================
 
