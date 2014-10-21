@@ -1,4 +1,11 @@
 
+n.n.n / 2014-10-21
+==================
+
+ * Update textom, parse-latin
+ * Add retext-no-break to desired plugins in Readme.md
+ * Add retext-location to desired plugins in Readme.md
+
 0.2.1 / 2014-10-15
 ==================
 
