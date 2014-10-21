@@ -14,8 +14,8 @@
   ],
   "dependencies": {
     "nlcst-to-textom": "^0.0.1",
-    "parse-latin": "^0.2.0",
-    "textom": "^0.2.1",
+    "parse-latin": "^0.3.0-rc.1",
+    "textom": "^0.3.0-rc.2",
     "ware": "^1.2.0"
   },
   "repository": {
