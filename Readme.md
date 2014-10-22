@@ -116,6 +116,7 @@ Parses the given source and when done passes either an error (the first argument
 - [retext-lancaster-stemmer](https://github.com/wooorm/retext-lancaster-stemmer) — (**[demo](http://wooorm.github.io/retext-lancaster-stemmer/)**) — Implementation of [the Lancaster (Paice/Husk) algorithm](http://www.comp.lancs.ac.uk/computing/research/stemming/index.htm);
 - [retext-language](https://github.com/wooorm/retext-language) — (**[demo](http://wooorm.github.io/retext-language/)**) — Detect the language of text;
 - [retext-link](https://github.com/wooorm/retext-link) — (**[demo](http://wooorm.github.io/retext-link/)**) — Detect links in text;
+- [retext-live](https://github.com/wooorm/retext-live) — Change a node based on a (new?) value;
 - [retext-metaphone](https://github.com/wooorm/retext-metaphone) — (**[demo](http://wooorm.github.io/retext-metaphone/)**) — Implementation of the Metaphone algorithm;
 - [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — (**[demo](http://wooorm.github.io/retext-porter-stemmer/)**) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
 - [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
