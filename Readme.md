@@ -137,13 +137,14 @@ Parses the given source and when done passes either an error (the first argument
 - retext-date — Detect time and date in text;
 - retext-emoticon — Like **retext-emoji**, but for general emoticons;
 - retext-frequent-words — Like **retext-keywords**, but based on frequency and stop-words instead of a POS-tagger;
-- retext-sync — Detect changes in a textarea (or contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
+- retext-hyphen — Insert soft-hyphens where needed; this might have to be implemented with some sort of node which doesn't stringify;
 - retext-location — Track the position of nodes (line, column);
 - retext-no-pants — Opposite of **retext-smartypants**;
 - retext-no-break — Inserts [non-breaking spaces](http://en.wikipedia.org/wiki/Non-breaking_space#Non-breaking_behavior) between things like “100 km”;
 - retext-profanity — Censor profane words;
 - retext-punctuation-pair — Detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
 - retext-summary — Summarise text;
+- retext-sync — Detect changes in a textarea (or contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
 - retraverse — Like Estraverse.
 
 ## Parsers
