@@ -145,6 +145,7 @@ Parses the given source and when done passes either an error (the first argument
 - retext-punctuation-pair — Detect which opening or initial punctuation, belongs to which closing or final punctuation mark (and vice versa);
 - retext-summary — Summarise text;
 - retext-sync — Detect changes in a textarea (or contenteditable?), sync the diffs over to a **retext** tree, let plugins modify the content, and sync the diffs back to the textarea;
+- retext-typography — Applies typographic enhancements, like (or using?) retext-smartypants and retext-hyphen;
 - retraverse — Like Estraverse.
 
 ## Parsers
