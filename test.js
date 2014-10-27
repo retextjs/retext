@@ -179,9 +179,8 @@ describe('Retext#use(plugin)', function () {
         assert(isInvoked === true);
     });
 
-    it('should invoke a plugin with `retext` and `options`', function (done) {
+    it('should invoke a plugin with `retext` and `options`', function () {
         var retext,
-            root,
             options,
             parameters;
 
@@ -191,22 +190,16 @@ describe('Retext#use(plugin)', function () {
 
         retext = new Retext();
 
-        root = new retext.TextOM.RootNode();
-
         options = {};
 
         retext.use(plugin, options);
 
-        retext.run(root, function (err) {
-            assert(parameters[0] === retext);
-            assert(parameters[1] === options);
-            assert(parameters.length === 2);
-
-            done(err);
-        });
+        assert(parameters[0] === retext);
+        assert(parameters[1] === options);
+        assert(parameters.length === 2);
     });
 
-    it('should invoke plugins in order', function (done) {
+    it('should invoke plugins in order', function () {
         var retext,
             isInvoked;
 
@@ -227,11 +220,10 @@ describe('Retext#use(plugin)', function () {
 
         retext
             .use(firstPlugin)
-            .use(secondPlugin)
-            .parse(null, done);
+            .use(secondPlugin);
     });
 
-    it('should invoke dependencies in order', function (done) {
+    it('should invoke dependencies in order', function () {
         var retext,
             invokeCount;
 
@@ -275,8 +267,7 @@ describe('Retext#use(plugin)', function () {
         retext
             .use(firstPlugin)
             .use(secondPlugin)
-            .use(thirdPlugin)
-            .parse(null, done);
+            .use(thirdPlugin);
     });
 
     it('should not re-attach an attached plugin', function () {
