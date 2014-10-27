@@ -73,7 +73,7 @@ function Retext(parser) {
  * @return this
  */
 
-Retext.prototype.use = function (plugin) {
+Retext.prototype.use = function (plugin, options) {
     var self,
         onparse;
 
@@ -107,7 +107,7 @@ Retext.prototype.use = function (plugin) {
     if (self.plugins.indexOf(plugin) === -1) {
         self.plugins.push(plugin);
 
-        onparse = plugin(self);
+        onparse = plugin(self, options || {});
 
         if (typeof onparse === 'function') {
             self.ware.use(onparse);
@@ -124,14 +124,20 @@ Retext.prototype.use = function (plugin) {
  * argument).
  *
  * @param {string?} value - The value to transform.
+ * @param {Object} [options={}] - Optional settings.
  * @param {function(Error, Node)} done - Callback to
  *   invoke when the transformations have completed.
  * @return this
  */
 
-Retext.prototype.parse = function (value, done) {
+Retext.prototype.parse = function (value, options, done) {
     var self,
         nlcst;
+
+    if (!done) {
+        done = options;
+        options = null;
+    }
 
     if (typeof done !== 'function') {
         throw new TypeError(
@@ -146,7 +152,7 @@ Retext.prototype.parse = function (value, done) {
 
     nlcst = self.parser.parse(value);
 
-    self.run(nlcstToTextOM(self.TextOM, nlcst), done);
+    self.run(nlcstToTextOM(self.TextOM, nlcst), options, done);
 
     return self;
 };
@@ -158,13 +164,19 @@ Retext.prototype.parse = function (value, done) {
  *
  * @param {Node} node - The node to apply attached
  *   plugins to.
+ * @param {Object} [options={}] - Optional settings.
  * @param {function(Error, Node)} done - Callback to
  *   invoke when the transformations have completed.
  * @return this
  */
 
-Retext.prototype.run = function (node, done) {
+Retext.prototype.run = function (node, options, done) {
     var self;
+
+    if (!done) {
+        done = options;
+        options = null;
+    }
 
     if (typeof done !== 'function') {
         throw new TypeError(
@@ -178,7 +190,7 @@ Retext.prototype.run = function (node, done) {
 
     self = this;
 
-    self.ware.run(node, self, done);
+    self.ware.run(node, self, options, done);
 
     return self;
 };
