@@ -33,6 +33,8 @@ function Retext(parser) {
     self = this;
     TextOM = new TextOMConstructor();
 
+    self.plugins = [];
+
     self.ware = new Ware();
     self.parser = parser;
     self.TextOM = TextOM;
@@ -65,15 +67,15 @@ function Retext(parser) {
  * `retext` instance. `plugin.attach` is invoked when
  * `plugin` is attached to a `retext` instance.
  *
- * @param {function(Node, Retext, Function?)} plugin -
- *   functionality to analyze and manipulate a node.
- * @param {function(Retext)} plugin.attach - functionality
- *   to initialize `plugin`.
+ * @param {function(Retext): function(Node, Function?)} plugin -
+ *   Functionality to initialize the plugin an manipulate the
+ *   object model and parser; returns a function
  * @return this
  */
 
 Retext.prototype.use = function (plugin) {
-    var self;
+    var self,
+        onparse;
 
     if (typeof plugin !== 'function') {
         throw new TypeError(
@@ -82,13 +84,33 @@ Retext.prototype.use = function (plugin) {
         );
     }
 
+    if (typeof plugin.attach === 'function') {
+        throw new TypeError(
+            'Illegal invocation: `' + plugin + '` ' +
+            'is not a valid argument for ' +
+            '`Retext#use(plugin)`.\n' +
+            'This breaking change, the removal of ' +
+            '`attach`, occurred in 0.3.0-rc.2, see ' +
+            'GitHub for more information.'
+        );
+    }
+
     self = this;
 
-    if (self.ware.fns.indexOf(plugin) === -1) {
-        self.ware.use(plugin);
+    /**
+     * Ware does not know which plugins are attached,
+     * only which `onrun` methods are. Thus, we have
+     * a custom list of `plugins`, and here we check
+     * against that.
+     */
 
-        if (plugin.attach) {
-            plugin.attach(self);
+    if (self.plugins.indexOf(plugin) === -1) {
+        self.plugins.push(plugin);
+
+        onparse = plugin(self);
+
+        if (typeof onparse === 'function') {
+            self.ware.use(onparse);
         }
     }
 

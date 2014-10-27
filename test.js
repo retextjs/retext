@@ -137,82 +137,88 @@ describe('Retext#use(plugin)', function () {
         }, /object Object/);
     });
 
+    it('should throw when `plugin.attach` is a `function`', function () {
+        var retext;
+
+        retext = new Retext();
+
+        /* istanbul ignore next */
+        function plugin() {}
+
+        plugin.attach = noop;
+
+        assert.throws(function () {
+            retext.use(plugin);
+        }, /`attach`/);
+    });
+
     it('should attach a plugin', function () {
         var retext;
 
         retext = new Retext();
 
-        assert(retext.ware.fns.length === 0);
+        assert(retext.plugins.length === 0);
 
         retext.use(noop);
 
-        assert(retext.ware.fns.length === 1);
+        assert(retext.plugins.length === 1);
     });
 
-    it('should invoke `attach` on an attached plugin', function () {
+    it('should invoke an attached plugin', function () {
         var retext,
             isInvoked;
 
-        /* istanbul ignore next: noop */
-        function plugin() {}
+        function plugin() {
+            isInvoked = true;
+        }
 
         retext = new Retext();
-
-        plugin.attach = function () {
-            isInvoked = true;
-        };
 
         retext.use(plugin);
 
         assert(isInvoked === true);
     });
 
-    it('should invoke `attach` with `retext`', function (done) {
+    it('should invoke a plugin with `retext`', function (done) {
         var retext,
             root,
-            args;
+            parameters;
 
-        function plugin() {}
+        function plugin() {
+            parameters = arguments;
+        }
 
         retext = new Retext();
         root = new retext.TextOM.RootNode();
 
-        plugin.attach = function () {
-            args = arguments;
-        };
-
         retext.use(plugin);
 
         retext.run(root, function (err) {
-            assert(args[0] === retext);
-            assert(args.length === 1);
+            assert(parameters[0] === retext);
+            assert(parameters.length === 1);
 
             done(err);
         });
     });
 
-    it('should invoke `attach` on plugins in order', function (done) {
+    it('should invoke plugins in order', function (done) {
         var retext,
             isInvoked;
 
-        function firstPlugin() {}
-
-        function secondPlugin() {}
-
-        retext = new Retext();
-        isInvoked = false;
-
-        firstPlugin.attach = function () {
+        function firstPlugin() {
             assert(isInvoked === false);
 
             isInvoked = true;
-        };
+        }
 
-        secondPlugin.attach = function () {
+        function secondPlugin() {
             assert(isInvoked === true);
 
             isInvoked = true;
-        };
+        }
+
+        retext = new Retext();
+        isInvoked = false;
 
         retext
             .use(firstPlugin)
@@ -220,40 +226,13 @@ describe('Retext#use(plugin)', function () {
             .parse(null, done);
     });
 
-    it('should invoke `attach` on dependencies in order', function (done) {
+    it('should invoke dependencies in order', function (done) {
         var retext,
             invokeCount;
 
-        function firstPlugin() {}
+        /* eslint-disable no-use-before-define */
 
-        function secondPlugin() {}
-
-        function thirdPlugin() {}
-
-        retext = new Retext();
-        invokeCount = 0;
-
-        thirdPlugin.attach = function () {
-            assert(invokeCount === 2);
-
-            retext
-                .use(firstPlugin)
-                .use(secondPlugin);
-
-            invokeCount++;
-        };
-
-        secondPlugin.attach = function () {
-            assert(invokeCount === 1);
-
-            invokeCount++;
-
-            retext
-                .use(firstPlugin)
-                .use(thirdPlugin);
-        };
-
-        firstPlugin.attach = function () {
+        function firstPlugin() {
             assert(invokeCount === 0);
 
             invokeCount++;
@@ -261,7 +240,32 @@ describe('Retext#use(plugin)', function () {
             retext
                 .use(secondPlugin)
                 .use(thirdPlugin);
-        };
+        }
+
+        function secondPlugin() {
+            assert(invokeCount === 1);
+
+            invokeCount++;
+
+            retext
+                .use(firstPlugin)
+                .use(thirdPlugin);
+        }
+
+        function thirdPlugin() {
+            assert(invokeCount === 2);
+
+            retext
+                .use(firstPlugin)
+                .use(secondPlugin);
+
+            invokeCount++;
+        }
+
+        /* eslint-enable no-use-before-define */
+
+        retext = new Retext();
+        invokeCount = 0;
 
         retext
             .use(firstPlugin)
@@ -277,11 +281,11 @@ describe('Retext#use(plugin)', function () {
 
         retext.use(noop);
 
-        assert(retext.ware.fns.length === 1);
+        assert(retext.plugins.length === 1);
 
         retext.use(noop);
 
-        assert(retext.ware.fns.length === 1);
+        assert(retext.plugins.length === 1);
     });
 });
 
@@ -353,17 +357,15 @@ describe('Retext#parse(value, done)', function () {
         });
     });
 
-    it('should not invoke `attach` on an attached plugin', function (done) {
+    it('should not invoke attached plugins', function (done) {
         var retext,
             isInvoked;
 
-        function plugin() {}
+        function plugin() {
+            isInvoked = true;
+        }
 
         retext = new Retext();
-
-        plugin.attach = function () {
-            isInvoked = true;
-        };
 
         retext.use(plugin);
 
@@ -378,12 +380,14 @@ describe('Retext#parse(value, done)', function () {
         });
     });
 
-    it('should invoke an attached plugin', function (done) {
+    it('should invoke `onrun`', function (done) {
         var retext,
             isInvoked;
 
         function plugin() {
-            isInvoked = true;
+            return function () {
+                isInvoked = true;
+            };
         }
 
         retext = new Retext();
@@ -399,43 +403,47 @@ describe('Retext#parse(value, done)', function () {
         });
     });
 
-    it('should invoke an attached plugin with a `RootNode` and retext',
-        function (done) {
-            var retext,
-                args;
+    it('should invoke `onrun` with a `RootNode` and retext', function (done) {
+        var retext,
+            parameters;
 
-            function plugin() {
-                args = arguments;
-            }
-
-            retext = new Retext();
-
-            retext.use(plugin);
-
-            retext.parse(null, function (err, tree) {
-                assert(args[0] === tree);
-                assert(args[1] === retext);
-                assert(args.length === 2);
-
-                done(err);
-            });
+        function plugin() {
+            return function () {
+                parameters = arguments;
+            };
         }
-    );
 
-    it('should invoke attached plugins in order', function (done) {
+        retext = new Retext();
+
+        retext.use(plugin);
+
+        retext.parse(null, function (err, tree) {
+            assert(parameters[0] === tree);
+            assert(parameters[1] === retext);
+            assert(parameters.length === 2);
+
+            done(err);
+        });
+    });
+
+    it('should invoke `onrun`s in order', function (done) {
         var retext,
             isInvoked;
 
         function firstPlugin() {
-            assert(isInvoked === false);
+            return function () {
+                assert(isInvoked === false);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
         function secondPlugin() {
-            assert(isInvoked === true);
+            return function () {
+                assert(isInvoked === true);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
         retext = new Retext();
@@ -454,33 +462,39 @@ describe('Retext#parse(value, done)', function () {
         /* eslint-disable no-use-before-define */
 
         function thirdPlugin() {
-            assert(invokeCount === 2);
-
             retext
                 .use(firstPlugin)
                 .use(secondPlugin);
 
-            invokeCount++;
+            return function () {
+                assert(invokeCount === 0);
+
+                invokeCount++;
+            };
         }
 
         function secondPlugin() {
-            assert(invokeCount === 1);
-
-            invokeCount++;
-
             retext
                 .use(firstPlugin)
                 .use(thirdPlugin);
+
+            return function () {
+                assert(invokeCount === 1);
+
+                invokeCount++;
+            };
         }
 
         function firstPlugin() {
-            assert(invokeCount === 0);
-
-            invokeCount++;
-
             retext
                 .use(secondPlugin)
                 .use(thirdPlugin);
+
+            return function () {
+                assert(invokeCount === 2);
+
+                invokeCount++;
+            };
         }
 
         /* eslint-enable no-use-before-define */
@@ -495,17 +509,19 @@ describe('Retext#parse(value, done)', function () {
             .parse(null, done);
     });
 
-    it('should not re-invoke an attached plugin', function (done) {
+    it('should not re-invoke `onrun`', function (done) {
         var retext,
             isInvoked;
 
         function nestedPlugin() {
-            assert(isInvoked !== true);
+            return function () {
+                assert(isInvoked !== true);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
-        function plugin(tree, retext) {
+        function plugin(retext) {
             retext.use(nestedPlugin);
         }
 
@@ -522,14 +538,16 @@ describe('Retext#parse(value, done)', function () {
 
         function nestedPlugin() {}
 
-        function plugin(tree, retext) {
-            var length;
+        function plugin(retext) {
+            return function () {
+                var length;
 
-            length = retext.ware.fns.length;
+                length = retext.plugins.length;
 
-            retext.use(nestedPlugin);
+                retext.use(nestedPlugin);
 
-            assert(length === retext.ware.fns.length);
+                assert(length === retext.plugins.length);
+            };
         }
 
         retext = new Retext();
@@ -603,19 +621,17 @@ describe('Retext#run(tree, done)', function () {
         });
     });
 
-    it('should not invoke `attach` on an attached plugin', function (done) {
+    it('should not invoke an attached plugin', function (done) {
         var retext,
             root,
             isInvoked;
 
-        function plugin() {}
+        function plugin() {
+            isInvoked = true;
+        }
 
         retext = new Retext();
         root = new retext.TextOM.RootNode();
-
-        plugin.attach = function () {
-            isInvoked = true;
-        };
 
         retext.use(plugin);
 
@@ -630,13 +646,15 @@ describe('Retext#run(tree, done)', function () {
         });
     });
 
-    it('should invoke an attached plugin', function (done) {
+    it('should invoke `onrun`', function (done) {
         var retext,
             root,
             isInvoked;
 
         function plugin() {
-            isInvoked = true;
+            return function () {
+                isInvoked = true;
+            };
         }
 
         retext = new Retext();
@@ -656,10 +674,12 @@ describe('Retext#run(tree, done)', function () {
     it('should invoke an attached plugin with a `RootNode`', function (done) {
         var retext,
             root,
-            args;
+            parameters;
 
         function plugin() {
-            args = arguments;
+            return function () {
+                parameters = arguments;
+            };
         }
 
         retext = new Retext();
@@ -668,9 +688,9 @@ describe('Retext#run(tree, done)', function () {
         retext.use(plugin);
 
         retext.run(root, function (err) {
-            assert(args[0] === root);
-            assert(args[1] === retext);
-            assert(args.length === 2);
+            assert(parameters[0] === root);
+            assert(parameters[1] === retext);
+            assert(parameters.length === 2);
 
             done(err);
         });
@@ -682,15 +702,19 @@ describe('Retext#run(tree, done)', function () {
             isInvoked;
 
         function firstPlugin() {
-            assert(isInvoked === false);
+            return function () {
+                assert(isInvoked === false);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
         function secondPlugin() {
-            assert(isInvoked === true);
+            return function () {
+                assert(isInvoked === true);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
         retext = new Retext();
@@ -711,33 +735,39 @@ describe('Retext#run(tree, done)', function () {
         /* eslint-disable no-use-before-define */
 
         function thirdPlugin() {
-            assert(invokeCount === 2);
-
             retext
                 .use(firstPlugin)
                 .use(secondPlugin);
 
-            invokeCount++;
+            return function () {
+                assert(invokeCount === 0);
+
+                invokeCount++;
+            };
         }
 
         function secondPlugin() {
-            assert(invokeCount === 1);
-
-            invokeCount++;
-
             retext
                 .use(firstPlugin)
                 .use(thirdPlugin);
+
+            return function () {
+                assert(invokeCount === 1);
+
+                invokeCount++;
+            };
         }
 
         function firstPlugin() {
-            assert(invokeCount === 0);
-
-            invokeCount++;
-
             retext
                 .use(secondPlugin)
                 .use(thirdPlugin);
+
+            return function () {
+                assert(invokeCount === 2);
+
+                invokeCount++;
+            };
         }
 
         /* eslint-enable no-use-before-define */
@@ -753,18 +783,20 @@ describe('Retext#run(tree, done)', function () {
             .run(root, done);
     });
 
-    it('should not re-invoke an attached plugin', function (done) {
+    it('should not re-invoke `onrun`', function (done) {
         var retext,
             root,
             isInvoked;
 
         function nestedPlugin() {
-            assert(isInvoked !== true);
+            return function () {
+                assert(isInvoked !== true);
 
-            isInvoked = true;
+                isInvoked = true;
+            };
         }
 
-        function plugin(tree, retext) {
+        function plugin(retext) {
             retext.use(nestedPlugin);
         }
 
@@ -783,14 +815,16 @@ describe('Retext#run(tree, done)', function () {
 
         function nestedPlugin() {}
 
-        function plugin(tree, retext) {
-            var length;
+        function plugin(retext) {
+            return function () {
+                var length;
 
-            length = retext.ware.fns.length;
+                length = retext.ware.fns.length;
 
-            retext.use(nestedPlugin);
+                retext.use(nestedPlugin);
 
-            assert(length === retext.ware.fns.length);
+                assert(length === retext.ware.fns.length);
+            };
         }
 
         retext = new Retext();
