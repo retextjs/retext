@@ -1,4 +1,25 @@
 
+n.n.n / 2014-10-27
+==================
+
+ * Remove superfluous test code
+ * Refactor docs in `Readme.md`
+ * Refactor module
+ * Remove `retext` argument for plugin's `onrun`
+ * Merge branch 'feature/standardise-options'
+ * Add functionality for options for `use` and `parse`
+ * Add tests for standardised options for `use` and `parse`
+ * Merge branch 'feature/refactor-plugin-and-attach-system'
+ * Refactor module for new plugin/attach system
+ * Refactor test for new plugin/attach system
+ * Add `.eslintrc`
+ * Disallow space after object keys in `.jscs.json`
+ * Update eslint, mocha
+ * Add retext-typography to desired plugins in Readme.md
+ * Add retext-hyphen to desired plugins in Readme.md
+ * Update retext-live (to -sync) in desired plugins in `Readme.md`
+ * Add retext-live to plugins in Readme.md
+
 0.3.0-rc.1 / 2014-10-21
 ==================
 
