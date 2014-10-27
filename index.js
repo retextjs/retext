@@ -190,7 +190,7 @@ Retext.prototype.run = function (node, options, done) {
 
     self = this;
 
-    self.ware.run(node, self, options, done);
+    self.ware.run(node, options, done);
 
     return self;
 };

@@ -428,9 +428,8 @@ describe('Retext#parse(value, done)', function () {
 
             retext.parse(null, options, function (err, tree) {
                 assert(parameters[0] === tree);
-                assert(parameters[1] === retext);
-                assert(parameters[2] === options);
-                assert(parameters.length === 3);
+                assert(parameters[1] === options);
+                assert(parameters.length === 2);
 
                 done(err);
             });
@@ -705,9 +704,8 @@ describe('Retext#run(tree, done)', function () {
 
             retext.run(root, options, function (err) {
                 assert(parameters[0] === root);
-                assert(parameters[1] === retext);
-                assert(parameters[2] === options);
-                assert(parameters.length === 3);
+                assert(parameters[1] === options);
+                assert(parameters.length === 2);
 
                 done(err);
             });
