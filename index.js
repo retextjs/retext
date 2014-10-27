@@ -6,7 +6,7 @@ var nlcstToTextOM,
     Ware;
 
 /**
- * Module dependencies.
+ * Dependencies.
  */
 
 nlcstToTextOM = require('nlcst-to-textom');
@@ -50,26 +50,22 @@ function Retext(parser) {
 /**
  * Attaches `plugin`: a humble function.
  *
- * When `parse` or `run` is invoked, `plugin` is
- * invoked with `node` and a `retext` instance.
+ * When `use` is called, the `plugin` is invoked with
+ * the retext instance and an `options` object.
+ * Code to initialize `plugin` should go here, such as
+ * functionality to modify the object model (TextOM),
+ * the parser (e.g., `parse-latin`), or the `retext`
+ * instance itsekf.
  *
+ * Optionally `plugin` can return a function which is
+ * called every time the user invokes `parse` or `run`.
+ * When that happends, that function is invoked with
+ * a `Node` and an `options` object.
  * If `plugin` contains asynchronous functionality, it
  * should accept a third argument (`next`) and invoke
  * it on completion.
  *
- * `plugin.attach` is invoked with a `retext` instance
- * when attached, enabling `plugin` to depend on other
- * plugins.
- *
- * Code to initialize `plugin` should go into its `attach`
- * method, such as functionality to modify the object model
- * (TextOM), the parser (e.g., `parse-latin`), or the
- * `retext` instance. `plugin.attach` is invoked when
- * `plugin` is attached to a `retext` instance.
- *
- * @param {function(Retext): function(Node, Function?)} plugin -
- *   Functionality to initialize the plugin an manipulate the
- *   object model and parser; returns a function
+ * @param {function(Retext, Object): function(Node, Object, Function?)} plugin
  * @return this
  */
 
