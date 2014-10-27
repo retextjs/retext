@@ -1,5 +1,5 @@
 
-n.n.n / 2014-10-27
+0.3.0-rc.2 / 2014-10-27
 ==================
 
  * Remove superfluous test code
