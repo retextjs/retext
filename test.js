@@ -94,7 +94,7 @@ describe('new Retext(parser)', function () {
 });
 
 /**
- * Test `Retext#use(plugin)`.
+ * Test `Retext#use(plugin, options?)`.
  */
 
 describe('Retext#use(plugin)', function () {
@@ -179,9 +179,10 @@ describe('Retext#use(plugin)', function () {
         assert(isInvoked === true);
     });
 
-    it('should invoke a plugin with `retext`', function (done) {
+    it('should invoke a plugin with `retext` and `options`', function (done) {
         var retext,
             root,
+            options,
             parameters;
 
         function plugin() {
@@ -189,13 +190,17 @@ describe('Retext#use(plugin)', function () {
         }
 
         retext = new Retext();
+
         root = new retext.TextOM.RootNode();
 
-        retext.use(plugin);
+        options = {};
+
+        retext.use(plugin, options);
 
         retext.run(root, function (err) {
             assert(parameters[0] === retext);
-            assert(parameters.length === 1);
+            assert(parameters[1] === options);
+            assert(parameters.length === 2);
 
             done(err);
         });
@@ -290,7 +295,7 @@ describe('Retext#use(plugin)', function () {
 });
 
 /**
- * Test Retext#parse(value, done).
+ * Test Retext#parse(value, options?, done).
  */
 
 describe('Retext#parse(value, done)', function () {
@@ -403,28 +408,34 @@ describe('Retext#parse(value, done)', function () {
         });
     });
 
-    it('should invoke `onrun` with a `RootNode` and retext', function (done) {
-        var retext,
-            parameters;
+    it('should invoke `onrun` with a `RootNode`, retext, and `options`',
+        function (done) {
+            var retext,
+                options,
+                parameters;
 
-        function plugin() {
-            return function () {
-                parameters = arguments;
-            };
+            function plugin() {
+                return function () {
+                    parameters = arguments;
+                };
+            }
+
+            retext = new Retext();
+
+            options = {};
+
+            retext.use(plugin);
+
+            retext.parse(null, options, function (err, tree) {
+                assert(parameters[0] === tree);
+                assert(parameters[1] === retext);
+                assert(parameters[2] === options);
+                assert(parameters.length === 3);
+
+                done(err);
+            });
         }
-
-        retext = new Retext();
-
-        retext.use(plugin);
-
-        retext.parse(null, function (err, tree) {
-            assert(parameters[0] === tree);
-            assert(parameters[1] === retext);
-            assert(parameters.length === 2);
-
-            done(err);
-        });
-    });
+    );
 
     it('should invoke `onrun`s in order', function (done) {
         var retext,
@@ -560,7 +571,7 @@ describe('Retext#parse(value, done)', function () {
 });
 
 /**
- * Test Retext#run(tree, done).
+ * Test Retext#run(tree, options?, done).
  */
 
 describe('Retext#run(tree, done)', function () {
@@ -671,30 +682,37 @@ describe('Retext#run(tree, done)', function () {
         });
     });
 
-    it('should invoke an attached plugin with a `RootNode`', function (done) {
-        var retext,
-            root,
-            parameters;
+    it('should invoke `onrun` with `root`, retext, and `options`',
+        function (done) {
+            var retext,
+                root,
+                options,
+                parameters;
 
-        function plugin() {
-            return function () {
-                parameters = arguments;
-            };
+            function plugin() {
+                return function () {
+                    parameters = arguments;
+                };
+            }
+
+            retext = new Retext();
+
+            root = new retext.TextOM.RootNode();
+
+            options = {};
+
+            retext.use(plugin);
+
+            retext.run(root, options, function (err) {
+                assert(parameters[0] === root);
+                assert(parameters[1] === retext);
+                assert(parameters[2] === options);
+                assert(parameters.length === 3);
+
+                done(err);
+            });
         }
-
-        retext = new Retext();
-        root = new retext.TextOM.RootNode();
-
-        retext.use(plugin);
-
-        retext.run(root, function (err) {
-            assert(parameters[0] === root);
-            assert(parameters[1] === retext);
-            assert(parameters.length === 2);
-
-            done(err);
-        });
-    });
+    );
 
     it('should invoke attached plugins in order', function (done) {
         var retext,
