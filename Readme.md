@@ -94,13 +94,14 @@ retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
 
 Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of **parse-latin**).
 
-### Retext#use(plugin)
+### Retext#use(function(Retext, Object), options?)
 
-Takes a plugin—a humble function. When `Retext#parse()` is invoked, the plugin will be invoked with the parsed tree, and the **Retext** instance as arguments. Returns self.
+Takes a plugin—a humble function to transform the object model.
+Can return a function (`function(Node, Object, next)`) which is given the document as created by `Retext#parse()` before its given to the user.
 
-### Retext#parse(value, function(Error, Node))
+### Retext#parse(value, options?, function(Error, Node))
 
-Parses the given source and when done passes either an error (the first argument), or the (by `use`d plugins, modified) tree (the second argument) to the callback.
+Parses the given source and, when done, passes either an error (the first argument), or the (by `use`d plugins, modified) document (the second argument) to the callback.
 
 ## Plugins
 
