@@ -41,10 +41,10 @@ var Retext = require('retext'),
 
 /* Create an instance using retext-emoji and -smartypants. */
 var retext = new Retext()
-    .use(emoji({
+    .use(emoji, {
         'convert' : 'encode'
-    }))
-    .use(smartypants());
+    })
+    .use(smartypants);
 
 /* Read a document. */
 retext.parse(
