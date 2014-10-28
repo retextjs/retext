@@ -14,8 +14,8 @@
   ],
   "dependencies": {
     "wooorm/nlcst-to-textom": "^0.0.1",
-    "wooorm/parse-latin": "^0.3.0-rc.1",
-    "wooorm/textom": "^0.3.0-rc.2",
+    "wooorm/parse-latin": "^0.3.0",
+    "wooorm/textom": "^0.3.0",
     "segmentio/ware": "^1.2.0"
   },
   "repository": "wooorm/retext",
