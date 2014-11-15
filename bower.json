@@ -13,7 +13,7 @@
     "textom"
   ],
   "dependencies": {
-    "nlcst-to-textom": "^0.0.1",
+    "nlcst-to-textom": "^0.1.0",
     "parse-latin": "^0.3.0",
     "textom": "^0.3.0",
     "ware": "git@github.com:segmentio/ware.git#1.2.0"
