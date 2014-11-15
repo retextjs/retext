@@ -89,14 +89,20 @@ retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
 
 Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of **parse-latin**).
 
-### Retext#use(function(Retext, Object), options?)
+### Retext#use([plugin](plugin), options?)
 
 Takes a plugin—a humble function to transform the object model.
-Can return a function (`function(Node, Object, next)`) which is given the document as created by `Retext#parse()` before its given to the user.
+Optionally takes an `options` object, but its up to plugin authors to support settings.
 
-### Retext#parse(value, options?, function(Error, Node))
+### Retext#parse(value, options?, function(Error, NLCSTNode))
 
 Parses the given source and, when done, passes either an error (the first argument), or the (by `use`d plugins, modified) document (the second argument) to the callback.
+
+### plugin
+
+A plugin is simply a function, with `function(retext, options?)` as its signature. The first argument is the **Retext** instance a user attached the plugin to. The plugin is invoked when a user `use`s the plugin (not when a document is parsed) and enables the plugin to modify the internal Object Model ([`retext.TextOM`](https://github.com/wooorm/textom)) or the parser ([`retext.parser`](https://github.com/wooorm/parse-latin)).
+
+The plugin can return another function: `function(NLCSTNode, options, next?)`. This function is invokeded when a document is parsed. It’s given the document as created by `Retext#parse()` before its given to the user.
 
 ## Plugins
 
@@ -133,7 +139,7 @@ Parses the given source and, when done, passes either an error (the first argume
 - retext-date — Detect time and date in text;
 - retext-emoticon — Like **retext-emoji**, but for general emoticons;
 - retext-frequent-words — Like **retext-keywords**, but based on frequency and stop-words instead of a POS-tagger;
-- retext-hyphen — Insert soft-hyphens where needed; this might have to be implemented with some sort of node which doesn't stringify;
+- retext-hyphen — Insert soft-hyphens where needed; this might have to be implemented with some sort of node which doesn’t stringify;
 - retext-location — Track the position of nodes (line, column);
 - retext-no-pants — Opposite of **retext-smartypants**;
 - retext-no-break — Inserts [non-breaking spaces](http://en.wikipedia.org/wiki/Non-breaking_space#Non-breaking_behavior) between things like “100 km”;
