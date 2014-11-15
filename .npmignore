@@ -1,4 +1,5 @@
 .*
+*.svg
 *.log
 build/
 bower_components/

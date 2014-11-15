@@ -1,4 +1,4 @@
-# ![Retext logo](http://i58.tinypic.com/5xpx5z.png)
+# ![Retext](https://github.com/wooorm/retext/raw/master/logo.svg)
 
 [![Build Status](https://img.shields.io/travis/wooorm/retext.svg?style=flat)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg?style=flat)](https://coveralls.io/r/wooorm/retext?branch=master) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg?style=flat)](https://codeclimate.com/github/wooorm/retext)
 
