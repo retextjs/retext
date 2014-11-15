@@ -1,4 +1,15 @@
 
+n.n.n / 2014-11-15
+==================
+
+ * Refactor script targets in `package.json`
+ * Add `logo.svg`
+ * Add description of plugins to `Readme.md`
+ * Remove personal intro from `Readme.md`
+ * Add flat badges to `Readme.md`
+ * Update parse-latin
+ * Update matcha, nlcst-to-textom
+
 0.3.0 / 2014-10-28
 ==================
 
