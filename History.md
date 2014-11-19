@@ -1,5 +1,5 @@
 
-n.n.n / 2014-11-19
+0.4.0-rc.2 / 2014-11-19
 ==================
 
  * Update parse-latin, textom to lates development releases
