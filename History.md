@@ -1,4 +1,10 @@
 
+n.n.n / 2014-11-19
+==================
+
+ * Update parse-latin, textom to lates development releases
+ * Fix logo link in `Readme.md`
+
 0.4.0-rc.1 / 2014-11-15
 ==================
 
