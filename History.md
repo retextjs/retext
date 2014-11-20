@@ -1,4 +1,10 @@
 
+n.n.n / 2014-11-20
+==================
+
+ * Update dependencies
+ * Fix incorrect executive rights on `test.js`
+
 0.4.0-rc.2 / 2014-11-19
 ==================
 
