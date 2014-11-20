@@ -106,8 +106,8 @@ The plugin can return another function: `function(NLCSTNode, options, next?)`. T
 
 ## Plugins
 
-- [retext-ast](https://github.com/wooorm/retext-ast) — Encoding and decoding between AST (JSON) and TextOM object model;
 - [retext-content](https://github.com/wooorm/retext-content) — Append, prepend, remove, and replace content into/from Retext nodes;
+- [retext-cst](https://github.com/wooorm/retext-ast) — Encoding and decoding between AST (JSON) and TextOM object model;
 - [retext-directionality](https://github.com/wooorm/retext-directionality) — (**[demo](http://wooorm.github.io/retext-directionality/)**) — Detect the direction text is written in;
 - [retext-dom](https://github.com/wooorm/retext-dom) — (**[demo](http://wooorm.github.io/retext-dom/)**) — Create a (living) DOM tree from a TextOM tree;
 - [retext-double-metaphone](https://github.com/wooorm/retext-double-metaphone) — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**) — Implementation of the Double Metaphone algorithm;
