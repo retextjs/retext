@@ -89,12 +89,12 @@ retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
 
 Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of **parse-latin**).
 
-### Retext#use([plugin](plugin), options?)
+### Retext#use([plugin](#plugin), options?)
 
 Takes a plugin—a humble function to transform the object model.
 Optionally takes an `options` object, but its up to plugin authors to support settings.
 
-### Retext#parse(value, options?, function(Error, NLCSTNode))
+### Retext#parse(value, options?, done(err, tree))
 
 Parses the given source and, when done, passes either an error (the first argument), or the (by `use`d plugins, modified) document (the second argument) to the callback.
 
