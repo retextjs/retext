@@ -14,8 +14,8 @@
   ],
   "dependencies": {
     "nlcst-to-textom": "^0.1.0",
-    "parse-latin": "^0.4.0-rc.1",
-    "textom": "^0.3.0",
+    "parse-latin": "^0.4.0",
+    "textom": "^0.3.1",
     "ware": "git@github.com:segmentio/ware.git#1.2.0"
   },
   "repository": {
