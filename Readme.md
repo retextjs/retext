@@ -137,7 +137,6 @@ The plugin can return another function: `function(NLCSTNode, options, next?)`. T
 > Let me know if you still have any questions, go ahead and send me [feedback](mailto:tituswormer@gmail.com) or [raise an issue](https://github.com/wooorm/retext/issues).
 
 - retext-date — Detect time and date in text;
-- retext-emoticon — Like **retext-emoji**, but for general emoticons;
 - retext-frequent-words — Like **retext-keywords**, but based on frequency and stop-words instead of a POS-tagger;
 - retext-hyphen — Insert soft-hyphens where needed; this might have to be implemented with some sort of node which doesn’t stringify;
 - retext-location — Track the position of nodes (line, column);
