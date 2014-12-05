@@ -84,7 +84,7 @@ var Retext = require('retext'),
 var retext = new Retext(new ParseEnglish());
 
 /* There, ol’ chap. */
-retext.parse(/* ...some English... */, function (err, tree) {/* ... */});
+retext.parse('Some English', function (err, tree) {/* ... */});
 ```
 
 Return a new `Retext` instance with the given [parser](#parsers) (defaults to an instance of **parse-latin**).
