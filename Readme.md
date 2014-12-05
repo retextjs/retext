@@ -160,9 +160,9 @@ The plugin can return another function: `function(NLCSTNode, options, next?)`. T
 On a MacBook Air, it parses about 2 big articles, 22 sections, or 202 paragraphs per second.
 
 ```
-              retext.parse(source);
-  202 op/s » A paragraph (5 sentences, 100 words)
-   22 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
+           retext.parse(value, callback);
+  230 op/s » A paragraph (5 sentences, 100 words)
+   25 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
     2 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
 ```
 
