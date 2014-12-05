@@ -1,4 +1,20 @@
 
+n.n.n / 2014-12-05
+==================
+
+ * Fix benchmark results in `Readme.md`
+ * Fix typos in `Readme.md`
+ * Fix example to be valid JS in `Readme.md`
+ * Add link to personal website to copyright in `Readme.md`
+ * Refactor npm script targets in `package.json`
+ * Update benchmark results in `Readme.md`
+ * Update nlcst-to-textom, textom
+ * Update eslint
+ * Remove retext-emoticon from desired plug-ins in `Readme.md`
+ * Add demo for `retext-syllabe` to `Readme.md`
+ * Rename retext-ast to retext-cst in plugins in `Readme.md`
+ * Fix typo’s in `Readme.md`
+
 0.4.0 / 2014-11-20
 ==================
 
