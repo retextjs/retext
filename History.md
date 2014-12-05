@@ -1,5 +1,5 @@
 
-n.n.n / 2014-12-05
+0.5.0-rc.1 / 2014-12-05
 ==================
 
  * Fix benchmark results in `Readme.md`
