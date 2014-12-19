@@ -1,4 +1,15 @@
 
+n.n.n / 2014-12-19
+==================
+
+  * Update textom
+  * Refactor to adhere to strict jsdoc style
+  * Add jscs-jsdoc configuration to `.jscs.json`
+  * Add jscs-jsdoc as a dev-dependency
+  * Refactor npm scripts for changes in npm
+  * Add demo for `retext-inspect` to `Readme.md`
+  * Add demo for `retext-cst` to `Readme.md`
+
 0.5.0-rc.1 / 2014-12-05
 ==================
 
