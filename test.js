@@ -3,21 +3,24 @@
 var Retext,
     assert;
 
-/**
+/*
  * Module dependencies (retext, assert).
  */
 
 Retext = require('./');
 assert = require('assert');
 
-/**
+/*
  * Cache a (by istanbul ignored) no-operation function.
  */
 
 /* istanbul ignore next */
+/**
+ * No-op.
+ */
 function noop() {}
 
-/**
+/*
  * Test `Retext`.
  */
 
@@ -53,7 +56,7 @@ describe('new Retext()', function () {
         assert('Node' in retext.TextOM);
     });
 
-    /**
+    /*
      * The following sounds a bit weird, but can best be thought of as
      * a test for multiple contexts, similar to how different frames on
      * the client side use different Array constructors.
@@ -78,7 +81,7 @@ describe('new Retext()', function () {
     });
 });
 
-/**
+/*
  * Test `Retext` when given a parser.
  */
 
@@ -93,7 +96,7 @@ describe('new Retext(parser)', function () {
     });
 });
 
-/**
+/*
  * Test `Retext#use(plugin, options?)`.
  */
 
@@ -143,6 +146,9 @@ describe('Retext#use(plugin)', function () {
         retext = new Retext();
 
         /* istanbul ignore next */
+        /**
+         * No-op.
+         */
         function plugin() {}
 
         plugin.attach = noop;
@@ -168,6 +174,9 @@ describe('Retext#use(plugin)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * Spy.
+         */
         function plugin() {
             isInvoked = true;
         }
@@ -184,6 +193,9 @@ describe('Retext#use(plugin)', function () {
             options,
             parameters;
 
+        /**
+         * A plugin to test its arguments.
+         */
         function plugin() {
             parameters = arguments;
         }
@@ -203,12 +215,20 @@ describe('Retext#use(plugin)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * A plugin checking that the second plugin
+         * is not invoked.
+         */
         function firstPlugin() {
             assert(isInvoked === false);
 
             isInvoked = true;
         }
 
+        /**
+         * A plugin checking that the first plugin
+         * is already invoked.
+         */
         function secondPlugin() {
             assert(isInvoked === true);
 
@@ -229,6 +249,10 @@ describe('Retext#use(plugin)', function () {
 
         /* eslint-disable no-use-before-define */
 
+        /**
+         * A plugin checking that it's the first invoked
+         * plugin.
+         */
         function firstPlugin() {
             assert(invokeCount === 0);
 
@@ -239,6 +263,10 @@ describe('Retext#use(plugin)', function () {
                 .use(thirdPlugin);
         }
 
+        /**
+         * A plugin checking that it's the second invoked
+         * plugin.
+         */
         function secondPlugin() {
             assert(invokeCount === 1);
 
@@ -249,6 +277,10 @@ describe('Retext#use(plugin)', function () {
                 .use(thirdPlugin);
         }
 
+        /**
+         * A plugin checking that it's the last invoked
+         * plugin.
+         */
         function thirdPlugin() {
             assert(invokeCount === 2);
 
@@ -285,7 +317,7 @@ describe('Retext#use(plugin)', function () {
     });
 });
 
-/**
+/*
  * Test Retext#parse(value, options?, done).
  */
 
@@ -357,6 +389,10 @@ describe('Retext#parse(value, done)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * A plugin returning a spy, checking it's
+         * invoked.
+         */
         function plugin() {
             isInvoked = true;
         }
@@ -380,6 +416,10 @@ describe('Retext#parse(value, done)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * A plugin returning a spy, checking it's
+         * invoked.
+         */
         function plugin() {
             return function () {
                 isInvoked = true;
@@ -405,6 +445,10 @@ describe('Retext#parse(value, done)', function () {
                 options,
                 parameters;
 
+            /**
+             * A plugin returning a spy, to test its
+             * arguments.
+             */
             function plugin() {
                 return function () {
                     parameters = arguments;
@@ -431,6 +475,10 @@ describe('Retext#parse(value, done)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * A plugin returning a spy checking that it
+         * is the first invoked plugin.
+         */
         function firstPlugin() {
             return function () {
                 assert(isInvoked === false);
@@ -439,6 +487,10 @@ describe('Retext#parse(value, done)', function () {
             };
         }
 
+        /**
+         * A plugin returning a spy checking that the
+         * first plugin is already invoked.
+         */
         function secondPlugin() {
             return function () {
                 assert(isInvoked === true);
@@ -462,6 +514,10 @@ describe('Retext#parse(value, done)', function () {
 
         /* eslint-disable no-use-before-define */
 
+        /**
+         * A plugin checking that it's the first invoked
+         * plugin.
+         */
         function thirdPlugin() {
             retext
                 .use(firstPlugin)
@@ -474,6 +530,10 @@ describe('Retext#parse(value, done)', function () {
             };
         }
 
+        /**
+         * A plugin checking that it's the second invoked
+         * plugin.
+         */
         function secondPlugin() {
             retext
                 .use(firstPlugin)
@@ -486,6 +546,10 @@ describe('Retext#parse(value, done)', function () {
             };
         }
 
+        /**
+         * A plugin checking that it's the last invoked
+         * plugin.
+         */
         function firstPlugin() {
             retext
                 .use(secondPlugin)
@@ -514,6 +578,10 @@ describe('Retext#parse(value, done)', function () {
         var retext,
             isInvoked;
 
+        /**
+         * A plugin returning a spy which detects if
+         * its invoked.
+         */
         function nestedPlugin() {
             return function () {
                 assert(isInvoked !== true);
@@ -522,6 +590,11 @@ describe('Retext#parse(value, done)', function () {
             };
         }
 
+        /**
+         * A plugin using another plugin.
+         *
+         * @param {Retext} retext
+         */
         function plugin(retext) {
             retext.use(nestedPlugin);
         }
@@ -537,8 +610,17 @@ describe('Retext#parse(value, done)', function () {
     it('should not re-attach an attached plugin', function (done) {
         var retext;
 
+        /**
+         * Nested plugin.
+         */
         function nestedPlugin() {}
 
+        /**
+         * A plugin returning a spy,
+         * using a nested plugin.
+         *
+         * @param {Retext} retext
+         */
         function plugin(retext) {
             return function () {
                 var length;
@@ -560,7 +642,7 @@ describe('Retext#parse(value, done)', function () {
     });
 });
 
-/**
+/*
  * Test Retext#run(tree, options?, done).
  */
 
@@ -627,6 +709,9 @@ describe('Retext#run(tree, done)', function () {
             root,
             isInvoked;
 
+        /**
+         * A plugin returning a spy.
+         */
         function plugin() {
             isInvoked = true;
         }
@@ -652,6 +737,9 @@ describe('Retext#run(tree, done)', function () {
             root,
             isInvoked;
 
+        /**
+         * A plugin returning a spy.
+         */
         function plugin() {
             return function () {
                 isInvoked = true;
@@ -679,6 +767,10 @@ describe('Retext#run(tree, done)', function () {
                 options,
                 parameters;
 
+            /**
+             * A plugin returning a spy, to test its
+             * arguments.
+             */
             function plugin() {
                 return function () {
                     parameters = arguments;
@@ -708,6 +800,10 @@ describe('Retext#run(tree, done)', function () {
             root,
             isInvoked;
 
+        /**
+         * A plugin returning a spy, detecting if
+         * none of the spies are already invoked.
+         */
         function firstPlugin() {
             return function () {
                 assert(isInvoked === false);
@@ -716,6 +812,10 @@ describe('Retext#run(tree, done)', function () {
             };
         }
 
+        /**
+         * A plugin returning a spy, detecting if
+         * one of the spies is already invoked.
+         */
         function secondPlugin() {
             return function () {
                 assert(isInvoked === true);
@@ -741,6 +841,9 @@ describe('Retext#run(tree, done)', function () {
 
         /* eslint-disable no-use-before-define */
 
+        /**
+         * A plugin depending on two other plugins.
+         */
         function thirdPlugin() {
             retext
                 .use(firstPlugin)
@@ -753,6 +856,9 @@ describe('Retext#run(tree, done)', function () {
             };
         }
 
+        /**
+         * A plugin depending on two other plugins.
+         */
         function secondPlugin() {
             retext
                 .use(firstPlugin)
@@ -765,6 +871,9 @@ describe('Retext#run(tree, done)', function () {
             };
         }
 
+        /**
+         * A plugin depending on two other plugins.
+         */
         function firstPlugin() {
             retext
                 .use(secondPlugin)
@@ -795,6 +904,9 @@ describe('Retext#run(tree, done)', function () {
             root,
             isInvoked;
 
+        /**
+         * Nested plugin.
+         */
         function nestedPlugin() {
             return function () {
                 assert(isInvoked !== true);
@@ -803,6 +915,11 @@ describe('Retext#run(tree, done)', function () {
             };
         }
 
+        /**
+         * plugin using a nested plugin.
+         *
+         * @param {Retext} retext
+         */
         function plugin(retext) {
             retext.use(nestedPlugin);
         }
@@ -820,8 +937,16 @@ describe('Retext#run(tree, done)', function () {
         var retext,
             root;
 
+        /**
+         * Nested plugin.
+         */
         function nestedPlugin() {}
 
+        /**
+         * Spy.
+         *
+         * @param {Retext} retext
+         */
         function plugin(retext) {
             return function () {
                 var length;

@@ -6,13 +6,13 @@ var Retext,
     section,
     article;
 
-/**
+/*
  * Module dependencies (retext).
  */
 
 Retext = require('./');
 
-/**
+/*
  * Test data.
  *
  * This includes:
@@ -43,7 +43,7 @@ section = paragraph + Array(10).join('\n\n' + paragraph);
 
 article = section + Array(10).join('\n\n' + section);
 
-/**
+/*
  * Benchmark suite.
  */
 
@@ -52,7 +52,7 @@ suite('retext.parse(value, callback);', function () {
 
     retext = new Retext();
 
-    /**
+    /*
      * Benchmark a paragraph.
      */
 
@@ -62,7 +62,7 @@ suite('retext.parse(value, callback);', function () {
         }
     );
 
-    /**
+    /*
      * Benchmark a section.
      */
 
@@ -72,7 +72,7 @@ suite('retext.parse(value, callback);', function () {
         }
     );
 
-    /**
+    /*
      * Benchmark an article.
      */
 

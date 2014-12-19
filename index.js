@@ -5,7 +5,7 @@ var nlcstToTextOM,
     ParseLatin,
     Ware;
 
-/**
+/*
  * Dependencies.
  */
 
@@ -19,9 +19,8 @@ Ware = require('ware');
  *
  * @param {Function?} parser - the parser to use. Defaults
  *   to a new instance of `parse-latin`.
- * @constructor
+ * @constructor Retext
  */
-
 function Retext(parser) {
     var self,
         TextOM;
@@ -39,7 +38,7 @@ function Retext(parser) {
     self.parser = parser;
     self.TextOM = TextOM;
 
-    /**
+    /*
      * Expose `TextOM` on `parser`, and vice versa.
      */
 
@@ -66,9 +65,8 @@ function Retext(parser) {
  * it on completion.
  *
  * @param {function(Retext, Object): function(Node, Object, Function?)} plugin
- * @return this
+ * @return {Retext} - self
  */
-
 Retext.prototype.use = function (plugin, options) {
     var self,
         onparse;
@@ -93,7 +91,7 @@ Retext.prototype.use = function (plugin, options) {
 
     self = this;
 
-    /**
+    /*
      * Ware does not know which plugins are attached,
      * only which `onrun` methods are. Thus, we have
      * a custom list of `plugins`, and here we check
@@ -123,9 +121,8 @@ Retext.prototype.use = function (plugin, options) {
  * @param {Object} [options={}] - Optional settings.
  * @param {function(Error, Node)} done - Callback to
  *   invoke when the transformations have completed.
- * @return this
+ * @return {Retext} - self
  */
-
 Retext.prototype.parse = function (value, options, done) {
     var self,
         nlcst;
@@ -163,9 +160,8 @@ Retext.prototype.parse = function (value, options, done) {
  * @param {Object} [options={}] - Optional settings.
  * @param {function(Error, Node)} done - Callback to
  *   invoke when the transformations have completed.
- * @return this
+ * @return {Retext} - self
  */
-
 Retext.prototype.run = function (node, options, done) {
     var self;
 
@@ -191,7 +187,7 @@ Retext.prototype.run = function (node, options, done) {
     return self;
 };
 
-/**
+/*
  * Expose `Retext`.
  */
 
