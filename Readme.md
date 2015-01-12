@@ -9,18 +9,21 @@
 
 ## Installation
 
-npm:
-```sh
+[npm](https://docs.npmjs.com/cli/install):
+
+```bash
 $ npm install retext
 ```
 
-Component:
-```sh
+[Component.js](https://github.com/componentjs/component):
+
+```bash
 $ component install wooorm/retext
 ```
 
-Bower:
-```sh
+[Bower](http://bower.io/#install-packages):
+
+```bash
 $ bower install retext
 ```
 
@@ -28,7 +31,7 @@ $ bower install retext
 
 The following example uses **[retext-emoji](https://github.com/wooorm/retext-emoji)** (to show emoji) and **[retext-smartypants](https://github.com/wooorm/retext-smartypants)** (for smart punctuation).
 
-```js
+```javascript
 /* Require dependencies. */
 var Retext = require('retext'),
     emoji = require('retext-emoji'),
@@ -77,7 +80,7 @@ retext.parse(
 
 ### Retext(parser?)
 
-```js
+```javascript
 var Retext = require('retext'),
     ParseEnglish = require('parse-english');
 
@@ -159,7 +162,7 @@ The plugin can return another function: `function(NLCSTNode, options, next?)`. T
 
 On a MacBook Air, it parses about 2 big articles, 25 sections, or 230 paragraphs per second.
 
-```
+```text
            retext.parse(value, callback);
   230 op/s » A paragraph (5 sentences, 100 words)
    25 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
