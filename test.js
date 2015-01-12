@@ -63,10 +63,10 @@ describe('new Retext()', function () {
      */
 
     it('should create a new object model', function (done) {
-        new Retext().parse(null, function (err, tree1) {
+        new Retext().parse(null, function (exception, tree1) {
             /* istanbul ignore if: should not error. */
-            if (err) {
-                throw err;
+            if (exception) {
+                throw exception;
             }
 
             new Retext().parse(null, function (err, tree2) {
@@ -578,6 +578,8 @@ describe('Retext#parse(value, done)', function () {
         var retext,
             isInvoked;
 
+        retext = new Retext();
+
         /**
          * A plugin returning a spy which detects if
          * its invoked.
@@ -592,14 +594,10 @@ describe('Retext#parse(value, done)', function () {
 
         /**
          * A plugin using another plugin.
-         *
-         * @param {Retext} retext
          */
-        function plugin(retext) {
+        function plugin() {
             retext.use(nestedPlugin);
         }
-
-        retext = new Retext();
 
         retext
             .use(nestedPlugin)
@@ -610,6 +608,8 @@ describe('Retext#parse(value, done)', function () {
     it('should not re-attach an attached plugin', function (done) {
         var retext;
 
+        retext = new Retext();
+
         /**
          * Nested plugin.
          */
@@ -618,10 +618,8 @@ describe('Retext#parse(value, done)', function () {
         /**
          * A plugin returning a spy,
          * using a nested plugin.
-         *
-         * @param {Retext} retext
          */
-        function plugin(retext) {
+        function plugin() {
             return function () {
                 var length;
 
@@ -632,8 +630,6 @@ describe('Retext#parse(value, done)', function () {
                 assert(length === retext.plugins.length);
             };
         }
-
-        retext = new Retext();
 
         retext
             .use(nestedPlugin)
@@ -904,6 +900,8 @@ describe('Retext#run(tree, done)', function () {
             root,
             isInvoked;
 
+        retext = new Retext();
+
         /**
          * Nested plugin.
          */
@@ -917,14 +915,11 @@ describe('Retext#run(tree, done)', function () {
 
         /**
          * plugin using a nested plugin.
-         *
-         * @param {Retext} retext
          */
-        function plugin(retext) {
+        function plugin() {
             retext.use(nestedPlugin);
         }
 
-        retext = new Retext();
         root = new retext.TextOM.RootNode();
 
         retext
@@ -937,6 +932,8 @@ describe('Retext#run(tree, done)', function () {
         var retext,
             root;
 
+        retext = new Retext();
+
         /**
          * Nested plugin.
          */
@@ -944,10 +941,8 @@ describe('Retext#run(tree, done)', function () {
 
         /**
          * Spy.
-         *
-         * @param {Retext} retext
          */
-        function plugin(retext) {
+        function plugin() {
             return function () {
                 var length;
 
@@ -959,7 +954,6 @@ describe('Retext#run(tree, done)', function () {
             };
         }
 
-        retext = new Retext();
         root = new retext.TextOM.RootNode();
 
         retext
