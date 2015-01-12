@@ -27,6 +27,12 @@ $ component install wooorm/retext
 $ bower install retext
 ```
 
+[Duo](http://duojs.org/#getting-started):
+
+```javascript
+var Retext = require('wooorm/retext');
+```
+
 ## Usage
 
 The following example uses **[retext-emoji](https://github.com/wooorm/retext-emoji)** (to show emoji) and **[retext-smartypants](https://github.com/wooorm/retext-smartypants)** (for smart punctuation).
