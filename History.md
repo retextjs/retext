@@ -1,5 +1,5 @@
 
-n.n.n / 2015-01-12
+0.5.0 / 2015-01-12
 ==================
 
   * Update textom to a stable version
