@@ -34,7 +34,7 @@
   "scripts": {
     "test": "_mocha --check-leaks test.js",
     "test-travis": "istanbul cover _mocha --report lcovonly -- --check-leaks test.js",
-    "coverage": "istanbul cover _mocha -- -- test.js",
+    "coverage": "istanbul cover _mocha -- --check-leaks test.js",
     "lint-api": "eslint index.js",
     "lint-test": "eslint --env mocha test.js",
     "lint-benchmark": "eslint --global suite,set,bench benchmark.js",
