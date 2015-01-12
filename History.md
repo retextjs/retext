@@ -1,4 +1,17 @@
 
+n.n.n / 2015-01-12
+==================
+
+  * Update textom to a stable version
+  * Update copyright notice in `LICENSE` to include 2015
+  * Add link to whole license in `Readme.md`
+  * Add Duo as an instalation method in `Readme.md`
+  * Add links to installation methods in `Readme.md`
+  * Refactor `package.json`
+  * Update jscs-jsdoc
+  * Refactor `test.js` for changes in eslint
+  * Update eslint
+
 0.5.0-rc.2 / 2014-12-19
 ==================
 
