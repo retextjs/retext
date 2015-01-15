@@ -130,7 +130,7 @@ The plugin can return another function: `function(NLCSTNode, options, next?)`. T
 - [retext-live](https://github.com/wooorm/retext-live) — Change a node based on a (new?) value;
 - [retext-metaphone](https://github.com/wooorm/retext-metaphone) — (**[demo](http://wooorm.github.io/retext-metaphone/)**) — Implementation of the Metaphone algorithm;
 - [retext-porter-stemmer](https://github.com/wooorm/retext-porter-stemmer) — (**[demo](http://wooorm.github.io/retext-porter-stemmer/)**) — Implementation of [the Porter stemming algorithm](http://tartarus.org/martin/PorterStemmer/);
-- [retext-pos](https://github.com/wooorm/retext-pos) — Part-of-speech tagger;
+- [retext-pos](https://github.com/wooorm/retext-pos) — (**[demo](http://wooorm.github.io/retext-pos/)**) — Part-of-speech tagger;
 - [retext-range](https://github.com/wooorm/retext-range) — Sequences of content within a TextOM tree between two points;
 - [retext-search](https://github.com/wooorm/retext-search) — (**[demo](http://wooorm.github.io/retext-search/)**) — Search in a TextOM tree;
 - [retext-sentiment](https://github.com/wooorm/retext-sentiment) — (**[demo](http://wooorm.github.io/retext-sentiment/)**) — Detect sentiment in text;
