@@ -1,4 +1,22 @@
 
+n.n.n / 2015-01-23
+==================
+
+  * Add UMD as an installation method in `Readme.md`
+  * Add `index.js` to bower ignore
+  * Remove bower dependencies due to UMD build
+  * Add `retext.js` to bowers `main` instead of `index.js`
+  * Add `retext.js`, `retext.min.js`
+  * Add `retext.js`, `retext.min.js` to `.npmignore`
+  * Add `postbuild` npm script target to mangle build
+  * Add `build`, `prepublish` npm script target
+  * Add esmangle as a dev-dependency
+  * Add browserify as a dev-dependency
+  * Refactor npm script targets
+  * Update eslint
+  * Add demo for `retext-keywords` to `Readme.md`
+  * Add demo for `retext-pos` to `Readme.md`
+
 0.5.0 / 2015-01-12
 ==================
 
