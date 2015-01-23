@@ -45,6 +45,8 @@
     "lint-style": "jscs --reporter inline index.js test.js benchmark.js",
     "lint": "npm run lint-api && npm run lint-test && npm run lint-benchmark && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
+    "build": "browserify index.js -s Retext > retext.js",
+    "prepublish": "npm run build",
     "benchmark": "matcha benchmark.js"
   }
 }
