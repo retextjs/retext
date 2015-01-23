@@ -29,8 +29,9 @@
     "coverage/",
     "node_modules/",
     "benchmark.js",
+    "index.js",
+    "test.js",
     "component.json",
-    "package.json",
-    "test.js"
+    "package.json"
   ]
 }
