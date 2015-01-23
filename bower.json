@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "main": "index.js",
+  "main": "retext.js",
   "description": "Extensible system for analysing and manipulating natural language",
   "license": "MIT",
   "keywords": [
