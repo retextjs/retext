@@ -46,6 +46,7 @@
     "lint": "npm run lint-api && npm run lint-test && npm run lint-benchmark && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
     "build": "browserify index.js -s Retext > retext.js",
+    "postbuild": "esmangle retext.js > retext.min.js",
     "prepublish": "npm run build",
     "benchmark": "matcha benchmark.js"
   }
