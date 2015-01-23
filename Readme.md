@@ -33,6 +33,15 @@ $ bower install retext
 var Retext = require('wooorm/retext');
 ```
 
+UMD (globals/AMD/CommonJS) ([uncompressed](retext.js) and [minified](retext.min.js):
+
+```html
+<script src="path/to/retext.js"></script>
+<script>
+  var retext = new Retext();
+</script>
+```
+
 ## Usage
 
 The following example uses **[retext-emoji](https://github.com/wooorm/retext-emoji)** (to show emoji) and **[retext-smartypants](https://github.com/wooorm/retext-smartypants)** (for smart punctuation).
