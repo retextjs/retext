@@ -12,12 +12,6 @@
     "nlcst",
     "textom"
   ],
-  "dependencies": {
-    "nlcst-to-textom": "^0.2.0",
-    "parse-latin": "^0.4.0",
-    "textom": "^0.4.0",
-    "ware": "git@github.com:segmentio/ware.git#1.2.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/wooorm/retext.git"
