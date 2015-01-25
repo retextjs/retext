@@ -6,10 +6,11 @@ bower_components/
 components/
 coverage/
 node_modules/
-test.js
 benchmark.js
+build.js
+retext.js
+retext.min.js
+test.js
 bower.json
 component.json
 History.md
-retext.js
-retext.min.js

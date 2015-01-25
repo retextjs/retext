@@ -29,6 +29,7 @@
     "coverage/",
     "node_modules/",
     "benchmark.js",
+    "build.js",
     "index.js",
     "test.js",
     "component.json",
