@@ -25,7 +25,7 @@
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "devDependencies": {
     "browserify": "^8.0.0",
-    "eslint": "^0.12.0",
+    "eslint": "^0.13.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.3.0",
     "jscs": "^1.0.0",
