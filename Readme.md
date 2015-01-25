@@ -33,7 +33,7 @@ $ bower install retext
 var Retext = require('wooorm/retext');
 ```
 
-UMD (globals/AMD/CommonJS) ([uncompressed](retext.js) and [minified](retext.min.js):
+UMD (globals/AMD/CommonJS) ([uncompressed](retext.js) and [compressed](retext.min.js)):
 
 ```html
 <script src="path/to/retext.js"></script>
