@@ -23,6 +23,9 @@
     "url": "https://github.com/wooorm/retext.git"
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
+  "files": [
+      "index.js"
+  ],
   "devDependencies": {
     "browserify": "^11.0.0",
     "eslint": "^0.24.0",
