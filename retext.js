@@ -1,19 +1,14 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Retext = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var nlcstToTextOM,
-    TextOMConstructor,
-    ParseLatin,
-    Ware;
-
 /*
  * Dependencies.
  */
 
-nlcstToTextOM = require('nlcst-to-textom');
-TextOMConstructor = require('textom');
-ParseLatin = require('parse-latin');
-Ware = require('ware');
+var nlcstToTextOM = require('nlcst-to-textom');
+var TextOMConstructor = require('textom');
+var ParseLatin = require('parse-latin');
+var Ware = require('ware');
 
 /**
  * Construct an instance of `Retext`.
@@ -23,15 +18,12 @@ Ware = require('ware');
  * @constructor Retext
  */
 function Retext(parser) {
-    var self,
-        TextOM;
+    var self = this;
+    var TextOM = new TextOMConstructor();
 
     if (!parser) {
         parser = new ParseLatin();
     }
-
-    self = this;
-    TextOM = new TextOMConstructor();
 
     self.plugins = [];
 
@@ -69,8 +61,8 @@ function Retext(parser) {
  * @return {Retext} - self
  */
 Retext.prototype.use = function (plugin, options) {
-    var self,
-        onparse;
+    var self = this;
+    var onparse;
 
     if (typeof plugin !== 'function') {
         throw new TypeError(
@@ -89,8 +81,6 @@ Retext.prototype.use = function (plugin, options) {
             'GitHub for more information.'
         );
     }
-
-    self = this;
 
     /*
      * Ware does not know which plugins are attached,
@@ -125,8 +115,8 @@ Retext.prototype.use = function (plugin, options) {
  * @return {Retext} - self
  */
 Retext.prototype.parse = function (value, options, done) {
-    var self,
-        nlcst;
+    var self = this;
+    var nlcst;
 
     if (!done) {
         done = options;
@@ -141,8 +131,6 @@ Retext.prototype.parse = function (value, options, done) {
             'more information.'
         );
     }
-
-    self = this;
 
     nlcst = self.parser.parse(value);
 
@@ -164,7 +152,7 @@ Retext.prototype.parse = function (value, options, done) {
  * @return {Retext} - self
  */
 Retext.prototype.run = function (node, options, done) {
-    var self;
+    var self = this;
 
     if (!done) {
         done = options;
@@ -180,8 +168,6 @@ Retext.prototype.run = function (node, options, done) {
             'more information.'
         );
     }
-
-    self = this;
 
     self.ware.run(node, options, done);
 

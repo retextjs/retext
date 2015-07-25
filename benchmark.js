@@ -1,16 +1,12 @@
 'use strict';
 
-var Retext,
-    sentence,
-    paragraph,
-    section,
-    article;
+/* global bench suite */
 
 /*
  * Module dependencies (retext).
  */
 
-Retext = require('./');
+var Retext = require('./');
 
 /*
  * Test data.
@@ -26,10 +22,10 @@ Retext = require('./');
  *   http://www.gutenberg.org/files/10745/10745-h/10745-h.htm
  */
 
-sentence = 'Where she had stood was clear, and she was gone since Sir ' +
+var sentence = 'Where she had stood was clear, and she was gone since Sir ' +
     'Kay does not choose to assume my quarrel.';
 
-paragraph = 'Thou art a churlish knight to so affront a lady ' +
+var paragraph = 'Thou art a churlish knight to so affront a lady ' +
     'he could not sit upon his horse any longer. ' +
     'For methinks something hath befallen my lord and that he ' +
     'then, after a while, he cried out in great voice. ' +
@@ -39,18 +35,16 @@ paragraph = 'Thou art a churlish knight to so affront a lady ' +
     'so the Lady of the Lake vanished away, everything behind. ' +
     sentence;
 
-section = paragraph + Array(10).join('\n\n' + paragraph);
+var section = paragraph + Array(10).join('\n\n' + paragraph);
 
-article = section + Array(10).join('\n\n' + section);
+var article = section + Array(10).join('\n\n' + section);
 
 /*
  * Benchmark suite.
  */
 
 suite('retext.parse(value, callback);', function () {
-    var retext;
-
-    retext = new Retext();
+    var retext = new Retext();
 
     /*
      * Benchmark a paragraph.

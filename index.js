@@ -1,18 +1,13 @@
 'use strict';
 
-var nlcstToTextOM,
-    TextOMConstructor,
-    ParseLatin,
-    Ware;
-
 /*
  * Dependencies.
  */
 
-nlcstToTextOM = require('nlcst-to-textom');
-TextOMConstructor = require('textom');
-ParseLatin = require('parse-latin');
-Ware = require('ware');
+var nlcstToTextOM = require('nlcst-to-textom');
+var TextOMConstructor = require('textom');
+var ParseLatin = require('parse-latin');
+var Ware = require('ware');
 
 /**
  * Construct an instance of `Retext`.
@@ -22,15 +17,12 @@ Ware = require('ware');
  * @constructor Retext
  */
 function Retext(parser) {
-    var self,
-        TextOM;
+    var self = this;
+    var TextOM = new TextOMConstructor();
 
     if (!parser) {
         parser = new ParseLatin();
     }
-
-    self = this;
-    TextOM = new TextOMConstructor();
 
     self.plugins = [];
 
@@ -68,8 +60,8 @@ function Retext(parser) {
  * @return {Retext} - self
  */
 Retext.prototype.use = function (plugin, options) {
-    var self,
-        onparse;
+    var self = this;
+    var onparse;
 
     if (typeof plugin !== 'function') {
         throw new TypeError(
@@ -88,8 +80,6 @@ Retext.prototype.use = function (plugin, options) {
             'GitHub for more information.'
         );
     }
-
-    self = this;
 
     /*
      * Ware does not know which plugins are attached,
@@ -124,8 +114,8 @@ Retext.prototype.use = function (plugin, options) {
  * @return {Retext} - self
  */
 Retext.prototype.parse = function (value, options, done) {
-    var self,
-        nlcst;
+    var self = this;
+    var nlcst;
 
     if (!done) {
         done = options;
@@ -140,8 +130,6 @@ Retext.prototype.parse = function (value, options, done) {
             'more information.'
         );
     }
-
-    self = this;
 
     nlcst = self.parser.parse(value);
 
@@ -163,7 +151,7 @@ Retext.prototype.parse = function (value, options, done) {
  * @return {Retext} - self
  */
 Retext.prototype.run = function (node, options, done) {
-    var self;
+    var self = this;
 
     if (!done) {
         done = options;
@@ -179,8 +167,6 @@ Retext.prototype.run = function (node, options, done) {
             'more information.'
         );
     }
-
-    self = this;
 
     self.ware.run(node, options, done);
 
