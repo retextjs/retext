@@ -48,9 +48,9 @@ The following example uses **[retext-emoji](https://github.com/wooorm/retext-emo
 
 ```javascript
 /* Require dependencies. */
-var Retext = require('retext'),
-    emoji = require('retext-emoji'),
-    smartypants = require('retext-smartypants');
+var Retext = require('retext');
+var emoji = require('retext-emoji');
+var smartypants = require('retext-smartypants');
 
 /* Create an instance using retext-emoji and -smartypants. */
 var retext = new Retext()
@@ -74,7 +74,7 @@ retext.parse(
         if (err) {
             throw err;
         }
-        
+
         /* Log the text content of the tree (the transformed input). */
         console.log(tree.toString());
         /**
@@ -96,9 +96,8 @@ retext.parse(
 ### Retext(parser?)
 
 ```javascript
-var Retext = require('retext'),
-    ParseEnglish = require('parse-english');
-
+var Retext = require('retext');
+var ParseEnglish = require('parse-english');
 var retext = new Retext(new ParseEnglish());
 
 /* There, ol’ chap. */
