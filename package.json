@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "nlcst-to-textom": "^0.2.0",
-    "parse-latin": "^0.4.0",
+    "parse-latin": "^0.5.1",
     "textom": "^0.4.0",
     "ware": "^1.2.0"
   },
@@ -24,12 +24,12 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "devDependencies": {
-    "browserify": "^8.0.0",
-    "eslint": "^0.13.0",
+    "browserify": "^11.0.0",
+    "eslint": "^0.24.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.3.0",
     "jscs": "^1.0.0",
-    "jscs-jsdoc": "^0.4.0",
+    "jscs-jsdoc": "^1.0.0",
     "matcha": "^0.6.0",
     "mocha": "^2.0.0"
   },
