@@ -1,3 +1,11 @@
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer. All rights reserved.
+ * @module retext
+ * @fileoverview Extensible system for analysing and manipulating
+ *   natural language.
+ */
+
 'use strict';
 
 /*
@@ -70,17 +78,6 @@ Retext.prototype.use = function (plugin, options) {
         );
     }
 
-    if (typeof plugin.attach === 'function') {
-        throw new TypeError(
-            'Illegal invocation: `' + plugin + '` ' +
-            'is not a valid argument for ' +
-            '`Retext#use(plugin)`.\n' +
-            'This breaking change, the removal of ' +
-            '`attach`, occurred in 0.3.0-rc.2, see ' +
-            'GitHub for more information.'
-        );
-    }
-
     /*
      * Ware does not know which plugins are attached,
      * only which `onrun` methods are. Thus, we have
@@ -122,15 +119,6 @@ Retext.prototype.parse = function (value, options, done) {
         options = null;
     }
 
-    if (typeof done !== 'function') {
-        throw new TypeError(
-            'Illegal invocation: `' + done + '` ' +
-            'is not a valid argument for `Retext#parse(value, done)`.\n' +
-            'This breaking change occurred in 0.2.0-rc.1, see GitHub for ' +
-            'more information.'
-        );
-    }
-
     nlcst = self.parser.parse(value);
 
     self.run(nlcstToTextOM(self.TextOM, nlcst), options, done);
@@ -156,16 +144,6 @@ Retext.prototype.run = function (node, options, done) {
     if (!done) {
         done = options;
         options = null;
-    }
-
-    if (typeof done !== 'function') {
-        throw new TypeError(
-            'Illegal invocation: `' + done + '` ' +
-            'is not a valid argument for ' +
-            '`Retext#run(node, done)`.\n' +
-            'This breaking change occurred in 0.2.0-rc.1, see GitHub for ' +
-            'more information.'
-        );
     }
 
     self.ware.run(node, options, done);
