@@ -24,7 +24,7 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "files": [
-      "index.js"
+    "index.js"
   ],
   "devDependencies": {
     "browserify": "^11.0.0",
@@ -34,6 +34,12 @@
     "jscs": "^1.0.0",
     "jscs-jsdoc": "^1.0.0",
     "matcha": "^0.6.0",
+    "mdast": "^0.27.1",
+    "mdast-comment-config": "^0.1.2",
+    "mdast-github": "^0.3.2",
+    "mdast-lint": "^0.4.2",
+    "mdast-slug": "^0.1.1",
+    "mdast-validate-links": "^0.2.1",
     "mocha": "^2.0.0"
   },
   "scripts": {
@@ -46,8 +52,10 @@
     "lint-style": "jscs --reporter inline .",
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
-    "build": "browserify index.js -s Retext > retext.js",
-    "postbuild": "esmangle retext.js > retext.min.js",
+    "build-bundle": "browserify index.js -s Retext > retext.js",
+    "postbuild-bundle": "esmangle retext.js > retext.min.js",
+    "build-md": "mdast . --quiet",
+    "build": "npm run build-md && npm run build-bundle",
     "prepublish": "npm run build",
     "benchmark": "matcha benchmark.js"
   }
