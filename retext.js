@@ -21,6 +21,17 @@ var Ware = require('ware');
 /**
  * Construct an instance of `Retext`.
  *
+ * @example
+ *   var Retext = require('retext');
+ *
+ *   var retext = new Retext();
+ *
+ * @example
+ *   var Retext = require('retext');
+ *   var English = require('parse-english');
+ *
+ *   var retext = new Retext(new English());
+ *
  * @param {Function?} parser - the parser to use. Defaults
  *   to a new instance of `parse-latin`.
  * @constructor Retext
@@ -55,7 +66,7 @@ function Retext(parser) {
  * Code to initialize `plugin` should go here, such as
  * functionality to modify the object model (TextOM),
  * the parser (e.g., `parse-latin`), or the `retext`
- * instance itsekf.
+ * instance itself.
  *
  * Optionally `plugin` can return a function which is
  * called every time the user invokes `parse` or `run`.
@@ -64,6 +75,17 @@ function Retext(parser) {
  * If `plugin` contains asynchronous functionality, it
  * should accept a third argument (`next`) and invoke
  * it on completion.
+ *
+ * @example
+ *   var Retext = require('retext');
+ *   var smartypants = require('retext-smartypants');
+ *
+ *   var retext = new Retext()
+ *     .use(smartypants)
+ *     .parse('Foo "bar" baz.', function (err, tree) {
+ *       console.log(tree.toString());
+ *       // 'Foo “bar” baz.'
+ *     });
  *
  * @param {function(Retext, Object): function(Node, Object, Function?)} plugin
  * @return {Retext} - self
@@ -105,6 +127,16 @@ Retext.prototype.use = function (plugin, options) {
  * error (first argument) or the transformed node (second
  * argument).
  *
+ * @example
+ *   var Retext = require('retext');
+ *   var smartypants = require('retext-smartypants');
+ *
+ *   var retext = new Retext()
+ *     .parse('Foo "bar" baz.', function (err, tree) {
+ *       console.log(tree.type);
+ *       // 'RootNode'
+ *     });
+ *
  * @param {string?} value - The value to transform.
  * @param {Object} [options={}] - Optional settings.
  * @param {function(Error, Node)} done - Callback to
@@ -132,6 +164,7 @@ Retext.prototype.parse = function (value, options, done) {
  * with either an error (first argument) or the transformed
  * `node` (second argument).
  *
+ * @private
  * @param {Node} node - The node to apply attached
  *   plugins to.
  * @param {Object} [options={}] - Optional settings.
