@@ -133,22 +133,6 @@ describe('Retext#use(plugin)', function () {
         }, /object Object/);
     });
 
-    it('should throw when `plugin.attach` is a `function`', function () {
-        var retext = new Retext();
-
-        /* istanbul ignore next */
-        /**
-         * No-op.
-         */
-        function plugin() {}
-
-        plugin.attach = noop;
-
-        assert.throws(function () {
-            retext.use(plugin);
-        }, /`attach`/);
-    });
-
     it('should attach a plugin', function () {
         var retext = new Retext();
 
@@ -310,30 +294,6 @@ describe('Retext#parse(value, done)', function () {
         var retext = new Retext();
 
         equal(retext.parse(null, done), retext);
-    });
-
-    it('should throw when `done` is not a `function`', function () {
-        var retext = new Retext();
-
-        assert.throws(function () {
-            retext.parse(null);
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.parse(null, null);
-        }, /null/);
-
-        assert.throws(function () {
-            retext.parse(null, undefined);
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.parse(null, true);
-        }, /true/);
-
-        assert.throws(function () {
-            retext.parse(null, {});
-        }, /object Object/);
     });
 
     it('should invoke `done` with a `RootNode`', function (done) {
@@ -612,31 +572,6 @@ describe('Retext#run(tree, done)', function () {
         var root = new retext.TextOM.RootNode();
 
         equal(retext.run(root, done), retext);
-    });
-
-    it('should throw when `done` is not a `function`', function () {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-
-        assert.throws(function () {
-            retext.run(root);
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.run(root, null);
-        }, /null/);
-
-        assert.throws(function () {
-            retext.run(root, undefined);
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.run(root, true);
-        }, /true/);
-
-        assert.throws(function () {
-            retext.run(root, {});
-        }, /object Object/);
     });
 
     it('should invoke `done` with `tree`', function (done) {
