@@ -34,9 +34,9 @@
     "mocha": "^2.0.0"
   },
   "scripts": {
-    "test-api": "_mocha --check-leaks test.js",
+    "test-api": "mocha --check-leaks test.js",
     "test-coveralls": "istanbul cover _mocha --report lcovonly -- --check-leaks test.js",
-    "test-coverage": "istanbul cover _mocha -- --check-leaks test.js",
+    "test-coverage": "istanbul cover _mocha -- -- test.js",
     "test-travis": "npm run test-coveralls",
     "test": "npm run test-api",
     "lint-api": "eslint .",

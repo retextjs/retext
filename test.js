@@ -9,6 +9,13 @@
 var Retext = require('./');
 var assert = require('assert');
 
+/*
+ * Constants.
+ */
+
+var equal = assert.strictEqual;
+var nequal = assert.notStrictEqual;
+
 /**
  * No-op.
  */
@@ -22,7 +29,7 @@ noop();
 
 describe('new Retext()', function () {
     it('should be a `function`', function () {
-        assert(typeof Retext === 'function');
+        equal(typeof Retext, 'function');
     });
 
     it('should return a newly initialized `Retext` object', function () {
@@ -82,7 +89,7 @@ describe('new Retext(parser)', function () {
         var retext = new Retext(noop);
 
         assert('parser' in retext);
-        assert(retext.parser === noop);
+        equal(retext.parser, noop);
     });
 });
 
@@ -92,14 +99,14 @@ describe('new Retext(parser)', function () {
 
 describe('Retext#use(plugin)', function () {
     it('should be a `function`', function () {
-        assert(typeof Retext.prototype.use === 'function');
-        assert(typeof (new Retext()).use === 'function');
+        equal(typeof Retext.prototype.use, 'function');
+        equal(typeof (new Retext()).use, 'function');
     });
 
     it('should return self', function () {
         var retext = new Retext();
 
-        assert(retext.use(noop) === retext);
+        equal(retext.use(noop), retext);
     });
 
     it('should throw when not given a function', function () {
@@ -145,11 +152,11 @@ describe('Retext#use(plugin)', function () {
     it('should attach a plugin', function () {
         var retext = new Retext();
 
-        assert(retext.plugins.length === 0);
+        equal(retext.plugins.length, 0);
 
         retext.use(noop);
 
-        assert(retext.plugins.length === 1);
+        equal(retext.plugins.length, 1);
     });
 
     it('should invoke an attached plugin', function () {
@@ -165,7 +172,7 @@ describe('Retext#use(plugin)', function () {
 
         retext.use(plugin);
 
-        assert(isInvoked === true);
+        equal(isInvoked, true);
     });
 
     it('should invoke a plugin with `retext` and `options`', function () {
@@ -182,9 +189,9 @@ describe('Retext#use(plugin)', function () {
 
         retext.use(plugin, options);
 
-        assert(parameters[0] === retext);
-        assert(parameters[1] === options);
-        assert(parameters.length === 2);
+        equal(parameters[0], retext);
+        equal(parameters[1], options);
+        equal(parameters.length, 2);
     });
 
     it('should invoke plugins in order', function () {
@@ -196,7 +203,7 @@ describe('Retext#use(plugin)', function () {
          * is not invoked.
          */
         function firstPlugin() {
-            assert(isInvoked === false);
+            equal(isInvoked, false);
 
             isInvoked = true;
         }
@@ -206,7 +213,7 @@ describe('Retext#use(plugin)', function () {
          * is already invoked.
          */
         function secondPlugin() {
-            assert(isInvoked === true);
+            equal(isInvoked, true);
 
             isInvoked = true;
         }
@@ -214,6 +221,8 @@ describe('Retext#use(plugin)', function () {
         retext
             .use(firstPlugin)
             .use(secondPlugin);
+
+        equal(isInvoked, true);
     });
 
     it('should invoke dependencies in order', function () {
@@ -227,7 +236,7 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function firstPlugin() {
-            assert(invokeCount === 0);
+            equal(invokeCount, 0);
 
             invokeCount++;
 
@@ -241,7 +250,7 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function secondPlugin() {
-            assert(invokeCount === 1);
+            equal(invokeCount, 1);
 
             invokeCount++;
 
@@ -255,7 +264,7 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function thirdPlugin() {
-            assert(invokeCount === 2);
+            equal(invokeCount, 2);
 
             retext
                 .use(firstPlugin)
@@ -270,6 +279,8 @@ describe('Retext#use(plugin)', function () {
             .use(firstPlugin)
             .use(secondPlugin)
             .use(thirdPlugin);
+
+        equal(invokeCount, 3);
     });
 
     it('should not re-attach an attached plugin', function () {
@@ -277,11 +288,11 @@ describe('Retext#use(plugin)', function () {
 
         retext.use(noop);
 
-        assert(retext.plugins.length === 1);
+        equal(retext.plugins.length, 1);
 
         retext.use(noop);
 
-        assert(retext.plugins.length === 1);
+        equal(retext.plugins.length, 1);
     });
 });
 
@@ -291,14 +302,14 @@ describe('Retext#use(plugin)', function () {
 
 describe('Retext#parse(value, done)', function () {
     it('should be a `function`', function () {
-        assert(typeof Retext.prototype.parse === 'function');
-        assert(typeof (new Retext()).parse === 'function');
+        equal(typeof Retext.prototype.parse, 'function');
+        equal(typeof (new Retext()).parse, 'function');
     });
 
     it('should return self', function (done) {
         var retext = new Retext();
 
-        assert(retext.parse(null, done) === retext);
+        equal(retext.parse(null, done), retext);
     });
 
     it('should throw when `done` is not a `function`', function () {
@@ -339,9 +350,9 @@ describe('Retext#parse(value, done)', function () {
         new Retext().parse('Something something', function (err, root) {
             assert('head' in root);
             assert('tail' in root);
-            assert(root.head.parent === root);
+            equal(root.head.parent, root);
             assert('TextOM' in root);
-            assert(root.toString() === 'Something something');
+            equal(root.toString(), 'Something something');
 
             done(err);
         });
@@ -361,12 +372,12 @@ describe('Retext#parse(value, done)', function () {
 
         retext.use(plugin);
 
-        assert(isInvoked === true);
+        equal(isInvoked, true);
 
         isInvoked = false;
 
         retext.parse(null, function (err) {
-            assert(isInvoked !== true);
+            nequal(isInvoked, true);
 
             done(err);
         });
@@ -388,10 +399,10 @@ describe('Retext#parse(value, done)', function () {
 
         retext.use(plugin);
 
-        assert(isInvoked !== true);
+        nequal(isInvoked, true);
 
         retext.parse(null, function (err) {
-            assert(isInvoked === true);
+            equal(isInvoked, true);
 
             done(err);
         });
@@ -416,9 +427,9 @@ describe('Retext#parse(value, done)', function () {
             retext.use(plugin);
 
             retext.parse(null, options, function (err, tree) {
-                assert(parameters[0] === tree);
-                assert(parameters[1] === options);
-                assert(parameters.length === 2);
+                equal(parameters[0], tree);
+                equal(parameters[1], options);
+                equal(parameters.length, 2);
 
                 done(err);
             });
@@ -427,7 +438,7 @@ describe('Retext#parse(value, done)', function () {
 
     it('should invoke `onrun`s in order', function (done) {
         var retext = new Retext();
-        var isInvoked;
+        var isInvoked = false;
 
         /**
          * A plugin returning a spy checking that it
@@ -435,7 +446,7 @@ describe('Retext#parse(value, done)', function () {
          */
         function firstPlugin() {
             return function () {
-                assert(isInvoked === false);
+                equal(isInvoked, false);
 
                 isInvoked = true;
             };
@@ -447,18 +458,18 @@ describe('Retext#parse(value, done)', function () {
          */
         function secondPlugin() {
             return function () {
-                assert(isInvoked === true);
+                equal(isInvoked, true);
 
-                isInvoked = true;
+                isInvoked = 'third';
             };
         }
-
-        isInvoked = false;
 
         retext
             .use(firstPlugin)
             .use(secondPlugin)
             .parse(null, done);
+
+        equal(isInvoked, 'third');
     });
 
     it('should invoke dependencies in order', function (done) {
@@ -477,7 +488,7 @@ describe('Retext#parse(value, done)', function () {
                 .use(secondPlugin);
 
             return function () {
-                assert(invokeCount === 0);
+                equal(invokeCount, 0);
 
                 invokeCount++;
             };
@@ -493,7 +504,7 @@ describe('Retext#parse(value, done)', function () {
                 .use(thirdPlugin);
 
             return function () {
-                assert(invokeCount === 1);
+                equal(invokeCount, 1);
 
                 invokeCount++;
             };
@@ -509,7 +520,7 @@ describe('Retext#parse(value, done)', function () {
                 .use(thirdPlugin);
 
             return function () {
-                assert(invokeCount === 2);
+                equal(invokeCount, 2);
 
                 invokeCount++;
             };
@@ -522,6 +533,8 @@ describe('Retext#parse(value, done)', function () {
             .use(secondPlugin)
             .use(thirdPlugin)
             .parse(null, done);
+
+        equal(invokeCount, 3);
     });
 
     it('should not re-invoke `onrun`', function (done) {
@@ -534,7 +547,7 @@ describe('Retext#parse(value, done)', function () {
          */
         function nestedPlugin() {
             return function () {
-                assert(isInvoked !== true);
+                nequal(isInvoked, true);
 
                 isInvoked = true;
             };
@@ -551,6 +564,8 @@ describe('Retext#parse(value, done)', function () {
             .use(nestedPlugin)
             .use(plugin)
             .parse(null, done);
+
+        equal(isInvoked, true);
     });
 
     it('should not re-attach an attached plugin', function (done) {
@@ -571,7 +586,7 @@ describe('Retext#parse(value, done)', function () {
 
                 retext.use(nestedPlugin);
 
-                assert(length === retext.plugins.length);
+                equal(length, retext.plugins.length);
             };
         }
 
@@ -588,15 +603,15 @@ describe('Retext#parse(value, done)', function () {
 
 describe('Retext#run(tree, done)', function () {
     it('should be a `function`', function () {
-        assert(typeof Retext.prototype.run === 'function');
-        assert(typeof (new Retext()).run === 'function');
+        equal(typeof Retext.prototype.run, 'function');
+        equal(typeof (new Retext()).run, 'function');
     });
 
     it('should return self', function (done) {
         var retext = new Retext();
         var root = new retext.TextOM.RootNode();
 
-        assert(retext.run(root, done) === retext);
+        equal(retext.run(root, done), retext);
     });
 
     it('should throw when `done` is not a `function`', function () {
@@ -629,7 +644,7 @@ describe('Retext#run(tree, done)', function () {
         var root = new retext.TextOM.RootNode();
 
         retext.run(root, function (err, tree) {
-            assert(root === tree);
+            equal(root, tree);
 
             done(err);
         });
@@ -649,12 +664,12 @@ describe('Retext#run(tree, done)', function () {
 
         retext.use(plugin);
 
-        assert(isInvoked === true);
+        equal(isInvoked, true);
 
         isInvoked = false;
 
         retext.run(root, function (err) {
-            assert(isInvoked !== true);
+            nequal(isInvoked, true);
 
             done(err);
         });
@@ -676,10 +691,10 @@ describe('Retext#run(tree, done)', function () {
 
         retext.use(plugin);
 
-        assert(isInvoked !== true);
+        nequal(isInvoked, true);
 
         retext.run(root, function (err) {
-            assert(isInvoked === true);
+            equal(isInvoked, true);
 
             done(err);
         });
@@ -706,9 +721,9 @@ describe('Retext#run(tree, done)', function () {
             retext.use(plugin);
 
             retext.run(root, options, function (err) {
-                assert(parameters[0] === root);
-                assert(parameters[1] === options);
-                assert(parameters.length === 2);
+                equal(parameters[0], root);
+                equal(parameters[1], options);
+                equal(parameters.length, 2);
 
                 done(err);
             });
@@ -726,7 +741,7 @@ describe('Retext#run(tree, done)', function () {
          */
         function firstPlugin() {
             return function () {
-                assert(isInvoked === false);
+                equal(isInvoked, false);
 
                 isInvoked = true;
             };
@@ -738,7 +753,7 @@ describe('Retext#run(tree, done)', function () {
          */
         function secondPlugin() {
             return function () {
-                assert(isInvoked === true);
+                equal(isInvoked, true);
 
                 isInvoked = true;
             };
@@ -766,7 +781,7 @@ describe('Retext#run(tree, done)', function () {
                 .use(secondPlugin);
 
             return function () {
-                assert(invokeCount === 0);
+                equal(invokeCount, 0);
 
                 invokeCount++;
             };
@@ -781,7 +796,7 @@ describe('Retext#run(tree, done)', function () {
                 .use(thirdPlugin);
 
             return function () {
-                assert(invokeCount === 1);
+                equal(invokeCount, 1);
 
                 invokeCount++;
             };
@@ -796,7 +811,7 @@ describe('Retext#run(tree, done)', function () {
                 .use(thirdPlugin);
 
             return function () {
-                assert(invokeCount === 2);
+                equal(invokeCount, 2);
 
                 invokeCount++;
             };
@@ -821,7 +836,7 @@ describe('Retext#run(tree, done)', function () {
          */
         function nestedPlugin() {
             return function () {
-                assert(isInvoked !== true);
+                nequal(isInvoked, true);
 
                 isInvoked = true;
             };
@@ -858,7 +873,7 @@ describe('Retext#run(tree, done)', function () {
 
                 retext.use(nestedPlugin);
 
-                assert(length === retext.ware.fns.length);
+                equal(length, retext.ware.fns.length);
             };
         }
 
