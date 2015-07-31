@@ -4,6 +4,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0-rc.2 / 2015-07-31
+=======================
+
+*   Fix missing files ([7dac502](https://github.com/wooorm/retext/commit/7dac502))
+
 1.0.0-rc.1 / 2015-07-31
 =======================
 
