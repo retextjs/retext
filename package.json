@@ -9,14 +9,12 @@
     "parser",
     "analyse",
     "manipulate",
-    "nlcst",
-    "textom"
+    "nlcst"
   ],
   "dependencies": {
-    "nlcst-to-textom": "^0.2.0",
+    "nlcst-to-string": "^0.1.5",
     "parse-latin": "^0.5.1",
-    "textom": "^0.4.0",
-    "ware": "^1.2.0"
+    "unified": "^1.0.0"
   },
   "repository": {
     "type": "git",
@@ -40,7 +38,8 @@
     "mdast-lint": "^0.4.2",
     "mdast-slug": "^0.1.1",
     "mdast-validate-links": "^0.3.1",
-    "mocha": "^2.0.0"
+    "mocha": "^2.0.0",
+    "nlcst-test": "^0.2.1"
   },
   "scripts": {
     "test-api": "mocha --check-leaks test.js",

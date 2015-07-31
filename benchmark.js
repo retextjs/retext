@@ -51,8 +51,8 @@ suite('retext.parse(value, callback);', function () {
      */
 
     bench('A paragraph (5 sentences, 100 words)',
-        function (done) {
-            retext.parse(paragraph, done);
+        function () {
+            retext.parse(paragraph);
         }
     );
 
@@ -61,8 +61,8 @@ suite('retext.parse(value, callback);', function () {
      */
 
     bench('A section (10 paragraphs, 50 sentences, 1,000 words)',
-        function (done) {
-            retext.parse(section, done);
+        function () {
+            retext.parse(section);
         }
     );
 
@@ -71,8 +71,8 @@ suite('retext.parse(value, callback);', function () {
      */
 
     bench('An article (100 paragraphs, 500 sentences, 10,000 words)',
-        function (done) {
-            retext.parse(article, done);
+        function () {
+            retext.parse(article);
         }
     );
 });

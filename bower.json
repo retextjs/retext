@@ -9,8 +9,7 @@
     "parser",
     "analyse",
     "manipulate",
-    "nlcst",
-    "textom"
+    "nlcst"
   ],
   "repository": {
     "type": "git",

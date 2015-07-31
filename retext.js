@@ -1,7 +1,8 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Retext = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * @author Titus Wormer
- * @copyright 2014-2015 Titus Wormer. All rights reserved.
+ * @copyright 2014-2015 Titus Wormer.
+ * @license MIT
  * @module retext
  * @fileoverview Extensible system for analysing and manipulating
  *   natural language.
@@ -13,249 +14,1942 @@
  * Dependencies.
  */
 
-var nlcstToTextOM = require('nlcst-to-textom');
-var TextOMConstructor = require('textom');
-var ParseLatin = require('parse-latin');
-var Ware = require('ware');
-
-/**
- * Construct an instance of `Retext`.
- *
- * @example
- *   var Retext = require('retext');
- *
- *   var retext = new Retext();
- *
- * @example
- *   var Retext = require('retext');
- *   var English = require('parse-english');
- *
- *   var retext = new Retext(new English());
- *
- * @param {Function?} parser - the parser to use. Defaults
- *   to a new instance of `parse-latin`.
- * @constructor Retext
- */
-function Retext(parser) {
-    var self = this;
-    var TextOM = new TextOMConstructor();
-
-    if (!parser) {
-        parser = new ParseLatin();
-    }
-
-    self.plugins = [];
-
-    self.ware = new Ware();
-    self.parser = parser;
-    self.TextOM = TextOM;
-
-    /*
-     * Expose `TextOM` on `parser`, and vice versa.
-     */
-
-    parser.TextOM = TextOM;
-    TextOM.parser = parser;
-}
-
-/**
- * Attaches `plugin`: a humble function.
- *
- * When `use` is called, the `plugin` is invoked with
- * the retext instance and an `options` object.
- * Code to initialize `plugin` should go here, such as
- * functionality to modify the object model (TextOM),
- * the parser (e.g., `parse-latin`), or the `retext`
- * instance itself.
- *
- * Optionally `plugin` can return a function which is
- * called every time the user invokes `parse` or `run`.
- * When that happends, that function is invoked with
- * a `Node` and an `options` object.
- * If `plugin` contains asynchronous functionality, it
- * should accept a third argument (`next`) and invoke
- * it on completion.
- *
- * @example
- *   var Retext = require('retext');
- *   var smartypants = require('retext-smartypants');
- *
- *   var retext = new Retext()
- *     .use(smartypants)
- *     .parse('Foo "bar" baz.', function (err, tree) {
- *       console.log(tree.toString());
- *       // 'Foo “bar” baz.'
- *     });
- *
- * @param {function(Retext, Object): function(Node, Object, Function?)} plugin
- * @return {Retext} - self
- */
-Retext.prototype.use = function (plugin, options) {
-    var self = this;
-    var onparse;
-
-    if (typeof plugin !== 'function') {
-        throw new TypeError(
-            'Illegal invocation: `' + plugin + '` ' +
-            'is not a valid argument for `Retext#use(plugin)`'
-        );
-    }
-
-    /*
-     * Ware does not know which plugins are attached,
-     * only which `onrun` methods are. Thus, we have
-     * a custom list of `plugins`, and here we check
-     * against that.
-     */
-
-    if (self.plugins.indexOf(plugin) === -1) {
-        self.plugins.push(plugin);
-
-        onparse = plugin(self, options || {});
-
-        if (typeof onparse === 'function') {
-            self.ware.use(onparse);
-        }
-    }
-
-    return self;
-};
-
-/**
- * Transform a given value into a node, applies attached
- * plugins to the node, and invokes `done` with either an
- * error (first argument) or the transformed node (second
- * argument).
- *
- * @example
- *   var Retext = require('retext');
- *   var smartypants = require('retext-smartypants');
- *
- *   var retext = new Retext()
- *     .parse('Foo "bar" baz.', function (err, tree) {
- *       console.log(tree.type);
- *       // 'RootNode'
- *     });
- *
- * @param {string?} value - The value to transform.
- * @param {Object} [options={}] - Optional settings.
- * @param {function(Error, Node)} done - Callback to
- *   invoke when the transformations have completed.
- * @return {Retext} - self
- */
-Retext.prototype.parse = function (value, options, done) {
-    var self = this;
-    var nlcst;
-
-    if (!done) {
-        done = options;
-        options = null;
-    }
-
-    nlcst = self.parser.parse(value);
-
-    self.run(nlcstToTextOM(self.TextOM, nlcst), options, done);
-
-    return self;
-};
-
-/**
- * Applies attached plugins to `node` and invokes `done`
- * with either an error (first argument) or the transformed
- * `node` (second argument).
- *
- * @private
- * @param {Node} node - The node to apply attached
- *   plugins to.
- * @param {Object} [options={}] - Optional settings.
- * @param {function(Error, Node)} done - Callback to
- *   invoke when the transformations have completed.
- * @return {Retext} - self
- */
-Retext.prototype.run = function (node, options, done) {
-    var self = this;
-
-    if (!done) {
-        done = options;
-        options = null;
-    }
-
-    self.ware.run(node, options, done);
-
-    return self;
-};
+var unified = require('unified');
+var Parser = require('./lib/parse.js');
+var Compiler = require('./lib/compile.js');
 
 /*
- * Expose `Retext`.
+ * Exports.
  */
 
-module.exports = Retext;
+module.exports = unified({
+    'name': 'retext',
+    'type': 'cst',
+    'Parser': Parser,
+    'Compiler': Compiler
+});
 
-},{"nlcst-to-textom":2,"parse-latin":3,"textom":28,"ware":29}],2:[function(require,module,exports){
+},{"./lib/compile.js":2,"./lib/parse.js":3,"unified":34}],2:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer. All rights reserved.
+ * @license MIT
+ * @module retext:compile
+ * @fileoverview Compile nlcst to string.
+ */
+
 'use strict';
 
 /*
- * Constants.
+ * Dependencies.
  */
 
-var has;
-
-has = Object.prototype.hasOwnProperty;
+var toString = require('nlcst-to-string');
 
 /**
- * Transform a concrete syntax tree into a tree constructed
- * from a given object model.
+ * Construct a new compiler.
  *
- * @param {Object} TextOM
- * @param {NLCSTNode} nlcst
- * @return {Node} From `nlcst` and `TextOM` constructed
- *   node.
+ * @example
+ *   var file = new VFile('Hello World.');
+ *
+ *   file.namespace('retext').cst = {
+ *       'type': 'SentenceNode',
+ *       'children': [
+ *           {
+ *               'type': 'WordNode',
+ *               'children': [{
+ *                   'type': 'TextNode',
+ *                   'value': 'Hello'
+ *               }]
+ *           },
+ *           {
+ *               'type': 'WhiteSpaceNode',
+ *               'value': ' '
+ *           },
+ *           {
+ *               'type': 'WordNode',
+ *               'children': [{
+ *                   'type': 'TextNode',
+ *                   'value': 'World'
+ *               }]
+ *           },
+ *           {
+ *               'type': 'PunctuationNode',
+ *               'value': '.'
+ *           }
+ *       ]
+ *   };
+ *
+ *   var compiler = new Compiler(file);
+ *
+ * @constructor
+ * @class {Compiler}
+ * @param {File} file - Virtual file.
  */
-function nlcstToTextOM(TextOM, nlcst) {
-    var index,
-        node,
-        children,
-        nodes,
-        data,
-        attribute;
-
-    node = new TextOM[nlcst.type]();
-
-    if (has.call(nlcst, 'children')) {
-        index = -1;
-        children = nlcst.children;
-        nodes = [];
-
-        while (children[++index]) {
-            nodes[index] = nlcstToTextOM(TextOM, children[index]);
-        }
-
-        node.appendAll(nodes);
-    } else {
-        node.fromString(nlcst.value);
-    }
-
-    if (has.call(nlcst, 'data')) {
-        data = nlcst.data;
-
-        for (attribute in data) {
-            if (has.call(data, attribute)) {
-                node.data[attribute] = data[attribute];
-            }
-        }
-    }
-
-    return node;
+function Compiler(file) {
+    this.file = file;
 }
 
-module.exports = nlcstToTextOM;
+/**
+ * Stringify the bound file.
+ *
+ * @example
+ *   var file = new VFile('Hello');
+ *
+ *   file.namespace('retext').cst = {
+ *     type: 'WordNode',
+ *     children: [{
+ *       type: 'TextNode',
+ *       value: 'Hello'
+ *     }]
+ *   });
+ *
+ *   new Compiler(file).compile();
+ *   // 'Foo'
+ *
+ * @this {Compiler}
+ * @return {string} - Document.
+ */
+function compile() {
+    return toString(this.file.namespace('retext').cst);
+}
 
-},{}],3:[function(require,module,exports){
+/*
+ * Expose `compile`.
+ */
+
+Compiler.prototype.compile = compile;
+
+/*
+ * Expose.
+ */
+
+module.exports = Compiler;
+
+},{"nlcst-to-string":8}],3:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer. All rights reserved.
+ * @license MIT
+ * @module retext:parse
+ * @fileoverview Parse a virtual file to nlcst.
+ */
+
+'use strict';
+
+/*
+ * Dependencies.
+ */
+
+var Latin = require('parse-latin');
+
+/**
+ * Construct a new parser.
+ *
+ * @example
+ *   var file = new VFile('Hello World.');
+ *   var parser = new Parser(file);
+ *
+ * @constructor
+ * @class {Parser}
+ * @param {File} file - Virtual file.
+ */
+function Parser(file) {
+    this.file = file;
+}
+
+/**
+ * Stringify the bound file.
+ *
+ * @example
+ *   var file = new VFile('Hello world');
+ *
+ *   new Parser(file).parse();
+ *   // ...
+ *   // {
+ *   //     'type': 'SentenceNode',
+ *   //     'children': [
+ *   //         {
+ *   //             'type': 'WordNode',
+ *   //             'children': [{
+ *   //                 'type': 'TextNode',
+ *   //                 'value': 'Hello'
+ *   //             }]
+ *   //         },
+ *   //         {
+ *   //             'type': 'WhiteSpaceNode',
+ *   //             'value': ' '
+ *   //         },
+ *   //         {
+ *   //             'type': 'WordNode',
+ *   //             'children': [{
+ *   //                 'type': 'TextNode',
+ *   //                 'value': 'World'
+ *   //             }]
+ *   //         },
+ *   //         {
+ *   //             'type': 'PunctuationNode',
+ *   //             'value': '.'
+ *   //         }
+ *   //     ]
+ *   // }
+ *   // ...
+ *
+ * @this {Parser}
+ * @return {Node} - NLCST node.
+ */
+function parse() {
+    return new Latin().parse(this.file.toString());
+}
+
+/*
+ * Expose `parse`.
+ */
+
+Parser.prototype.parse = parse;
+
+/*
+ * Expose.
+ */
+
+module.exports = Parser;
+
+},{"parse-latin":9}],4:[function(require,module,exports){
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+var base64 = require('base64-js')
+var ieee754 = require('ieee754')
+var isArray = require('is-array')
+
+exports.Buffer = Buffer
+exports.SlowBuffer = SlowBuffer
+exports.INSPECT_MAX_BYTES = 50
+Buffer.poolSize = 8192 // not used by this implementation
+
+var rootParent = {}
+
+/**
+ * If `Buffer.TYPED_ARRAY_SUPPORT`:
+ *   === true    Use Uint8Array implementation (fastest)
+ *   === false   Use Object implementation (most compatible, even IE6)
+ *
+ * Browsers that support typed arrays are IE 10+, Firefox 4+, Chrome 7+, Safari 5.1+,
+ * Opera 11.6+, iOS 4.2+.
+ *
+ * Note:
+ *
+ * - Implementation must support adding new properties to `Uint8Array` instances.
+ *   Firefox 4-29 lacked support, fixed in Firefox 30+.
+ *   See: https://bugzilla.mozilla.org/show_bug.cgi?id=695438.
+ *
+ *  - Chrome 9-10 is missing the `TypedArray.prototype.subarray` function.
+ *
+ *  - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
+ *    incorrect length in some situations.
+ *
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they will
+ * get the Object implementation, which is slower but will work correctly.
+ */
+Buffer.TYPED_ARRAY_SUPPORT = (function () {
+  function Foo () {}
+  try {
+    var buf = new ArrayBuffer(0)
+    var arr = new Uint8Array(buf)
+    arr.foo = function () { return 42 }
+    arr.constructor = Foo
+    return arr.foo() === 42 && // typed array instances can be augmented
+        arr.constructor === Foo && // constructor can be set
+        typeof arr.subarray === 'function' && // chrome 9-10 lack `subarray`
+        new Uint8Array(1).subarray(1, 1).byteLength === 0 // ie10 has broken `subarray`
+  } catch (e) {
+    return false
+  }
+})()
+
+function kMaxLength () {
+  return Buffer.TYPED_ARRAY_SUPPORT
+    ? 0x7fffffff
+    : 0x3fffffff
+}
+
+/**
+ * Class: Buffer
+ * =============
+ *
+ * The Buffer constructor returns instances of `Uint8Array` that are augmented
+ * with function properties for all the node `Buffer` API functions. We use
+ * `Uint8Array` so that square bracket notation works as expected -- it returns
+ * a single octet.
+ *
+ * By augmenting the instances, we can avoid modifying the `Uint8Array`
+ * prototype.
+ */
+function Buffer (arg) {
+  if (!(this instanceof Buffer)) {
+    // Avoid going through an ArgumentsAdaptorTrampoline in the common case.
+    if (arguments.length > 1) return new Buffer(arg, arguments[1])
+    return new Buffer(arg)
+  }
+
+  this.length = 0
+  this.parent = undefined
+
+  // Common case.
+  if (typeof arg === 'number') {
+    return fromNumber(this, arg)
+  }
+
+  // Slightly less common case.
+  if (typeof arg === 'string') {
+    return fromString(this, arg, arguments.length > 1 ? arguments[1] : 'utf8')
+  }
+
+  // Unusual.
+  return fromObject(this, arg)
+}
+
+function fromNumber (that, length) {
+  that = allocate(that, length < 0 ? 0 : checked(length) | 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) {
+    for (var i = 0; i < length; i++) {
+      that[i] = 0
+    }
+  }
+  return that
+}
+
+function fromString (that, string, encoding) {
+  if (typeof encoding !== 'string' || encoding === '') encoding = 'utf8'
+
+  // Assumption: byteLength() return value is always < kMaxLength.
+  var length = byteLength(string, encoding) | 0
+  that = allocate(that, length)
+
+  that.write(string, encoding)
+  return that
+}
+
+function fromObject (that, object) {
+  if (Buffer.isBuffer(object)) return fromBuffer(that, object)
+
+  if (isArray(object)) return fromArray(that, object)
+
+  if (object == null) {
+    throw new TypeError('must start with number, buffer, array or string')
+  }
+
+  if (typeof ArrayBuffer !== 'undefined' && object.buffer instanceof ArrayBuffer) {
+    return fromTypedArray(that, object)
+  }
+
+  if (object.length) return fromArrayLike(that, object)
+
+  return fromJsonObject(that, object)
+}
+
+function fromBuffer (that, buffer) {
+  var length = checked(buffer.length) | 0
+  that = allocate(that, length)
+  buffer.copy(that, 0, 0, length)
+  return that
+}
+
+function fromArray (that, array) {
+  var length = checked(array.length) | 0
+  that = allocate(that, length)
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+// Duplicate of fromArray() to keep fromArray() monomorphic.
+function fromTypedArray (that, array) {
+  var length = checked(array.length) | 0
+  that = allocate(that, length)
+  // Truncating the elements is probably not what people expect from typed
+  // arrays with BYTES_PER_ELEMENT > 1 but it's compatible with the behavior
+  // of the old Buffer constructor.
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+function fromArrayLike (that, array) {
+  var length = checked(array.length) | 0
+  that = allocate(that, length)
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+// Deserialize { type: 'Buffer', data: [1,2,3,...] } into a Buffer object.
+// Returns a zero-length buffer for inputs that don't conform to the spec.
+function fromJsonObject (that, object) {
+  var array
+  var length = 0
+
+  if (object.type === 'Buffer' && isArray(object.data)) {
+    array = object.data
+    length = checked(array.length) | 0
+  }
+  that = allocate(that, length)
+
+  for (var i = 0; i < length; i += 1) {
+    that[i] = array[i] & 255
+  }
+  return that
+}
+
+function allocate (that, length) {
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    that = Buffer._augment(new Uint8Array(length))
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    that.length = length
+    that._isBuffer = true
+  }
+
+  var fromPool = length !== 0 && length <= Buffer.poolSize >>> 1
+  if (fromPool) that.parent = rootParent
+
+  return that
+}
+
+function checked (length) {
+  // Note: cannot use `length < kMaxLength` here because that fails when
+  // length is NaN (which is otherwise coerced to zero.)
+  if (length >= kMaxLength()) {
+    throw new RangeError('Attempt to allocate Buffer larger than maximum ' +
+                         'size: 0x' + kMaxLength().toString(16) + ' bytes')
+  }
+  return length | 0
+}
+
+function SlowBuffer (subject, encoding) {
+  if (!(this instanceof SlowBuffer)) return new SlowBuffer(subject, encoding)
+
+  var buf = new Buffer(subject, encoding)
+  delete buf.parent
+  return buf
+}
+
+Buffer.isBuffer = function isBuffer (b) {
+  return !!(b != null && b._isBuffer)
+}
+
+Buffer.compare = function compare (a, b) {
+  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
+    throw new TypeError('Arguments must be Buffers')
+  }
+
+  if (a === b) return 0
+
+  var x = a.length
+  var y = b.length
+
+  var i = 0
+  var len = Math.min(x, y)
+  while (i < len) {
+    if (a[i] !== b[i]) break
+
+    ++i
+  }
+
+  if (i !== len) {
+    x = a[i]
+    y = b[i]
+  }
+
+  if (x < y) return -1
+  if (y < x) return 1
+  return 0
+}
+
+Buffer.isEncoding = function isEncoding (encoding) {
+  switch (String(encoding).toLowerCase()) {
+    case 'hex':
+    case 'utf8':
+    case 'utf-8':
+    case 'ascii':
+    case 'binary':
+    case 'base64':
+    case 'raw':
+    case 'ucs2':
+    case 'ucs-2':
+    case 'utf16le':
+    case 'utf-16le':
+      return true
+    default:
+      return false
+  }
+}
+
+Buffer.concat = function concat (list, length) {
+  if (!isArray(list)) throw new TypeError('list argument must be an Array of Buffers.')
+
+  if (list.length === 0) {
+    return new Buffer(0)
+  } else if (list.length === 1) {
+    return list[0]
+  }
+
+  var i
+  if (length === undefined) {
+    length = 0
+    for (i = 0; i < list.length; i++) {
+      length += list[i].length
+    }
+  }
+
+  var buf = new Buffer(length)
+  var pos = 0
+  for (i = 0; i < list.length; i++) {
+    var item = list[i]
+    item.copy(buf, pos)
+    pos += item.length
+  }
+  return buf
+}
+
+function byteLength (string, encoding) {
+  if (typeof string !== 'string') string = '' + string
+
+  var len = string.length
+  if (len === 0) return 0
+
+  // Use a for loop to avoid recursion
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'ascii':
+      case 'binary':
+      // Deprecated
+      case 'raw':
+      case 'raws':
+        return len
+      case 'utf8':
+      case 'utf-8':
+        return utf8ToBytes(string).length
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return len * 2
+      case 'hex':
+        return len >>> 1
+      case 'base64':
+        return base64ToBytes(string).length
+      default:
+        if (loweredCase) return utf8ToBytes(string).length // assume utf8
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+Buffer.byteLength = byteLength
+
+// pre-set for values that may exist in the future
+Buffer.prototype.length = undefined
+Buffer.prototype.parent = undefined
+
+function slowToString (encoding, start, end) {
+  var loweredCase = false
+
+  start = start | 0
+  end = end === undefined || end === Infinity ? this.length : end | 0
+
+  if (!encoding) encoding = 'utf8'
+  if (start < 0) start = 0
+  if (end > this.length) end = this.length
+  if (end <= start) return ''
+
+  while (true) {
+    switch (encoding) {
+      case 'hex':
+        return hexSlice(this, start, end)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Slice(this, start, end)
+
+      case 'ascii':
+        return asciiSlice(this, start, end)
+
+      case 'binary':
+        return binarySlice(this, start, end)
+
+      case 'base64':
+        return base64Slice(this, start, end)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return utf16leSlice(this, start, end)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = (encoding + '').toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toString = function toString () {
+  var length = this.length | 0
+  if (length === 0) return ''
+  if (arguments.length === 0) return utf8Slice(this, 0, length)
+  return slowToString.apply(this, arguments)
+}
+
+Buffer.prototype.equals = function equals (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return true
+  return Buffer.compare(this, b) === 0
+}
+
+Buffer.prototype.inspect = function inspect () {
+  var str = ''
+  var max = exports.INSPECT_MAX_BYTES
+  if (this.length > 0) {
+    str = this.toString('hex', 0, max).match(/.{2}/g).join(' ')
+    if (this.length > max) str += ' ... '
+  }
+  return '<Buffer ' + str + '>'
+}
+
+Buffer.prototype.compare = function compare (b) {
+  if (!Buffer.isBuffer(b)) throw new TypeError('Argument must be a Buffer')
+  if (this === b) return 0
+  return Buffer.compare(this, b)
+}
+
+Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
+  if (byteOffset > 0x7fffffff) byteOffset = 0x7fffffff
+  else if (byteOffset < -0x80000000) byteOffset = -0x80000000
+  byteOffset >>= 0
+
+  if (this.length === 0) return -1
+  if (byteOffset >= this.length) return -1
+
+  // Negative offsets start from the end of the buffer
+  if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0)
+
+  if (typeof val === 'string') {
+    if (val.length === 0) return -1 // special case: looking for empty string always fails
+    return String.prototype.indexOf.call(this, val, byteOffset)
+  }
+  if (Buffer.isBuffer(val)) {
+    return arrayIndexOf(this, val, byteOffset)
+  }
+  if (typeof val === 'number') {
+    if (Buffer.TYPED_ARRAY_SUPPORT && Uint8Array.prototype.indexOf === 'function') {
+      return Uint8Array.prototype.indexOf.call(this, val, byteOffset)
+    }
+    return arrayIndexOf(this, [ val ], byteOffset)
+  }
+
+  function arrayIndexOf (arr, val, byteOffset) {
+    var foundIndex = -1
+    for (var i = 0; byteOffset + i < arr.length; i++) {
+      if (arr[byteOffset + i] === val[foundIndex === -1 ? 0 : i - foundIndex]) {
+        if (foundIndex === -1) foundIndex = i
+        if (i - foundIndex + 1 === val.length) return byteOffset + foundIndex
+      } else {
+        foundIndex = -1
+      }
+    }
+    return -1
+  }
+
+  throw new TypeError('val must be string, number or Buffer')
+}
+
+// `get` will be removed in Node 0.13+
+Buffer.prototype.get = function get (offset) {
+  console.log('.get() is deprecated. Access using array indexes instead.')
+  return this.readUInt8(offset)
+}
+
+// `set` will be removed in Node 0.13+
+Buffer.prototype.set = function set (v, offset) {
+  console.log('.set() is deprecated. Access using array indexes instead.')
+  return this.writeUInt8(v, offset)
+}
+
+function hexWrite (buf, string, offset, length) {
+  offset = Number(offset) || 0
+  var remaining = buf.length - offset
+  if (!length) {
+    length = remaining
+  } else {
+    length = Number(length)
+    if (length > remaining) {
+      length = remaining
+    }
+  }
+
+  // must be an even number of digits
+  var strLen = string.length
+  if (strLen % 2 !== 0) throw new Error('Invalid hex string')
+
+  if (length > strLen / 2) {
+    length = strLen / 2
+  }
+  for (var i = 0; i < length; i++) {
+    var parsed = parseInt(string.substr(i * 2, 2), 16)
+    if (isNaN(parsed)) throw new Error('Invalid hex string')
+    buf[offset + i] = parsed
+  }
+  return i
+}
+
+function utf8Write (buf, string, offset, length) {
+  return blitBuffer(utf8ToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+function asciiWrite (buf, string, offset, length) {
+  return blitBuffer(asciiToBytes(string), buf, offset, length)
+}
+
+function binaryWrite (buf, string, offset, length) {
+  return asciiWrite(buf, string, offset, length)
+}
+
+function base64Write (buf, string, offset, length) {
+  return blitBuffer(base64ToBytes(string), buf, offset, length)
+}
+
+function ucs2Write (buf, string, offset, length) {
+  return blitBuffer(utf16leToBytes(string, buf.length - offset), buf, offset, length)
+}
+
+Buffer.prototype.write = function write (string, offset, length, encoding) {
+  // Buffer#write(string)
+  if (offset === undefined) {
+    encoding = 'utf8'
+    length = this.length
+    offset = 0
+  // Buffer#write(string, encoding)
+  } else if (length === undefined && typeof offset === 'string') {
+    encoding = offset
+    length = this.length
+    offset = 0
+  // Buffer#write(string, offset[, length][, encoding])
+  } else if (isFinite(offset)) {
+    offset = offset | 0
+    if (isFinite(length)) {
+      length = length | 0
+      if (encoding === undefined) encoding = 'utf8'
+    } else {
+      encoding = length
+      length = undefined
+    }
+  // legacy write(string, encoding, offset, length) - remove in v0.13
+  } else {
+    var swap = encoding
+    encoding = offset
+    offset = length | 0
+    length = swap
+  }
+
+  var remaining = this.length - offset
+  if (length === undefined || length > remaining) length = remaining
+
+  if ((string.length > 0 && (length < 0 || offset < 0)) || offset > this.length) {
+    throw new RangeError('attempt to write outside buffer bounds')
+  }
+
+  if (!encoding) encoding = 'utf8'
+
+  var loweredCase = false
+  for (;;) {
+    switch (encoding) {
+      case 'hex':
+        return hexWrite(this, string, offset, length)
+
+      case 'utf8':
+      case 'utf-8':
+        return utf8Write(this, string, offset, length)
+
+      case 'ascii':
+        return asciiWrite(this, string, offset, length)
+
+      case 'binary':
+        return binaryWrite(this, string, offset, length)
+
+      case 'base64':
+        // Warning: maxLength not taken into account in base64Write
+        return base64Write(this, string, offset, length)
+
+      case 'ucs2':
+      case 'ucs-2':
+      case 'utf16le':
+      case 'utf-16le':
+        return ucs2Write(this, string, offset, length)
+
+      default:
+        if (loweredCase) throw new TypeError('Unknown encoding: ' + encoding)
+        encoding = ('' + encoding).toLowerCase()
+        loweredCase = true
+    }
+  }
+}
+
+Buffer.prototype.toJSON = function toJSON () {
+  return {
+    type: 'Buffer',
+    data: Array.prototype.slice.call(this._arr || this, 0)
+  }
+}
+
+function base64Slice (buf, start, end) {
+  if (start === 0 && end === buf.length) {
+    return base64.fromByteArray(buf)
+  } else {
+    return base64.fromByteArray(buf.slice(start, end))
+  }
+}
+
+function utf8Slice (buf, start, end) {
+  var res = ''
+  var tmp = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; i++) {
+    if (buf[i] <= 0x7F) {
+      res += decodeUtf8Char(tmp) + String.fromCharCode(buf[i])
+      tmp = ''
+    } else {
+      tmp += '%' + buf[i].toString(16)
+    }
+  }
+
+  return res + decodeUtf8Char(tmp)
+}
+
+function asciiSlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; i++) {
+    ret += String.fromCharCode(buf[i] & 0x7F)
+  }
+  return ret
+}
+
+function binarySlice (buf, start, end) {
+  var ret = ''
+  end = Math.min(buf.length, end)
+
+  for (var i = start; i < end; i++) {
+    ret += String.fromCharCode(buf[i])
+  }
+  return ret
+}
+
+function hexSlice (buf, start, end) {
+  var len = buf.length
+
+  if (!start || start < 0) start = 0
+  if (!end || end < 0 || end > len) end = len
+
+  var out = ''
+  for (var i = start; i < end; i++) {
+    out += toHex(buf[i])
+  }
+  return out
+}
+
+function utf16leSlice (buf, start, end) {
+  var bytes = buf.slice(start, end)
+  var res = ''
+  for (var i = 0; i < bytes.length; i += 2) {
+    res += String.fromCharCode(bytes[i] + bytes[i + 1] * 256)
+  }
+  return res
+}
+
+Buffer.prototype.slice = function slice (start, end) {
+  var len = this.length
+  start = ~~start
+  end = end === undefined ? len : ~~end
+
+  if (start < 0) {
+    start += len
+    if (start < 0) start = 0
+  } else if (start > len) {
+    start = len
+  }
+
+  if (end < 0) {
+    end += len
+    if (end < 0) end = 0
+  } else if (end > len) {
+    end = len
+  }
+
+  if (end < start) end = start
+
+  var newBuf
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    newBuf = Buffer._augment(this.subarray(start, end))
+  } else {
+    var sliceLen = end - start
+    newBuf = new Buffer(sliceLen, undefined)
+    for (var i = 0; i < sliceLen; i++) {
+      newBuf[i] = this[i + start]
+    }
+  }
+
+  if (newBuf.length) newBuf.parent = this.parent || this
+
+  return newBuf
+}
+
+/*
+ * Need to make sure that buffer isn't trying to write out of bounds.
+ */
+function checkOffset (offset, ext, length) {
+  if ((offset % 1) !== 0 || offset < 0) throw new RangeError('offset is not uint')
+  if (offset + ext > length) throw new RangeError('Trying to access beyond buffer length')
+}
+
+Buffer.prototype.readUIntLE = function readUIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUIntBE = function readUIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) {
+    checkOffset(offset, byteLength, this.length)
+  }
+
+  var val = this[offset + --byteLength]
+  var mul = 1
+  while (byteLength > 0 && (mul *= 0x100)) {
+    val += this[offset + --byteLength] * mul
+  }
+
+  return val
+}
+
+Buffer.prototype.readUInt8 = function readUInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  return this[offset]
+}
+
+Buffer.prototype.readUInt16LE = function readUInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return this[offset] | (this[offset + 1] << 8)
+}
+
+Buffer.prototype.readUInt16BE = function readUInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  return (this[offset] << 8) | this[offset + 1]
+}
+
+Buffer.prototype.readUInt32LE = function readUInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return ((this[offset]) |
+      (this[offset + 1] << 8) |
+      (this[offset + 2] << 16)) +
+      (this[offset + 3] * 0x1000000)
+}
+
+Buffer.prototype.readUInt32BE = function readUInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] * 0x1000000) +
+    ((this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    this[offset + 3])
+}
+
+Buffer.prototype.readIntLE = function readIntLE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var val = this[offset]
+  var mul = 1
+  var i = 0
+  while (++i < byteLength && (mul *= 0x100)) {
+    val += this[offset + i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readIntBE = function readIntBE (offset, byteLength, noAssert) {
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkOffset(offset, byteLength, this.length)
+
+  var i = byteLength
+  var mul = 1
+  var val = this[offset + --i]
+  while (i > 0 && (mul *= 0x100)) {
+    val += this[offset + --i] * mul
+  }
+  mul *= 0x80
+
+  if (val >= mul) val -= Math.pow(2, 8 * byteLength)
+
+  return val
+}
+
+Buffer.prototype.readInt8 = function readInt8 (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 1, this.length)
+  if (!(this[offset] & 0x80)) return (this[offset])
+  return ((0xff - this[offset] + 1) * -1)
+}
+
+Buffer.prototype.readInt16LE = function readInt16LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset] | (this[offset + 1] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt16BE = function readInt16BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 2, this.length)
+  var val = this[offset + 1] | (this[offset] << 8)
+  return (val & 0x8000) ? val | 0xFFFF0000 : val
+}
+
+Buffer.prototype.readInt32LE = function readInt32LE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset]) |
+    (this[offset + 1] << 8) |
+    (this[offset + 2] << 16) |
+    (this[offset + 3] << 24)
+}
+
+Buffer.prototype.readInt32BE = function readInt32BE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+
+  return (this[offset] << 24) |
+    (this[offset + 1] << 16) |
+    (this[offset + 2] << 8) |
+    (this[offset + 3])
+}
+
+Buffer.prototype.readFloatLE = function readFloatLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, true, 23, 4)
+}
+
+Buffer.prototype.readFloatBE = function readFloatBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 4, this.length)
+  return ieee754.read(this, offset, false, 23, 4)
+}
+
+Buffer.prototype.readDoubleLE = function readDoubleLE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, true, 52, 8)
+}
+
+Buffer.prototype.readDoubleBE = function readDoubleBE (offset, noAssert) {
+  if (!noAssert) checkOffset(offset, 8, this.length)
+  return ieee754.read(this, offset, false, 52, 8)
+}
+
+function checkInt (buf, value, offset, ext, max, min) {
+  if (!Buffer.isBuffer(buf)) throw new TypeError('buffer must be a Buffer instance')
+  if (value > max || value < min) throw new RangeError('value is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('index out of range')
+}
+
+Buffer.prototype.writeUIntLE = function writeUIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+
+  var mul = 1
+  var i = 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUIntBE = function writeUIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  byteLength = byteLength | 0
+  if (!noAssert) checkInt(this, value, offset, byteLength, Math.pow(2, 8 * byteLength), 0)
+
+  var i = byteLength - 1
+  var mul = 1
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = (value / mul) & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeUInt8 = function writeUInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0xff, 0)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  this[offset] = value
+  return offset + 1
+}
+
+function objectWriteUInt16 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 2); i < j; i++) {
+    buf[offset + i] = (value & (0xff << (8 * (littleEndian ? i : 1 - i)))) >>>
+      (littleEndian ? i : 1 - i) * 8
+  }
+}
+
+Buffer.prototype.writeUInt16LE = function writeUInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = value
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeUInt16BE = function writeUInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0xffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = value
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+function objectWriteUInt32 (buf, value, offset, littleEndian) {
+  if (value < 0) value = 0xffffffff + value + 1
+  for (var i = 0, j = Math.min(buf.length - offset, 4); i < j; i++) {
+    buf[offset + i] = (value >>> (littleEndian ? i : 3 - i) * 8) & 0xff
+  }
+}
+
+Buffer.prototype.writeUInt32LE = function writeUInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset + 3] = (value >>> 24)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 1] = (value >>> 8)
+    this[offset] = value
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeUInt32BE = function writeUInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0xffffffff, 0)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = value
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeIntLE = function writeIntLE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = 0
+  var mul = 1
+  var sub = value < 0 ? 1 : 0
+  this[offset] = value & 0xFF
+  while (++i < byteLength && (mul *= 0x100)) {
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeIntBE = function writeIntBE (value, offset, byteLength, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) {
+    var limit = Math.pow(2, 8 * byteLength - 1)
+
+    checkInt(this, value, offset, byteLength, limit - 1, -limit)
+  }
+
+  var i = byteLength - 1
+  var mul = 1
+  var sub = value < 0 ? 1 : 0
+  this[offset + i] = value & 0xFF
+  while (--i >= 0 && (mul *= 0x100)) {
+    this[offset + i] = ((value / mul) >> 0) - sub & 0xFF
+  }
+
+  return offset + byteLength
+}
+
+Buffer.prototype.writeInt8 = function writeInt8 (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 1, 0x7f, -0x80)
+  if (!Buffer.TYPED_ARRAY_SUPPORT) value = Math.floor(value)
+  if (value < 0) value = 0xff + value + 1
+  this[offset] = value
+  return offset + 1
+}
+
+Buffer.prototype.writeInt16LE = function writeInt16LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = value
+    this[offset + 1] = (value >>> 8)
+  } else {
+    objectWriteUInt16(this, value, offset, true)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt16BE = function writeInt16BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 2, 0x7fff, -0x8000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 8)
+    this[offset + 1] = value
+  } else {
+    objectWriteUInt16(this, value, offset, false)
+  }
+  return offset + 2
+}
+
+Buffer.prototype.writeInt32LE = function writeInt32LE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = value
+    this[offset + 1] = (value >>> 8)
+    this[offset + 2] = (value >>> 16)
+    this[offset + 3] = (value >>> 24)
+  } else {
+    objectWriteUInt32(this, value, offset, true)
+  }
+  return offset + 4
+}
+
+Buffer.prototype.writeInt32BE = function writeInt32BE (value, offset, noAssert) {
+  value = +value
+  offset = offset | 0
+  if (!noAssert) checkInt(this, value, offset, 4, 0x7fffffff, -0x80000000)
+  if (value < 0) value = 0xffffffff + value + 1
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    this[offset] = (value >>> 24)
+    this[offset + 1] = (value >>> 16)
+    this[offset + 2] = (value >>> 8)
+    this[offset + 3] = value
+  } else {
+    objectWriteUInt32(this, value, offset, false)
+  }
+  return offset + 4
+}
+
+function checkIEEE754 (buf, value, offset, ext, max, min) {
+  if (value > max || value < min) throw new RangeError('value is out of bounds')
+  if (offset + ext > buf.length) throw new RangeError('index out of range')
+  if (offset < 0) throw new RangeError('index out of range')
+}
+
+function writeFloat (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 4, 3.4028234663852886e+38, -3.4028234663852886e+38)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 23, 4)
+  return offset + 4
+}
+
+Buffer.prototype.writeFloatLE = function writeFloatLE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeFloatBE = function writeFloatBE (value, offset, noAssert) {
+  return writeFloat(this, value, offset, false, noAssert)
+}
+
+function writeDouble (buf, value, offset, littleEndian, noAssert) {
+  if (!noAssert) {
+    checkIEEE754(buf, value, offset, 8, 1.7976931348623157E+308, -1.7976931348623157E+308)
+  }
+  ieee754.write(buf, value, offset, littleEndian, 52, 8)
+  return offset + 8
+}
+
+Buffer.prototype.writeDoubleLE = function writeDoubleLE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, true, noAssert)
+}
+
+Buffer.prototype.writeDoubleBE = function writeDoubleBE (value, offset, noAssert) {
+  return writeDouble(this, value, offset, false, noAssert)
+}
+
+// copy(targetBuffer, targetStart=0, sourceStart=0, sourceEnd=buffer.length)
+Buffer.prototype.copy = function copy (target, targetStart, start, end) {
+  if (!start) start = 0
+  if (!end && end !== 0) end = this.length
+  if (targetStart >= target.length) targetStart = target.length
+  if (!targetStart) targetStart = 0
+  if (end > 0 && end < start) end = start
+
+  // Copy 0 bytes; we're done
+  if (end === start) return 0
+  if (target.length === 0 || this.length === 0) return 0
+
+  // Fatal error conditions
+  if (targetStart < 0) {
+    throw new RangeError('targetStart out of bounds')
+  }
+  if (start < 0 || start >= this.length) throw new RangeError('sourceStart out of bounds')
+  if (end < 0) throw new RangeError('sourceEnd out of bounds')
+
+  // Are we oob?
+  if (end > this.length) end = this.length
+  if (target.length - targetStart < end - start) {
+    end = target.length - targetStart + start
+  }
+
+  var len = end - start
+
+  if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+    for (var i = 0; i < len; i++) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else {
+    target._set(this.subarray(start, start + len), targetStart)
+  }
+
+  return len
+}
+
+// fill(value, start=0, end=buffer.length)
+Buffer.prototype.fill = function fill (value, start, end) {
+  if (!value) value = 0
+  if (!start) start = 0
+  if (!end) end = this.length
+
+  if (end < start) throw new RangeError('end < start')
+
+  // Fill 0 bytes; we're done
+  if (end === start) return
+  if (this.length === 0) return
+
+  if (start < 0 || start >= this.length) throw new RangeError('start out of bounds')
+  if (end < 0 || end > this.length) throw new RangeError('end out of bounds')
+
+  var i
+  if (typeof value === 'number') {
+    for (i = start; i < end; i++) {
+      this[i] = value
+    }
+  } else {
+    var bytes = utf8ToBytes(value.toString())
+    var len = bytes.length
+    for (i = start; i < end; i++) {
+      this[i] = bytes[i % len]
+    }
+  }
+
+  return this
+}
+
+/**
+ * Creates a new `ArrayBuffer` with the *copied* memory of the buffer instance.
+ * Added in Node 0.12. Only available in browsers that support ArrayBuffer.
+ */
+Buffer.prototype.toArrayBuffer = function toArrayBuffer () {
+  if (typeof Uint8Array !== 'undefined') {
+    if (Buffer.TYPED_ARRAY_SUPPORT) {
+      return (new Buffer(this)).buffer
+    } else {
+      var buf = new Uint8Array(this.length)
+      for (var i = 0, len = buf.length; i < len; i += 1) {
+        buf[i] = this[i]
+      }
+      return buf.buffer
+    }
+  } else {
+    throw new TypeError('Buffer.toArrayBuffer not supported in this browser')
+  }
+}
+
+// HELPER FUNCTIONS
+// ================
+
+var BP = Buffer.prototype
+
+/**
+ * Augment a Uint8Array *instance* (not the Uint8Array class!) with Buffer methods
+ */
+Buffer._augment = function _augment (arr) {
+  arr.constructor = Buffer
+  arr._isBuffer = true
+
+  // save reference to original Uint8Array set method before overwriting
+  arr._set = arr.set
+
+  // deprecated, will be removed in node 0.13+
+  arr.get = BP.get
+  arr.set = BP.set
+
+  arr.write = BP.write
+  arr.toString = BP.toString
+  arr.toLocaleString = BP.toString
+  arr.toJSON = BP.toJSON
+  arr.equals = BP.equals
+  arr.compare = BP.compare
+  arr.indexOf = BP.indexOf
+  arr.copy = BP.copy
+  arr.slice = BP.slice
+  arr.readUIntLE = BP.readUIntLE
+  arr.readUIntBE = BP.readUIntBE
+  arr.readUInt8 = BP.readUInt8
+  arr.readUInt16LE = BP.readUInt16LE
+  arr.readUInt16BE = BP.readUInt16BE
+  arr.readUInt32LE = BP.readUInt32LE
+  arr.readUInt32BE = BP.readUInt32BE
+  arr.readIntLE = BP.readIntLE
+  arr.readIntBE = BP.readIntBE
+  arr.readInt8 = BP.readInt8
+  arr.readInt16LE = BP.readInt16LE
+  arr.readInt16BE = BP.readInt16BE
+  arr.readInt32LE = BP.readInt32LE
+  arr.readInt32BE = BP.readInt32BE
+  arr.readFloatLE = BP.readFloatLE
+  arr.readFloatBE = BP.readFloatBE
+  arr.readDoubleLE = BP.readDoubleLE
+  arr.readDoubleBE = BP.readDoubleBE
+  arr.writeUInt8 = BP.writeUInt8
+  arr.writeUIntLE = BP.writeUIntLE
+  arr.writeUIntBE = BP.writeUIntBE
+  arr.writeUInt16LE = BP.writeUInt16LE
+  arr.writeUInt16BE = BP.writeUInt16BE
+  arr.writeUInt32LE = BP.writeUInt32LE
+  arr.writeUInt32BE = BP.writeUInt32BE
+  arr.writeIntLE = BP.writeIntLE
+  arr.writeIntBE = BP.writeIntBE
+  arr.writeInt8 = BP.writeInt8
+  arr.writeInt16LE = BP.writeInt16LE
+  arr.writeInt16BE = BP.writeInt16BE
+  arr.writeInt32LE = BP.writeInt32LE
+  arr.writeInt32BE = BP.writeInt32BE
+  arr.writeFloatLE = BP.writeFloatLE
+  arr.writeFloatBE = BP.writeFloatBE
+  arr.writeDoubleLE = BP.writeDoubleLE
+  arr.writeDoubleBE = BP.writeDoubleBE
+  arr.fill = BP.fill
+  arr.inspect = BP.inspect
+  arr.toArrayBuffer = BP.toArrayBuffer
+
+  return arr
+}
+
+var INVALID_BASE64_RE = /[^+\/0-9A-z\-]/g
+
+function base64clean (str) {
+  // Node strips out invalid characters like \n and \t from the string, base64-js does not
+  str = stringtrim(str).replace(INVALID_BASE64_RE, '')
+  // Node converts strings with length < 2 to ''
+  if (str.length < 2) return ''
+  // Node allows for non-padded base64 strings (missing trailing ===), base64-js does not
+  while (str.length % 4 !== 0) {
+    str = str + '='
+  }
+  return str
+}
+
+function stringtrim (str) {
+  if (str.trim) return str.trim()
+  return str.replace(/^\s+|\s+$/g, '')
+}
+
+function toHex (n) {
+  if (n < 16) return '0' + n.toString(16)
+  return n.toString(16)
+}
+
+function utf8ToBytes (string, units) {
+  units = units || Infinity
+  var codePoint
+  var length = string.length
+  var leadSurrogate = null
+  var bytes = []
+  var i = 0
+
+  for (; i < length; i++) {
+    codePoint = string.charCodeAt(i)
+
+    // is surrogate component
+    if (codePoint > 0xD7FF && codePoint < 0xE000) {
+      // last char was a lead
+      if (leadSurrogate) {
+        // 2 leads in a row
+        if (codePoint < 0xDC00) {
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          leadSurrogate = codePoint
+          continue
+        } else {
+          // valid surrogate pair
+          codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
+          leadSurrogate = null
+        }
+      } else {
+        // no lead yet
+
+        if (codePoint > 0xDBFF) {
+          // unexpected trail
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else if (i + 1 === length) {
+          // unpaired lead
+          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+          continue
+        } else {
+          // valid lead
+          leadSurrogate = codePoint
+          continue
+        }
+      }
+    } else if (leadSurrogate) {
+      // valid bmp char, but last char was a lead
+      if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+      leadSurrogate = null
+    }
+
+    // encode utf8
+    if (codePoint < 0x80) {
+      if ((units -= 1) < 0) break
+      bytes.push(codePoint)
+    } else if (codePoint < 0x800) {
+      if ((units -= 2) < 0) break
+      bytes.push(
+        codePoint >> 0x6 | 0xC0,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x10000) {
+      if ((units -= 3) < 0) break
+      bytes.push(
+        codePoint >> 0xC | 0xE0,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else if (codePoint < 0x200000) {
+      if ((units -= 4) < 0) break
+      bytes.push(
+        codePoint >> 0x12 | 0xF0,
+        codePoint >> 0xC & 0x3F | 0x80,
+        codePoint >> 0x6 & 0x3F | 0x80,
+        codePoint & 0x3F | 0x80
+      )
+    } else {
+      throw new Error('Invalid code point')
+    }
+  }
+
+  return bytes
+}
+
+function asciiToBytes (str) {
+  var byteArray = []
+  for (var i = 0; i < str.length; i++) {
+    // Node's code seems to be doing this and not & 0x7F..
+    byteArray.push(str.charCodeAt(i) & 0xFF)
+  }
+  return byteArray
+}
+
+function utf16leToBytes (str, units) {
+  var c, hi, lo
+  var byteArray = []
+  for (var i = 0; i < str.length; i++) {
+    if ((units -= 2) < 0) break
+
+    c = str.charCodeAt(i)
+    hi = c >> 8
+    lo = c % 256
+    byteArray.push(lo)
+    byteArray.push(hi)
+  }
+
+  return byteArray
+}
+
+function base64ToBytes (str) {
+  return base64.toByteArray(base64clean(str))
+}
+
+function blitBuffer (src, dst, offset, length) {
+  for (var i = 0; i < length; i++) {
+    if ((i + offset >= dst.length) || (i >= src.length)) break
+    dst[i + offset] = src[i]
+  }
+  return i
+}
+
+function decodeUtf8Char (str) {
+  try {
+    return decodeURIComponent(str)
+  } catch (err) {
+    return String.fromCharCode(0xFFFD) // UTF 8 invalid char
+  }
+}
+
+},{"base64-js":5,"ieee754":6,"is-array":7}],5:[function(require,module,exports){
+var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+;(function (exports) {
+	'use strict';
+
+  var Arr = (typeof Uint8Array !== 'undefined')
+    ? Uint8Array
+    : Array
+
+	var PLUS   = '+'.charCodeAt(0)
+	var SLASH  = '/'.charCodeAt(0)
+	var NUMBER = '0'.charCodeAt(0)
+	var LOWER  = 'a'.charCodeAt(0)
+	var UPPER  = 'A'.charCodeAt(0)
+	var PLUS_URL_SAFE = '-'.charCodeAt(0)
+	var SLASH_URL_SAFE = '_'.charCodeAt(0)
+
+	function decode (elt) {
+		var code = elt.charCodeAt(0)
+		if (code === PLUS ||
+		    code === PLUS_URL_SAFE)
+			return 62 // '+'
+		if (code === SLASH ||
+		    code === SLASH_URL_SAFE)
+			return 63 // '/'
+		if (code < NUMBER)
+			return -1 //no match
+		if (code < NUMBER + 10)
+			return code - NUMBER + 26 + 26
+		if (code < UPPER + 26)
+			return code - UPPER
+		if (code < LOWER + 26)
+			return code - LOWER + 26
+	}
+
+	function b64ToByteArray (b64) {
+		var i, j, l, tmp, placeHolders, arr
+
+		if (b64.length % 4 > 0) {
+			throw new Error('Invalid string. Length must be a multiple of 4')
+		}
+
+		// the number of equal signs (place holders)
+		// if there are two placeholders, than the two characters before it
+		// represent one byte
+		// if there is only one, then the three characters before it represent 2 bytes
+		// this is just a cheap hack to not do indexOf twice
+		var len = b64.length
+		placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+
+		// base64 is 4/3 + up to two characters of the original data
+		arr = new Arr(b64.length * 3 / 4 - placeHolders)
+
+		// if there are placeholders, only get up to the last complete 4 chars
+		l = placeHolders > 0 ? b64.length - 4 : b64.length
+
+		var L = 0
+
+		function push (v) {
+			arr[L++] = v
+		}
+
+		for (i = 0, j = 0; i < l; i += 4, j += 3) {
+			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
+			push((tmp & 0xFF0000) >> 16)
+			push((tmp & 0xFF00) >> 8)
+			push(tmp & 0xFF)
+		}
+
+		if (placeHolders === 2) {
+			tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
+			push(tmp & 0xFF)
+		} else if (placeHolders === 1) {
+			tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
+			push((tmp >> 8) & 0xFF)
+			push(tmp & 0xFF)
+		}
+
+		return arr
+	}
+
+	function uint8ToBase64 (uint8) {
+		var i,
+			extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
+			output = "",
+			temp, length
+
+		function encode (num) {
+			return lookup.charAt(num)
+		}
+
+		function tripletToBase64 (num) {
+			return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
+		}
+
+		// go through the array every three bytes, we'll deal with trailing stuff later
+		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+			output += tripletToBase64(temp)
+		}
+
+		// pad the end with zeros, but make sure to not forget the extra bytes
+		switch (extraBytes) {
+			case 1:
+				temp = uint8[uint8.length - 1]
+				output += encode(temp >> 2)
+				output += encode((temp << 4) & 0x3F)
+				output += '=='
+				break
+			case 2:
+				temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
+				output += encode(temp >> 10)
+				output += encode((temp >> 4) & 0x3F)
+				output += encode((temp << 2) & 0x3F)
+				output += '='
+				break
+		}
+
+		return output
+	}
+
+	exports.toByteArray = b64ToByteArray
+	exports.fromByteArray = uint8ToBase64
+}(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
+
+},{}],6:[function(require,module,exports){
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = nBytes * 8 - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = nBytes * 8 - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = (value * c - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+},{}],7:[function(require,module,exports){
+
+/**
+ * isArray
+ */
+
+var isArray = Array.isArray;
+
+/**
+ * toString
+ */
+
+var str = Object.prototype.toString;
+
+/**
+ * Whether or not the given `val`
+ * is an array.
+ *
+ * example:
+ *
+ *        isArray([]);
+ *        // > true
+ *        isArray(arguments);
+ *        // > false
+ *        isArray('');
+ *        // > false
+ *
+ * @param {mixed} val
+ * @return {bool}
+ */
+
+module.exports = isArray || function (val) {
+  return !! val && '[object Array]' == str.call(val);
+};
+
+},{}],8:[function(require,module,exports){
+'use strict';
+
+/**
+ * Stringify an NLCST node.
+ *
+ * @param {NLCSTNode} nlcst
+ * @return {string}
+ */
+function nlcstToString(nlcst) {
+    var values,
+        length,
+        children;
+
+    if (typeof nlcst.value === 'string') {
+        return nlcst.value;
+    }
+
+    children = nlcst.children;
+    length = children.length;
+
+    /**
+     * Shortcut: This is pretty common, and a small performance win.
+     */
+
+    if (length === 1 && 'value' in children[0]) {
+        return children[0].value;
+    }
+
+    values = [];
+
+    while (length--) {
+        values[length] = nlcstToString(children[length]);
+    }
+
+    return values.join('');
+}
+
+/*
+ * Expose `nlcstToString`.
+ */
+
+module.exports = nlcstToString;
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/parse-latin');
 
-},{"./lib/parse-latin":6}],4:[function(require,module,exports){
+},{"./lib/parse-latin":12}],10:[function(require,module,exports){
 module.exports = {
     'affixSymbol': /^([\)\]\}\u0F3B\u0F3D\u169C\u2046\u207E\u208E\u2309\u230B\u232A\u2769\u276B\u276D\u276F\u2771\u2773\u2775\u27C6\u27E7\u27E9\u27EB\u27ED\u27EF\u2984\u2986\u2988\u298A\u298C\u298E\u2990\u2992\u2994\u2996\u2998\u29D9\u29DB\u29FD\u2E23\u2E25\u2E27\u2E29\u3009\u300B\u300D\u300F\u3011\u3015\u3017\u3019\u301B\u301E\u301F\uFD3E\uFE18\uFE36\uFE38\uFE3A\uFE3C\uFE3E\uFE40\uFE42\uFE44\uFE48\uFE5A\uFE5C\uFE5E\uFF09\uFF3D\uFF5D\uFF60\uFF63]|["'\xBB\u2019\u201D\u203A\u2E03\u2E05\u2E0A\u2E0D\u2E1D\u2E21]|[!\.\?\u2026\u203D])\1*$/,
     'newLine': /^(\r?\n|\r)+$/,
@@ -270,7 +1964,7 @@ module.exports = {
     'whiteSpace': /^(?:[\t-\r \x85\xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000])+$/
 };
 
-},{}],5:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 /*
@@ -325,7 +2019,7 @@ function modifierFactory(callback) {
 
 module.exports = modifierFactory;
 
-},{"array-iterate":26}],6:[function(require,module,exports){
+},{"array-iterate":32}],12:[function(require,module,exports){
 /*!
  * parse-latin
  *
@@ -1112,7 +2806,7 @@ ParseLatin.plugin = pluginFactory;
 
 ParseLatin.modifier = modifierFactory;
 
-},{"./expressions":4,"./modifier":5,"./parser":7,"./plugin":8,"./plugin/break-implicit-sentences":9,"./plugin/make-final-white-space-siblings":10,"./plugin/make-initial-white-space-siblings":11,"./plugin/merge-affix-exceptions":12,"./plugin/merge-affix-symbol":13,"./plugin/merge-final-word-symbol":14,"./plugin/merge-initial-lower-case-letter-sentences":15,"./plugin/merge-initial-word-symbol":16,"./plugin/merge-initialisms":17,"./plugin/merge-inner-word-symbol":18,"./plugin/merge-non-word-sentences":19,"./plugin/merge-prefix-exceptions":20,"./plugin/merge-remaining-full-stops":21,"./plugin/merge-words":22,"./plugin/patch-position":23,"./plugin/remove-empty-nodes":24}],7:[function(require,module,exports){
+},{"./expressions":10,"./modifier":11,"./parser":13,"./plugin":14,"./plugin/break-implicit-sentences":15,"./plugin/make-final-white-space-siblings":16,"./plugin/make-initial-white-space-siblings":17,"./plugin/merge-affix-exceptions":18,"./plugin/merge-affix-symbol":19,"./plugin/merge-final-word-symbol":20,"./plugin/merge-initial-lower-case-letter-sentences":21,"./plugin/merge-initial-word-symbol":22,"./plugin/merge-initialisms":23,"./plugin/merge-inner-word-symbol":24,"./plugin/merge-non-word-sentences":25,"./plugin/merge-prefix-exceptions":26,"./plugin/merge-remaining-full-stops":27,"./plugin/merge-words":28,"./plugin/patch-position":29,"./plugin/remove-empty-nodes":30}],13:[function(require,module,exports){
 'use strict';
 
 var tokenizer;
@@ -1152,7 +2846,7 @@ function parserFactory(options) {
 
 module.exports = parserFactory;
 
-},{"./tokenizer":25}],8:[function(require,module,exports){
+},{"./tokenizer":31}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1181,7 +2875,7 @@ function pluginFactory(callback) {
 
 module.exports = pluginFactory;
 
-},{}],9:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1278,7 +2972,7 @@ function breakImplicitSentences(child, index, parent) {
 
 module.exports = modifier(breakImplicitSentences);
 
-},{"../expressions":4,"../modifier":5,"nlcst-to-string":27}],10:[function(require,module,exports){
+},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],16:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1330,7 +3024,7 @@ function makeFinalWhiteSpaceSiblings(child, index, parent) {
 
 module.exports = modifier(makeFinalWhiteSpaceSiblings);
 
-},{"../modifier":5}],11:[function(require,module,exports){
+},{"../modifier":11}],17:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1375,7 +3069,7 @@ function makeInitialWhiteSpaceSiblings(child, index, parent) {
 
 module.exports = plugin(makeInitialWhiteSpaceSiblings);
 
-},{"../plugin":8}],12:[function(require,module,exports){
+},{"../plugin":14}],18:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1459,7 +3153,7 @@ function mergeAffixExceptions(child, index, parent) {
 
 module.exports = modifier(mergeAffixExceptions);
 
-},{"../modifier":5,"nlcst-to-string":27}],13:[function(require,module,exports){
+},{"../modifier":11,"nlcst-to-string":33}],19:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1550,7 +3244,7 @@ function mergeAffixSymbol(child, index, parent) {
 
 module.exports = modifier(mergeAffixSymbol);
 
-},{"../expressions":4,"../modifier":5,"nlcst-to-string":27}],14:[function(require,module,exports){
+},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],20:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1637,7 +3331,7 @@ function mergeFinalWordSymbol(child, index, parent) {
 
 module.exports = modifier(mergeFinalWordSymbol);
 
-},{"../modifier":5,"nlcst-to-string":27}],15:[function(require,module,exports){
+},{"../modifier":11,"nlcst-to-string":33}],21:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1735,7 +3429,7 @@ function mergeInitialLowerCaseLetterSentences(child, index, parent) {
 
 module.exports = modifier(mergeInitialLowerCaseLetterSentences);
 
-},{"../expressions":4,"../modifier":5,"nlcst-to-string":27}],16:[function(require,module,exports){
+},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],22:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1829,7 +3523,7 @@ function mergeInitialWordSymbol(child, index, parent) {
 
 module.exports = modifier(mergeInitialWordSymbol);
 
-},{"../modifier":5,"nlcst-to-string":27}],17:[function(require,module,exports){
+},{"../modifier":11,"nlcst-to-string":33}],23:[function(require,module,exports){
 'use strict';
 
 /*
@@ -1957,7 +3651,7 @@ function mergeInitialisms(child, index, parent) {
 
 module.exports = modifier(mergeInitialisms);
 
-},{"../expressions":4,"../modifier":5,"nlcst-to-string":27}],18:[function(require,module,exports){
+},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],24:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2096,7 +3790,7 @@ function mergeInnerWordSymbol(child, index, parent) {
 
 module.exports = modifier(mergeInnerWordSymbol);
 
-},{"../expressions":4,"../modifier":5,"nlcst-to-string":27}],19:[function(require,module,exports){
+},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],25:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2186,7 +3880,7 @@ function mergeNonWordSentences(child, index, parent) {
 
 module.exports = modifier(mergeNonWordSentences);
 
-},{"../modifier":5}],20:[function(require,module,exports){
+},{"../modifier":11}],26:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2297,7 +3991,7 @@ function mergePrefixExceptions(child, index, parent) {
 
 module.exports = modifier(mergePrefixExceptions);
 
-},{"../modifier":5,"nlcst-to-string":27}],21:[function(require,module,exports){
+},{"../modifier":11,"nlcst-to-string":33}],27:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2463,7 +4157,7 @@ function mergeRemainingFullStops(child) {
 
 module.exports = plugin(mergeRemainingFullStops);
 
-},{"../expressions":4,"../plugin":8,"nlcst-to-string":27}],22:[function(require,module,exports){
+},{"../expressions":10,"../plugin":14,"nlcst-to-string":33}],28:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2527,7 +4221,7 @@ function mergeFinalWordSymbol(child, index, parent) {
 
 module.exports = modifier(mergeFinalWordSymbol);
 
-},{"../modifier":5}],23:[function(require,module,exports){
+},{"../modifier":11}],29:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2584,7 +4278,7 @@ function patchPosition(child, index, node) {
 
 module.exports = plugin(patchPosition);
 
-},{"../plugin":8}],24:[function(require,module,exports){
+},{"../plugin":14}],30:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2623,7 +4317,7 @@ function removeEmptyNodes(child, index, parent) {
 
 module.exports = modifier(removeEmptyNodes);
 
-},{"../modifier":5}],25:[function(require,module,exports){
+},{"../modifier":11}],31:[function(require,module,exports){
 'use strict';
 
 var nlcstToString;
@@ -2705,7 +4399,7 @@ function tokenizerFactory(childType, expression) {
 
 module.exports = tokenizerFactory;
 
-},{"nlcst-to-string":27}],26:[function(require,module,exports){
+},{"nlcst-to-string":33}],32:[function(require,module,exports){
 'use strict';
 
 /**
@@ -2792,2105 +4486,1274 @@ function iterate(values, callback, context) {
 
 module.exports = iterate;
 
-},{}],27:[function(require,module,exports){
-'use strict';
-
+},{}],33:[function(require,module,exports){
+arguments[4][8][0].apply(exports,arguments)
+},{"dup":8}],34:[function(require,module,exports){
 /**
- * Stringify an NLCST node.
- *
- * @param {NLCSTNode} nlcst
- * @return {string}
- */
-function nlcstToString(nlcst) {
-    var values,
-        length,
-        children;
-
-    if (typeof nlcst.value === 'string') {
-        return nlcst.value;
-    }
-
-    children = nlcst.children;
-    length = children.length;
-
-    /**
-     * Shortcut: This is pretty common, and a small performance win.
-     */
-
-    if (length === 1 && 'value' in children[0]) {
-        return children[0].value;
-    }
-
-    values = [];
-
-    while (length--) {
-        values[length] = nlcstToString(children[length]);
-    }
-
-    return values.join('');
-}
-
-/*
- * Expose `nlcstToString`.
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module unified
+ * @fileoverview Parse / Transform / Compile / Repeat.
  */
 
-module.exports = nlcstToString;
-
-},{}],28:[function(require,module,exports){
 'use strict';
 
 /*
- * Cached methods.
+ * Dependencies.
  */
 
-var has,
-    arrayPrototype,
-    arraySlice,
-    arrayJoin;
-
-has = Object.prototype.hasOwnProperty;
-
-arrayPrototype = Array.prototype;
-
-arraySlice = arrayPrototype.slice;
-arrayJoin = arrayPrototype.join;
+var bail = require('bail');
+var ware = require('ware');
+var AttachWare = require('attach-ware')(ware);
+var VFile = require('vfile');
+var unherit = require('unherit');
 
 /*
- * Utilities.
- *
- * These utilities are specialised to work on nodes,
- * with a length property that needs updating,
- * and without falsey/missing values.
+ * Processing pipeline.
  */
+
+var pipeline = ware()
+    .use(function (ctx) {
+        ctx.tree = ctx.context.parse(ctx.file, ctx.settings);
+    })
+    .use(function (ctx, next) {
+        ctx.context.run(ctx.tree, ctx.file, next);
+    })
+    .use(function (ctx) {
+        ctx.result = ctx.context.stringify(ctx.tree, ctx.file, ctx.settings);
+    });
 
 /**
- * Insert `value` at `position` in `arrayLike`,
- * and move all values in `arrayLike` from `position`
- * to `length` one position forwards.
+ * Construct a new Processor class based on the
+ * given options.
  *
- * Expects all values in `arrayLike` to be truthy.
- *
- * @param {Array.<*>} arrayLike
- * @param {*} value
- * @param {number} position
- * @private
+ * @param {Object} options - Configuration.
+ * @param {string} options.name - Private storage.
+ * @param {string} options.type - Type of syntax tree.
+ * @param {Function} options.Parser - Class to turn a
+ *   virtual file into a syntax tree.
+ * @param {Function} options.Compiler - Class to turn a
+ *   syntax tree into a string.
+ * @return {Processor} - A new constructor.
  */
-function arrayLikeMove(arrayLike, value, position) {
-    var next;
-
-    if (!arrayLike[position]) {
-        arrayLike[position] = value;
-
-        position++;
-    } else {
-        while (value) {
-            next = arrayLike[position];
-
-            arrayLike[position] = value;
-
-            position++;
-
-            value = next;
-        }
-    }
-
-    arrayLike.length = position;
-}
-
-/**
- * Remove the item at `position` in `arrayLike`,
- * and move all values in `arrayLike` from `position`
- * to `length` one position backwards.
- *
- * Expects all values in `arrayLike` to be truthy.
- *
- * @param {Array.<*>} arrayLike
- * @param {number} position
- * @private
- */
-function arrayLikeRemove(arrayLike, position) {
-    while (arrayLike[position]) {
-        arrayLike[position] = arrayLike[++position];
-    }
-
-    arrayLike.length--;
-}
-
-/**
- * Find the position of `value` in `arrayLike`.
- * Returns `-1` if value is not found.
- *
- * Expects all values in `arrayLike` to be truthy.
- *
- * @param {Array.<*>} arrayLike
- * @param {*} value
- * @return {number} position, or `-1`
- * @private
- */
-function arrayLikeIndexOf(arrayLike, value) {
-    var index;
-
-    index = -1;
-
-    while (arrayLike[++index]) {
-        if (arrayLike[index] === value) {
-            return index;
-        }
-    }
-
-    return -1;
-}
-
-/*
- * Static node types.
- */
-
-var ROOT_NODE,
-    PARAGRAPH_NODE,
-    SENTENCE_NODE,
-    WORD_NODE,
-    SYMBOL_NODE,
-    PUNCTUATION_NODE,
-    WHITE_SPACE_NODE,
-    SOURCE_NODE,
-    TEXT_NODE;
-
-ROOT_NODE = 'RootNode';
-PARAGRAPH_NODE = 'ParagraphNode';
-SENTENCE_NODE = 'SentenceNode';
-WORD_NODE = 'WordNode';
-SYMBOL_NODE = 'SymbolNode';
-PUNCTUATION_NODE = 'PunctuationNode';
-WHITE_SPACE_NODE = 'WhiteSpaceNode';
-SOURCE_NODE = 'SourceNode';
-TEXT_NODE = 'TextNode';
-
-/*
- * Static node names.
- */
-
-var NODE,
-    PARENT,
-    CHILD,
-    ELEMENT,
-    TEXT;
-
-NODE = 'Node';
-PARENT = 'Parent';
-CHILD = 'Child';
-ELEMENT = 'Element';
-TEXT = 'Text';
-
-/**
- * Invoke listeners while a condition returns true
- *
- * @param {function(): function(): boolean} condition
- * @private
- */
-function invokeEvent(condition) {
-    /**
-     * Invoke every callback in `callbacks` with `parameters`
-     * and `context` as its context object, while the condition
-     * returns truthy.
-     *
-     * @param {Array.<Function>} handlers
-     * @param {string} name
-     * @param {Array.<*>} parameters
-     * @param {Node} context
-     */
-    return function (handlers, name, parameters, context) {
-        var index,
-            length,
-            test;
-
-        if (!handlers) {
-            return true;
-        }
-
-        handlers = handlers[name];
-
-        if (!handlers || !handlers.length) {
-            return true;
-        }
-
-        test = condition.apply(context, parameters);
-
-        index = -1;
-        length = handlers.length;
-
-        handlers = handlers.concat();
-
-        while (++index < length) {
-            if (!test()) {
-                return false;
-            }
-
-            handlers[index].apply(context, parameters);
-        }
-
-        return test();
-    };
-}
-
-/*
- * `remove` event condition.
- */
-
-invokeEvent.remove = invokeEvent(function (previousParent) {
-    var self;
-
-    self = this;
+function unified(options) {
+    var name = options.name;
+    var type = options.type;
+    var Parser = options.Parser;
+    var Compiler = options.Compiler;
 
     /**
-     * Return true if the current parent is not
-     * the removed-from parent.
+     * Construct a Processor instance.
      *
-     * @return {boolean}
+     * @constructor
+     * @class {Processor}
      */
-    return function () {
-        return previousParent !== self.parent;
-    };
-});
+    function Processor(processor) {
+        var self = this;
 
-/*
- * `insert` event condition.
- */
+        if (!(self instanceof Processor)) {
+            return new Processor(processor);
+        }
 
-invokeEvent.insert = invokeEvent(function () {
-    var self,
-        parent;
+        self.ware = new AttachWare(processor && processor.ware);
+        self.ware.context = self;
 
-    self = this;
-    parent = self.parent;
+        self.Parser = unherit(Parser);
+        self.Compiler = unherit(Compiler);
+    }
 
     /**
-     * Return true if the current parent is
-     * the inserted-into parent.
+     * Either return `context` if its an instance
+     * of `Processor` or construct a new `Processor`
+     * instance.
      *
-     * @return {boolean}
+     * @private
+     * @param {Processor?} [context] - Context object.
+     * @return {Processor} - Either `context` or a new
+     *   Processor instance.
      */
-    return function () {
-        return parent === self.parent;
-    };
-});
-
-/*
- * `insertinside` event condition.
- */
-
-invokeEvent.insertinside = invokeEvent(function (node) {
-    var parent;
-
-    parent = node.parent;
-
-    return function () {
-        return node.parent === parent;
-    };
-});
-
-/*
- * `removeinside` event condition.
- */
-
-invokeEvent.removeinside = invokeEvent(function (node, previousParent) {
-    return function () {
-        return node.parent !== previousParent;
-    };
-});
-
-/*
- * Default conditional (always returns `true`).
- */
-
-var invokeAll;
-
-invokeAll = invokeEvent(function () {
-    return function () {
-        return true;
-    };
-});
-
-/**
- * Return whether or not `child` can be inserted
- * into `parent`.
- *
- * @param {Parent} parent
- * @param {Child} child
- * @return {boolean}
- * @private
- */
-function canInsertIntoParent(parent, child) {
-    var allowed;
-
-    allowed = parent.allowedChildTypes;
-
-    if (!allowed || !allowed.length || !child.type) {
-        return true;
+    function instance(context) {
+        return context instanceof Processor ? context : new Processor();
     }
 
-    return arrayLikeIndexOf(allowed, child.type) !== -1;
-}
-
-/**
- * Insert all `children` after `start` in `parent`, or at
- * `parent`s head when `start` is not given.
- *
- * @param {Parent} parent
- * @param {Child?} start
- * @param {Array.<Child>} children
- * @return {Array.<Child>} `children`.
- * @private
- */
-function insertAll(parent, start, children) {
-    var index,
-        length,
-        prev,
-        end,
-        child,
-        indice;
-
-    if (!parent) {
-        throw new Error(
-            'TypeError: `' + parent + '` is not a ' +
-            'valid `parent` for `insertAll`'
-        );
-    }
-
-    if (!children) {
-        throw new Error(
-            'TypeError: `' + children + '` is not a ' +
-            'valid `children` for `insertAll`'
-        );
-    }
-
-    /*
-     * Exit early.
-     */
-
-    length = children.length;
-
-    if (!length) {
-        return children;
-    }
-
-    if (start) {
-        if (start.parent !== parent) {
-            throw new Error(
-                'HierarchyError: The operated on node ' +
-                'is detached from `parent`'
-            );
-        }
-
-        indice = arrayLikeIndexOf(parent, start);
-
-        if (indice === -1) {
-            throw new Error(
-                'HierarchyError: The operated on node ' +
-                'is attached to `parent`, but `parent` ' +
-                'has no index corresponding to the node'
-            );
-        }
-    }
-
-    /*
-     * Remove `children` from their parents.
-     */
-
-    index = -1;
-
-    while (++index < length) {
-        child = children[index];
-
-        if (typeof child.remove !== 'function') {
-            throw new Error(
-                'TypeError: `' + child + '` does not ' +
-                'have a `remove` method'
-            );
-        }
-
-        if (parent === child) {
-            throw new Error(
-                'HierarchyError: Cannot insert `node` into ' +
-                'self'
-            );
-        }
-
-        /*
-         * Detach `child`.
-         */
-
-        child.remove();
-    }
-
-    /*
-     * Clean start and end after removal.
-     */
-
-    if (start && start.parent === parent) {
-        end = start.next;
-    } else {
-        start = null;
-        end = parent.head;
-        indice = -1;
-    }
-
-    /*
-     * Insert `children`.
-     */
-
-    index = -1;
-
-    prev = start;
-
-    while (children[++index]) {
-        child = children[index];
-
-        /*
-         * Set `child`s parent to parent.
-         */
-
-        child.parent = parent;
-
-        /*
-         * Set `child`s prev node to `prev` and
-         * `prev`s next node to `child`.
-         */
-
-        if (prev) {
-            child.prev = prev;
-
-            prev.next = child;
-        }
-
-        /*
-         * Prepare for the next iteration.
-         */
-
-        prev = child;
-    }
-
-    /*
-     * Set the `child`s next node to `end`.
-     */
-
-    if (end) {
-        prev.next = end;
-        end.prev = prev;
-    }
-
-    /*
-     * Update `head` and `tail`.
-     */
-
-    if (!start) {
-        parent.head = children[0];
-
-        if (!parent.tail && (end || length !== 1)) {
-            parent.tail = end || prev;
-        }
-    } else if (!end) {
-        parent.tail = prev;
-    }
-
-    /*
-     * Update array-like representation.
+    /**
+     * Attach a plugin.
      *
-     * The linked-list representation is valid, but
+     * @this {Processor?} - Either a Processor instance or
+     *   the Processor constructor.
+     * @return {Processor}
      */
+    function use() {
+        var self = instance(this);
 
-    index = indice;
+        self.ware.use.apply(self.ware, arguments);
 
-    child = children[0];
-
-    while (child) {
-        parent[++index] = child;
-
-        child = child.next;
+        return self;
     }
 
-    parent.length += children.length;
-
-    /*
-     * Emit events.
+    /**
+     * Transform.
+     *
+     * @this {Processor?} - Either a Processor instance or
+     *   the Processor constructor.
+     * @param {Node} [node] - Syntax tree.
+     * @param {VFile?} [file] - Virtual file.
+     * @param {Function?} [done] - Callback.
+     * @return {Node} - `node`.
      */
+    function run(node, file, done) {
+        var self = this;
+        var space;
 
-    index = -1;
-
-    while (children[++index]) {
-        children[index].trigger('insert', parent);
-    }
-
-    /*
-     * Emit a single `change` event.
-     * This will also trigger `changeinside` events on
-     * `parent` and its constructors.
-     */
-
-    parent.trigger('change', parent);
-
-    return children;
-}
-
-/**
- * Insert `child` after `item` in `parent`, or at
- * `parent`s head when `item` is not given.
- *
- * @param {Parent} parent
- * @param {Child} item
- * @param {Child} child
- * @return {Child} `child`.
- * @private
- */
-function insert(parent, item, child) {
-    var next,
-        indice;
-
-    if (!parent) {
-        throw new Error(
-            'TypeError: `' + parent + '` is not a ' +
-            'valid `parent` for `insert`'
-        );
-    }
-
-    if (!child) {
-        throw new Error(
-            'TypeError: `' + child + '` is not a ' +
-            'valid `child` for `insert`'
-        );
-    }
-
-    if (parent === child || parent === item) {
-        throw new Error(
-            'HierarchyError: Cannot insert `node` into ' +
-            'self'
-        );
-    }
-
-    if (!canInsertIntoParent(parent, child)) {
-        throw new Error(
-            'HierarchyError: The operation would yield ' +
-            'an incorrect node tree'
-        );
-    }
-
-    if (typeof child.remove !== 'function') {
-        throw new Error(
-            'TypeError: The operated on node does not ' +
-            'have a `remove` method'
-        );
-    }
-
-    /*
-     * Exit early.
-     */
-
-    if (item && item === child) {
-        return child;
-    }
-
-    /*
-     * Detach `child`.
-     */
-
-    child.remove();
-
-    /*
-     * Set `child`s parent to parent.
-     */
-
-    child.parent = parent;
-
-    if (item) {
-        next = item.next;
-
-        if (item.parent !== parent) {
-            throw new Error(
-                'HierarchyError: The operated on node ' +
-                'is detached from `parent`'
-            );
+        if (typeof file === 'function') {
+            done = file;
+            file = null;
         }
 
-        indice = arrayLikeIndexOf(parent, item);
-
-        if (indice === -1) {
-            throw new Error(
-                'HierarchyError: The operated on node ' +
-                'is attached to `parent`, but `parent` ' +
-                'has no index corresponding to the node'
-            );
+        if (!file && node && !node.type) {
+            file = node;
+            node = null;
         }
-    } else {
-        item = null;
-        next = parent.head;
-        indice = -1;
-    }
 
-    if (item || next) {
-        /*
-         * If `item` has a next node, link `child`s next
-         * node, to `item`s next node, and link the next
-         * nodes previous node to `child`.
-         */
+        file = new VFile(file);
+        space = file.namespace(name);
 
-        if (next) {
-            child.next = next;
-            next.prev = child;
+        if (!node) {
+            node = space[type] || node;
+        } else if (!space[type]) {
+            space[type] = node;
         }
+
+        if (!node) {
+            throw new Error('Expected node, got ' + node);
+        }
+
+        done = typeof done === 'function' ? done : bail;
 
         /*
-         * Set `child`s previous node to `item`, and set
-         * the next node of `item` to `child`.
+         * Only run when this is an instance of Processor,
+         * and when there are transformers.
          */
 
-        if (item) {
-            child.prev = item;
-            item.next = child;
-
-            if (item === parent.tail || !parent.tail) {
-                parent.tail = child;
-            }
+        if (self.ware && self.ware.fns) {
+            self.ware.run(node, file, done);
         } else {
-            parent.head = child;
-
-            if (!parent.tail) {
-                parent.tail = next;
-            }
+            done(null, node, file);
         }
 
-        /*
-         * If the parent has no last node or if `item` is
-         * `parent`s last node.
-         */
-
-        arrayLikeMove(parent, child, indice + 1);
-    } else {
-        /*
-         * Prepend the node: There is no `head`, nor
-         * `tail` node yet.
-         *
-         * Set `parent`s head to `child`.
-         */
-
-        parent.head = child;
-        parent[0] = child;
-        parent.length = 1;
-    }
-
-    /*
-     * Emit events.
-     */
-
-    child.trigger('insert', parent);
-
-    /*
-     * Emit a single `change` event.
-     * This will also trigger `changeinside` events on
-     * `parent` and its constructors.
-     */
-
-    parent.trigger('change', parent);
-
-    return child;
-}
-
-/**
- * Remove `node` from its parent.
- *
- * @param {Child} node
- * @return {Child} - `node`.
- * @private
- */
-function remove(node) {
-    var parent,
-        prev,
-        next,
-        indice;
-
-    if (!node) {
-        throw new Error(
-            'TypeError: `' + node + '` is not a ' +
-            'valid `node` for `remove`'
-        );
-    }
-
-    /*
-     * Exit early when the node is already detached.
-     */
-
-    parent = node.parent;
-
-    if (!parent) {
         return node;
     }
 
-    prev = node.prev;
-    next = node.next;
-
-    /*
-     * If `node` is its parent's tail, link the
-     * tail to `node`s previous item.
+    /**
+     * Parse a file.
+     *
+     * Patches the parsed node onto the `name`
+     * namespace on the `type` property.
+     *
+     * @this {Processor?} - Either a Processor instance or
+     *   the Processor constructor.
+     * @param {string|VFile} value - Input to parse.
+     * @param {Object?} [settings] - Configuration.
+     * @return {Node} - `node`.
      */
+    function parse(value, settings) {
+        var file = new VFile(value);
+        var CustomParser = (this && this.Parser) || Parser;
+        var node = new CustomParser(file, settings).parse();
 
-    if (parent.tail === node) {
-        parent.tail = prev;
+        file.namespace(name)[type] = node;
+
+        return node;
     }
 
-    /*
-     * If `node` is its parent's head, link the
-     * head to `node`s next item.
+    /**
+     * Compile a file.
+     *
+     * Used the parsed node at the `name`
+     * namespace at `type` when no node was given.
+     *
+     * @this {Processor?} - Either a Processor instance or
+     *   the Processor constructor.
+     * @param {Object} [node] - Syntax tree.
+     * @param {VFile} [file] - File with syntax tree.
+     * @param {Object?} [settings] - Configuration.
+     * @return {string} - Compiled `file`.
      */
+    function stringify(node, file, settings) {
+        var CustomCompiler = (this && this.Compiler) || Compiler;
+        var space;
 
-    if (parent.head === node) {
-        parent.head = next;
+        if (settings === null || settings === undefined) {
+            settings = file;
+            file = null;
+        }
+
+        if (!file && node && !node.type) {
+            file = node;
+            node = null;
+        }
+
+        file = new VFile(file);
+        space = file.namespace(name);
+
+        if (!node) {
+            node = space[type] || node;
+        } else if (!space[type]) {
+            space[type] = node;
+        }
+
+        if (!node) {
+            throw new Error('Expected node, got ' + node);
+        }
+
+        return new CustomCompiler(file, settings).compile();
     }
 
-    /*
-     * If node was its parent's only child,
-     * remove the `tail` we just added.
+    /**
+     * Parse / Transform / Compile.
+     *
+     * @this {Processor?} - Either a Processor instance or
+     *   the Processor constructor.
+     * @param {string|VFile} value - Input to process.
+     * @param {Object?} [settings] - Configuration.
+     * @param {Function?} [done] - Callback.
+     * @return {string?} - Parsed document, when
+     *   transformation was async.
      */
+    function process(value, settings, done) {
+        var self = instance(this);
+        var file = new VFile(value);
+        var result = null;
 
-    if (parent.tail === parent.head) {
-        parent.tail = null;
-    }
+        if (typeof settings === 'function') {
+            done = settings;
+            settings = null;
+        }
 
-    /*
-     * If a previous item exists, link its next item to
-     * `node`s next item.
-     */
+        pipeline.run({
+            'context': self,
+            'file': file,
+            'settings': settings || {}
+        }, function (err, res) {
+            result = res && res.result;
 
-    if (prev) {
-        prev.next = next;
-    }
-
-    /*
-     * If a next item exists, link its previous item to
-     * `node`s previous item.
-     */
-
-    if (next) {
-        next.prev = prev;
-    }
-
-    indice = arrayLikeIndexOf(parent, node);
-
-    if (indice === -1) {
-        throw new Error(
-            'HierarchyError: The operated on node ' +
-            'is attached to `parent`, but `parent` ' +
-            'has no index corresponding to the node'
-        );
-    }
-
-    arrayLikeRemove(parent, indice);
-
-    /*
-     * Remove links from `node` to both its next and
-     * previous items, and its parent.
-     */
-
-    node.prev = null;
-    node.next = null;
-    node.parent = null;
-
-    /*
-     * Emit events.
-     */
-
-    node.trigger('remove', parent, parent);
-
-    /*
-     * Emit a single `change` event.
-     * This will also trigger `changeinside` events on
-     * `parent` and its constructors.
-     */
-
-    parent.trigger('change', parent);
-
-    return node;
-}
-
-/**
- * Throw an error if a split would be invalid.
- *
- * @param {number} position
- * @param {number} length
- * @return {number} - Normalised position.
- * @private
- */
-function validateSplitPosition(position, length) {
-    if (
-        position === null ||
-        position === undefined ||
-        position !== position ||
-        position === -Infinity
-    ) {
-        position = 0;
-    } else if (position === Infinity) {
-        position = length;
-    } else if (typeof position !== 'number') {
-        throw new TypeError(
-            'TypeError: `' + position + '` is not a ' +
-            'valid `position` for `#split()`'
-        );
-    } else if (position < 0) {
-        position = Math.abs((length + position) % length);
-    }
-
-    return position;
-}
-
-/**
- * Add data in a TextOM node to an NLCST node.
- *
- * @param {Node} node
- * @param {NLCSTNode} nlcst
- * @private
- */
-function dataToJSON(node, nlcst) {
-    var data,
-        attribute;
-
-    data = node.data;
-
-    for (attribute in data) {
-        if (has.call(data, attribute)) {
-            /*
-             * This makes sure no empty data objects
-             * are created.
-             */
-
-            if (!nlcst.data) {
-                nlcst.data = {};
+            if (done) {
+                done(err, file, result);
+            } else if (err) {
+                bail(err);
             }
-
-            nlcst.data[attribute] = data[attribute];
-        }
-    }
-}
-
-/**
- * Inherit Super's prototype into a `Constructor`.
- *
- * Such as `Node` is implemented by `Parent`, `Parent`
- * is implemented by `RootNode`, etc.
- *
- * @param {Function} Constructor
- * @this {Function} - Super.
- * @private
- */
-function isImplementedBy(Constructor) {
-    var self,
-        constructors,
-        constructorPrototype,
-        key,
-        newPrototype;
-
-    self = this;
-
-    constructors = [Constructor].concat(self.constructors || [self]);
-
-    constructorPrototype = Constructor.prototype;
-
-    /**
-     * Construct a new prototype.
-     */
-    function AltConstructor () {}
-
-    AltConstructor.prototype = self.prototype;
-
-    newPrototype = new AltConstructor();
-
-    for (key in constructorPrototype) {
-        /*
-         * Note: Code climate, and probably other
-         * linters, will fail here. Thats okay,
-         * they're wrong.
-         */
-
-        newPrototype[key] = constructorPrototype[key];
-    }
-
-    /*
-     * Some browser do not enumerate custom
-     * `toString` methods, `Node.isImplementedBy`
-     * does cater for `toString`, but not others
-     * (`valueOf` and such).
-     */
-
-    if (constructorPrototype.toString !== {}.toString) {
-        newPrototype.toString = constructorPrototype.toString;
-    }
-
-    if (constructorPrototype.valueOf !== {}.valueOf) {
-        newPrototype.valueOf = constructorPrototype.valueOf;
-    }
-
-    /*
-     * Copy properties and methods on the Super (not
-     * its prototype) over to the given `Constructor`.
-     */
-
-    for (key in self) {
-        if (has.call(self, key)) {
-            Constructor[key] = self[key];
-        }
-    }
-
-    /*
-     * Enable nicely displayed `> Node` instead of
-     * `> Object` in some browser consoles.
-     */
-
-    newPrototype.constructor = Constructor;
-
-    /*
-     * Store all constructor function.
-     */
-
-    Constructor.constructors = constructors;
-
-    /*
-     * Set the new prototype.
-     */
-
-    Constructor.prototype = newPrototype;
-}
-
-/**
- * Construct a new TextOM namespace.
- *
- * @return {TextOM}
- */
-function TextOMConstructor() {
-    var nodePrototype,
-        parentPrototype,
-        childPrototype,
-        textPrototype,
-        TextOM;
-
-    /**
-     * Define `Node`.
-     *
-     * @constructor Node
-     */
-    function Node() {
-        if (!this.data) {
-            this.data = {};
-        }
-    }
-
-    nodePrototype = Node.prototype;
-
-    /**
-     * Expose the node name of `Node`.
-     *
-     * @readonly
-     * @static
-     * @memberof Node#
-     */
-    nodePrototype.nodeName = NODE;
-
-    /**
-     * Listen to an event.
-     *
-     * @param {string} name
-     * @param {function(...*)} handler
-     * @this {Node|Function}
-     * @return {Node|Function}
-     */
-    nodePrototype.on = Node.on = function (name, handler) {
-        var self,
-            handlers;
-
-        self = this;
-
-        if (typeof name !== 'string') {
-            if (name === null || name === undefined) {
-                return self;
-            }
-
-            throw new Error(
-                'Illegal invocation: `' + name + '` ' +
-                'is not a valid `name` for ' +
-                '`on(name, handler)`'
-            );
-        }
-
-        if (typeof handler !== 'function') {
-            if (handler === null || handler === undefined) {
-                return self;
-            }
-
-            throw new TypeError(
-                'Illegal invocation: `' + handler + '` ' +
-                'is not a valid `handler` for ' +
-                '`on(name, handler)`'
-            );
-        }
-
-        handlers = self.callbacks || (self.callbacks = {});
-        handlers = handlers[name] || (handlers[name] = []);
-        handlers.unshift(handler);
-
-        return self;
-    };
-
-    /**
-     * Stop listening to an event.
-     *
-     * - When no arguments are given, stops listening;
-     * - When `name` is given, stops listening to events
-     *   of name `name`;
-     * - When `name` and `handler` are given, stops
-     *   invoking `handler` when events of name `name`
-     *   are emitted.
-     *
-     * @param {string?} name
-     * @param {function(...[*])?} handler
-     * @this {Node|Function}
-     * @return {Node|Function}
-     */
-    nodePrototype.off = Node.off = function (name, handler) {
-        var self,
-            handlers,
-            indice;
-
-        self = this;
-
-        if (
-            (name === null || name === undefined) &&
-            (handler === null || handler === undefined)
-        ) {
-            self.callbacks = {};
-
-            return self;
-        }
-
-        if (typeof name !== 'string') {
-            if (name === null || name === undefined) {
-                return self;
-            }
-
-            throw new Error(
-                'Illegal invocation: `' + name + '` ' +
-                'is not a valid `name` for ' +
-                '`off(name, handler)`'
-            );
-        }
-
-        handlers = self.callbacks;
-
-        if (!handlers) {
-            return self;
-        }
-
-        handlers = handlers[name];
-
-        if (!handlers) {
-            return self;
-        }
-
-        if (typeof handler !== 'function') {
-            if (handler === null || handler === undefined) {
-                self.callbacks[name] = [];
-
-                return self;
-            }
-
-            throw new Error(
-                'Illegal invocation: `' + handler + '` ' +
-                'is not a valid `handler` for ' +
-                '`off(name, handler)`'
-            );
-        }
-
-        indice = handlers.indexOf(handler);
-
-        if (indice !== -1) {
-            handlers.splice(indice, 1);
-        }
-
-        return self;
-    };
-
-    /**
-     * Emit an event.
-     * Passes all other arguments to the handlers.
-     *
-     * @param {string} name
-     * @this {Node}
-     * @return {Node|boolean}
-     */
-    nodePrototype.emit = function (name) {
-        var self,
-            parameters,
-            constructors,
-            constructor,
-            index,
-            length,
-            invoke,
-            handlers;
-
-        self = this;
-        handlers = self.callbacks;
-
-        invoke = invokeEvent[name] || invokeAll;
-
-        parameters = arraySlice.call(arguments, 1);
-
-        if (!invoke(handlers, name, parameters, self)) {
-            return false;
-        }
-
-        constructors = self.constructor.constructors;
-
-        if (!constructors) {
-            throw new Error(
-                'HierarchyError: The operated on node ' +
-                'is not a node'
-            );
-        }
-
-        length = constructors.length;
-        index = -1;
-
-        while (++index < length) {
-            constructor = constructors[index];
-
-            if (!invoke(constructor.callbacks, name, parameters, self)) {
-                return false;
-            }
-        }
-
-        return true;
-    };
-
-    /**
-     * Emit an event, and trigger a bubbling event on context.
-     * Passes all other arguments to the handlers.
-     *
-     * @param {string} name
-     * @param {Node} context
-     * @this {Node}
-     * @return {Node|boolean}
-     */
-    nodePrototype.trigger = function (name, context) {
-        var self,
-            node,
-            parameters,
-            invoke;
-
-        self = this;
-
-        parameters = arraySlice.call(arguments, 2);
-
-        /*
-         * Emit the event, exit with an error if it's canceled.
-         */
-
-        if (!self.emit.apply(self, [name].concat(parameters))) {
-            return false;
-        }
-
-        /*
-         * Exit if no context exists.
-         */
-
-        if (!context) {
-            return true;
-        }
-
-        /*
-         * Start firing bubbling events.
-         */
-
-        name += 'inside';
-
-        invoke = invokeEvent[name] || invokeAll;
-
-        parameters = [self].concat(parameters);
-
-        node = context;
-
-        while (node) {
-            if (!invoke(node.callbacks, name, parameters, node)) {
-                return false;
-            }
-
-            if (!invoke(node.constructor.callbacks, name, parameters, node)) {
-                return false;
-            }
-
-            node = node.parent;
-        }
-
-        return true;
-    };
-
-    /*
-     * Expose `isImplementedBy` on Node.
-     */
-
-    Node.isImplementedBy = isImplementedBy;
-
-    /**
-     * Define `Parent`.
-     *
-     * @constructor Parent
-     * @extends {Node}
-     */
-    function Parent() {
-        Node.apply(this, arguments);
-    }
-
-    parentPrototype = Parent.prototype;
-
-    /**
-     * Expose the node name of `Parent`.
-     *
-     * @readonly
-     * @static
-     */
-    parentPrototype.nodeName = PARENT;
-
-    /**
-     * First child of a `parent`, null otherwise.
-     *
-     * @type {Child?}
-     * @readonly
-     */
-    parentPrototype.head = null;
-
-    /**
-     * Last child of a `parent` (unless the last child
-     * is also the first child), `null` otherwise.
-     *
-     * @type {Child?}
-     * @readonly
-     */
-    parentPrototype.tail = null;
-
-    /**
-     * Number of children in `parent`.
-     *
-     * @type {number}
-     * @readonly
-     */
-    parentPrototype.length = 0;
-
-    /**
-     * Insert a child at the beginning of the parent.
-     *
-     * @param {Child} child - Child to insert as the new
-     *   head.
-     * @return {self}
-     */
-    parentPrototype.prepend = function (child) {
-        return insert(this, null, child);
-    };
-
-    /**
-     * Insert children at the beginning of the parent.
-     *
-     * @param {Array.<Child>} children - Children to
-     *   insert at the start.
-     * @return {self}
-     */
-    parentPrototype.prependAll = function (children) {
-        return insertAll(this, null, children);
-    };
-
-    /**
-     * Insert a child at the end of the list (like Array#push).
-     *
-     * @param {Child} child - Child to insert as the new
-     *   tail.
-     * @return {self}
-     */
-    parentPrototype.append = function (child) {
-        return insert(this, this.tail || this.head, child);
-    };
-
-    /**
-     * Insert children at the end of the parent.
-     *
-     * @param {Array.<Child>} children - Children to
-     *   insert at the end.
-     * @return {self}
-     */
-    parentPrototype.appendAll = function (children) {
-        return insertAll(this, this.tail || this.head, children);
-    };
-
-    /**
-     * Get child at `position` in `parent`.
-     *
-     * @param {number?} [index=0] - Position of `child`;
-     * @return {Child?}
-     */
-    parentPrototype.item = function (index) {
-        if (index === null || index === undefined) {
-            index = 0;
-        } else if (typeof index !== 'number' || index !== index) {
-            throw new Error(
-                'TypeError: `' + index + '` ' +
-                'is not a valid `index` for ' +
-                '`item(index)`'
-            );
-        }
-
-        return this[index] || null;
-    };
-
-    /**
-     * Return the result of calling `toString` on each of `Parent`s children.
-     *
-     * @this {Parent}
-     * @return {string}
-     */
-    parentPrototype.toString = function () {
-        return arrayJoin.call(this, '');
-    };
-
-    /**
-     * Return an NLCST node representing the context.
-     *
-     * @this {Parent}
-     * @return {NLCSTNode}
-     */
-    parentPrototype.valueOf = function () {
-        var self,
-            index,
-            children,
-            nlcst;
-
-        self = this;
-
-        children = [];
-
-        nlcst = {
-            'type': self.type || '',
-            'children': children
-        };
-
-        index = -1;
-
-        while (self[++index]) {
-            children[index] = self[index].valueOf();
-        }
-
-        dataToJSON(self, nlcst);
-
-        return nlcst;
-    };
-
-    /*
-     * Inherit from `Node.prototype`.
-     */
-
-    Node.isImplementedBy(Parent);
-
-    /**
-     * Define `Child`.
-     *
-     * @constructor Child
-     * @extends {Node}
-     */
-    function Child() {
-        Node.apply(this, arguments);
-    }
-
-    childPrototype = Child.prototype;
-
-    /*
-     * Expose the node name of `Child`.
-     *
-     * @readonly
-     * @static
-     */
-
-    childPrototype.nodeName = CHILD;
-
-    /*
-     * Parent or `null`.
-     *
-     * @type {Parent?}
-     * @readonly
-     */
-
-    childPrototype.parent = null;
-
-    /*
-     * The next node, `null` otherwise (when `child` is
-     * its parent's tail or detached).
-     *
-     * @type {Child?}
-     * @readonly
-     */
-
-    childPrototype.next = null;
-
-    /*
-     * The previous node, `null` otherwise (when `child` is
-     * its parent's head or detached).
-     *
-     * @type {Child?}
-     * @readonly
-     */
-
-    childPrototype.prev = null;
-
-    /**
-     * Insert `child` before the context in its parent.
-     *
-     * @param {Child} child - Child to insert.
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.before = function (child) {
-        return insert(this.parent, this.prev, child);
-    };
-
-    /**
-     * Insert `children` before the context in its parent.
-     *
-     * @param {Array.<Child>} children - Children to
-     *   insert.
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.beforeAll = function (children) {
-        return insertAll(this.parent, this.prev, children);
-    };
-
-    /**
-     * Insert `child` after the context in its parent.
-     *
-     * @param {Child} child - Child to insert.
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.after = function (child) {
-        return insert(this.parent, this, child);
-    };
-
-    /**
-     * Insert `children` after the context in its parent.
-     *
-     * @param {Array.<Child>} children - Children to
-     *   insert.
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.afterAll = function (children) {
-        return insertAll(this.parent, this, children);
-    };
-
-    /**
-     * Replace the context object with `child`.
-     *
-     * @param {Child} child - Child to insert.
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.replace = function (child) {
-        var result;
-
-        result = insert(this.parent, this, child);
-
-        remove(this);
+        });
 
         return result;
-    };
-
-    /**
-     * Remove the context object.
-     *
-     * @this {Child}
-     * @return {self}
-     */
-    childPrototype.remove = function () {
-        return remove(this);
-    };
-
-    /*
-     * Inherit from `Node.prototype`.
-     */
-
-    Node.isImplementedBy(Child);
-
-    /**
-     * Define `Element`.
-     *
-     * @constructor Element
-     * @extends {Parent}
-     * @extends {Child}
-     */
-    function Element() {
-        Parent.apply(this, arguments);
-        Child.apply(this, arguments);
     }
 
     /*
-     * Inherit from `Parent.prototype` and
-     * `Child.prototype`.
+     * Methods / functions.
      */
 
-    Parent.isImplementedBy(Element);
-    Child.isImplementedBy(Element);
-
-    /**
-     * Split the context in two, dividing the children
-     * from 0-position (NOT INCLUDING the character at
-     * `position`), and position-length (INCLUDING the
-     * character at `position`).
-     *
-     * @param {number?} [position=0] - Position to split
-     *   at.
-     * @this {Parent}
-     * @return {self}
-     */
-    Element.prototype.split = function (position) {
-        var self,
-            cloneNode,
-            index;
-
-        self = this;
-
-        position = validateSplitPosition(position, self.length);
-
-        /*eslint-disable new-cap */
-        cloneNode = insert(self.parent, self.prev, new self.constructor());
-        /*eslint-enable new-cap */
-
-        index = -1;
-
-        /*
-         * Move the children of `self` to the clone,
-         * from `0` to `position`. Looks a bit weird,
-         * but when a node is appended, it's also
-         * removed.
-         */
-
-        while (++index < position && self[0]) {
-            cloneNode.append(self[0]);
-        }
-
-        return cloneNode;
-    };
-
-    /*
-     * Add Parent as a constructor (which it is)
-     */
-
-    Element.constructors.splice(2, 0, Parent);
-
-    /**
-     * Expose the node name of `Element`.
-     *
-     * @readonly
-     * @static
-     */
-    Element.prototype.nodeName = ELEMENT;
-
-    /**
-     * Define `Text`.
-     *
-     * @param {string?} value
-     * @constructor Text
-     * @extends {Child}
-     */
-    function Text(value) {
-        Child.apply(this, arguments);
-
-        this.fromString(value);
-    }
-
-    textPrototype = Text.prototype;
-
-    /*
-     * Expose the node name of `Text`.
-     *
-     * @readonly
-     * @static
-     */
-
-    textPrototype.nodeName = TEXT;
-
-    /*
-     * Default value.
-     */
-
-    textPrototype.internalValue = '';
-
-    /**
-     * Get the internal value of a Text;
-     *
-     * @this {Text}
-     * @return {string}
-     */
-    textPrototype.toString = function () {
-        return this.internalValue;
-    };
-
-    /**
-     * Return an NLCST node representing the text.
-     *
-     * @this {Text}
-     * @return {NLCSTNode}
-     */
-    textPrototype.valueOf = function () {
-        var self,
-            nlcst;
-
-        self = this;
-
-        nlcst = {
-            'type': self.type || '',
-            'value': self.internalValue
-        };
-
-        dataToJSON(self, nlcst);
-
-        return nlcst;
-    };
-
-    /**
-     * Sets the internal value of the context with the
-     * stringified `value`.
-     *
-     * @param {string?} [value='']
-     * @this {Text}
-     * @return {string}
-     */
-    textPrototype.fromString = function (value) {
-        var self,
-            current,
-            parent;
-
-        self = this;
-
-        if (value === null || value === undefined) {
-            value = '';
-        } else {
-            value = String(value);
-        }
-
-        current = self.toString();
-
-        if (value !== current) {
-            parent = self.parent;
-
-            self.internalValue = value;
-
-            self.trigger('changetext', parent, value, current);
-
-            /*
-             * Emit a single `change` event.
-             * This will also trigger `changeinside` events on
-             * `parent` and its constructors.
-             */
-
-            if (parent) {
-                parent.trigger('change', parent);
-            }
-        }
-
-        return value;
-    };
-
-    /**
-     * Split the context in two, dividing the children
-     * from 0-position (NOT INCLUDING the character at
-     * `position`), and position-length (INCLUDING the
-     * character at `position`).
-     *
-     * @param {number?} [position=0] - Position to split
-     *   at.
-     * @this {Text}
-     * @return {self}
-     */
-    textPrototype.split = function (position) {
-        var self,
-            value,
-            cloneNode;
-
-        self = this;
-        value = self.internalValue;
-
-        position = validateSplitPosition(position, value.length);
-
-        /*eslint-disable new-cap */
-        cloneNode = insert(self.parent, self.prev, new self.constructor());
-        /*eslint-enable new-cap */
-
-        self.fromString(value.slice(position));
-        cloneNode.fromString(value.slice(0, position));
-
-        return cloneNode;
-    };
-
-    /*
-     * Inherit from `Child.prototype`.
-     */
-
-    Child.isImplementedBy(Text);
-
-    /**
-     * Define `RootNode`.
-     *
-     * @constructor RootNode
-     * @extends {Parent}
-     */
-    function RootNode() {
-        Parent.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of RootNode.
-     *
-     * @readonly
-     * @static
-     */
-    RootNode.prototype.type = ROOT_NODE;
-
-    /**
-     * Define allowed children.
-     *
-     * @readonly
-     */
-    RootNode.prototype.allowedChildTypes = [
-        PARAGRAPH_NODE,
-        WHITE_SPACE_NODE,
-        SOURCE_NODE
-    ];
-
-    /*
-     * Inherit from `Parent.prototype`.
-     */
-
-    Parent.isImplementedBy(RootNode);
-
-    /**
-     * Define `ParagraphNode`.
-     *
-     * @constructor ParagraphNode
-     * @extends {Element}
-     */
-    function ParagraphNode() {
-        Element.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of ParagraphNode.
-     *
-     * @readonly
-     * @static
-     */
-    ParagraphNode.prototype.type = PARAGRAPH_NODE;
-
-    /**
-     * Define allowed children.
-     *
-     * @readonly
-     */
-    ParagraphNode.prototype.allowedChildTypes = [
-        SENTENCE_NODE,
-        WHITE_SPACE_NODE,
-        SOURCE_NODE
-    ];
-
-    /*
-     * Inherit from `Parent.prototype` and `Child.prototype`.
-     */
-
-    Element.isImplementedBy(ParagraphNode);
-
-    /**
-     * Define `SentenceNode`.
-     *
-     * @constructor SentenceNode
-     * @extends {Element}
-     */
-    function SentenceNode() {
-        Element.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of SentenceNode.
-     *
-     * @readonly
-     * @static
-     */
-    SentenceNode.prototype.type = SENTENCE_NODE;
-
-    /**
-     * Define allowed children.
-     *
-     * @readonly
-     */
-    SentenceNode.prototype.allowedChildTypes = [
-        WORD_NODE,
-        SYMBOL_NODE,
-        PUNCTUATION_NODE,
-        WHITE_SPACE_NODE,
-        SOURCE_NODE
-    ];
-
-    /*
-     * Inherit from `Parent.prototype` and `Child.prototype`.
-     */
-
-    Element.isImplementedBy(SentenceNode);
-
-    /**
-     * Define `WordNode`.
-     *
-     * @constructor WordNode
-     * @extends {Element}
-     */
-    function WordNode() {
-        Element.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of WordNode.
-     *
-     * @readonly
-     * @static
-     */
-    WordNode.prototype.type = WORD_NODE;
-
-    /**
-     * Define allowed children.
-     *
-     * @readonly
-     */
-    WordNode.prototype.allowedChildTypes = [
-        TEXT_NODE,
-        SYMBOL_NODE,
-        PUNCTUATION_NODE
-    ];
-
-    /*
-     * Inherit from `Text.prototype`.
-     */
-
-    Element.isImplementedBy(WordNode);
-
-    /**
-     * Define `SymbolNode`.
-     *
-     * @constructor SymbolNode
-     * @extends {Text}
-     */
-    function SymbolNode() {
-        Text.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of SymbolNode.
-     *
-     * @readonly
-     * @static
-     */
-    SymbolNode.prototype.type = SYMBOL_NODE;
-
-    /*
-     * Inherit from `SymbolNode.prototype`.
-     */
-
-    Text.isImplementedBy(SymbolNode);
-
-    /**
-     * Define `PunctuationNode`.
-     *
-     * @constructor PunctuationNode
-     * @extends {Text}
-     */
-    function PunctuationNode() {
-        SymbolNode.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of PunctuationNode.
-     *
-     * @readonly
-     * @static
-     */
-    PunctuationNode.prototype.type = PUNCTUATION_NODE;
-
-    /*
-     * Inherit from `SymbolNode.prototype`.
-     */
-
-    SymbolNode.isImplementedBy(PunctuationNode);
-
-    /**
-     * Expose `WhiteSpaceNode`.
-     *
-     * @constructor WhiteSpaceNode
-     * @extends {Text}
-     */
-    function WhiteSpaceNode() {
-        SymbolNode.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of WhiteSpaceNode.
-     *
-     * @readonly
-     * @static
-     */
-    WhiteSpaceNode.prototype.type = WHITE_SPACE_NODE;
-
-    /**
-     * Inherit from `SymbolNode.prototype`.
-     */
-    SymbolNode.isImplementedBy(WhiteSpaceNode);
-
-    /***
-     * Expose `SourceNode`.
-     *
-     * @constructor SourceNode
-     * @extends {Text}
-     */
-    function SourceNode() {
-        Text.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of SourceNode.
-     *
-     * @readonly
-     * @static
-     */
-    SourceNode.prototype.type = SOURCE_NODE;
-
-    /*
-     * Inherit from `Text.prototype`.
-     */
-
-    Text.isImplementedBy(SourceNode);
-
-    /**
-     * Expose `TextNode`.
-     *
-     * @constructor TextNode
-     * @extends {Text}
-     */
-    function TextNode() {
-        Text.apply(this, arguments);
-    }
-
-    /**
-     * The type of an instance of TextNode.
-     *
-     * @readonly
-     * @static
-     */
-    TextNode.prototype.type = TEXT_NODE;
-
-    /*
-     * Inherit from `Text.prototype`.
-     */
-
-    Text.isImplementedBy(TextNode);
-
-    /**
-     * Define the `TextOM` object.
-     *
-     * @namespace TextOM
-     */
-    TextOM = {};
-
-    /*
-     * Expose all node names on `TextOM`.
-     */
-
-    TextOM.NODE = NODE;
-    TextOM.PARENT = PARENT;
-    TextOM.CHILD = CHILD;
-    TextOM.ELEMENT = ELEMENT;
-    TextOM.TEXT = TEXT;
-
-    /*
-     * Expose all different `Node`s on `TextOM`.
-     */
-
-    TextOM.Node = Node;
-    TextOM.Parent = Parent;
-    TextOM.Child = Child;
-    TextOM.Element = Element;
-    TextOM.Text = Text;
-    TextOM.RootNode = RootNode;
-    TextOM.ParagraphNode = ParagraphNode;
-    TextOM.SentenceNode = SentenceNode;
-    TextOM.WordNode = WordNode;
-    TextOM.SymbolNode = SymbolNode;
-    TextOM.PunctuationNode = PunctuationNode;
-    TextOM.WhiteSpaceNode = WhiteSpaceNode;
-    TextOM.SourceNode = SourceNode;
-    TextOM.TextNode = TextNode;
-
-    /*
-     * Expose all node types on `TextOM`.
-     */
-
-    TextOM.ROOT_NODE = ROOT_NODE;
-    TextOM.PARAGRAPH_NODE = PARAGRAPH_NODE;
-    TextOM.SENTENCE_NODE = SENTENCE_NODE;
-    TextOM.WORD_NODE = WORD_NODE;
-    TextOM.SYMBOL_NODE = SYMBOL_NODE;
-    TextOM.PUNCTUATION_NODE = PUNCTUATION_NODE;
-    TextOM.WHITE_SPACE_NODE = WHITE_SPACE_NODE;
-    TextOM.SOURCE_NODE = SOURCE_NODE;
-    TextOM.TEXT_NODE = TEXT_NODE;
-
-    /*
-     * Expose `TextOM` on every `Node`.
-     */
-
-    nodePrototype.TextOM = TextOM;
-
-    /*
-     * Expose all node names on every `Node`.
-     */
-
-    nodePrototype.NODE = NODE;
-    nodePrototype.PARENT = PARENT;
-    nodePrototype.CHILD = CHILD;
-    nodePrototype.ELEMENT = ELEMENT;
-    nodePrototype.TEXT = TEXT;
-
-    /*
-     * Expose all node types on every `Node`.
-     */
-
-    nodePrototype.ROOT_NODE = ROOT_NODE;
-    nodePrototype.PARAGRAPH_NODE = PARAGRAPH_NODE;
-    nodePrototype.SENTENCE_NODE = SENTENCE_NODE;
-    nodePrototype.WORD_NODE = WORD_NODE;
-    nodePrototype.SYMBOL_NODE = SYMBOL_NODE;
-    nodePrototype.PUNCTUATION_NODE = PUNCTUATION_NODE;
-    nodePrototype.WHITE_SPACE_NODE = WHITE_SPACE_NODE;
-    nodePrototype.SOURCE_NODE = SOURCE_NODE;
-    nodePrototype.TEXT_NODE = TEXT_NODE;
-
-    /*
-     * Expose `TextOM`.
-     */
-
-    return TextOM;
+    var proto = Processor.prototype;
+
+    Processor.use = proto.use = use;
+    Processor.parse = proto.parse = parse;
+    Processor.run = proto.run = run;
+    Processor.stringify = proto.stringify = stringify;
+    Processor.process = proto.process = process;
+
+    return Processor;
 }
 
 /*
- * Expose `TextOMConstructor`.
+ * Expose.
  */
 
-module.exports = TextOMConstructor;
+module.exports = unified;
 
-},{}],29:[function(require,module,exports){
+},{"attach-ware":35,"bail":36,"unherit":37,"vfile":40,"ware":41}],35:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module attach-ware
+ * @fileoverview Middleware with configuration.
+ * @example
+ *   var ware = require('attach-ware')(require('ware'));
+ *
+ *   var middleware = ware()
+ *     .use(function (context, options) {
+ *         if (!options.condition) return;
+ *
+ *         return function (req, res, next) {
+ *           res.x = 'hello';
+ *           next();
+ *         };
+ *     }, {
+ *         'condition': true
+ *     })
+ *     .use(function (context, options) {
+ *         if (!options.condition) return;
+ *
+ *         return function (req, res, next) {
+ *           res.y = 'world';
+ *           next();
+ *         };
+ *     }, {
+ *         'condition': false
+ *     });
+ *
+ *   middleware.run({}, {}, function (err, req, res) {
+ *     res.x; // "hello"
+ *     res.y; // undefined
+ *   });
+ */
+
+'use strict';
+
+var slice = [].slice;
+var unherit = require('unherit');
+
+/**
+ * Clone `Ware` without affecting the super-class and
+ * turn it into configurable middleware.
+ *
+ * @param {Function} Ware - Ware-like constructor.
+ * @return {Function} AttachWare - Configurable middleware.
+ */
+function patch(Ware) {
+    /*
+     * Methods.
+     */
+
+    var useFn = Ware.prototype.use;
+
+    /**
+     * @constructor
+     * @class {AttachWare}
+     */
+    var AttachWare = unherit(Ware);
+
+    AttachWare.prototype.foo = true;
+
+    /**
+     * Attach configurable middleware.
+     *
+     * @memberof {AttachWare}
+     * @this {AttachWare}
+     * @param {Function} attach
+     * @return {AttachWare} - `this`.
+     */
+    function use(attach) {
+        var self = this;
+        var params = slice.call(arguments, 1);
+        var index;
+        var length;
+        var fn;
+
+        /*
+         * Accept other `AttachWare`.
+         */
+
+        if (attach instanceof AttachWare) {
+            if (attach.attachers) {
+                return self.use(attach.attachers);
+            }
+
+            return self;
+        }
+
+        /*
+         * Accept normal ware.
+         */
+
+        if (attach instanceof Ware) {
+            self.fns = self.fns.concat(attach.fns);
+            return self;
+        }
+
+        /*
+         * Multiple attachers.
+         */
+
+        if ('length' in attach && typeof attach !== 'function') {
+            index = -1;
+            length = attach.length;
+
+            while (++index < length) {
+                self.use.apply(self, [attach[index]].concat(params));
+            }
+
+            return self;
+        }
+
+        /*
+         * Single attacher.
+         */
+
+        fn = attach.apply(null, [self.context || self].concat(params));
+
+        /*
+         * Store the attacher to not break `new Ware(otherWare)`
+         * functionality.
+         */
+
+        if (!self.attachers) {
+            self.attachers = [];
+        }
+
+        self.attachers.push(attach);
+
+        /*
+         * Pass `fn` to the original `Ware#use()`.
+         */
+
+        if (fn) {
+            useFn.call(self, fn);
+        }
+
+        return self;
+    }
+
+    AttachWare.prototype.use = use;
+
+    return function (fn) {
+        return new AttachWare(fn);
+    };
+}
+
+module.exports = patch;
+
+},{"unherit":37}],36:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer. All rights reserved.
+ * @module bail
+ * @fileoverview Throw a given error.
+ */
+
+'use strict';
+
+/**
+ * Throw a given error.
+ *
+ * @example
+ *   bail();
+ *
+ * @example
+ *   bail(new Error('failure'));
+ *   // Error: failure
+ *   //     at repl:1:6
+ *   //     at REPLServer.defaultEval (repl.js:154:27)
+ *   //     ...
+ *
+ * @param {Error?} [err] - Optional error.
+ * @throws {Error} - `err`, when given.
+ */
+function bail(err) {
+    if (err) {
+        throw err;
+    }
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = bail;
+
+},{}],37:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module unherit
+ * @fileoverview Create a custom constructor which can be modified
+ *   without affecting the original class.
+ * @example
+ *   var EventEmitter = require('events').EventEmitter;
+ *   var Emitter = unherit(EventEmitter);
+ *   // Create a private class which acts just like
+ *   // `EventEmitter`.
+ *
+ *   Emitter.prototype.defaultMaxListeners = 0;
+ *   // Now, all instances of `Emitter` have no maximum
+ *   // listeners, without affecting other `EventEmitter`s.
+ */
+
+'use strict';
+
+/*
+ * Dependencies.
+ */
+
+var clone = require('clone');
+var inherits = require('inherits');
+
+/**
+ * Create a custom constructor which can be modified
+ * without affecting the original class.
+ *
+ * @param {Function} Super - Super-class.
+ * @return {Function} - Constructor acting like `Super`,
+ *   which can be modified without affecting the original
+ *   class.
+ */
+function unherit(Super) {
+    var base = clone(Super.prototype);
+    var result;
+    var key;
+
+    /**
+     * Constructor accepting a single argument,
+     * which itself is an `arguments` object.
+     */
+    function From(parameters) {
+        return Super.apply(this, parameters);
+    }
+
+    /**
+     * Constructor accepting variadic arguments.
+     */
+    function Of() {
+        if (!(this instanceof Of)) {
+            return new From(arguments);
+        }
+
+        return Super.apply(this, arguments);
+    }
+
+    inherits(Of, Super);
+    inherits(From, Of);
+
+    /*
+     * Both do duplicate work. However, cloning the
+     * prototype ensures clonable things are cloned
+     * and thus used. The `inherits` call ensures
+     * `instanceof` still thinks an instance subclasses
+     * `Super`.
+     */
+
+    result = Of.prototype;
+
+    for (key in base) {
+        result[key] = base[key];
+    }
+
+    return Of;
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = unherit;
+
+},{"clone":38,"inherits":39}],38:[function(require,module,exports){
+(function (Buffer){
+var clone = (function() {
+'use strict';
+
+/**
+ * Clones (copies) an Object using deep copying.
+ *
+ * This function supports circular references by default, but if you are certain
+ * there are no circular references in your object, you can save some CPU time
+ * by calling clone(obj, false).
+ *
+ * Caution: if `circular` is false and `parent` contains circular references,
+ * your program may enter an infinite loop and crash.
+ *
+ * @param `parent` - the object to be cloned
+ * @param `circular` - set to true if the object to be cloned may contain
+ *    circular references. (optional - true by default)
+ * @param `depth` - set to a number if the object is only to be cloned to
+ *    a particular depth. (optional - defaults to Infinity)
+ * @param `prototype` - sets the prototype to be used when cloning an object.
+ *    (optional - defaults to parent prototype).
+*/
+function clone(parent, circular, depth, prototype) {
+  var filter;
+  if (typeof circular === 'object') {
+    depth = circular.depth;
+    prototype = circular.prototype;
+    filter = circular.filter;
+    circular = circular.circular
+  }
+  // maintain two arrays for circular references, where corresponding parents
+  // and children have the same index
+  var allParents = [];
+  var allChildren = [];
+
+  var useBuffer = typeof Buffer != 'undefined';
+
+  if (typeof circular == 'undefined')
+    circular = true;
+
+  if (typeof depth == 'undefined')
+    depth = Infinity;
+
+  // recurse this function so we don't reset allParents and allChildren
+  function _clone(parent, depth) {
+    // cloning null always returns null
+    if (parent === null)
+      return null;
+
+    if (depth == 0)
+      return parent;
+
+    var child;
+    var proto;
+    if (typeof parent != 'object') {
+      return parent;
+    }
+
+    if (clone.__isArray(parent)) {
+      child = [];
+    } else if (clone.__isRegExp(parent)) {
+      child = new RegExp(parent.source, __getRegExpFlags(parent));
+      if (parent.lastIndex) child.lastIndex = parent.lastIndex;
+    } else if (clone.__isDate(parent)) {
+      child = new Date(parent.getTime());
+    } else if (useBuffer && Buffer.isBuffer(parent)) {
+      child = new Buffer(parent.length);
+      parent.copy(child);
+      return child;
+    } else {
+      if (typeof prototype == 'undefined') {
+        proto = Object.getPrototypeOf(parent);
+        child = Object.create(proto);
+      }
+      else {
+        child = Object.create(prototype);
+        proto = prototype;
+      }
+    }
+
+    if (circular) {
+      var index = allParents.indexOf(parent);
+
+      if (index != -1) {
+        return allChildren[index];
+      }
+      allParents.push(parent);
+      allChildren.push(child);
+    }
+
+    for (var i in parent) {
+      var attrs;
+      if (proto) {
+        attrs = Object.getOwnPropertyDescriptor(proto, i);
+      }
+
+      if (attrs && attrs.set == null) {
+        continue;
+      }
+      child[i] = _clone(parent[i], depth - 1);
+    }
+
+    return child;
+  }
+
+  return _clone(parent, depth);
+}
+
+/**
+ * Simple flat clone using prototype, accepts only objects, usefull for property
+ * override on FLAT configuration object (no nested props).
+ *
+ * USE WITH CAUTION! This may not behave as you wish if you do not know how this
+ * works.
+ */
+clone.clonePrototype = function clonePrototype(parent) {
+  if (parent === null)
+    return null;
+
+  var c = function () {};
+  c.prototype = parent;
+  return new c();
+};
+
+// private utility functions
+
+function __objToStr(o) {
+  return Object.prototype.toString.call(o);
+};
+clone.__objToStr = __objToStr;
+
+function __isDate(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object Date]';
+};
+clone.__isDate = __isDate;
+
+function __isArray(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object Array]';
+};
+clone.__isArray = __isArray;
+
+function __isRegExp(o) {
+  return typeof o === 'object' && __objToStr(o) === '[object RegExp]';
+};
+clone.__isRegExp = __isRegExp;
+
+function __getRegExpFlags(re) {
+  var flags = '';
+  if (re.global) flags += 'g';
+  if (re.ignoreCase) flags += 'i';
+  if (re.multiline) flags += 'm';
+  return flags;
+};
+clone.__getRegExpFlags = __getRegExpFlags;
+
+return clone;
+})();
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = clone;
+}
+
+}).call(this,require("buffer").Buffer)
+},{"buffer":4}],39:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],40:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module vfile
+ * @fileoverview Virtual file format to attach additional
+ *   information related to processed input.  Similar to
+ *   `wearefractal/vinyl`.  Additionally, `VFile` can be
+ *   passed directly to ESLint formatters to visualise
+ *   warnings and errors relating to a file.
+ * @example
+ *   var VFile = require('vfile');
+ *
+ *   var file = new VFile({
+ *     'directory': '~',
+ *     'filename': 'example',
+ *     'extension': 'txt',
+ *     'contents': 'Foo *bar* baz'
+ *   });
+ *
+ *   file.toString(); // 'Foo *bar* baz'
+ *   file.filePath(); // '~/example.txt'
+ *
+ *   file.move({'extension': 'md'});
+ *   file.filePath(); // '~/example.md'
+ *
+ *   file.warn('Something went wrong', {'line': 2, 'column': 3});
+ *   // { [~/example.md:2:3: Something went wrong]
+ *   //   name: '~/example.md:2:3',
+ *   //   file: '~/example.md',
+ *   //   reason: 'Something went wrong',
+ *   //   line: 2,
+ *   //   column: 3,
+ *   //   fatal: false }
+ */
+
+'use strict';
+
+var SEPARATOR = '/';
+
+try {
+    SEPARATOR = require('pa' + 'th').sep;
+} catch (e) { /* empty */ }
+
+/**
+ * File-related message with location information.
+ *
+ * @typedef {Error} VFileMessage
+ * @property {string} name - (Starting) location of the
+ *   message, preceded by its file-path when available,
+ *   and joined by `:`. Used internally by the native
+ *   `Error#toString()`.
+ * @property {string} file - File-path.
+ * @property {string} reason - Reason for message.
+ * @property {number?} line - Line of message, when
+ *   available.
+ * @property {number?} column - Column of message, when
+ *   available.
+ * @property {string?} stack - Stack of message, when
+ *   available.
+ * @property {boolean?} fatal - Whether the associated file
+ *   is still processable.
+ */
+
+/**
+ * Stringify a position.
+ *
+ * @example
+ *   stringify({'line': 1, 'column': 3}) // '1:3'
+ *   stringify({'line': 1}) // '1:1'
+ *   stringify({'column': 3}) // '1:3'
+ *   stringify() // '1:1'
+ *
+ * @private
+ * @param {Object?} [position] - Single position, like
+ *   those available at `node.position.start`.
+ * @return {string}
+ */
+function stringify(position) {
+    if (!position) {
+        position = {};
+    }
+
+    return (position.line || 1) + ':' + (position.column || 1);
+}
+
+/**
+ * ESLint's formatter API expects `filePath` to be a
+ * string.  This hack supports invocation as well as
+ * implicit coercion.
+ *
+ * @example
+ *   var file = new VFile({
+ *     'filename': 'example',
+ *     'extension': 'txt'
+ *   });
+ *
+ *   filePath = filePathFactory(file);
+ *
+ *   String(filePath); // 'example.txt'
+ *   filePath(); // 'example.txt'
+ *
+ * @private
+ * @param {VFile} file
+ * @return {Function}
+ */
+function filePathFactory(file) {
+    /**
+     * Get the filename, with extension and directory, if applicable.
+     *
+     * @example
+     *   var file = new VFile({
+     *     'directory': '~',
+     *     'filename': 'example',
+     *     'extension': 'txt'
+     *   });
+     *
+     *   String(file.filePath); // ~/example.txt
+     *   file.filePath() // ~/example.txt
+     *
+     * @memberof {VFile}
+     * @property {Function} toString - Itself. ESLint's
+     *   formatter API expects `filePath` to be `string`.
+     *   This hack supports invocation as well as implicit
+     *   coercion.
+     * @return {string} - If the `vFile` has a `filename`,
+     *   it will be prefixed with the directory (slashed),
+     *   if applicable, and suffixed with the (dotted)
+     *   extension (if applicable).  Otherwise, an empty
+     *   string is returned.
+     */
+    function filePath() {
+        var directory = file.directory;
+        var separator;
+
+        if (file.filename || file.extension) {
+            separator = directory.charAt(directory.length - 1);
+
+            if (separator === '/' || separator === '\\') {
+                directory = directory.slice(0, -1);
+            }
+
+            if (directory === '.') {
+                directory = '';
+            }
+
+            return (directory ? directory + SEPARATOR : '') +
+                file.filename +
+                (file.extension ? '.' + file.extension : '');
+        }
+
+        return '';
+    }
+
+    filePath.toString = filePath;
+
+    return filePath;
+}
+
+/**
+ * Construct a new file.
+ *
+ * @example
+ *   var file = new VFile({
+ *     'directory': '~',
+ *     'filename': 'example',
+ *     'extension': 'txt',
+ *     'contents': 'Foo *bar* baz'
+ *   });
+ *
+ *   file === VFile(file) // true
+ *   file === new VFile(file) // true
+ *   VFile('foo') instanceof VFile // true
+ *
+ * @constructor
+ * @class {VFile}
+ * @param {Object|VFile|string} [options] - either an
+ *   options object, or the value of `contents` (both
+ *   optional).  When a `file` is passed in, it's
+ *   immediately returned.
+ * @property {string} [contents=''] - Content of file.
+ * @property {string} [directory=''] - Path to parent
+ *   directory.
+ * @property {string} [filename=''] - Filename.
+ *   A file-path can still be generated when no filename
+ *   exists.
+ * @property {string} [extension=''] - Extension.
+ *   A file-path can still be generated when no extension
+ *   exists.
+ * @property {boolean?} quiet - Whether an error created by
+ *   `VFile#fail()` is returned (when truthy) or thrown
+ *   (when falsey). Ensure all `messages` associated with
+ *   a file are handled properly when setting this to
+ *   `true`.
+ * @property {Array.<VFileMessage>} messages - List of associated
+ *   messages.
+ */
+function VFile(options) {
+    var self = this;
+
+    /*
+     * No `new` operator.
+     */
+
+    if (!(self instanceof VFile)) {
+        return new VFile(options);
+    }
+
+    /*
+     * Given file.
+     */
+
+    if (
+        options &&
+        typeof options.message === 'function' &&
+        typeof options.hasFailed === 'function'
+    ) {
+        return options;
+    }
+
+    if (!options) {
+        options = {};
+    } else if (typeof options === 'string') {
+        options = {
+            'contents': options
+        };
+    }
+
+    self.contents = options.contents || '';
+    self.filename = options.filename || '';
+    self.directory = options.directory || '';
+    self.extension = options.extension || '';
+
+    self.messages = [];
+
+    /*
+     * Make sure eslint’s formatters stringify `filePath`
+     * properly.
+     */
+
+    self.filePath = filePathFactory(self);
+}
+
+/**
+ * Get the value of the file.
+ *
+ * @example
+ *   var vFile = new VFile('Foo');
+ *   String(vFile); // 'Foo'
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @return {string} - value at the `contents` property
+ *   in context.
+ */
+function toString() {
+    return this.contents;
+}
+
+/**
+ * Move a file by passing a new directory, filename,
+ * and extension.  When these are not given, the default
+ * values are kept.
+ *
+ * @example
+ *   var file = new VFile({
+ *     'directory': '~',
+ *     'filename': 'example',
+ *     'extension': 'txt',
+ *     'contents': 'Foo *bar* baz'
+ *   });
+ *
+ *   file.move({'directory': '/var/www'});
+ *   file.filePath(); // '/var/www/example.txt'
+ *
+ *   file.move({'extension': 'md'});
+ *   file.filePath(); // '/var/www/example.md'
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @param {Object?} [options]
+ * @return {VFile} - Context object.
+ */
+function move(options) {
+    var self = this;
+
+    if (!options) {
+        options = {};
+    }
+
+    self.directory = options.directory || self.directory || '';
+    self.filename = options.filename || self.filename || '';
+    self.extension = options.extension || self.extension || '';
+
+    return self;
+}
+
+/**
+ * Create a message with `reason` at `position`.
+ * When an error is passed in as `reason`, copies the
+ * stack.  This does not add a message to `messages`.
+ *
+ * @example
+ *   var file = new VFile();
+ *
+ *   file.message('Something went wrong');
+ *   // { [1:1: Something went wrong]
+ *   //   name: '1:1',
+ *   //   file: '',
+ *   //   reason: 'Something went wrong',
+ *   //   line: null,
+ *   //   column: null }
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @param {string|Error} reason - Reason for message.
+ * @param {Node|Location|Position} [position] - Location
+ *   of message in file.
+ * @return {VFileMessage} - File-related message with
+ *   location information.
+ */
+function message(reason, position) {
+    var filePath = this.filePath();
+    var location;
+    var err;
+
+    /*
+     * Node / location / position.
+     */
+
+    if (position && position.position) {
+        position = position.position;
+    }
+
+    if (position && position.start) {
+        location = stringify(position.start) + '-' + stringify(position.end);
+        position = position.start;
+    } else {
+        location = stringify(position);
+    }
+
+    err = new Error(reason.message || reason);
+
+    err.name = (filePath ? filePath + ':' : '') + location;
+    err.file = filePath;
+    err.reason = reason.message || reason;
+    err.line = position ? position.line : null;
+    err.column = position ? position.column : null;
+
+    if (reason.stack) {
+        err.stack = reason.stack;
+    }
+
+    return err;
+}
+
+/**
+ * Warn. Creates a non-fatal message (see `VFile#message()`),
+ * and adds it to the file's `messages` list.
+ *
+ * @example
+ *   var file = new VFile();
+ *
+ *   file.warn('Something went wrong');
+ *   // { [1:1: Something went wrong]
+ *   //   name: '1:1',
+ *   //   file: '',
+ *   //   reason: 'Something went wrong',
+ *   //   line: null,
+ *   //   column: null,
+ *   //   fatal: false }
+ *
+ * @see VFile#message
+ * @this {VFile}
+ * @memberof {VFile}
+ */
+function warn() {
+    var err = this.message.apply(this, arguments);
+
+    err.fatal = false;
+
+    this.messages.push(err);
+
+    return err;
+}
+
+/**
+ * Fail. Creates a fatal message (see `VFile#message()`),
+ * sets `fatal: true`, adds it to the file's
+ * `messages` list.
+ *
+ * If `quiet` is not `true`, throws the error.
+ *
+ * @example
+ *   var file = new VFile();
+ *
+ *   file.fail('Something went wrong');
+ *   // 1:1: Something went wrong
+ *   //     at VFile.exception (vfile/index.js:296:11)
+ *   //     at VFile.fail (vfile/index.js:360:20)
+ *   //     at repl:1:6
+ *
+ *   file.quiet = true;
+ *   file.fail('Something went wrong');
+ *   // { [1:1: Something went wrong]
+ *   //   name: '1:1',
+ *   //   file: '',
+ *   //   reason: 'Something went wrong',
+ *   //   line: null,
+ *   //   column: null,
+ *   //   fatal: true }
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @throws {VFileMessage} - When not `quiet: true`.
+ * @param {string|Error} reason - Reason for failure.
+ * @param {Node|Location|Position} [position] - Place
+ *   of failure in file.
+ * @return {VFileMessage} - Unless thrown, of course.
+ */
+function fail(reason, position) {
+    var err = this.message(reason, position);
+
+    err.fatal = true;
+
+    this.messages.push(err);
+
+    if (!this.quiet) {
+        throw err;
+    }
+
+    return err;
+}
+
+/**
+ * Check if a fatal message occurred making the file no
+ * longer processable.
+ *
+ * @example
+ *   var file = new VFile();
+ *   file.quiet = true;
+ *
+ *   file.hasFailed(); // false
+ *
+ *   file.fail('Something went wrong');
+ *   file.hasFailed(); // true
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @return {boolean} - `true` if at least one of file's
+ *   `messages` has a `fatal` property set to `true`
+ */
+function hasFailed() {
+    var messages = this.messages;
+    var index = -1;
+    var length = messages.length;
+
+    while (++index < length) {
+        if (messages[index].fatal) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Access private information relating to a file.
+ *
+ * @example
+ *   var file = new VFile('Foo');
+ *
+ *   file.namespace('foo').bar = 'baz';
+ *
+ *   console.log(file.namespace('foo').bar) // 'baz';
+ *
+ * @this {VFile}
+ * @memberof {VFile}
+ * @param {string} key - Namespace key.
+ * @return {Object} - Private space.
+ */
+function namespace(key) {
+    var self = this;
+    var space = self.data;
+
+    if (!space) {
+        space = self.data = {};
+    }
+
+    if (!space[key]) {
+        space[key] = {};
+    }
+
+    return space[key];
+}
+
+/*
+ * Methods.
+ */
+
+var vFilePrototype = VFile.prototype;
+
+vFilePrototype.move = move;
+vFilePrototype.toString = toString;
+vFilePrototype.message = message;
+vFilePrototype.warn = warn;
+vFilePrototype.fail = fail;
+vFilePrototype.hasFailed = hasFailed;
+vFilePrototype.namespace = namespace;
+
+/*
+ * Expose.
+ */
+
+module.exports = VFile;
+
+},{}],41:[function(require,module,exports){
 /**
  * Module Dependencies
  */
@@ -4983,7 +5846,7 @@ Ware.prototype.run = function () {
   return this;
 };
 
-},{"wrap-fn":30}],30:[function(require,module,exports){
+},{"wrap-fn":42}],42:[function(require,module,exports){
 /**
  * Module Dependencies
  */
@@ -5110,7 +5973,7 @@ function once(fn) {
   };
 }
 
-},{"co":31}],31:[function(require,module,exports){
+},{"co":43}],43:[function(require,module,exports){
 
 /**
  * slice() reference.

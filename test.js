@@ -6,15 +6,16 @@
  * Dependencies.
  */
 
-var Retext = require('./');
 var assert = require('assert');
+var test = require('nlcst-test');
+var Retext = require('./');
 
 /*
  * Constants.
  */
 
 var equal = assert.strictEqual;
-var nequal = assert.notStrictEqual;
+var throws = assert.throws;
 
 /**
  * No-op.
@@ -24,7 +25,7 @@ function noop() {}
 noop();
 
 /*
- * Test `Retext`.
+ * Tests.
  */
 
 describe('new Retext()', function () {
@@ -37,70 +38,31 @@ describe('new Retext()', function () {
         assert(new Retext() instanceof Retext);
     });
 
-    it('should set `parser` to an instance of parse-latin', function () {
+    it('should set `Parser` and `Compiler`', function () {
         var retext = new Retext();
 
-        assert('parser' in retext);
-        assert('TextOM' in retext.parser);
-
-        assert('parse' in retext.parser);
+        assert('Parser' in retext);
+        assert('Compiler' in retext);
     });
 
-    it('should set `TextOM` to an instance of `TextOM`', function () {
-        var retext = new Retext();
+    it('should create new constructors', function () {
+        var P1 = new Retext().Parser;
+        var P2 = new Retext().Parser;
+        var C1 = new Retext().Compiler;
+        var C2 = new Retext().Compiler;
 
-        assert('TextOM' in retext);
-        assert('parser' in retext.TextOM);
+        assert(!(new P1() instanceof P2));
+        assert(!(new P2() instanceof P1));
 
-        assert('Node' in retext.TextOM);
-    });
-
-    /*
-     * The following sounds a bit weird, but can best be thought of as
-     * a test for multiple contexts, similar to how different frames on
-     * the client side use different Array constructors.
-     */
-
-    it('should create a new object model', function (done) {
-        new Retext().parse(null, function (exception, tree1) {
-            /* istanbul ignore if: should not error. */
-            if (exception) {
-                throw exception;
-            }
-
-            new Retext().parse(null, function (err, tree2) {
-                assert(tree1 instanceof tree1.constructor);
-                assert(!(tree1 instanceof tree2.constructor));
-                assert(tree2 instanceof tree2.constructor);
-                assert(!(tree2 instanceof tree1.constructor));
-
-                done(err);
-            });
-        });
+        assert(!(new C1() instanceof C2));
+        assert(!(new C2() instanceof C1));
     });
 });
 
-/*
- * Test `Retext` when given a parser.
- */
-
-describe('new Retext(parser)', function () {
-    it('should set `parser` to the given parser', function () {
-        var retext = new Retext(noop);
-
-        assert('parser' in retext);
-        equal(retext.parser, noop);
-    });
-});
-
-/*
- * Test `Retext#use(plugin, options?)`.
- */
-
-describe('Retext#use(plugin)', function () {
+describe('Retext#use()', function () {
     it('should be a `function`', function () {
-        equal(typeof Retext.prototype.use, 'function');
-        equal(typeof (new Retext()).use, 'function');
+        equal(typeof new Retext().use, 'function');
+        equal(typeof Retext.use, 'function');
     });
 
     it('should return self', function () {
@@ -112,51 +74,30 @@ describe('Retext#use(plugin)', function () {
     it('should throw when not given a function', function () {
         var retext = new Retext();
 
-        assert.throws(function () {
+        throws(function () {
             retext.use();
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.use(null);
-        }, /null/);
-
-        assert.throws(function () {
-            retext.use(undefined);
-        }, /undefined/);
-
-        assert.throws(function () {
-            retext.use(true);
-        }, /true/);
-
-        assert.throws(function () {
-            retext.use({});
-        }, /object Object/);
+        });
     });
 
     it('should attach a plugin', function () {
         var retext = new Retext();
 
-        equal(retext.plugins.length, 0);
-
         retext.use(noop);
 
-        equal(retext.plugins.length, 1);
+        equal(retext.ware.attachers.length, 1);
     });
 
-    it('should invoke an attached plugin', function () {
+    it('should invoke an attached plugin', function (done) {
         var retext = new Retext();
-        var isInvoked;
 
         /**
          * Spy.
          */
         function plugin() {
-            isInvoked = true;
+            done();
         }
 
         retext.use(plugin);
-
-        equal(isInvoked, true);
     });
 
     it('should invoke a plugin with `retext` and `options`', function () {
@@ -178,17 +119,15 @@ describe('Retext#use(plugin)', function () {
         equal(parameters.length, 2);
     });
 
-    it('should invoke plugins in order', function () {
+    it('should invoke plugins in order', function (done) {
         var retext = new Retext();
-        var isInvoked = false;
+        var isInvoked;
 
         /**
          * A plugin checking that the second plugin
          * is not invoked.
          */
         function firstPlugin() {
-            equal(isInvoked, false);
-
             isInvoked = true;
         }
 
@@ -199,19 +138,17 @@ describe('Retext#use(plugin)', function () {
         function secondPlugin() {
             equal(isInvoked, true);
 
-            isInvoked = true;
+            done();
         }
 
         retext
             .use(firstPlugin)
             .use(secondPlugin);
-
-        equal(isInvoked, true);
     });
 
     it('should invoke dependencies in order', function () {
         var retext = new Retext();
-        var invokeCount = 0;
+        var count = 0;
 
         /* eslint-disable no-use-before-define */
 
@@ -220,13 +157,9 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function firstPlugin() {
-            equal(invokeCount, 0);
+            equal(count, 0);
 
-            invokeCount++;
-
-            retext
-                .use(secondPlugin)
-                .use(thirdPlugin);
+            count++;
         }
 
         /**
@@ -234,13 +167,9 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function secondPlugin() {
-            equal(invokeCount, 1);
+            equal(count, 1);
 
-            invokeCount++;
-
-            retext
-                .use(firstPlugin)
-                .use(thirdPlugin);
+            count++;
         }
 
         /**
@@ -248,13 +177,9 @@ describe('Retext#use(plugin)', function () {
          * plugin.
          */
         function thirdPlugin() {
-            equal(invokeCount, 2);
+            equal(count, 2);
 
-            retext
-                .use(firstPlugin)
-                .use(secondPlugin);
-
-            invokeCount++;
+            count++;
         }
 
         /* eslint-enable no-use-before-define */
@@ -264,556 +189,107 @@ describe('Retext#use(plugin)', function () {
             .use(secondPlugin)
             .use(thirdPlugin);
 
-        equal(invokeCount, 3);
-    });
-
-    it('should not re-attach an attached plugin', function () {
-        var retext = new Retext();
-
-        retext.use(noop);
-
-        equal(retext.plugins.length, 1);
-
-        retext.use(noop);
-
-        equal(retext.plugins.length, 1);
+        equal(count, 3);
     });
 });
 
-/*
- * Test Retext#parse(value, options?, done).
- */
-
-describe('Retext#parse(value, done)', function () {
+describe('Retext#parse()', function () {
     it('should be a `function`', function () {
-        equal(typeof Retext.prototype.parse, 'function');
-        equal(typeof (new Retext()).parse, 'function');
+        equal(typeof new Retext().parse, 'function');
+        equal(typeof Retext.parse, 'function');
     });
 
-    it('should return self', function (done) {
-        var retext = new Retext();
-
-        equal(retext.parse(null, done), retext);
-    });
-
-    it('should invoke `done` with a `RootNode`', function (done) {
-        var retext = new Retext();
-
-        retext.parse(null, function (err, tree) {
-            assert(tree instanceof retext.parser.TextOM.RootNode);
-
-            done(err);
-        });
-    });
-
-    it('should transform `value` into a `TextOM` object', function (done) {
-        new Retext().parse('Something something', function (err, root) {
-            assert('head' in root);
-            assert('tail' in root);
-            equal(root.head.parent, root);
-            assert('TextOM' in root);
-            equal(root.toString(), 'Something something');
-
-            done(err);
-        });
-    });
-
-    it('should not invoke attached plugins', function (done) {
-        var retext = new Retext();
-        var isInvoked;
-
-        /**
-         * A plugin returning a spy, checking it's
-         * invoked.
-         */
-        function plugin() {
-            isInvoked = true;
-        }
-
-        retext.use(plugin);
-
-        equal(isInvoked, true);
-
-        isInvoked = false;
-
-        retext.parse(null, function (err) {
-            nequal(isInvoked, true);
-
-            done(err);
-        });
-    });
-
-    it('should invoke `onrun`', function (done) {
-        var retext = new Retext();
-        var isInvoked;
-
-        /**
-         * A plugin returning a spy, checking it's
-         * invoked.
-         */
-        function plugin() {
-            return function () {
-                isInvoked = true;
-            };
-        }
-
-        retext.use(plugin);
-
-        nequal(isInvoked, true);
-
-        retext.parse(null, function (err) {
-            equal(isInvoked, true);
-
-            done(err);
-        });
-    });
-
-    it('should invoke `onrun` with a `RootNode`, retext, and `options`',
-        function (done) {
-            var retext = new Retext();
-            var options = {};
-            var parameters;
-
-            /**
-             * A plugin returning a spy, to test its
-             * arguments.
-             */
-            function plugin() {
-                return function () {
-                    parameters = arguments;
-                };
-            }
-
-            retext.use(plugin);
-
-            retext.parse(null, options, function (err, tree) {
-                equal(parameters[0], tree);
-                equal(parameters[1], options);
-                equal(parameters.length, 2);
-
-                done(err);
-            });
-        }
-    );
-
-    it('should invoke `onrun`s in order', function (done) {
-        var retext = new Retext();
-        var isInvoked = false;
-
-        /**
-         * A plugin returning a spy checking that it
-         * is the first invoked plugin.
-         */
-        function firstPlugin() {
-            return function () {
-                equal(isInvoked, false);
-
-                isInvoked = true;
-            };
-        }
-
-        /**
-         * A plugin returning a spy checking that the
-         * first plugin is already invoked.
-         */
-        function secondPlugin() {
-            return function () {
-                equal(isInvoked, true);
-
-                isInvoked = 'third';
-            };
-        }
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin)
-            .parse(null, done);
-
-        equal(isInvoked, 'third');
-    });
-
-    it('should invoke dependencies in order', function (done) {
-        var retext = new Retext();
-        var invokeCount = 0;
-
-        /* eslint-disable no-use-before-define */
-
-        /**
-         * A plugin checking that it's the first invoked
-         * plugin.
-         */
-        function thirdPlugin() {
-            retext
-                .use(firstPlugin)
-                .use(secondPlugin);
-
-            return function () {
-                equal(invokeCount, 0);
-
-                invokeCount++;
-            };
-        }
-
-        /**
-         * A plugin checking that it's the second invoked
-         * plugin.
-         */
-        function secondPlugin() {
-            retext
-                .use(firstPlugin)
-                .use(thirdPlugin);
-
-            return function () {
-                equal(invokeCount, 1);
-
-                invokeCount++;
-            };
-        }
-
-        /**
-         * A plugin checking that it's the last invoked
-         * plugin.
-         */
-        function firstPlugin() {
-            retext
-                .use(secondPlugin)
-                .use(thirdPlugin);
-
-            return function () {
-                equal(invokeCount, 2);
-
-                invokeCount++;
-            };
-        }
-
-        /* eslint-enable no-use-before-define */
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin)
-            .use(thirdPlugin)
-            .parse(null, done);
-
-        equal(invokeCount, 3);
-    });
-
-    it('should not re-invoke `onrun`', function (done) {
-        var retext = new Retext();
-        var isInvoked;
-
-        /**
-         * A plugin returning a spy which detects if
-         * its invoked.
-         */
-        function nestedPlugin() {
-            return function () {
-                nequal(isInvoked, true);
-
-                isInvoked = true;
-            };
-        }
-
-        /**
-         * A plugin using another plugin.
-         */
-        function plugin() {
-            retext.use(nestedPlugin);
-        }
-
-        retext
-            .use(nestedPlugin)
-            .use(plugin)
-            .parse(null, done);
-
-        equal(isInvoked, true);
-    });
-
-    it('should not re-attach an attached plugin', function (done) {
-        var retext = new Retext();
-
-        /**
-         * Nested plugin.
-         */
-        function nestedPlugin() {}
-
-        /**
-         * A plugin returning a spy,
-         * using a nested plugin.
-         */
-        function plugin() {
-            return function () {
-                var length = retext.plugins.length;
-
-                retext.use(nestedPlugin);
-
-                equal(length, retext.plugins.length);
-            };
-        }
-
-        retext
-            .use(nestedPlugin)
-            .use(plugin)
-            .parse(null, done);
+    it('should return nlcst', function () {
+        test(Retext.parse('Foo'));
     });
 });
 
-/*
- * Test Retext#run(tree, options?, done).
- */
-
-describe('Retext#run(tree, done)', function () {
+describe('Retext#run()', function () {
     it('should be a `function`', function () {
-        equal(typeof Retext.prototype.run, 'function');
-        equal(typeof (new Retext()).run, 'function');
+        equal(typeof new Retext().run, 'function');
+        equal(typeof Retext.run, 'function');
     });
 
-    it('should return self', function (done) {
+    it('should return the cst', function () {
         var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
+        var root = {
+            'type': 'RootNode',
+            'children': []
+        };
 
-        equal(retext.run(root, done), retext);
+        equal(retext.run(root), root);
     });
 
-    it('should invoke `done` with `tree`', function (done) {
+    it('should accept `done`', function (done) {
         var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
+        var root = {
+            'type': 'RootNode',
+            'children': []
+        };
 
-        retext.run(root, function (err, tree) {
+        retext.run(root, done);
+    });
+
+    it('should invoke `done` with `tree` and a file', function (done) {
+        var retext = new Retext();
+        var root = {
+            'type': 'RootNode',
+            'children': []
+        };
+
+        retext.run(root, function (err, tree, file) {
             equal(root, tree);
+            equal(file.hasFailed(), false);
 
             done(err);
         });
     });
 
-    it('should not invoke an attached plugin', function (done) {
+    it('should invoke a transformer', function (done) {
         var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-        var isInvoked;
-
-        /**
-         * A plugin returning a spy.
-         */
-        function plugin() {
-            isInvoked = true;
-        }
-
-        retext.use(plugin);
-
-        equal(isInvoked, true);
-
-        isInvoked = false;
-
-        retext.run(root, function (err) {
-            nequal(isInvoked, true);
-
-            done(err);
-        });
-    });
-
-    it('should invoke `onrun`', function (done) {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-        var isInvoked;
-
-        /**
-         * A plugin returning a spy.
-         */
-        function plugin() {
-            return function () {
-                isInvoked = true;
-            };
-        }
-
-        retext.use(plugin);
-
-        nequal(isInvoked, true);
-
-        retext.run(root, function (err) {
-            equal(isInvoked, true);
-
-            done(err);
-        });
-    });
-
-    it('should invoke `onrun` with `root`, retext, and `options`',
-        function (done) {
-            var retext = new Retext();
-            var root = new retext.TextOM.RootNode();
-            var options = {};
-            var parameters;
-
-            /**
-             * A plugin returning a spy, to test its
-             * arguments.
-             */
-            function plugin() {
-                return function () {
-                    parameters = arguments;
-                };
-            }
-
-            retext.use(plugin);
-
-            retext.run(root, options, function (err) {
-                equal(parameters[0], root);
-                equal(parameters[1], options);
-                equal(parameters.length, 2);
-
-                done(err);
-            });
-        }
-    );
-
-    it('should invoke attached plugins in order', function (done) {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-        var isInvoked = false;
-
-        /**
-         * A plugin returning a spy, detecting if
-         * none of the spies are already invoked.
-         */
-        function firstPlugin() {
-            return function () {
-                equal(isInvoked, false);
-
-                isInvoked = true;
-            };
-        }
-
-        /**
-         * A plugin returning a spy, detecting if
-         * one of the spies is already invoked.
-         */
-        function secondPlugin() {
-            return function () {
-                equal(isInvoked, true);
-
-                isInvoked = true;
-            };
-        }
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin)
-            .run(root, done);
-    });
-
-    it('should invoke dependencies in order', function (done) {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-        var invokeCount = 0;
-
-        /* eslint-disable no-use-before-define */
-
-        /**
-         * A plugin depending on two other plugins.
-         */
-        function thirdPlugin() {
-            retext
-                .use(firstPlugin)
-                .use(secondPlugin);
-
-            return function () {
-                equal(invokeCount, 0);
-
-                invokeCount++;
-            };
-        }
-
-        /**
-         * A plugin depending on two other plugins.
-         */
-        function secondPlugin() {
-            retext
-                .use(firstPlugin)
-                .use(thirdPlugin);
-
-            return function () {
-                equal(invokeCount, 1);
-
-                invokeCount++;
-            };
-        }
-
-        /**
-         * A plugin depending on two other plugins.
-         */
-        function firstPlugin() {
-            retext
-                .use(secondPlugin)
-                .use(thirdPlugin);
-
-            return function () {
-                equal(invokeCount, 2);
-
-                invokeCount++;
-            };
-        }
-
-        /* eslint-enable no-use-before-define */
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin)
-            .use(thirdPlugin)
-            .run(root, done);
-    });
-
-    it('should not re-invoke `onrun`', function (done) {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-        var isInvoked;
-
-        /**
-         * Nested plugin.
-         */
-        function nestedPlugin() {
-            return function () {
-                nequal(isInvoked, true);
-
-                isInvoked = true;
-            };
-        }
-
-        /**
-         * plugin using a nested plugin.
-         */
-        function plugin() {
-            retext.use(nestedPlugin);
-        }
-
-        retext
-            .use(nestedPlugin)
-            .use(plugin)
-            .run(root, done);
-    });
-
-    it('should not re-attach an attached plugin', function (done) {
-        var retext = new Retext();
-        var root = new retext.TextOM.RootNode();
-
-        /**
-         * Nested plugin.
-         */
-        function nestedPlugin() {}
 
         /**
          * Spy.
          */
-        function plugin() {
-            return function () {
-                var length = retext.ware.fns.length;
-
-                retext.use(nestedPlugin);
-
-                equal(length, retext.ware.fns.length);
-            };
+        function transformer() {
+            done();
         }
 
-        retext
-            .use(nestedPlugin)
-            .use(plugin)
-            .run(root, done);
+        /**
+         * Spy.
+         */
+        function attacher() {
+            return transformer;
+        }
+
+        retext.use(attacher).run({
+            'type': 'RootNode',
+            'children': []
+        });
+    });
+});
+
+describe('Retext#stringify()', function () {
+    it('should be a `function`', function () {
+        equal(typeof new Retext().stringify, 'function');
+        equal(typeof Retext.stringify, 'function');
+    });
+
+    it('should return string', function () {
+        equal(Retext.stringify({
+            'type': 'TextNode',
+            'value': 'foo'
+        }), 'foo');
+    });
+});
+
+describe('Retext#process()', function () {
+    it('should be a `function`', function () {
+        equal(typeof new Retext().process, 'function');
+        equal(typeof Retext.process, 'function');
+    });
+
+    it('should return string', function () {
+        equal(Retext.process('Foo bar baz.'), 'Foo bar baz.');
     });
 });

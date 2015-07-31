@@ -8,7 +8,7 @@
 
 **retext** is an extensible natural language system—by default using
 [**parse-latin**](https://github.com/wooorm/parse-latin) to transform natural
-language into a **[TextOM](https://github.com/wooorm/textom/)** object model.
+language into **[NLCST](https://github.com/wooorm/nlcst/)**.
 **Retext** provides a pluggable system for analysing and manipulating natural
 language in JavaScript. NodeJS and the browser. Tests provide 100% coverage.
 
@@ -60,23 +60,30 @@ UMD (globals/AMD/CommonJS) ([uncompressed](retext.js) and [compressed](retext.mi
 
 ## Usage
 
-The following example uses **[retext-emoji](https://github.com/wooorm/retext-emoji)** (to show emoji) and **[retext-smartypants](https://github.com/wooorm/retext-smartypants)** (for smart punctuation).
+The following example uses [**retext-emoji**](https://github.com/wooorm/retext-emoji)
+(to show emoji) and [**retext-smartypants**](https://github.com/wooorm/retext-smartypants)
+(for smart punctuation).
+
+Require dependencies:
 
 ```javascript
-/* Require dependencies. */
-var Retext = require('retext');
+var retext = require('retext');
 var emoji = require('retext-emoji');
 var smartypants = require('retext-smartypants');
+```
 
-/* Create an instance using retext-emoji and -smartypants. */
-var retext = new Retext()
-    .use(emoji, {
-        'convert' : 'encode'
-    })
-    .use(smartypants);
+Create an instance using retext-emoji and -smartypants:
 
-/* Read a document. */
-retext.parse(
+```javascript
+var processor = retext().use(smartypants).use(emoji, {
+    'convert' : 'encode'
+});
+```
+
+Process a document:
+
+```javascript
+var doc = processor.process(
     'The three wise monkeys [. . .] sometimes called the ' +
     'three mystic apes--are a pictorial maxim. Together ' +
     'they embody the proverbial principle to ("see no evil, ' +
@@ -84,69 +91,83 @@ retext.parse(
     'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
     'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
     'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
-    'covering his mouth, who speaks no evil.',
-    function (err, tree) {
-        /* Handle errors. */
-        if (err) {
-            throw err;
-        }
-
-        /* Log the text content of the tree (the transformed input). */
-        console.log(tree.toString());
-        /**
-         * This logs the following:
-         *   The three wise monkeys […] sometimes called the three
-         *   mystic apes—are a pictorial maxim. Together they
-         *   embody the proverbial principle to (“see no evil,
-         *   hear no evil, speak no evil”). The three monkeys are
-         *   Mizaru (🙈), covering his eyes, who sees no evil;
-         *   Kikazaru (🙉), covering his ears, who hears no evil;
-         *   and Iwazaru (🙊), covering his mouth, who speaks no evil.
-         */
-    }
+    'covering his mouth, who speaks no evil.'
 );
+```
+
+Yields (you need a browser which supports emoji to see them):
+
+```text
+The three wise monkeys […] sometimes called the three
+mystic apes—are a pictorial maxim. Together they
+embody the proverbial principle to (“see no evil,
+hear no evil, speak no evil”). The three monkeys are
+Mizaru (🙈), covering his eyes, who sees no evil;
+Kikazaru (🙉), covering his ears, who hears no evil;
+and Iwazaru (🙊), covering his mouth, who speaks no evil.
 ```
 
 ## API
 
-### Retext(parser?)
+### [retext](#api).use([plugin](#plugin)\[, options\])
 
-```javascript
-var Retext = require('retext');
-var ParseEnglish = require('parse-english');
-var retext = new Retext(new ParseEnglish());
+Change the way [**retext**](#api) works by using a [plugin](#plugin).
 
-/* There, ol’ chap. */
-retext.parse('Some English', function (err, tree) {/* ... */});
-```
+**Signatures**
 
-Return a new `Retext` instance with the given [parser](#parsers) (defaults to
-an instance of **parse-latin**).
+*   `processor = retext.use(plugin, options?)`;
+*   `processor = retext.use(plugins)`.
 
-### Retext#use([plugin](#plugin), options?)
+**Parameters**
 
-Takes a plugin—a humble function to transform the object model.
-Optionally takes an `options` object, but it’s up to plugin authors to support
-settings.
+*   `plugin` (`Function`) — A [**Plugin**](#plugin);
 
-### Retext#parse(value, options?, done(err, tree))
+*   `plugins` (`Array.<Function>`) — A list of [**Plugin**](#plugin)s;
 
-Parses the given source and, when done, passes either an error (the first
-argument), or the (by `use`d plugins, modified) document (the second argument)
-to the callback.
+*   `options` (`Object?`) — Passed to the plugin. Specified by its
+    documentation.
+
+**Returns**
+
+`Object`: an instance of Retext: The returned object functions just like
+**retext** (it has the same methods), but caches the `use`d plugins. This
+provides the ability to chain `use` calls to use multiple plugins, but
+ensures the functioning of the **retext** module does not change for other
+dependents.
+
+### [retext](#api).process(value\[, done\])
+
+Parse a text document, apply plugins to it, and compile it into
+something else.
+
+**Signatures**
+
+*   `doc = mdast.process(value[, done])`.
+
+**Parameters**
+
+*   `value` (`string`) — Text document;
+
+*   `done` (`function(err, doc, file)`, optional) — Callback invoked when the
+    output is generated with either an error, or a result. Only strictly
+    needed when async plugins are used.
+
+**Returns**
+
+`string` or `null`: A document. Formatted in whatever plugins generate.
+The result is `null` if a plugin is asynchronous, in which case the callback
+`done` should’ve been passed (don’t worry: plugin creators make sure you know
+its async).
 
 ### plugin
 
-A plugin is simply a function, with `function(retext, options?)` as its
+A plugin is simply a function, with `function(retext[, options])` as its
 signature. The first argument is the **Retext** instance a user attached the
 plugin to. The plugin is invoked when a user `use`s the plugin (not when a
-document is parsed) and enables the plugin to modify the internal Object Model
-([`retext.TextOM`](https://github.com/wooorm/textom)) or the parser
-([`retext.parser`](https://github.com/wooorm/parse-latin)).
+document is parsed) and enables the plugin to modify retext.
 
-The plugin can return another function: `function(NLCSTNode, options, next?)`.
-This function is invokeded when a document is parsed. It’s given the document
-as created by `Retext#parse()` before it’s given to the user.
+The plugin can return another function: `function(NLCSTNode, file[, next])`.
+This function is invoked when a document is parsed.
 
 ## Plugins
 
@@ -312,14 +333,13 @@ paragraphs per second.
 
 ```text
            retext.parse(value, callback);
-  230 op/s » A paragraph (5 sentences, 100 words)
-   25 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
-    2 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
+  325 op/s » A paragraph (5 sentences, 100 words)
+   33 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
+    3 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
 ```
 
 ## Related
 
-*   [textom](https://github.com/wooorm/textom)
 *   [nlcst](https://github.com/wooorm/nlcst)
 
 ## License
