@@ -45,7 +45,7 @@
   "scripts": {
     "test-api": "mocha --check-leaks test.js",
     "test-coverage": "istanbul cover _mocha -- -- test.js",
-    "test-travis": "npm run test-coveralls",
+    "test-travis": "npm run test-coverage",
     "test": "npm run test-api",
     "lint-api": "eslint .",
     "lint-style": "jscs --reporter inline .",
