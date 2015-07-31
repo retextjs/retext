@@ -4,6 +4,14 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+0.6.0 / 2015-07-31
+==================
+
+*   Replace coveralls with codecov ([65d1cfb](https://github.com/wooorm/retext/commit/65d1cfb))
+*   Remove warnings about deprecations ([6561765](https://github.com/wooorm/retext/commit/6561765))
+*   Update parse-latin, browserify, eslint, jscs-jsdoc ([525aa73](https://github.com/wooorm/retext/commit/525aa73))
+*   Fix UMD build typo in `Readme.md` ([cb7c4d8](https://github.com/wooorm/retext/commit/cb7c4d8))
+
 0.5.1 / 2015-01-23
 ==================
 
