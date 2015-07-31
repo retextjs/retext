@@ -9,14 +9,12 @@
     "parser",
     "analyse",
     "manipulate",
-    "nlcst",
-    "textom"
+    "nlcst"
   ],
   "dependencies": {
-    "wooorm/nlcst-to-textom": "^0.2.0",
     "wooorm/parse-latin": "^0.5.1",
-    "wooorm/textom": "^0.4.0",
-    "segmentio/ware": "^1.2.0"
+    "wooorm/unified": "^1.0.0",
+    "wooorm/nlcst-to-string": "~0.1.5"
   },
   "repository": "wooorm/retext",
   "scripts": [
