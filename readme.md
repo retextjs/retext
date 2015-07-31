@@ -1,6 +1,6 @@
 # ![Retext](https://cdn.rawgit.com/wooorm/retext/master/logo.svg)
 
-[![Build Status](https://img.shields.io/travis/wooorm/retext.svg?style=flat)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext.svg?style=flat)](https://coveralls.io/r/wooorm/retext?branch=master) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg?style=flat)](https://codeclimate.com/github/wooorm/retext)
+[![Build Status](https://img.shields.io/travis/wooorm/retext.svg)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/retext.svg)](https://codecov.io/github/wooorm/retext) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg)](https://codeclimate.com/github/wooorm/retext)
 
 **retext** is an extensible natural language system—by default using
 [**parse-latin**](https://github.com/wooorm/parse-latin) to transform natural
