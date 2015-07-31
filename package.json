@@ -54,7 +54,6 @@
     "postbuild-bundle": "esmangle retext.js > retext.min.js",
     "build-md": "mdast . --quiet",
     "build": "npm run build-md && npm run build-bundle",
-    "prepublish": "npm run build",
     "benchmark": "matcha benchmark.js"
   }
 }
