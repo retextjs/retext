@@ -4,6 +4,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0-rc.1 / 2015-07-31
+=======================
+
+*   Refactor retext ([e68af6a](https://github.com/wooorm/retext/commit/e68af6a))
+
 0.6.0 / 2015-07-31
 ==================
 
