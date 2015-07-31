@@ -652,7 +652,6 @@ describe('Retext#run(tree, done)', function () {
                 };
             }
 
-
             retext.use(plugin);
 
             retext.run(root, options, function (err) {
