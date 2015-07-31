@@ -18,6 +18,8 @@
   },
   "repository": "wooorm/retext",
   "scripts": [
-    "index.js"
+    "index.js",
+    "lib/parse.js",
+    "lib/compile.js"
   ]
 }

@@ -22,7 +22,8 @@
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "files": [
-    "index.js"
+    "index.js",
+    "lib"
   ],
   "devDependencies": {
     "browserify": "^11.0.0",
