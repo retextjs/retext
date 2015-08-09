@@ -4,6 +4,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0-rc.3 / 2015-08-09
+=======================
+
+*   Add positional information to NLCST parsers ([5de2f80](https://github.com/wooorm/retext/commit/5de2f80))
+
 1.0.0-rc.2 / 2015-07-31
 =======================
 
