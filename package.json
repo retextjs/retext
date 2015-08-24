@@ -12,8 +12,8 @@
     "nlcst"
   ],
   "dependencies": {
-    "nlcst-to-string": "^0.1.5",
-    "parse-latin": "^0.5.1",
+    "nlcst-to-string": "^1.0.0",
+    "parse-latin": "^1.0.0",
     "unified": "^1.0.0"
   },
   "repository": {
@@ -27,18 +27,18 @@
   ],
   "devDependencies": {
     "browserify": "^11.0.0",
-    "eslint": "^0.24.0",
+    "eslint": "^1.0.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.3.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
     "matcha": "^0.6.0",
-    "mdast": "^0.28.0",
-    "mdast-comment-config": "^0.1.2",
-    "mdast-github": "^0.3.2",
-    "mdast-lint": "^0.4.2",
-    "mdast-slug": "^0.1.1",
-    "mdast-validate-links": "^0.3.1",
+    "mdast": "^1.0.0",
+    "mdast-comment-config": "^1.0.0",
+    "mdast-github": "^1.0.0",
+    "mdast-lint": "^1.0.0",
+    "mdast-slug": "^1.0.0",
+    "mdast-validate-links": "^1.0.0",
     "mocha": "^2.0.0",
     "nlcst-test": "^0.2.1"
   },
