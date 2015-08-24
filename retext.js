@@ -10,6 +10,8 @@
 
 'use strict';
 
+/* eslint-env commonjs */
+
 /*
  * Dependencies.
  */
@@ -29,7 +31,7 @@ module.exports = unified({
     'Compiler': Compiler
 });
 
-},{"./lib/compile.js":2,"./lib/parse.js":3,"unified":34}],2:[function(require,module,exports){
+},{"./lib/compile.js":2,"./lib/parse.js":3,"unified":33}],2:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2014-2015 Titus Wormer. All rights reserved.
@@ -37,6 +39,8 @@ module.exports = unified({
  * @module retext:compile
  * @fileoverview Compile nlcst to string.
  */
+
+/* eslint-env commonjs */
 
 'use strict';
 
@@ -136,6 +140,8 @@ module.exports = Compiler;
  */
 
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
@@ -349,8 +355,13 @@ function fromObject (that, object) {
     throw new TypeError('must start with number, buffer, array or string')
   }
 
-  if (typeof ArrayBuffer !== 'undefined' && object.buffer instanceof ArrayBuffer) {
-    return fromTypedArray(that, object)
+  if (typeof ArrayBuffer !== 'undefined') {
+    if (object.buffer instanceof ArrayBuffer) {
+      return fromTypedArray(that, object)
+    }
+    if (object instanceof ArrayBuffer) {
+      return fromArrayBuffer(that, object)
+    }
   }
 
   if (object.length) return fromArrayLike(that, object)
@@ -383,6 +394,18 @@ function fromTypedArray (that, array) {
   // of the old Buffer constructor.
   for (var i = 0; i < length; i += 1) {
     that[i] = array[i] & 255
+  }
+  return that
+}
+
+function fromArrayBuffer (that, array) {
+  if (Buffer.TYPED_ARRAY_SUPPORT) {
+    // Return an augmented `Uint8Array` instance, for best performance
+    array.byteLength
+    that = Buffer._augment(new Uint8Array(array))
+  } else {
+    // Fallback: Return an object instance of the Buffer class
+    that = fromTypedArray(that, new Uint8Array(array))
   }
   return that
 }
@@ -504,8 +527,6 @@ Buffer.concat = function concat (list, length) {
 
   if (list.length === 0) {
     return new Buffer(0)
-  } else if (list.length === 1) {
-    return list[0]
   }
 
   var i
@@ -680,13 +701,13 @@ Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
   throw new TypeError('val must be string, number or Buffer')
 }
 
-// `get` will be removed in Node 0.13+
+// `get` is deprecated
 Buffer.prototype.get = function get (offset) {
   console.log('.get() is deprecated. Access using array indexes instead.')
   return this.readUInt8(offset)
 }
 
-// `set` will be removed in Node 0.13+
+// `set` is deprecated
 Buffer.prototype.set = function set (v, offset) {
   console.log('.set() is deprecated. Access using array indexes instead.')
   return this.writeUInt8(v, offset)
@@ -827,20 +848,99 @@ function base64Slice (buf, start, end) {
 }
 
 function utf8Slice (buf, start, end) {
-  var res = ''
-  var tmp = ''
   end = Math.min(buf.length, end)
+  var res = []
 
-  for (var i = start; i < end; i++) {
-    if (buf[i] <= 0x7F) {
-      res += decodeUtf8Char(tmp) + String.fromCharCode(buf[i])
-      tmp = ''
-    } else {
-      tmp += '%' + buf[i].toString(16)
+  var i = start
+  while (i < end) {
+    var firstByte = buf[i]
+    var codePoint = null
+    var bytesPerSequence = (firstByte > 0xEF) ? 4
+      : (firstByte > 0xDF) ? 3
+      : (firstByte > 0xBF) ? 2
+      : 1
+
+    if (i + bytesPerSequence <= end) {
+      var secondByte, thirdByte, fourthByte, tempCodePoint
+
+      switch (bytesPerSequence) {
+        case 1:
+          if (firstByte < 0x80) {
+            codePoint = firstByte
+          }
+          break
+        case 2:
+          secondByte = buf[i + 1]
+          if ((secondByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0x1F) << 0x6 | (secondByte & 0x3F)
+            if (tempCodePoint > 0x7F) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 3:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0xC | (secondByte & 0x3F) << 0x6 | (thirdByte & 0x3F)
+            if (tempCodePoint > 0x7FF && (tempCodePoint < 0xD800 || tempCodePoint > 0xDFFF)) {
+              codePoint = tempCodePoint
+            }
+          }
+          break
+        case 4:
+          secondByte = buf[i + 1]
+          thirdByte = buf[i + 2]
+          fourthByte = buf[i + 3]
+          if ((secondByte & 0xC0) === 0x80 && (thirdByte & 0xC0) === 0x80 && (fourthByte & 0xC0) === 0x80) {
+            tempCodePoint = (firstByte & 0xF) << 0x12 | (secondByte & 0x3F) << 0xC | (thirdByte & 0x3F) << 0x6 | (fourthByte & 0x3F)
+            if (tempCodePoint > 0xFFFF && tempCodePoint < 0x110000) {
+              codePoint = tempCodePoint
+            }
+          }
+      }
     }
+
+    if (codePoint === null) {
+      // we did not generate a valid codePoint so insert a
+      // replacement char (U+FFFD) and advance only 1 byte
+      codePoint = 0xFFFD
+      bytesPerSequence = 1
+    } else if (codePoint > 0xFFFF) {
+      // encode to utf16 (surrogate pair dance)
+      codePoint -= 0x10000
+      res.push(codePoint >>> 10 & 0x3FF | 0xD800)
+      codePoint = 0xDC00 | codePoint & 0x3FF
+    }
+
+    res.push(codePoint)
+    i += bytesPerSequence
   }
 
-  return res + decodeUtf8Char(tmp)
+  return decodeCodePointsArray(res)
+}
+
+// Based on http://stackoverflow.com/a/22747272/680742, the browser with
+// the lowest limit is Chrome, with 0x10000 args.
+// We go 1 magnitude less, for safety
+var MAX_ARGUMENTS_LENGTH = 0x1000
+
+function decodeCodePointsArray (codePoints) {
+  var len = codePoints.length
+  if (len <= MAX_ARGUMENTS_LENGTH) {
+    return String.fromCharCode.apply(String, codePoints) // avoid extra slice()
+  }
+
+  // Decode in chunks to avoid "call stack size exceeded".
+  var res = ''
+  var i = 0
+  while (i < len) {
+    res += String.fromCharCode.apply(
+      String,
+      codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+    )
+  }
+  return res
 }
 
 function asciiSlice (buf, start, end) {
@@ -1375,9 +1475,16 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
   }
 
   var len = end - start
+  var i
 
-  if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
-    for (var i = 0; i < len; i++) {
+  if (this === target && start < targetStart && targetStart < end) {
+    // descending copy from end
+    for (i = len - 1; i >= 0; i--) {
+      target[i + targetStart] = this[i + start]
+    }
+  } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
+    // ascending copy from start
+    for (i = 0; i < len; i++) {
       target[i + targetStart] = this[i + start]
     }
   } else {
@@ -1453,7 +1560,7 @@ Buffer._augment = function _augment (arr) {
   // save reference to original Uint8Array set method before overwriting
   arr._set = arr.set
 
-  // deprecated, will be removed in node 0.13+
+  // deprecated
   arr.get = BP.get
   arr.set = BP.set
 
@@ -1539,28 +1646,15 @@ function utf8ToBytes (string, units) {
   var length = string.length
   var leadSurrogate = null
   var bytes = []
-  var i = 0
 
-  for (; i < length; i++) {
+  for (var i = 0; i < length; i++) {
     codePoint = string.charCodeAt(i)
 
     // is surrogate component
     if (codePoint > 0xD7FF && codePoint < 0xE000) {
       // last char was a lead
-      if (leadSurrogate) {
-        // 2 leads in a row
-        if (codePoint < 0xDC00) {
-          if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-          leadSurrogate = codePoint
-          continue
-        } else {
-          // valid surrogate pair
-          codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
-          leadSurrogate = null
-        }
-      } else {
+      if (!leadSurrogate) {
         // no lead yet
-
         if (codePoint > 0xDBFF) {
           // unexpected trail
           if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
@@ -1569,17 +1663,29 @@ function utf8ToBytes (string, units) {
           // unpaired lead
           if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
           continue
-        } else {
-          // valid lead
-          leadSurrogate = codePoint
-          continue
         }
+
+        // valid lead
+        leadSurrogate = codePoint
+
+        continue
       }
+
+      // 2 leads in a row
+      if (codePoint < 0xDC00) {
+        if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
+        leadSurrogate = codePoint
+        continue
+      }
+
+      // valid surrogate pair
+      codePoint = leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00 | 0x10000
     } else if (leadSurrogate) {
       // valid bmp char, but last char was a lead
       if ((units -= 3) > -1) bytes.push(0xEF, 0xBF, 0xBD)
-      leadSurrogate = null
     }
+
+    leadSurrogate = null
 
     // encode utf8
     if (codePoint < 0x80) {
@@ -1598,7 +1704,7 @@ function utf8ToBytes (string, units) {
         codePoint >> 0x6 & 0x3F | 0x80,
         codePoint & 0x3F | 0x80
       )
-    } else if (codePoint < 0x200000) {
+    } else if (codePoint < 0x110000) {
       if ((units -= 4) < 0) break
       bytes.push(
         codePoint >> 0x12 | 0xF0,
@@ -1649,14 +1755,6 @@ function blitBuffer (src, dst, offset, length) {
     dst[i + offset] = src[i]
   }
   return i
-}
-
-function decodeUtf8Char (str) {
-  try {
-    return decodeURIComponent(str)
-  } catch (err) {
-    return String.fromCharCode(0xFFFD) // UTF 8 invalid char
-  }
 }
 
 },{"base64-js":5,"ieee754":6,"is-array":7}],5:[function(require,module,exports){
@@ -1907,27 +2005,38 @@ module.exports = isArray || function (val) {
 };
 
 },{}],8:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module nlcst:to-string
+ * @fileoverview Transform an NLCST node into a string.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /**
  * Stringify an NLCST node.
  *
- * @param {NLCSTNode} nlcst
- * @return {string}
+ * @param {NLCSTNode|Array.<NLCSTNode>} node - Node to to
+ *   stringify.
+ * @return {string} - Stringified `node`.
  */
-function nlcstToString(nlcst) {
-    var values,
-        length,
-        children;
+function nlcstToString(node) {
+    var values;
+    var length;
+    var children;
 
-    if (typeof nlcst.value === 'string') {
-        return nlcst.value;
+    if (typeof node.value === 'string') {
+        return node.value;
     }
 
-    children = nlcst.children;
+    children = 'length' in node ? node : node.children;
     length = children.length;
 
-    /**
+    /*
      * Shortcut: This is pretty common, and a small performance win.
      */
 
@@ -1945,17 +2054,30 @@ function nlcstToString(nlcst) {
 }
 
 /*
- * Expose `nlcstToString`.
+ * Expose.
  */
 
 module.exports = nlcstToString;
 
 },{}],9:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin
+ * @fileoverview Latin-script (natural language) parser.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 module.exports = require('./lib/parse-latin');
 
-},{"./lib/parse-latin":12}],10:[function(require,module,exports){
+},{"./lib/parse-latin":11}],10:[function(require,module,exports){
+/* This module is generated by `script/build-expressions.js` */
+'use strict'
+/* eslint-env commonjs */
 module.exports = {
     'affixSymbol': /^([\)\]\}\u0F3B\u0F3D\u169C\u2046\u207E\u208E\u2309\u230B\u232A\u2769\u276B\u276D\u276F\u2771\u2773\u2775\u27C6\u27E7\u27E9\u27EB\u27ED\u27EF\u2984\u2986\u2988\u298A\u298C\u298E\u2990\u2992\u2994\u2996\u2998\u29D9\u29DB\u29FD\u2E23\u2E25\u2E27\u2E29\u3009\u300B\u300D\u300F\u3011\u3015\u3017\u3019\u301B\u301E\u301F\uFD3E\uFE18\uFE36\uFE38\uFE3A\uFE3C\uFE3E\uFE40\uFE42\uFE44\uFE48\uFE5A\uFE5C\uFE5E\uFF09\uFF3D\uFF5D\uFF60\uFF63]|["'\xBB\u2019\u201D\u203A\u2E03\u2E05\u2E0A\u2E0D\u2E1D\u2E21]|[!\.\?\u2026\u203D])\1*$/,
     'newLine': /^(\r?\n|\r)+$/,
@@ -1971,83 +2093,24 @@ module.exports = {
 };
 
 },{}],11:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin
+ * @fileoverview Latin-script (natural language) parser.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var iterate;
-
-iterate = require('array-iterate');
-
-/**
- * Pass the context as the third argument to `callback`.
- *
- * @param {function(Object, number, Object): number|undefined} callback
- * @return {function(Object, number)}
- */
-function wrapperFactory(callback) {
-    return function (value, index) {
-        return callback(value, index, this);
-    };
-}
-
-/**
- * Turns `callback` into a ``iterator'' accepting a parent.
- *
- * see ``array-iterate'' for more info.
- *
- * @param {function(Object, number, Object): number|undefined} callback
- * @return {function(NLCSTParent)}
- */
-function iteratorFactory(callback) {
-    return function (parent) {
-        return iterate(parent.children, callback, parent);
-    };
-}
-
-/**
- * Turns `callback` into a ``iterator'' accepting a parent.
- *
- * see ``array-iterate'' for more info.
- *
- * @param {function(Object, number, Object): number|undefined} callback
- * @return {function(Object)}
- */
-function modifierFactory(callback) {
-    return iteratorFactory(wrapperFactory(callback));
-}
-
-/*
- * Expose `modifierFactory`.
- */
-
-module.exports = modifierFactory;
-
-},{"array-iterate":32}],12:[function(require,module,exports){
-/*!
- * parse-latin
- *
- * Licensed under MIT.
- * Copyright (c) 2014 Titus Wormer <tituswormer@gmail.com>
- */
-
-'use strict';
-
-/*
- * Dependencies.
- */
-
-var createParser,
-    expressions,
-    pluginFactory,
-    modifierFactory;
-
-createParser = require('./parser');
-expressions = require('./expressions');
-pluginFactory = require('./plugin');
-modifierFactory = require('./modifier');
+var createParser = require('./parser');
+var expressions = require('./expressions');
 
 /*
  * == CLASSIFY ===============================================================
@@ -2056,11 +2119,6 @@ modifierFactory = require('./modifier');
 /*
  * Constants.
  */
-
-var EXPRESSION_TOKEN,
-    EXPRESSION_WORD,
-    EXPRESSION_PUNCTUATION,
-    EXPRESSION_WHITE_SPACE;
 
 /*
  * Match all tokens:
@@ -2071,30 +2129,30 @@ var EXPRESSION_TOKEN,
  * - One or more of the same character;
  */
 
-EXPRESSION_TOKEN = expressions.token;
+var EXPRESSION_TOKEN = expressions.token;
 
 /*
  * Match a word.
  */
 
-EXPRESSION_WORD = expressions.word;
+var EXPRESSION_WORD = expressions.word;
 
 /*
  * Match a string containing ONLY punctuation.
  */
 
-EXPRESSION_PUNCTUATION = expressions.punctuation;
+var EXPRESSION_PUNCTUATION = expressions.punctuation;
 
 /*
  * Match a string containing ONLY white space.
  */
 
-EXPRESSION_WHITE_SPACE = expressions.whiteSpace;
+var EXPRESSION_WHITE_SPACE = expressions.whiteSpace;
 
 /**
  * Classify a token.
  *
- * @param {string?} value
+ * @param {string?} value - Value to classify.
  * @return {string} - value's type.
  */
 function classify(value) {
@@ -2116,16 +2174,16 @@ function classify(value) {
 /**
  * Transform a `value` into a list of `NLCSTNode`s.
  *
- * @param {ParseLatin} parser
- * @param {string?} value
+ * @param {ParseLatin} parser - Context.
+ * @param {string?} value - Value to tokenize.
  * @return {Array.<NLCSTNode>}
  */
 function tokenize(parser, value) {
-    var tokens,
-        offset,
-        line,
-        column,
-        match;
+    var tokens;
+    var offset;
+    var line;
+    var column;
+    var match;
 
     if (value === null || value === undefined) {
         value = '';
@@ -2185,7 +2243,7 @@ function tokenize(parser, value) {
      *   location = new Position(start);
      *   // {start: {line: 1, column: 1}, end: {line: 1, column: 3}}
      *
-     * @param {Object} start
+     * @param {Object} start - Starting position.
      */
     function Position(start) {
         this.start = start;
@@ -2236,12 +2294,12 @@ function tokenize(parser, value) {
      * @example
      *   update('foo');
      *
-     * @param {string} subvalue
+     * @param {string} subvalue - Eaten value..
      */
     function update(subvalue) {
-        var subvalueLength = subvalue.length,
-            character = -1,
-            lastIndex = -1;
+        var subvalueLength = subvalue.length;
+        var character = -1;
+        var lastIndex = -1;
 
         offset += subvalueLength;
 
@@ -2413,9 +2471,7 @@ function ParseLatin(options) {
  * Quick access to the prototype.
  */
 
-var parseLatinPrototype;
-
-parseLatinPrototype = ParseLatin.prototype;
+var parseLatinPrototype = ParseLatin.prototype;
 
 /*
  * == TOKENIZE ===============================================================
@@ -2437,7 +2493,7 @@ parseLatinPrototype.tokenize = function (value) {
 /**
  * Factory to create a `Text`.
  *
- * @param {string?} type
+ * @param {string} type - Name of text node.
  * @return {function(value): NLCSTText}
  */
 function createTextFactory(type) {
@@ -2523,22 +2579,16 @@ parseLatinPrototype.tokenizeText = createTextFactory('Text');
 /**
  * Run transform plug-ins for `key` on `nodes`.
  *
- * @param {string} key
- * @param {Array.<Node>} nodes
+ * @param {string} key - Unique name.
+ * @param {Array.<Node>} nodes - List of nodes.
  * @return {Array.<Node>} - `nodes`.
  */
 function run(key, nodes) {
-    var wareKey,
-        plugins,
-        index;
-
-    wareKey = key + 'Plugins';
-
-    plugins = this[wareKey];
+    var wareKey = key + 'Plugins';
+    var plugins = this[wareKey];
+    var index = -1;
 
     if (plugins) {
-        index = -1;
-
         while (plugins[++index]) {
             plugins[index](nodes);
         }
@@ -2554,9 +2604,9 @@ function run(key, nodes) {
 parseLatinPrototype.run = run;
 
 /**
- * @param {Function} Constructor
- * @param {string} key
- * @param {function(*): undefined} callback
+ * @param {Function} Constructor - Context.
+ * @param {string} key - Unique name.
+ * @param {function(*): undefined} callback - Wrapped.
  */
 function pluggable(Constructor, key, callback) {
     /**
@@ -2572,7 +2622,7 @@ function pluggable(Constructor, key, callback) {
  * Factory to inject `plugins`. Takes `callback` for
  * the actual inserting.
  *
- * @param {function(Object, string, Array.<Function>)} callback
+ * @param {function(Object, string, Array.<Function>)} callback - Wrapped.
  * @return {function(string, Array.<Function>)}
  */
 function useFactory(callback) {
@@ -2586,10 +2636,8 @@ function useFactory(callback) {
      */
 
     return function (key, plugins) {
-        var self,
-            wareKey;
-
-        self = this;
+        var self = this;
+        var wareKey;
 
         /*
          * Throw if the method is not pluggable.
@@ -2671,15 +2719,12 @@ parseLatinPrototype.useFirst = useFactory(function (context, key, plugins) {
  *
  * @see pluggable
  *
- * @param {string?} value
+ * @param {string?} value - Value to classify as a word.
  * @return {NLCSTWordNode}
  */
 pluggable(ParseLatin, 'tokenizeWord', function (value, eat) {
-    var add,
-        parent;
-
-    add = (eat || noopEat)('');
-    parent = {
+    var add = (eat || noopEat)('');
+    var parent = {
         'type': 'WordNode',
         'children': []
     };
@@ -2795,106 +2840,79 @@ parseLatinPrototype.use('tokenizeRoot', [
  */
 
 /*
- * Expose `ParseLatin`.
+ * Expose.
  */
 
 module.exports = ParseLatin;
 
-/*
- * Expose `pluginFactory` on `ParseLatin` as `plugin`.
- */
-
-ParseLatin.plugin = pluginFactory;
-
-/*
- * Expose `modifierFactory` on `ParseLatin` as `modifier`.
- */
-
-ParseLatin.modifier = modifierFactory;
-
-},{"./expressions":10,"./modifier":11,"./parser":13,"./plugin":14,"./plugin/break-implicit-sentences":15,"./plugin/make-final-white-space-siblings":16,"./plugin/make-initial-white-space-siblings":17,"./plugin/merge-affix-exceptions":18,"./plugin/merge-affix-symbol":19,"./plugin/merge-final-word-symbol":20,"./plugin/merge-initial-lower-case-letter-sentences":21,"./plugin/merge-initial-word-symbol":22,"./plugin/merge-initialisms":23,"./plugin/merge-inner-word-symbol":24,"./plugin/merge-non-word-sentences":25,"./plugin/merge-prefix-exceptions":26,"./plugin/merge-remaining-full-stops":27,"./plugin/merge-words":28,"./plugin/patch-position":29,"./plugin/remove-empty-nodes":30}],13:[function(require,module,exports){
-'use strict';
-
-var tokenizer;
-
-tokenizer = require('./tokenizer');
-
+},{"./expressions":10,"./parser":12,"./plugin/break-implicit-sentences":13,"./plugin/make-final-white-space-siblings":14,"./plugin/make-initial-white-space-siblings":15,"./plugin/merge-affix-exceptions":16,"./plugin/merge-affix-symbol":17,"./plugin/merge-final-word-symbol":18,"./plugin/merge-initial-lower-case-letter-sentences":19,"./plugin/merge-initial-word-symbol":20,"./plugin/merge-initialisms":21,"./plugin/merge-inner-word-symbol":22,"./plugin/merge-non-word-sentences":23,"./plugin/merge-prefix-exceptions":24,"./plugin/merge-remaining-full-stops":25,"./plugin/merge-words":26,"./plugin/patch-position":27,"./plugin/remove-empty-nodes":28}],12:[function(require,module,exports){
 /**
- * Construct a parser based on `options`.
- *
- * @param {Object} options
- * @return {function(string): NLCSTNode}
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:parser
+ * @fileoverview Construct a parser for a given node.
  */
-function parserFactory(options) {
-    var type,
-        delimiter,
-        tokenizerProperty;
 
-    type = options.type;
-    tokenizerProperty = options.tokenizer;
-    delimiter = options.delimiter;
-
-    if (delimiter) {
-        delimiter = tokenizer(options.delimiterType, options.delimiter);
-    }
-
-    return function (value) {
-        var children;
-
-        children = this[tokenizerProperty](value);
-
-        return {
-            'type': type,
-            'children': delimiter ? delimiter(children) : children
-        };
-    };
-}
-
-module.exports = parserFactory;
-
-},{"./tokenizer":31}],14:[function(require,module,exports){
 'use strict';
 
-/**
- * Turns `callback` into a ``plugin'' accepting a parent.
- *
- * @param {function(Object, number, Object)} callback
- * @return {function(NLCSTParent)}
- */
-function pluginFactory(callback) {
-    return function (parent) {
-        var index,
-            children;
-
-        index = -1;
-        children = parent.children;
-
-        while (children[++index]) {
-            callback(children[index], index, parent);
-        }
-    };
-}
-
-/*
- * Expose `pluginFactory`.
- */
-
-module.exports = pluginFactory;
-
-},{}],15:[function(require,module,exports){
-'use strict';
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier,
-    expressions;
+var tokenizer = require('./tokenizer');
 
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
-expressions = require('../expressions');
+/**
+ * Construct a parser based on `options`.
+ *
+ * @param {Object} options - Configuration.
+ * @return {function(string): NLCSTNode}
+ */
+function parserFactory(options) {
+    var type = options.type;
+    var tokenizerProperty = options.tokenizer;
+    var delimiter = options.delimiter;
+    var tokenize = delimiter && tokenizer(options.delimiterType, delimiter);
+
+    return function (value) {
+        var children = this[tokenizerProperty](value);
+
+        return {
+            'type': type,
+            'children': tokenize ? tokenize(children) : children
+        };
+    };
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = parserFactory;
+
+},{"./tokenizer":29}],13:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:break-implicit-sentencs
+ * @fileoverview Break a sentence if a white space with
+ *   more than one new-line is found.
+ */
+
+'use strict';
+
+/* eslint-env commonjs */
+
+/*
+ * Dependencies.
+ */
+
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -2902,28 +2920,26 @@ expressions = require('../expressions');
  * - Two or more new line characters.
  */
 
-var EXPRESSION_MULTI_NEW_LINE;
-
-EXPRESSION_MULTI_NEW_LINE = expressions.newLineMulti;
+var EXPRESSION_MULTI_NEW_LINE = expressions.newLineMulti;
 
 /**
  * Break a sentence if a white space with more
  * than one new-line is found.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined}
  */
 function breakImplicitSentences(child, index, parent) {
-    var children,
-        position,
-        length,
-        tail,
-        head,
-        end,
-        insertion,
-        node;
+    var children;
+    var position;
+    var length;
+    var tail;
+    var head;
+    var end;
+    var insertion;
+    var node;
 
     if (child.type !== 'SentenceNode') {
         return;
@@ -2931,9 +2947,12 @@ function breakImplicitSentences(child, index, parent) {
 
     children = child.children;
 
-    length = children.length;
+    /*
+     * Ignore first and last child.
+     */
 
-    position = -1;
+    length = children.length - 1;
+    position = 0;
 
     while (++position < length) {
         node = children[position];
@@ -2976,33 +2995,39 @@ function breakImplicitSentences(child, index, parent) {
  * Expose `breakImplicitSentences` as a plugin.
  */
 
-module.exports = modifier(breakImplicitSentences);
+module.exports = modifyChildren(breakImplicitSentences);
 
-},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],16:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-modify-children":31}],14:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:make-final-white-space-siblings
+ * @fileoverview Make final white-space siblings.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var modifier;
-
-modifier = require('../modifier');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Move white space ending a paragraph up, so they are
  * the siblings of paragraphs.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParent} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParent} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function makeFinalWhiteSpaceSiblings(child, index, parent) {
-    var children,
-        prev;
-
-    children = child.children;
+    var children = child.children;
+    var prev;
 
     if (
         children &&
@@ -3028,32 +3053,38 @@ function makeFinalWhiteSpaceSiblings(child, index, parent) {
  * Expose `makeFinalWhiteSpaceSiblings` as a modifier.
  */
 
-module.exports = modifier(makeFinalWhiteSpaceSiblings);
+module.exports = modifyChildren(makeFinalWhiteSpaceSiblings);
 
-},{"../modifier":11}],17:[function(require,module,exports){
+},{"unist-util-modify-children":31}],15:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:make-initial-white-space-siblings
+ * @fileoverview Make initial white-space siblings.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var plugin;
-
-plugin = require('../plugin');
+var visitChildren = require('unist-util-visit-children');
 
 /**
  * Move white space starting a sentence up, so they are
  * the siblings of sentences.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParent} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParent} parent - Parent of `child`.
  */
 function makeInitialWhiteSpaceSiblings(child, index, parent) {
-    var children,
-        next;
-
-    children = child.children;
+    var children = child.children;
+    var next;
 
     if (
         children &&
@@ -3073,38 +3104,44 @@ function makeInitialWhiteSpaceSiblings(child, index, parent) {
  * Expose `makeInitialWhiteSpaceSiblings` as a plugin.
  */
 
-module.exports = plugin(makeInitialWhiteSpaceSiblings);
+module.exports = visitChildren(makeInitialWhiteSpaceSiblings);
 
-},{"../plugin":14}],18:[function(require,module,exports){
+},{"unist-util-visit-children":32}],16:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-affix-exceptions
+ * @fileoverview Merge a sentence into its previous
+ *   sentence, when the sentence starts with a comma.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Merge a sentence into its previous sentence, when
  * the sentence starts with a comma.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeAffixExceptions(child, index, parent) {
-    var children,
-        node,
-        position,
-        previousChild,
-        value;
-
-    children = child.children;
+    var children = child.children;
+    var node;
+    var position;
+    var value;
+    var previousChild;
 
     if (!children || !children.length || index === 0) {
         return;
@@ -3157,22 +3194,30 @@ function mergeAffixExceptions(child, index, parent) {
  * Expose `mergeAffixExceptions` as a modifier.
  */
 
-module.exports = modifier(mergeAffixExceptions);
+module.exports = modifyChildren(mergeAffixExceptions);
 
-},{"../modifier":11,"nlcst-to-string":33}],19:[function(require,module,exports){
+},{"nlcst-to-string":8,"unist-util-modify-children":31}],17:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-affix-symbol
+ * @fileoverview Move certain punctuation following a
+ *   terminal marker (thus in the next sentence) to the
+ *   previous sentence.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier,
-    expressions;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
-expressions = require('../expressions');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -3183,27 +3228,23 @@ expressions = require('../expressions');
  *   terminal marker.
  */
 
-var EXPRESSION_AFFIX_SYMBOL;
-
-EXPRESSION_AFFIX_SYMBOL = expressions.affixSymbol;
+var EXPRESSION_AFFIX_SYMBOL = expressions.affixSymbol;
 
 /**
  * Move certain punctuation following a terminal
  * marker (thus in the next sentence) to the
  * previous sentence.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeAffixSymbol(child, index, parent) {
-    var children,
-        prev,
-        first,
-        second;
-
-    children = child.children;
+    var children = child.children;
+    var first;
+    var second;
+    var prev;
 
     if (
         children &&
@@ -3248,34 +3289,41 @@ function mergeAffixSymbol(child, index, parent) {
  * Expose `mergeAffixSymbol` as a modifier.
  */
 
-module.exports = modifier(mergeAffixSymbol);
+module.exports = modifyChildren(mergeAffixSymbol);
 
-},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],20:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-modify-children":31}],18:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-final-word-symbol
+ * @fileoverview Merge certain symbols into their preceding word.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Merge certain punctuation marks into their
  * preceding words.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTSentenceNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTSentenceNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeFinalWordSymbol(child, index, parent) {
-    var children,
-        prev,
-        next;
+    var children;
+    var prev;
+    var next;
 
     if (
         index !== 0 &&
@@ -3335,22 +3383,30 @@ function mergeFinalWordSymbol(child, index, parent) {
  * Expose `mergeFinalWordSymbol` as a modifier.
  */
 
-module.exports = modifier(mergeFinalWordSymbol);
+module.exports = modifyChildren(mergeFinalWordSymbol);
 
-},{"../modifier":11,"nlcst-to-string":33}],21:[function(require,module,exports){
+},{"nlcst-to-string":8,"unist-util-modify-children":31}],19:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-initial-lower-case-letter-sentences
+ * @fileoverview Merge a sentence into its previous
+ *   sentence, when the sentence starts with a lower case
+ *   letter.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier,
-    expressions;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
-expressions = require('../expressions');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -3358,27 +3414,23 @@ expressions = require('../expressions');
  * - Initial lowercase letter.
  */
 
-var EXPRESSION_LOWER_INITIAL;
-
-EXPRESSION_LOWER_INITIAL = expressions.lowerInitial;
+var EXPRESSION_LOWER_INITIAL = expressions.lowerInitial;
 
 /**
  * Merge a sentence into its previous sentence, when
  * the sentence starts with a lower case letter.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeInitialLowerCaseLetterSentences(child, index, parent) {
-    var siblings,
-        children,
-        position,
-        node,
-        prev;
-
-    children = child.children;
+    var children = child.children;
+    var position;
+    var node;
+    var siblings;
+    var prev;
 
     if (
         children &&
@@ -3433,33 +3485,40 @@ function mergeInitialLowerCaseLetterSentences(child, index, parent) {
  * Expose `mergeInitialLowerCaseLetterSentences` as a modifier.
  */
 
-module.exports = modifier(mergeInitialLowerCaseLetterSentences);
+module.exports = modifyChildren(mergeInitialLowerCaseLetterSentences);
 
-},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],22:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-modify-children":31}],20:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-initial-word-symbol
+ * @fileoverview Merge certain symbols into their next word.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Merge certain punctuation marks into their
  * following words.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTSentenceNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTSentenceNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeInitialWordSymbol(child, index, parent) {
-    var children,
-        next;
+    var children;
+    var next;
 
     if (
         (
@@ -3527,22 +3586,28 @@ function mergeInitialWordSymbol(child, index, parent) {
  * Expose `mergeInitialWordSymbol` as a modifier.
  */
 
-module.exports = modifier(mergeInitialWordSymbol);
+module.exports = modifyChildren(mergeInitialWordSymbol);
 
-},{"../modifier":11,"nlcst-to-string":33}],23:[function(require,module,exports){
+},{"nlcst-to-string":8,"unist-util-modify-children":31}],21:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-initialisms
+ * @fileoverview Merge initialisms.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier,
-    expressions;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
-expressions = require('../expressions');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -3550,27 +3615,25 @@ expressions = require('../expressions');
  * - Numbers.
  */
 
-var EXPRESSION_NUMERICAL;
-
-EXPRESSION_NUMERICAL = expressions.numerical;
+var EXPRESSION_NUMERICAL = expressions.numerical;
 
 /**
  * Merge initialisms.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTSentenceNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTSentenceNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeInitialisms(child, index, parent) {
-    var siblings,
-        prev,
-        children,
-        length,
-        position,
-        otherChild,
-        isAllDigits,
-        value;
+    var siblings;
+    var prev;
+    var children;
+    var length;
+    var position;
+    var otherChild;
+    var isAllDigits;
+    var value;
 
     if (
         index !== 0 &&
@@ -3655,22 +3718,29 @@ function mergeInitialisms(child, index, parent) {
  * Expose `mergeInitialisms` as a modifier.
  */
 
-module.exports = modifier(mergeInitialisms);
+module.exports = modifyChildren(mergeInitialisms);
 
-},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],24:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-modify-children":31}],22:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-inner-word-symbol
+ * @fileoverview Merge words joined by certain punctuation
+ *   marks.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier,
-    expressions;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
-expressions = require('../expressions');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -3678,26 +3748,24 @@ expressions = require('../expressions');
  * - Symbols part of surrounding words.
  */
 
-var EXPRESSION_INNER_WORD_SYMBOL;
-
-EXPRESSION_INNER_WORD_SYMBOL = expressions.wordSymbolInner;
+var EXPRESSION_INNER_WORD_SYMBOL = expressions.wordSymbolInner;
 
 /**
- * Merge two words surrounding certain punctuation marks.
+ * Merge words joined by certain punctuation marks.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTSentenceNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTSentenceNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeInnerWordSymbol(child, index, parent) {
-    var siblings,
-        sibling,
-        prev,
-        last,
-        position,
-        tokens,
-        queue;
+    var siblings;
+    var sibling;
+    var prev;
+    var last;
+    var position;
+    var tokens;
+    var queue;
 
     if (
         index !== 0 &&
@@ -3794,36 +3862,43 @@ function mergeInnerWordSymbol(child, index, parent) {
  * Expose `mergeInnerWordSymbol` as a modifier.
  */
 
-module.exports = modifier(mergeInnerWordSymbol);
+module.exports = modifyChildren(mergeInnerWordSymbol);
 
-},{"../expressions":10,"../modifier":11,"nlcst-to-string":33}],25:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-modify-children":31}],23:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-non-word-sentences
+ * @fileoverview Merge a sentence into the following
+ *   sentence, when the sentence does not contain word
+ *   tokens.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var modifier;
-
-modifier = require('../modifier');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Merge a sentence into the following sentence, when
  * the sentence does not contain word tokens.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeNonWordSentences(child, index, parent) {
-    var children,
-        position,
-        prev,
-        next;
-
-    children = child.children;
-    position = -1;
+    var children = child.children;
+    var position = -1;
+    var prev;
+    var next;
 
     while (children[++position]) {
         if (children[position].type === 'WordNode') {
@@ -3884,20 +3959,28 @@ function mergeNonWordSentences(child, index, parent) {
  * Expose `mergeNonWordSentences` as a modifier.
  */
 
-module.exports = modifier(mergeNonWordSentences);
+module.exports = modifyChildren(mergeNonWordSentences);
 
-},{"../modifier":11}],26:[function(require,module,exports){
+},{"unist-util-modify-children":31}],24:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-prefix-exceptions
+ * @fileoverview Merge a sentence into its next sentence,
+ *   when the sentence ends with a certain word.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    modifier;
-
-nlcstToString = require('nlcst-to-string');
-modifier = require('../modifier');
+var nlcstToString = require('nlcst-to-string');
+var modifyChildren = require('unist-util-modify-children');
 
 /*
  * Constants.
@@ -3907,9 +3990,7 @@ modifier = require('../modifier');
  *   case-insensitive abbreviation.
  */
 
-var EXPRESSION_ABBREVIATION_PREFIX;
-
-EXPRESSION_ABBREVIATION_PREFIX = new RegExp(
+var EXPRESSION_ABBREVIATION_PREFIX = new RegExp(
     '^(' +
         '[0-9]+|' +
         '[a-z]|' +
@@ -3935,17 +4016,15 @@ EXPRESSION_ABBREVIATION_PREFIX = new RegExp(
  * Merge a sentence into its next sentence, when the
  * sentence ends with a certain word.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergePrefixExceptions(child, index, parent) {
-    var children,
-        node,
-        next;
-
-    children = child.children;
+    var children = child.children;
+    var node;
+    var next;
 
     if (
         children &&
@@ -3995,22 +4074,29 @@ function mergePrefixExceptions(child, index, parent) {
  * Expose `mergePrefixExceptions` as a modifier.
  */
 
-module.exports = modifier(mergePrefixExceptions);
+module.exports = modifyChildren(mergePrefixExceptions);
 
-},{"../modifier":11,"nlcst-to-string":33}],27:[function(require,module,exports){
+},{"nlcst-to-string":8,"unist-util-modify-children":31}],25:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-remaining-full-stops
+ * @fileoverview Merge non-terminal-marker full stops into
+ *   previous or next adjacent words.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var nlcstToString,
-    plugin,
-    expressions;
-
-nlcstToString = require('nlcst-to-string');
-plugin = require('../plugin');
-expressions = require('../expressions');
+var nlcstToString = require('nlcst-to-string');
+var visitChildren = require('unist-util-visit-children');
+var expressions = require('../expressions');
 
 /*
  * Constants.
@@ -4020,30 +4106,23 @@ expressions = require('../expressions');
  *   case-insensitive abbreviation.
  */
 
-var EXPRESSION_TERMINAL_MARKER;
-
-EXPRESSION_TERMINAL_MARKER = expressions.terminalMarker;
+var EXPRESSION_TERMINAL_MARKER = expressions.terminalMarker;
 
 /**
  * Merge non-terminal-marker full stops into
  * the previous word (if available), or the next
  * word (if available).
  *
- * @param {NLCSTNode} child
+ * @param {NLCSTNode} child - Node.
  */
 function mergeRemainingFullStops(child) {
-    var children,
-        position,
-        grandchild,
-        prev,
-        next,
-        nextNext,
-        hasFoundDelimiter;
-
-    children = child.children;
-    position = children.length;
-
-    hasFoundDelimiter = false;
+    var children = child.children;
+    var position = children.length;
+    var hasFoundDelimiter = false;
+    var grandchild;
+    var prev;
+    var next;
+    var nextNext;
 
     while (children[--position]) {
         grandchild = children[position];
@@ -4161,16 +4240,26 @@ function mergeRemainingFullStops(child) {
  * Expose `mergeRemainingFullStops` as a plugin.
  */
 
-module.exports = plugin(mergeRemainingFullStops);
+module.exports = visitChildren(mergeRemainingFullStops);
 
-},{"../expressions":10,"../plugin":14,"nlcst-to-string":33}],28:[function(require,module,exports){
+},{"../expressions":10,"nlcst-to-string":8,"unist-util-visit-children":32}],26:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:merge-words
+ * @fileoverview Merge adjacent words.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var modifier = require('../modifier');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Merge multiple words. This merges the children of
@@ -4178,14 +4267,14 @@ var modifier = require('../modifier');
  * naturally by parse-latin, but might happen when
  * custom tokens were passed in.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTSentenceNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTSentenceNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function mergeFinalWordSymbol(child, index, parent) {
-    var siblings = parent.children,
-        next;
+    var siblings = parent.children;
+    var next;
 
     if (child.type === 'WordNode') {
         next = siblings[index + 1];
@@ -4225,16 +4314,27 @@ function mergeFinalWordSymbol(child, index, parent) {
  * Expose `mergeFinalWordSymbol` as a modifier.
  */
 
-module.exports = modifier(mergeFinalWordSymbol);
+module.exports = modifyChildren(mergeFinalWordSymbol);
 
-},{"../modifier":11}],29:[function(require,module,exports){
+},{"unist-util-modify-children":31}],27:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:patch-position
+ * @fileoverview Patch `position` on a parent node based
+ *   on its first and last child.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var plugin = require('../plugin');
+var visitChildren = require('unist-util-visit-children');
 
 /**
  * Add a `position` object when it does not yet exist
@@ -4252,7 +4352,7 @@ function patch(node) {
  * Patch the position on a parent node based on its first
  * and last child.
  *
- * @param {NLCSTNode} child
+ * @param {NLCSTNode} child - Node.
  */
 function patchPosition(child, index, node) {
     var siblings = node.children;
@@ -4282,25 +4382,33 @@ function patchPosition(child, index, node) {
  * Expose `patchPosition` as a plugin.
  */
 
-module.exports = plugin(patchPosition);
+module.exports = visitChildren(patchPosition);
 
-},{"../plugin":14}],30:[function(require,module,exports){
+},{"unist-util-visit-children":32}],28:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:plugin:remove-empty-nodes
+ * @fileoverview Remove empty child nodes without children.
+ */
+
 'use strict';
+
+/* eslint-env commonjs */
 
 /*
  * Dependencies.
  */
 
-var modifier;
-
-modifier = require('../modifier');
+var modifyChildren = require('unist-util-modify-children');
 
 /**
  * Remove empty children.
  *
- * @param {NLCSTNode} child
- * @param {number} index
- * @param {NLCSTParagraphNode} parent
+ * @param {NLCSTNode} child - Node.
+ * @param {number} index - Position of `child` in `parent`.
+ * @param {NLCSTParagraphNode} parent - Parent of `child`.
  * @return {undefined|number}
  */
 function removeEmptyNodes(child, index, parent) {
@@ -4321,54 +4429,56 @@ function removeEmptyNodes(child, index, parent) {
  * Expose `removeEmptyNodes` as a modifier.
  */
 
-module.exports = modifier(removeEmptyNodes);
+module.exports = modifyChildren(removeEmptyNodes);
 
-},{"../modifier":11}],31:[function(require,module,exports){
+},{"unist-util-modify-children":31}],29:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer
+ * @license MIT
+ * @module parse-latin:tokenizer
+ * @fileoverview Tokenize tokens matching an expression as
+ *   a given node-type.
+ */
+
 'use strict';
 
-var nlcstToString;
+/* eslint-env commonjs */
 
-nlcstToString = require('nlcst-to-string');
+/*
+ * Dependencies.
+ */
+
+var nlcstToString = require('nlcst-to-string');
 
 /**
  * Factory to create a tokenizer based on a given
  * `expression`.
  *
- * @param {string} childType
- * @param {RegExp} expression
+ * @param {string} childType - Type of child to tokenize
+ *   as.
+ * @param {RegExp} expression - Expression to use for
+ *   tokenization.
  * @return {function(NLCSTParent): Array.<NLCSTChild>}
  */
 function tokenizerFactory(childType, expression) {
     /**
      * A function which splits
      *
-     * @param {NLCSTParent} node
+     * @param {NLCSTParent} node - Parent node.
      * @return {Array.<NLCSTChild>}
      */
     return function (node) {
-        var children,
-            tokens,
-            type,
-            length,
-            index,
-            lastIndex,
-            start,
-            parent,
-            first,
-            last;
-
-        children = [];
-
-        tokens = node.children;
-        type = node.type;
-
-        length = tokens.length;
-
-        index = -1;
-
-        lastIndex = length - 1;
-
-        start = 0;
+        var children = [];
+        var tokens = node.children;
+        var type = node.type;
+        var length = tokens.length;
+        var index = -1;
+        var lastIndex = length - 1;
+        var start = 0;
+        var first;
+        var last;
+        var parent;
 
         while (++index < length) {
             if (
@@ -4403,31 +4513,53 @@ function tokenizerFactory(childType, expression) {
     };
 }
 
-module.exports = tokenizerFactory;
-
-},{"nlcst-to-string":33}],32:[function(require,module,exports){
-'use strict';
-
-/**
- * Cache `hasOwnProperty`.
+/*
+ * Expose.
  */
 
-var has;
+module.exports = tokenizerFactory;
 
-has = Object.prototype.hasOwnProperty;
+},{"nlcst-to-string":8}],30:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module array-iterate
+ * @fileoverview `forEach` with the possibility to change the next position.
+ */
+
+'use strict';
+
+/* eslint-env commonjs */
+
+/*
+ * Methods.
+ */
+
+var has = Object.prototype.hasOwnProperty;
+
+/**
+ * Callback given to `iterate`.
+ *
+ * @callback iterate~callback
+ * @this {*} - `context`, when given to `iterate`.
+ * @param {*} value - Current iteration.
+ * @param {number} index - Position of `value` in `values`.
+ * @param {{length: number}} values - Currently iterated over.
+ * @return {number?} - Position to go to next.
+ */
 
 /**
  * `Array#forEach()` with the possibility to change
  * the next position.
  *
- * @param {{length: number}} values
- * @param {function(*, number, {length: number}): number|undefined} callback
- * @param {*} context
+ * @param {{length: number}} values - Values.
+ * @param {arrayIterate~callback} callback - Callback given to `iterate`.
+ * @param {*?} [context] - Context object to use when invoking `callback`.
  */
-
 function iterate(values, callback, context) {
-    var index,
-        result;
+    var index = -1;
+    var result;
 
     if (!values) {
         throw new Error(
@@ -4449,14 +4581,12 @@ function iterate(values, callback, context) {
         );
     }
 
-    index = -1;
-
-    /**
+    /*
      * The length might change, so we do not cache it.
      */
 
     while (++index < values.length) {
-        /**
+        /*
          * Skip missing values.
          */
 
@@ -4466,13 +4596,13 @@ function iterate(values, callback, context) {
 
         result = callback.call(context, values[index], index, values);
 
-        /**
+        /*
          * If `callback` returns a `number`, move `index` over to
          * `number`.
          */
 
         if (typeof result === 'number') {
-            /**
+            /*
              * Make sure that negative numbers do not
              * break the loop.
              */
@@ -4486,15 +4616,159 @@ function iterate(values, callback, context) {
     }
 }
 
-/**
- * Expose `iterate`.
+/*
+ * Expose.
  */
 
 module.exports = iterate;
 
+},{}],31:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module unist:util:modify-children
+ * @fileoverview Unist utility to modify direct children of a parent.
+ */
+
+'use strict';
+
+/* eslint-env commonjs */
+
+/*
+ * Dependencies.
+ */
+
+var iterate = require('array-iterate');
+
+/**
+ * Modifier for children of `parent`.
+ *
+ * @typedef modifyChildren~callback
+ * @param {Node} child - Current iteration;
+ * @param {number} index - Position of `child` in `parent`;
+ * @param {Node} parent - Parent node of `child`.
+ * @return {number?} - Next position to iterate.
+ */
+
+/**
+ * Function invoking a bound `fn` for each child of `parent`.
+ *
+ * @typedef modifyChildren~modifier
+ * @param {Node} parent - Node with children.
+ * @throws {Error} - When not given a parent node.
+ */
+
+/**
+ * Pass the context as the third argument to `callback`.
+ *
+ * @param {modifyChildren~callback} callback - Function to wrap.
+ * @return {function(Node, number): number?} - Intermediate
+ *   version partially aplied version of
+ *   `modifyChildren~modifier`.
+ */
+function wrapperFactory(callback) {
+    return function (value, index) {
+        return callback(value, index, this);
+    };
+}
+
+/**
+ * Turns `callback` into a ``iterator'' accepting a parent.
+ *
+ * see ``array-iterate'' for more info.
+ *
+ * @param {modifyChildren~callback} callback - Function to wrap.
+ * @return {modifyChildren~modifier}
+ */
+function iteratorFactory(callback) {
+    return function (parent) {
+        var children = parent && parent.children;
+
+        if (!children) {
+            throw new Error('Missing children in `parent` for `modifier`');
+        }
+
+        return iterate(children, callback, parent);
+    };
+}
+
+/**
+ * Turns `callback` into a child-modifier accepting a parent.
+ *
+ * See `array-iterate` for more info.
+ *
+ * @param {modifyChildren~callback} callback - Function to wrap.
+ * @return {modifyChildren~modifier} - Wrapped `fn`.
+ */
+function modifierFactory(callback) {
+    return iteratorFactory(wrapperFactory(callback));
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = modifierFactory;
+
+},{"array-iterate":30}],32:[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module unist:util:visit-children
+ * @fileoverview Unist utility to visit direct children of a parent.
+ */
+
+'use strict';
+
+/* eslint-env commonjs */
+
+/**
+ * Visitor for children of `parent`.
+ *
+ * @typedef visitChildren~callback
+ * @param {Node} child - Current iteration;
+ * @param {number} index - Position of `child` in `parent`;
+ * @param {Node} parent - Parent node of `child`.
+ */
+
+/**
+ * Function invoking a bound `fn` for each child of `parent`.
+ *
+ * @typedef visitChildren~visitor
+ * @param {Node} parent - Node with children.
+ * @throws {Error} - When not given a parent node.
+ */
+
+/**
+ * Turns `callback` into a child-visitor accepting a parent.
+ *
+ * @param {visitChildren~callback} callback - Function to wrap.
+ * @return {visitChildren~visitor} - Wrapped `fn`.
+ */
+function visitorFactory(callback) {
+    return function (parent) {
+        var index = -1;
+        var children = parent && parent.children;
+
+        if (!children) {
+            throw new Error('Missing children in `parent` for `visitor`');
+        }
+
+        while (++index in children) {
+            callback(children[index], index, parent);
+        }
+    };
+}
+
+/*
+ * Expose.
+ */
+
+module.exports = visitorFactory;
+
 },{}],33:[function(require,module,exports){
-arguments[4][8][0].apply(exports,arguments)
-},{"dup":8}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4775,7 +5049,7 @@ function unified(options) {
 
 module.exports = unified;
 
-},{"attach-ware":35,"bail":36,"unherit":37,"vfile":40,"ware":41}],35:[function(require,module,exports){
+},{"attach-ware":34,"bail":35,"unherit":36,"vfile":39,"ware":40}],34:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -4928,7 +5202,7 @@ function patch(Ware) {
 
 module.exports = patch;
 
-},{"unherit":37}],36:[function(require,module,exports){
+},{"unherit":36}],35:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer. All rights reserved.
@@ -4966,7 +5240,7 @@ function bail(err) {
 
 module.exports = bail;
 
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5053,7 +5327,7 @@ function unherit(Super) {
 
 module.exports = unherit;
 
-},{"clone":38,"inherits":39}],38:[function(require,module,exports){
+},{"clone":37,"inherits":38}],37:[function(require,module,exports){
 (function (Buffer){
 var clone = (function() {
 'use strict';
@@ -5217,7 +5491,7 @@ if (typeof module === 'object' && module.exports) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":4}],39:[function(require,module,exports){
+},{"buffer":4}],38:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -5242,7 +5516,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /**
  * @author Titus Wormer
  * @copyright 2015 Titus Wormer
@@ -5346,7 +5620,7 @@ function stringify(position) {
  *   filePath(); // 'example.txt'
  *
  * @private
- * @param {VFile} file
+ * @param {VFile} file - Virtual file.
  * @return {Function}
  */
 function filePathFactory(file) {
@@ -5472,9 +5746,6 @@ function VFile(options) {
     }
 
     self.contents = options.contents || '';
-    self.filename = options.filename || '';
-    self.directory = options.directory || '';
-    self.extension = options.extension || '';
 
     self.messages = [];
 
@@ -5484,6 +5755,14 @@ function VFile(options) {
      */
 
     self.filePath = filePathFactory(self);
+
+    self.history = [];
+
+    self.move({
+        'filename': options.filename,
+        'directory': options.directory,
+        'extension': options.extension
+    })
 }
 
 /**
@@ -5523,11 +5802,13 @@ function toString() {
  *
  * @this {VFile}
  * @memberof {VFile}
- * @param {Object?} [options]
+ * @param {Object?} [options] - Configuration.
  * @return {VFile} - Context object.
  */
 function move(options) {
     var self = this;
+    var before = self.filePath();
+    var after;
 
     if (!options) {
         options = {};
@@ -5536,6 +5817,12 @@ function move(options) {
     self.directory = options.directory || self.directory || '';
     self.filename = options.filename || self.filename || '';
     self.extension = options.extension || self.extension || '';
+
+    after = self.filePath();
+
+    if (after && before !== after) {
+        self.history.push(after);
+    }
 
     return self;
 }
@@ -5566,8 +5853,18 @@ function move(options) {
  */
 function message(reason, position) {
     var filePath = this.filePath();
-    var location;
+    var range;
     var err;
+    var location = {
+        'start': {
+            'line': null,
+            'column': null
+        },
+        'end': {
+            'line': null,
+            'column': null
+        }
+    };
 
     /*
      * Node / location / position.
@@ -5578,19 +5875,27 @@ function message(reason, position) {
     }
 
     if (position && position.start) {
-        location = stringify(position.start) + '-' + stringify(position.end);
+        range = stringify(position.start) + '-' + stringify(position.end);
+        location = position;
         position = position.start;
     } else {
-        location = stringify(position);
+        range = stringify(position);
+
+        if (position) {
+            location.start = position;
+            location.end.line = null;
+            location.end.column = null;
+        }
     }
 
     err = new Error(reason.message || reason);
 
-    err.name = (filePath ? filePath + ':' : '') + location;
+    err.name = (filePath ? filePath + ':' : '') + range;
     err.file = filePath;
     err.reason = reason.message || reason;
     err.line = position ? position.line : null;
     err.column = position ? position.column : null;
+    err.location = location;
 
     if (reason.stack) {
         err.stack = reason.stack;
@@ -5710,7 +6015,7 @@ function hasFailed() {
 }
 
 /**
- * Access private information relating to a file.
+ * Access metadata.
  *
  * @example
  *   var file = new VFile('Foo');
@@ -5759,7 +6064,7 @@ vFilePrototype.namespace = namespace;
 
 module.exports = VFile;
 
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 /**
  * Module Dependencies
  */
@@ -5852,7 +6157,7 @@ Ware.prototype.run = function () {
   return this;
 };
 
-},{"wrap-fn":42}],42:[function(require,module,exports){
+},{"wrap-fn":41}],41:[function(require,module,exports){
 /**
  * Module Dependencies
  */
@@ -5979,7 +6284,7 @@ function once(fn) {
   };
 }
 
-},{"co":43}],43:[function(require,module,exports){
+},{"co":42}],42:[function(require,module,exports){
 
 /**
  * slice() reference.

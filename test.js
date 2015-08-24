@@ -1,6 +1,14 @@
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer.
+ * @license MIT
+ * @module retext
+ * @fileoverview Test suite for `retext`.
+ */
+
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env node, mocha */
 
 /*
  * Dependencies.

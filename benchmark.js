@@ -1,6 +1,16 @@
+/**
+ * @author Titus Wormer
+ * @copyright 2014-2015 Titus Wormer.
+ * @license MIT
+ * @module retext
+ * @fileoverview Benchmark suite for `retext`.
+ */
+
 'use strict';
 
 /* global bench suite */
+
+/* eslint-env node */
 
 /*
  * Module dependencies (retext).
