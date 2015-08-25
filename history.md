@@ -4,6 +4,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0-rc.4 / 2015-08-25
+=======================
+
+*   Refactor parsers to work with retext ([9bec852](https://github.com/wooorm/retext/commit/9bec852))
+*   Update dependencies, dev-dependencies ([7f2afa6](https://github.com/wooorm/retext/commit/7f2afa6))
+
 1.0.0-rc.3 / 2015-08-09
 =======================
 
