@@ -16,7 +16,7 @@
  */
 
 var unified = require('unified');
-var Parser = require('./lib/parse.js');
+var Parser = require('parse-latin');
 var Compiler = require('./lib/compile.js');
 
 /*
