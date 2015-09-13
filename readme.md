@@ -31,32 +31,9 @@ language in JavaScript. NodeJS and the browser. Tests provide 100% coverage.
 npm install retext
 ```
 
-[Component.js](https://github.com/componentjs/component):
-
-```bash
-component install wooorm/retext
-```
-
-[Bower](http://bower.io/#install-packages):
-
-```bash
-bower install retext
-```
-
-[Duo](http://duojs.org/#getting-started):
-
-```javascript
-var Retext = require('wooorm/retext');
-```
-
-UMD (globals/AMD/CommonJS) ([uncompressed](retext.js) and [compressed](retext.min.js)):
-
-```html
-<script src="path/to/retext.js"></script>
-<script>
-  var retext = new Retext();
-</script>
-```
+**retext** is also available for [bower](http://bower.io/#install-packages),
+and [duo](http://duojs.org/#getting-started), and as an AMD, CommonJS, and
+globals module, [uncompressed](retext.js) and [compressed](retext.min.js).
 
 ## Usage
 
@@ -171,13 +148,6 @@ This function is invoked when a document is parsed.
 
 ## Plugins
 
-*   [retext-content](https://github.com/wooorm/retext-content)
-    — Append, prepend, remove, and replace content into/from Retext nodes;
-
-*   [retext-cst](https://github.com/wooorm/retext-cst)
-    — (**[demo](http://wooorm.github.io/retext-cst/)**)
-    — Encoding and decoding between AST (JSON) and TextOM object model;
-
 *   [retext-directionality](https://github.com/wooorm/retext-directionality)
     — (**[demo](http://wooorm.github.io/retext-directionality/)**)
     — Detect the direction text is written in;
@@ -194,13 +164,6 @@ This function is invoked when a document is parsed.
     — (**[demo](http://wooorm.github.io/retext-emoji/)**)
     — Encode or decode [Gemojis](https://github.com/github/gemoji);
 
-*   [retext-find](https://github.com/wooorm/retext-find)
-    — Easily find nodes;
-
-*   [retext-inspect](https://github.com/wooorm/retext-inspect)
-    — (**[demo](http://wooorm.github.io/retext-inspect/)**)
-    — Nicely display nodes in `console.log` calls;
-
 *   [retext-keywords](https://github.com/wooorm/retext-keywords)
     — (**[demo](http://wooorm.github.io/retext-keywords/)**)
     — Extract keywords and keyphrases;
@@ -213,13 +176,6 @@ This function is invoked when a document is parsed.
     — (**[demo](http://wooorm.github.io/retext-language/)**)
     — Detect the language of text;
 
-*   [retext-link](https://github.com/wooorm/retext-link)
-    — (**[demo](http://wooorm.github.io/retext-link/)**)
-    — Detect links in text;
-
-*   [retext-live](https://github.com/wooorm/retext-live)
-    — Change a node based on a (new?) value;
-
 *   [retext-metaphone](https://github.com/wooorm/retext-metaphone)
     — (**[demo](http://wooorm.github.io/retext-metaphone/)**)
     — Implementation of the Metaphone algorithm;
@@ -231,13 +187,6 @@ This function is invoked when a document is parsed.
 *   [retext-pos](https://github.com/wooorm/retext-pos)
     — (**[demo](http://wooorm.github.io/retext-pos/)**)
     — Part-of-speech tagger;
-
-*   [retext-range](https://github.com/wooorm/retext-range)
-    — Sequences of content within a TextOM tree between two points;
-
-*   [retext-search](https://github.com/wooorm/retext-search)
-    — (**[demo](http://wooorm.github.io/retext-search/)**)
-    — Search in a TextOM tree;
 
 *   [retext-sentiment](https://github.com/wooorm/retext-sentiment)
     — (**[demo](http://wooorm.github.io/retext-sentiment/)**)
@@ -255,76 +204,23 @@ This function is invoked when a document is parsed.
     — (**[demo](http://wooorm.github.io/retext-syllable/)**)
     — Syllable count;
 
-*   [retext-visit](https://github.com/wooorm/retext-visit)
-    — (**[demo](http://wooorm.github.io/retext-visit/)**)
-    — Visit nodes, optionally by type;
+## List of Utilities
 
-*   [retext-walk](https://github.com/wooorm/retext-walk)
-    — Walk trees, optionally by type.
+Although not **retext** plug-ins, the following projects are useful when
+working with the [CST](https://github.com/wooorm/nlcst):
 
-## Desired Plugins
+*   [wooorm/nlcst-to-string](https://github.com/wooorm/nlcst-to-string)
+    — Stringify a node;
 
-> Hey! Want to create one of the following, or any other plugin, for
-> **retext** but not sure where to start? I suggest to read **retext-visit**’s
-> source code to see how it’s build first (it’s probably the most straight
-> forward to learn), and go from there.
-> Let me know if you still have any questions, go ahead and send me
-> [feedback](mailto:tituswormer@gmail.com) or [raise an
-> issue](https://github.com/wooorm/retext/issues).
+*   [wooorm/nlcst-is-literal](https://github.com/wooorm/nlcst-is-literal)
+    — Check whether a node is meant literally;
 
-*   retext-date
-    — Detect time and date in text;
+In addition, see [`wooorm/unist`](https://github.com/wooorm/unist#unist-node-utilties)
+for other utilities which work with **retext** nodes, but also with
+[**mdast**](https://github.com/wooorm/mdast) nodes.
 
-*   retext-frequen
-    -words — Like **retext-keywords**, but based on frequency and stop-words
-    instead of a POS-tagger;
-
-*   retext-hyphen
-    — Insert soft-hyphens where needed; this might have to be implemented
-    with some sort of node which doesn’t stringify;
-
-*   retext-location
-    — Track the position of nodes (line, column);
-
-*   retext-no-pants
-    — Opposite of **retext-smartypants**;
-
-*   retext-no-break
-    — Inserts [non-breaking spaces](http://en.wikipedia.org/wiki/Non-breaking_space#Non-breaking_behavior)
-    between things like “100 km”;
-
-*   retext-profanity
-    — Censor profane words;
-
-*   retext-punctuation-pair
-    — Detect which opening or initial punctuation, belongs to which closing
-    or final punctuation mark (and vice versa);
-
-*   retext-summary
-    — Summarise text;
-
-*   retext-sync
-    — Detect changes in a textarea (or contenteditable?), sync the diffs over
-    to a **retext** tree, let plugins modify the content, and sync the diffs
-    back to the textarea;
-
-*   retext-typography
-    — Applies typographic enhancements, like (or using?) retext-smartypants
-    and retext-hyphen;
-
-*   retraverse
-    — Like Estraverse.
-
-## Parsers
-
-*   [parse-latin](https://github.com/wooorm/parse-latin) (**[demo](http://wooorm.github.io/parse-latin/)**)
-    — default;
-
-*   [parse-english](https://github.com/wooorm/parse-english) (**[demo](http://wooorm.github.io/parse-english/)**)
-    — Specifically for English;
-
-*   [parse-dutch](https://github.com/wooorm/parse-dutch) (**[demo](http://wooorm.github.io/parse-dutch/)**)
-    — Specifically for Dutch;
+And finally, see [`wooorm/vfile`](https://github.com/wooorm/vfile#related-tools)
+for a list of utilities for working with virtual files.
 
 ## Benchmark
 
