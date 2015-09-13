@@ -2,6 +2,10 @@
 
 [![Build Status](https://img.shields.io/travis/wooorm/retext.svg)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/retext.svg)](https://codecov.io/github/wooorm/retext) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg)](https://codeclimate.com/github/wooorm/retext)
 
+> **Retext is going to [change
+> soon](https://github.com/wooorm/retext/issues/23). You probably wan’t to use
+> the [next, stable, version](https://github.com/wooorm/retext/tree/feature/stable).**
+
 **retext** is an extensible natural language system—by default using
 [**parse-latin**](https://github.com/wooorm/parse-latin) to transform natural
 language into a **[TextOM](https://github.com/wooorm/textom/)** object model.
