@@ -25,7 +25,6 @@ var Compiler = require('./lib/compile.js');
 
 module.exports = unified({
     'name': 'retext',
-    'type': 'cst',
     'Parser': Parser,
     'Compiler': Compiler
 });
