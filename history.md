@@ -1,29 +1,14 @@
 <!--mdast setext-->
 
-<!--lint disable maximum-line-length-->
+<!--lint disable maximum-line-length no-multiple-toplevel-headings-->
 
-<!--lint disable no-multiple-toplevel-headings-->
+1.0.0 / 2015-09-16
+==================
 
-1.0.0-rc.4 / 2015-08-25
-=======================
-
-*   Refactor parsers to work with retext ([9bec852](https://github.com/wooorm/retext/commit/9bec852))
-*   Update dependencies, dev-dependencies ([7f2afa6](https://github.com/wooorm/retext/commit/7f2afa6))
-
-1.0.0-rc.3 / 2015-08-09
-=======================
-
-*   Add positional information to NLCST parsers ([5de2f80](https://github.com/wooorm/retext/commit/5de2f80))
-
-1.0.0-rc.2 / 2015-07-31
-=======================
-
-*   Fix missing files ([7dac502](https://github.com/wooorm/retext/commit/7dac502))
-
-1.0.0-rc.1 / 2015-07-31
-=======================
-
-*   Refactor retext ([e68af6a](https://github.com/wooorm/retext/commit/e68af6a))
+*   Refactor with final changes before 1.0.0 ([da92a14](https://github.com/wooorm/retext/commit/da92a14))
+*   Refactor parsers to work with retext ([772a6eb](https://github.com/wooorm/retext/commit/772a6eb))
+*   Add positional information to NLCST parsers ([d1ab2f0](https://github.com/wooorm/retext/commit/d1ab2f0))
+*   Refactor retext ([30c0e21](https://github.com/wooorm/retext/commit/30c0e21))
 
 0.6.0 / 2015-07-31
 ==================
