@@ -2,23 +2,19 @@
 
 [![Build Status](https://img.shields.io/travis/wooorm/retext.svg)](https://travis-ci.org/wooorm/retext) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/retext.svg)](https://codecov.io/github/wooorm/retext) [![Code Climate](http://img.shields.io/codeclimate/github/wooorm/retext.svg)](https://codeclimate.com/github/wooorm/retext)
 
-> **Retext is going to [change
-> soon](https://github.com/wooorm/retext/issues/23). You probably wan’t to use
-> the [next, stable, version](https://github.com/wooorm/retext/tree/feature/stable).**
-
-**retext** is an extensible natural language system—by default using
-[**parse-latin**](https://github.com/wooorm/parse-latin) to transform natural
-language into **[NLCST](https://github.com/wooorm/nlcst/)**.
-**Retext** provides a pluggable system for analysing and manipulating natural
-language in JavaScript. NodeJS and the browser. Tests provide 100% coverage.
+**retext** is an extensible natural language processor with support for
+multiple languages. **Retext** provides a pluggable system for analysing
+and manipulating natural language in JavaScript. Node and the browser.
+100% coverage.
 
 > Rather than being a do-all library for Natural Language Processing (such as
 > [NLTK](http://www.nltk.org) or [OpenNLP](https://opennlp.apache.org)),
-> **retext** aims to be useful for more practical use cases (such as censoring
-> profane words or decoding emoticons, but the possibilities are endless)
-> instead of more academic goals (research purposes).
+> **retext** aims to be useful for more practical use cases (such as checking
+> for [insensitive words](https://github.com/wooorm/alex) or decoding
+> [emoticons](https://github.com/wooorm/retext-emoji)) instead of more academic
+> goals (research purposes).
 > **retext** is inherently modular—it uses plugins (similar to
-> [rework](https://github.com/reworkcss/rework/) for CSS) instead of providing
+> [mdast](https://github.com/wooorm/mdast/) for markdown) instead of providing
 > everything out of the box (such as
 > [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a
 > viable tool for use on the web.
@@ -38,8 +34,8 @@ globals module, [uncompressed](retext.js) and [compressed](retext.min.js).
 ## Usage
 
 The following example uses [**retext-emoji**](https://github.com/wooorm/retext-emoji)
-(to show emoji) and [**retext-smartypants**](https://github.com/wooorm/retext-smartypants)
-(for smart punctuation).
+to show emoji and [**retext-smartypants**](https://github.com/wooorm/retext-smartypants)
+for smart punctuation.
 
 Require dependencies:
 
@@ -60,28 +56,27 @@ var processor = retext().use(smartypants).use(emoji, {
 Process a document:
 
 ```javascript
-var doc = processor.process(
-    'The three wise monkeys [. . .] sometimes called the ' +
-    'three mystic apes--are a pictorial maxim. Together ' +
-    'they embody the proverbial principle to ("see no evil, ' +
-    'hear no evil, speak no evil"). The three monkeys are ' +
-    'Mizaru (:see_no_evil:), covering his eyes, who sees no ' +
-    'evil; Kikazaru (:hear_no_evil:), covering his ears, ' +
-    'who hears no evil; and Iwazaru (:speak_no_evil:), ' +
-    'covering his mouth, who speaks no evil.'
-);
+var doc = processor.process([
+    'The three wise monkeys [. . .] sometimes called the three mystic',
+    'apes--are a pictorial maxim. Together they embody the proverbial',
+    'principle to ("see no evil, hear no evil, speak no evil"). The',
+    'three monkeys are Mizaru (:see_no_evil:), covering his eyes, who',
+    'sees no evil; Kikazaru (:hear_no_evil:), covering his ears, who',
+    'hears no evil; and Iwazaru (:speak_no_evil:), covering his mouth,',
+    'who speaks no evil.'
+].join('\n'));
 ```
 
 Yields (you need a browser which supports emoji to see them):
 
 ```text
-The three wise monkeys […] sometimes called the three
-mystic apes—are a pictorial maxim. Together they
-embody the proverbial principle to (“see no evil,
-hear no evil, speak no evil”). The three monkeys are
-Mizaru (🙈), covering his eyes, who sees no evil;
-Kikazaru (🙉), covering his ears, who hears no evil;
-and Iwazaru (🙊), covering his mouth, who speaks no evil.
+The three wise monkeys […] sometimes called the three mystic
+apes—are a pictorial maxim. Together they embody the proverbial
+principle to (“see no evil, hear no evil, speak no evil”). The
+three monkeys are Mizaru (🙈), covering his eyes, who
+sees no evil; Kikazaru (🙉), covering his ears, who
+hears no evil; and Iwazaru (🙊), covering his mouth,
+who speaks no evil.
 ```
 
 ## API
@@ -106,13 +101,13 @@ Change the way [**retext**](#api) works by using a [plugin](#plugin).
 
 **Returns**
 
-`Object`: an instance of Retext: The returned object functions just like
+`Object` — an instance of Retext: The returned object functions just like
 **retext** (it has the same methods), but caches the `use`d plugins. This
 provides the ability to chain `use` calls to use multiple plugins, but
 ensures the functioning of the **retext** module does not change for other
 dependents.
 
-### [retext](#api).process(value\[, done\])
+### [retext](#api).process(value\[, [done](#function-doneerr-file-doc)\])
 
 Parse a text document, apply plugins to it, and compile it into
 something else.
@@ -123,30 +118,47 @@ something else.
 
 **Parameters**
 
-*   `value` (`string`) — Text document;
+*   `value` ([`VFile`](https://github.com/wooorm/vfile) or `string`)
+    — Text document;
 
-*   `done` (`function(err, doc, file)`, optional) — Callback invoked when the
-    output is generated with either an error, or a result. Only strictly
-    needed when async plugins are used.
+*   `done` ([`Function`](#function-doneerr-file-doc), optional).
 
 **Returns**
 
-`string` or `null`: A document. Formatted in whatever plugins generate.
-The result is `null` if a plugin is asynchronous, in which case the callback
-`done` should’ve been passed (don’t worry: plugin creators make sure you know
-its async).
+`string?`: A document. Formatted in whatever plugins generate. The result is
+`null` if a plugin is asynchronous, in which case the callback `done` should’ve
+been passed (don’t worry: plugin creators make sure you know its async).
 
-### plugin
+### function done(err, [file](https://github.com/wooorm/vfile), doc)
 
-A plugin is simply a function, with `function(retext[, options])` as its
-signature. The first argument is the **Retext** instance a user attached the
-plugin to. The plugin is invoked when a user `use`s the plugin (not when a
-document is parsed) and enables the plugin to modify retext.
+Callback invoked when the output is generated with either an error, or the
+processed document (represented as a virtual file and a string).
 
-The plugin can return another function: `function(NLCSTNode, file[, next])`.
-This function is invoked when a document is parsed.
+**Parameters**
 
-## Plugins
+*   `err` (`Error?`) — Reason of failure;
+*   `file` ([`VFile?`](https://github.com/wooorm/vfile)) — Virtual file;
+*   `doc` (`string?`) — Generated document.
+
+## Plugin
+
+### function attacher([retext](#api)\[, options\])
+
+A plugin is a function, which takes the **Retext** instance a user attached
+the plugin on as a first parameter and optional configuration as a second
+parameter.
+
+A plugin can return a `transformer`.
+
+### function transformer([node](https://github.com/wooorm/nlcst), [file](https://github.com/wooorm/vfile)\[, next\])
+
+A transformer changes the provided document (represented as a node and a
+virtual file).
+
+Transformers can be asynchronous, in which case `next` must be invoked
+(optionally with an error) when done.
+
+## List of Plugins
 
 *   [retext-directionality](https://github.com/wooorm/retext-directionality)
     — (**[demo](http://wooorm.github.io/retext-directionality/)**)
@@ -160,9 +172,18 @@ This function is invoked when a document is parsed.
     — (**[demo](http://wooorm.github.io/retext-double-metaphone/)**)
     — Implementation of the Double Metaphone algorithm;
 
+*   [retext-dutch](https://github.com/wooorm/retext-dutch)
+    — Dutch language support;
+
+*   [retext-english](https://github.com/wooorm/retext-english)
+    — English language support;
+
 *   [retext-emoji](https://github.com/wooorm/retext-emoji)
     — (**[demo](http://wooorm.github.io/retext-emoji/)**)
     — Encode or decode [Gemojis](https://github.com/github/gemoji);
+
+*   [retext-equality](https://github.com/wooorm/retext-equality)
+    — Warn about possible insensitive, inconsiderate language;
 
 *   [retext-keywords](https://github.com/wooorm/retext-keywords)
     — (**[demo](http://wooorm.github.io/retext-keywords/)**)
@@ -206,14 +227,17 @@ This function is invoked when a document is parsed.
 
 ## List of Utilities
 
-Although not **retext** plug-ins, the following projects are useful when
-working with the [CST](https://github.com/wooorm/nlcst):
+The following projects are useful when working with the syntax tree,
+[NLCST](https://github.com/wooorm/nlcst):
 
 *   [wooorm/nlcst-to-string](https://github.com/wooorm/nlcst-to-string)
     — Stringify a node;
 
 *   [wooorm/nlcst-is-literal](https://github.com/wooorm/nlcst-is-literal)
     — Check whether a node is meant literally;
+
+*   [wooorm/nlcst-test](https://github.com/wooorm/nlcst-test)
+    — Validate a NLCST node;
 
 In addition, see [`wooorm/unist`](https://github.com/wooorm/unist#unist-node-utilties)
 for other utilities which work with **retext** nodes, but also with
@@ -222,21 +246,11 @@ for other utilities which work with **retext** nodes, but also with
 And finally, see [`wooorm/vfile`](https://github.com/wooorm/vfile#related-tools)
 for a list of utilities for working with virtual files.
 
-## Benchmark
-
-On a MacBook Air, it parses about 2 big articles, 25 sections, or 230
-paragraphs per second.
-
-```text
-           retext.parse(value, callback);
-  325 op/s » A paragraph (5 sentences, 100 words)
-   33 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
-    3 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
-```
-
 ## Related
 
 *   [nlcst](https://github.com/wooorm/nlcst)
+*   [unist](https://github.com/wooorm/unist)
+*   [unified](https://github.com/wooorm/unified)
 
 ## License
 

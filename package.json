@@ -32,7 +32,6 @@
     "istanbul": "^0.3.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "matcha": "^0.6.0",
     "mdast": "^1.0.0",
     "mdast-comment-config": "^1.0.0",
     "mdast-github": "^1.0.0",
@@ -54,7 +53,6 @@
     "build-bundle": "browserify index.js -s Retext > retext.js",
     "postbuild-bundle": "esmangle retext.js > retext.min.js",
     "build-md": "mdast . --quiet",
-    "build": "npm run build-md && npm run build-bundle",
-    "benchmark": "matcha benchmark.js"
+    "build": "npm run build-md && npm run build-bundle"
   }
 }
