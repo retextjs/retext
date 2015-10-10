@@ -79,6 +79,8 @@ hears no evil; and Iwazaru (🙊), covering his mouth,
 who speaks no evil.
 ```
 
+Usage Retext in HTML files with [PostHTML-Retext](https://github.com/voischev/posthtml-retext)
+
 ## API
 
 ### [retext](#api).use([plugin](#plugin)\[, options\])
