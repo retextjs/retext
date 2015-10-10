@@ -246,6 +246,20 @@ for other utilities which work with **retext** nodes, but also with
 And finally, see [`wooorm/vfile`](https://github.com/wooorm/vfile#related-tools)
 for a list of utilities for working with virtual files.
 
+## List of Products
+
+The following products use retext:
+
+### CLI
+
+*   [wooorm/alex](https://github.com/wooorm/nlcst-to-string)
+    — Catch insensitive, inconsiderate writing.
+
+### Node
+
+*   [voischev/posthtml-retext](https://github.com/voischev/posthtml-retext)
+    — PostHTML plugin wrapper.
+
 ## Related
 
 *   [nlcst](https://github.com/wooorm/nlcst)
