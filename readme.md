@@ -14,7 +14,7 @@ and manipulating natural language in JavaScript. Node and the browser.
 > [emoticons](https://github.com/wooorm/retext-emoji)) instead of more academic
 > goals (research purposes).
 > **retext** is inherently modular—it uses plugins (similar to
-> [mdast](https://github.com/wooorm/mdast/) for markdown) instead of providing
+> [remark](https://github.com/wooorm/remark/) for markdown) instead of providing
 > everything out of the box (such as
 > [Natural](https://github.com/NaturalNode/natural)). This makes **retext** a
 > viable tool for use on the web.
@@ -114,7 +114,7 @@ something else.
 
 **Signatures**
 
-*   `doc = mdast.process(value[, done])`.
+*   `doc = retext.process(value[, done])`.
 
 **Parameters**
 

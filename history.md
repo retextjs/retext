@@ -1,4 +1,4 @@
-<!--mdast setext-->
+<!--remark setext-->
 
 <!--lint disable maximum-line-length no-multiple-toplevel-headings-->
 
