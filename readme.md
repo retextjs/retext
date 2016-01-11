@@ -209,6 +209,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
     — (**[demo](http://wooorm.github.io/retext-pos/)**)
     — Part-of-speech tagger;
 
+*   [retext-readability](https://github.com/wooorm/retext-readability)
+    — Check readability;
+
 *   [retext-sentiment](https://github.com/wooorm/retext-sentiment)
     — (**[demo](http://wooorm.github.io/retext-sentiment/)**)
     — Detect sentiment in text;
