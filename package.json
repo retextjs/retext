@@ -26,7 +26,7 @@
     "lib"
   ],
   "devDependencies": {
-    "browserify": "^12.0.0",
+    "browserify": "^13.0.0",
     "eslint": "^1.0.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.4.0",
