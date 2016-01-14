@@ -216,6 +216,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
     — (**[demo](http://wooorm.github.io/retext-sentiment/)**)
     — Detect sentiment in text;
 
+*   [retext-simplify](https://github.com/wooorm/retext-simplify)
+    — Check phrases for simpler alternatives;
+
 *   [retext-smartypants](https://github.com/wooorm/retext-smartypants)
     — (**[demo](http://wooorm.github.io/retext-smartypants/)**)
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
