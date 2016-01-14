@@ -236,11 +236,17 @@ Transformers can be asynchronous, in which case `next` must be invoked
 The following projects are useful when working with the syntax tree,
 [NLCST](https://github.com/wooorm/nlcst):
 
-*   [wooorm/nlcst-to-string](https://github.com/wooorm/nlcst-to-string)
-    — Stringify a node;
-
 *   [wooorm/nlcst-is-literal](https://github.com/wooorm/nlcst-is-literal)
     — Check whether a node is meant literally;
+
+*   [wooorm/nlcst-normalize](https://github.com/wooorm/nlcst-normalize)
+    — Normalize a word for easier comparison;
+
+*   [wooorm/nlcst-search](https://github.com/wooorm/nlcst-search)
+    — Search for patterns in an NLCST tree;
+
+*   [wooorm/nlcst-to-string](https://github.com/wooorm/nlcst-to-string)
+    — Stringify a node;
 
 *   [wooorm/nlcst-test](https://github.com/wooorm/nlcst-test)
     — Validate a NLCST node;
