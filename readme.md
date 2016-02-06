@@ -79,6 +79,17 @@ hears no evil; and Iwazaru (🙊), covering his mouth,
 who speaks no evil.
 ```
 
+Promisify a retext process with bluebird requires passing the processor as context:
+
+```
+var Promise = require('bluebird');
+var processor = retext().use(smartypants);
+
+var smartypantsPromise = Promise.promisify(processor.process, {context: processor})
+smartypantsPromise(myText).then(myCallback);
+```
+
+
 ## API
 
 ### [retext](#api).use([plugin](#plugin)\[, options\])
