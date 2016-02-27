@@ -160,6 +160,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
 
 ## List of Plugins
 
+*   [retext-cliches](https://github.com/dunckr/retext-cliches)
+    — Check phrases for cliches;
+
 *   [retext-directionality](https://github.com/wooorm/retext-directionality)
     — (**[demo](http://wooorm.github.io/retext-directionality/)**)
     — Detect the direction text is written in;
