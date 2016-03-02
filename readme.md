@@ -212,6 +212,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
     — (**[demo](http://wooorm.github.io/retext-pos/)**)
     — Part-of-speech tagger;
 
+*   [retext-profanities](https://github.com/wooorm/retext-profanities)
+    — Check profane and vulgar wording;
+
 *   [retext-readability](https://github.com/wooorm/retext-readability)
     — Check readability;
 
