@@ -1,6 +1,6 @@
 /**
  * @author Titus Wormer
- * @copyright 2014-2015 Titus Wormer.
+ * @copyright 2014 Titus Wormer
  * @license MIT
  * @module retext
  * @fileoverview Test suite for `retext`.
@@ -121,19 +121,19 @@ test('retext#use()', function (t) {
 
     retext()
         .use(function () {
-            t.equal(count, 0, 'invoke order A')
+            t.equal(count, 0, 'invoke order A');
             count = 1;
         })
         .use(function () {
-            t.equal(count, 1, 'invoke order B')
+            t.equal(count, 1, 'invoke order B');
             count = 2;
         })
         .use(function () {
-            t.equal(count, 2, 'invoke order B')
+            t.equal(count, 2, 'invoke order C');
             count = 3;
         });
 
-    t.equal(count, 3, 'invoke order D')
+    t.equal(count, 3, 'invoke order D');
 });
 
 test('retext#parse()', function (t) {

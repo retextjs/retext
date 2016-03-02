@@ -1,6 +1,6 @@
 /**
  * @author Titus Wormer
- * @copyright 2014-2015 Titus Wormer.
+ * @copyright 2014 Titus Wormer
  * @license MIT
  * @module retext
  * @fileoverview Extensible system for analysing and manipulating
