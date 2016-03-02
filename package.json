@@ -14,7 +14,7 @@
   "dependencies": {
     "nlcst-to-string": "^1.0.0",
     "parse-latin": "^3.0.0",
-    "unified": "^2.0.0"
+    "unified": "^3.0.0"
   },
   "repository": {
     "type": "git",
