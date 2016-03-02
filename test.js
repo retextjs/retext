@@ -8,22 +8,15 @@
 
 'use strict';
 
-/* eslint-env node, mocha */
+/* eslint-env node */
 
 /*
  * Dependencies.
  */
 
-var assert = require('assert');
-var test = require('nlcst-test');
-var Retext = require('./');
-
-/*
- * Constants.
- */
-
-var equal = assert.strictEqual;
-var throws = assert.throws;
+var test = require('tape');
+var nlcstTest = require('nlcst-test');
+var retext = require('./');
 
 /**
  * No-op.
@@ -36,268 +29,197 @@ noop();
  * Tests.
  */
 
-describe('new Retext()', function () {
-    it('should be a `function`', function () {
-        equal(typeof Retext, 'function');
-    });
+test('retext', function (t) {
+    t.plan(5);
 
-    it('should return a newly initialized `Retext` object', function () {
-        assert(new Retext(noop) instanceof Retext);
-        assert(new Retext() instanceof Retext);
-    });
+    t.equal(
+        typeof retext,
+        'function',
+        'should be a `function`'
+    );
 
-    it('should set `Parser` and `Compiler`', function () {
-        var retext = new Retext();
+    t.ok(
+        retext() instanceof retext,
+        'should return a newly initialized `Retext` object'
+    );
 
-        assert('Parser' in retext);
-        assert('Compiler' in retext);
-    });
+    t.ok('Parser' in retext(), 'should set `Parser`');
+    t.ok('Compiler' in retext(), 'should set `Compiler`');
 
-    it('should create new constructors', function () {
-        var P1 = new Retext().Parser;
-        var P2 = new Retext().Parser;
-        var C1 = new Retext().Compiler;
-        var C2 = new Retext().Compiler;
+    t.test('should create new constructors', function (st) {
+        var P1 = retext().Parser;
+        var P2 = retext().Parser;
+        var C1 = retext().Compiler;
+        var C2 = retext().Compiler;
 
-        assert(!(new P1() instanceof P2));
-        assert(!(new P2() instanceof P1));
+        st.plan(4);
 
-        assert(!(new C1() instanceof C2));
-        assert(!(new C2() instanceof C1));
+        st.notOk(new P1() instanceof P2);
+        st.notOk(new P2() instanceof P1);
+
+        st.notOk(new C1() instanceof C2);
+        st.notOk(new C2() instanceof C1);
     });
 });
 
-describe('Retext#use()', function () {
-    it('should be a `function`', function () {
-        equal(typeof new Retext().use, 'function');
-        equal(typeof Retext.use, 'function');
+test('retext#use()', function (t) {
+    var processor;
+    var options;
+    var count;
+
+    t.plan(11);
+
+    t.test('should be a `function`', function (st) {
+        st.plan(2);
+
+        st.equal(typeof retext().use, 'function');
+        st.equal(typeof retext.use, 'function');
     });
 
-    it('should return self', function () {
-        var retext = new Retext();
+    processor = retext();
 
-        equal(retext.use(noop), retext);
-    });
+    t.equal(
+        processor.use(noop),
+        processor,
+        'should return self'
+    );
 
-    it('should throw when not given a function', function () {
-        var retext = new Retext();
+    t.throws(function () {
+        retext().use();
+    }, 'should throw when not given a function');
 
-        throws(function () {
-            retext.use();
+    t.equal(
+        retext().use(noop).ware.attachers.length,
+        1,
+        'should attach a plugin'
+    );
+
+    processor = retext();
+    options = {};
+
+    processor.use(function () {
+        t.equal(
+            arguments.length,
+            2,
+            'should invoke attacher with two arguments'
+        );
+
+        t.equal(
+            arguments[0],
+            processor,
+            'should invoke attacher with `processor`'
+        );
+
+        t.equal(
+            arguments[1],
+            options,
+            'should invoke attacher with `options`'
+        );
+    }, options);
+
+    count = 0;
+
+    retext()
+        .use(function () {
+            t.equal(count, 0, 'invoke order A')
+            count = 1;
+        })
+        .use(function () {
+            t.equal(count, 1, 'invoke order B')
+            count = 2;
+        })
+        .use(function () {
+            t.equal(count, 2, 'invoke order B')
+            count = 3;
         });
+
+    t.equal(count, 3, 'invoke order D')
+});
+
+test('retext#parse()', function (t) {
+    t.plan(2);
+
+    t.test('should be a `function`', function (st) {
+        st.plan(2);
+        st.equal(typeof retext().parse, 'function');
+        st.equal(typeof retext.parse, 'function');
     });
 
-    it('should attach a plugin', function () {
-        var retext = new Retext();
+    t.doesNotThrow(function () {
+        nlcstTest(retext().parse('Foo'));
+    }, 'should return NLCST');
+});
 
-        retext.use(noop);
+test('retext#run()', function (t) {
+    var root;
 
-        equal(retext.ware.attachers.length, 1);
+    t.plan(6);
+
+    t.test('should be a `function`', function (st) {
+        st.plan(2);
+        st.equal(typeof retext().run, 'function');
+        st.equal(typeof retext.run, 'function');
     });
 
-    it('should invoke an attached plugin', function (done) {
-        var retext = new Retext();
+    root = {
+        'type': 'RootNode',
+        'children': []
+    };
 
+    t.equal(
+        retext().run(root),
+        root,
+        'should return the cst'
+    );
+
+    retext().run(root, function (err, tree, file) {
+        t.ifError(err, 'should accept `done`');
+        t.equal(root, tree, 'should pass `tree`');
+        t.equal(file.hasFailed(), false, 'should pass `file`');
+    });
+
+    retext().use(function () {
         /**
          * Spy.
          */
-        function plugin() {
-            done();
-        }
-
-        retext.use(plugin);
-    });
-
-    it('should invoke a plugin with `retext` and `options`', function () {
-        var retext = new Retext();
-        var options = {};
-        var parameters;
-
-        /**
-         * A plugin to test its arguments.
-         */
-        function plugin() {
-            parameters = arguments;
-        }
-
-        retext.use(plugin, options);
-
-        equal(parameters[0], retext);
-        equal(parameters[1], options);
-        equal(parameters.length, 2);
-    });
-
-    it('should invoke plugins in order', function (done) {
-        var retext = new Retext();
-        var isInvoked;
-
-        /**
-         * A plugin checking that the second plugin
-         * is not invoked.
-         */
-        function firstPlugin() {
-            isInvoked = true;
-        }
-
-        /**
-         * A plugin checking that the first plugin
-         * is already invoked.
-         */
-        function secondPlugin() {
-            equal(isInvoked, true);
-
-            done();
-        }
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin);
-    });
-
-    it('should invoke dependencies in order', function () {
-        var retext = new Retext();
-        var count = 0;
-
-        /* eslint-disable no-use-before-define */
-
-        /**
-         * A plugin checking that it's the first invoked
-         * plugin.
-         */
-        function firstPlugin() {
-            equal(count, 0);
-
-            count++;
-        }
-
-        /**
-         * A plugin checking that it's the second invoked
-         * plugin.
-         */
-        function secondPlugin() {
-            equal(count, 1);
-
-            count++;
-        }
-
-        /**
-         * A plugin checking that it's the last invoked
-         * plugin.
-         */
-        function thirdPlugin() {
-            equal(count, 2);
-
-            count++;
-        }
-
-        /* eslint-enable no-use-before-define */
-
-        retext
-            .use(firstPlugin)
-            .use(secondPlugin)
-            .use(thirdPlugin);
-
-        equal(count, 3);
-    });
+        return function () {
+            t.pass('should invoke a transformer');
+        };
+    }).run(root);
 });
 
-describe('Retext#parse()', function () {
-    it('should be a `function`', function () {
-        equal(typeof new Retext().parse, 'function');
-        equal(typeof Retext.parse, 'function');
+test('retext#stringify()', function (t) {
+    t.plan(2);
+
+    t.test('should be a `function`', function (st) {
+        st.plan(2);
+        st.equal(typeof retext().stringify, 'function');
+        st.equal(typeof retext.stringify, 'function');
     });
 
-    it('should return nlcst', function () {
-        test(Retext.parse('Foo'));
-    });
-});
-
-describe('Retext#run()', function () {
-    it('should be a `function`', function () {
-        equal(typeof new Retext().run, 'function');
-        equal(typeof Retext.run, 'function');
-    });
-
-    it('should return the cst', function () {
-        var retext = new Retext();
-        var root = {
-            'type': 'RootNode',
-            'children': []
-        };
-
-        equal(retext.run(root), root);
-    });
-
-    it('should accept `done`', function (done) {
-        var retext = new Retext();
-        var root = {
-            'type': 'RootNode',
-            'children': []
-        };
-
-        retext.run(root, done);
-    });
-
-    it('should invoke `done` with `tree` and a file', function (done) {
-        var retext = new Retext();
-        var root = {
-            'type': 'RootNode',
-            'children': []
-        };
-
-        retext.run(root, function (err, tree, file) {
-            equal(root, tree);
-            equal(file.hasFailed(), false);
-
-            done(err);
-        });
-    });
-
-    it('should invoke a transformer', function (done) {
-        var retext = new Retext();
-
-        /**
-         * Spy.
-         */
-        function transformer() {
-            done();
-        }
-
-        /**
-         * Spy.
-         */
-        function attacher() {
-            return transformer;
-        }
-
-        retext.use(attacher).run({
-            'type': 'RootNode',
-            'children': []
-        });
-    });
-});
-
-describe('Retext#stringify()', function () {
-    it('should be a `function`', function () {
-        equal(typeof new Retext().stringify, 'function');
-        equal(typeof Retext.stringify, 'function');
-    });
-
-    it('should return string', function () {
-        equal(Retext.stringify({
+    t.equal(
+        retext.stringify({
             'type': 'TextNode',
             'value': 'foo'
-        }), 'foo');
-    });
+        }),
+        'foo',
+        'should return string'
+    );
 });
 
-describe('Retext#process()', function () {
-    it('should be a `function`', function () {
-        equal(typeof new Retext().process, 'function');
-        equal(typeof Retext.process, 'function');
+test('retext#process()', function (t) {
+    t.plan(2);
+
+    t.test('should be a `function`', function (st) {
+        st.plan(2);
+
+        st.equal(typeof retext().process, 'function');
+        st.equal(typeof retext.process, 'function');
     });
 
-    it('should return string', function () {
-        equal(Retext.process('Foo bar baz.'), 'Foo bar baz.');
-    });
+    t.equal(
+        retext.process('Foo bar baz.'),
+        'Foo bar baz.',
+        'should return string'
+    );
 });
