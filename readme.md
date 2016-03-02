@@ -81,7 +81,7 @@ who speaks no evil.
 
 ## API
 
-### [retext](#api).use([plugin](#plugin)\[, options\])
+### [retext](#api).use([plugin](#plugin)\[, options])
 
 Change the way [**retext**](#api) works by using a [plugin](#plugin).
 
@@ -107,7 +107,7 @@ provides the ability to chain `use` calls to use multiple plugins, but
 ensures the functioning of the **retext** module does not change for other
 dependents.
 
-### [retext](#api).process(value\[, [done](#function-doneerr-file-doc)\])
+### [retext](#api).process(value\[, [done](#function-doneerr-file-doc)])
 
 Parse a text document, apply plugins to it, and compile it into
 something else.
@@ -142,7 +142,7 @@ processed document (represented as a virtual file and a string).
 
 ## Plugin
 
-### function attacher([retext](#api)\[, options\])
+### function attacher([retext](#api)\[, options])
 
 A plugin is a function, which takes the **Retext** instance a user attached
 the plugin on as a first parameter and optional configuration as a second
@@ -150,7 +150,7 @@ parameter.
 
 A plugin can return a `transformer`.
 
-### function transformer([node](https://github.com/wooorm/nlcst), [file](https://github.com/wooorm/vfile)\[, next\])
+### function transformer([node](https://github.com/wooorm/nlcst), [file](https://github.com/wooorm/vfile)\[, next])
 
 A transformer changes the provided document (represented as a node and a
 virtual file).

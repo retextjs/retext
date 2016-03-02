@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "nlcst-to-string": "^1.0.0",
-    "parse-latin": "^2.0.0",
+    "parse-latin": "^3.0.0",
     "unified": "^2.0.0"
   },
   "repository": {
@@ -27,17 +27,16 @@
   ],
   "devDependencies": {
     "browserify": "^13.0.0",
-    "eslint": "^1.0.0",
+    "eslint": "^2.0.0",
     "esmangle": "^1.0.0",
     "istanbul": "^0.4.0",
     "jscs": "^2.0.0",
     "jscs-jsdoc": "^1.0.0",
-    "remark": "^3.0.0",
-    "remark-comment-config": "^2.0.0",
-    "remark-github": "^2.0.0",
-    "remark-lint": "^2.0.0",
-    "remark-slug": "^3.0.0",
-    "remark-validate-links": "^2.0.0",
+    "remark": "^4.0.0",
+    "remark-comment-config": "^3.0.0",
+    "remark-github": "^4.0.1",
+    "remark-lint": "^3.0.0",
+    "remark-validate-links": "^3.0.0",
     "mocha": "^2.0.0",
     "nlcst-test": "^0.2.1"
   },

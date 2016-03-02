@@ -12,7 +12,7 @@
     "nlcst"
   ],
   "dependencies": {
-    "wooorm/parse-latin": "^2.0.0",
+    "wooorm/parse-latin": "^3.0.0",
     "wooorm/unified": "^1.0.0",
     "wooorm/nlcst-to-string": "^1.0.0"
   },
