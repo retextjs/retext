@@ -29,7 +29,8 @@ npm install retext
 
 **retext** is also available for [bower](http://bower.io/#install-packages),
 and [duo](http://duojs.org/#getting-started), and as an AMD, CommonJS, and
-globals module, [uncompressed](retext.js) and [compressed](retext.min.js).
+globals module, [uncompressed and
+compressed](https://github.com/wooorm/retext/releases).
 
 ## Usage
 

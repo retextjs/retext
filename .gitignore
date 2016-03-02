@@ -6,3 +6,5 @@ components/
 node_modules/
 coverage/
 build.js
+retext.js
+retext.min.js
