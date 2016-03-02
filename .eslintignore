@@ -1,6 +1,3 @@
-build/
-components/
 coverage/
-build.js
 retext.js
 retext.min.js
