@@ -188,6 +188,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
 *   [retext-equality](https://github.com/wooorm/retext-equality)
     — Warn about possible insensitive, inconsiderate language;
 
+*   [retext-intensify](https://github.com/wooorm/retext-intensify)
+    — Check weak and mitigating wording;
+
 *   [retext-keywords](https://github.com/wooorm/retext-keywords)
     — (**[demo](http://wooorm.github.io/retext-keywords/)**)
     — Extract keywords and keyphrases;
