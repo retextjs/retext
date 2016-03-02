@@ -2,6 +2,13 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.0.0 / 2016-03-02
+==================
+
+*   Remove Duo, Component, Bower support ([`92dcfdc`](https://github.com/wooorm/retext/commit/92dcfdc))
+*   Add npm, GitHub releases deployment to Travis ([`a7f4e85`](https://github.com/wooorm/retext/commit/a7f4e85))
+*   Update unified ([`b0ace83`](https://github.com/wooorm/retext/commit/b0ace83))
+
 1.0.0 / 2015-09-16
 ==================
 
