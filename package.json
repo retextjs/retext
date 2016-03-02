@@ -46,17 +46,15 @@
     "nlcst-test": "^0.2.1"
   },
   "scripts": {
-    "test-api": "mocha --check-leaks test.js",
-    "test-coverage": "istanbul cover _mocha -- -- test.js",
-    "test-travis": "npm run test-coverage",
-    "test": "npm run test-api",
+    "build-md": "remark . --quiet --frail",
+    "build-bundle": "browserify index.js -s Retext > retext.js",
+    "build-mangle": "esmangle retext.js > retext.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
     "lint-api": "eslint .",
     "lint-style": "jscs --reporter inline .",
     "lint": "npm run lint-api && npm run lint-style",
-    "make": "npm run lint && npm run test-coverage",
-    "build-bundle": "browserify index.js -s Retext > retext.js",
-    "postbuild-bundle": "esmangle retext.js > retext.min.js",
-    "build-md": "remark . --quiet",
-    "build": "npm run build-md && npm run build-bundle"
+    "test-api": "mocha --check-leaks test.js",
+    "test-coverage": "istanbul cover _mocha -- -- test.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
   }
 }
