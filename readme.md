@@ -178,6 +178,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
     — (**[demo](http://wooorm.github.io/retext-keywords/)**)
     — Extract keywords and keyphrases;
 
+*   [`dunckr/retext-overuse`](https://github.com/dunckr/retext-overuse)
+    — Check words for overuse;
+
 *   [`wooorm/retext-profanities`](https://github.com/wooorm/retext-profanities)
     — Check profane and vulgar wording;
 
