@@ -184,6 +184,9 @@ Transformers can be asynchronous, in which case `next` must be invoked
 *   [`wooorm/retext-profanities`](https://github.com/wooorm/retext-profanities)
     — Check profane and vulgar wording;
 
+*   [`dunckr/retext-overuse`](https://github.com/dunckr/retext-overuse)
+    — Check words for overuse;
+
 *   [`wooorm/retext-readability`](https://github.com/wooorm/retext-readability)
     — Check readability;
 
