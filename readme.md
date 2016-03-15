@@ -230,7 +230,7 @@ The following products use **retext**:
 
 ### CLI
 
-*   [`wooorm/alex`](https://github.com/wooorm/nlcst-to-string)
+*   [`wooorm/alex`](https://github.com/wooorm/alex)
     — Catch insensitive, inconsiderate writing.
 
 ### Node
