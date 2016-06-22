@@ -1,20 +1,26 @@
 {
   "excludeFiles": [
-    "coverage/",
-    "node_modules/",
+    "**/coverage",
+    "**/node_modules",
     "retext.js",
     "retext.min.js"
   ],
-  "preset": "yandex",
-  "requireQuotedKeysInObjects": true,
-  "disallowQuotedKeysInObjects": false,
+  "preset": "crockford",
+  "requireMultipleVarDecl": false,
+  "requireVarDeclFirst": false,
+  "disallowDanglingUnderscores": false,
   "maximumLineLength": {
     "value": 79,
     "allExcept": [
       "regex",
-      "urlComments"
+      "urlComments",
+      "require"
     ]
   },
+  "disallowQuotedKeysInObjects": {"except": ["required"]},
+  "disallowKeywords": [
+    "with"
+  ],
   "jsDoc": {
     "checkAnnotations": "jsdoc3",
     "checkParamExistence": true,

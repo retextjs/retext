@@ -1,0 +1,33 @@
+{
+  "name": "retext-latin",
+  "version": "0.0.0",
+  "description": "retext parser for Latin-script natural languages",
+  "license": "MIT",
+  "keywords": [
+    "natural",
+    "language",
+    "latin",
+    "concrete",
+    "syntax",
+    "tree",
+    "cst",
+    "parse"
+  ],
+  "homepage": "https://github.com/wooorm/retext",
+  "repository": "https://github.com/wooorm/retext/tree/master/packages/retext-latin",
+  "bugs": "https://github.com/wooorm/retext/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "engines": {
+    "node": ">=0.11.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "parse-latin": "^3.1.0",
+    "unherit": "^1.0.4"
+  }
+}

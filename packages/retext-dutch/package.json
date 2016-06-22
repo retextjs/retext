@@ -1,0 +1,33 @@
+{
+  "name": "retext-dutch",
+  "version": "1.0.0",
+  "description": "retext parser for the Dutch language",
+  "license": "MIT",
+  "keywords": [
+    "natural",
+    "language",
+    "dutch",
+    "concrete",
+    "syntax",
+    "tree",
+    "cst",
+    "parse"
+  ],
+  "homepage": "https://github.com/wooorm/retext",
+  "repository": "https://github.com/wooorm/retext/tree/master/packages/retext-dutch",
+  "bugs": "https://github.com/wooorm/retext/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "engines": {
+    "node": ">=0.11.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "parse-dutch": "^3.0.0",
+    "unherit": "^1.0.4"
+  }
+}

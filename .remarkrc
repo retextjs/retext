@@ -1,11 +1,22 @@
 {
   "output": true,
-  "plugins": [
-    "lint",
-    "github",
-    "comment-config",
-    "validate-links"
-  ],
+  "plugins": {
+    "comment-config": null,
+    "github": null,
+    "validate-links": null,
+    "toc": {
+      "maxDepth": 3,
+      "tight": true
+    },
+    "lint": {
+      "no-duplicate-headings": false,
+      "heading-increment": false,
+      "list-item-spacing": false,
+      "no-missing-blank-lines": false
+    },
+    "github": null,
+    "comment-config": null
+  },
   "settings": {
     "bullet": "*"
   }

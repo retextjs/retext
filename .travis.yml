@@ -1,20 +1,14 @@
 language: node_js
 node_js:
-- '0.10'
 - '0.11'
 - '0.12'
 - '4.0'
 - '5.0'
-after_script: npm install codecov.io && cat ./coverage/lcov.info | codecov
+- '6.0'
 sudo: false
+after_success:
+- bash <(curl -s https://codecov.io/bash)
 deploy:
-  - provider: npm
-    email: tituswormer@gmail.com
-    api_key:
-      secure: Fa+vEbSfe6rAa9nriEBOuTAE2yG2N7k3C2SFF7OB1NsRw76DLmBGLgKIaE5qu4/KnL0F0GS040L1oflg1xSIfuXw9eq1HN6yt9Bo7wz/dmg+Wsw9tiHsur1Wms4tOkI+zi/l7ZEEV2oM/0bLpMHYTXrJ94OYLi4slyD8ewn//zk=
-    on:
-      tags: true
-      node: '5.0'
   - provider: releases
     api_key:
       secure: f+niXC+P5aOAOx9uBudo+Qs+s77yRnoWmCTaMYTWbrULYYO8vqT7wHEeXSk5oXyr9fyUUUNsB+XQdxxGfB8RvBVJNUMAGneaF/iSo8r9lINFJ825l97wPtDV4BT+kNGFXKP4l7Kxq33Ld3FH73n3GAKOW337RZp6/rGqfRaJ4t8=
@@ -23,3 +17,4 @@ deploy:
       - "retext.min.js"
     on:
       tags: true
+      node: '6.0'

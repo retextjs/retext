@@ -3,223 +3,114 @@
  * @copyright 2014 Titus Wormer
  * @license MIT
  * @module retext
- * @fileoverview Test suite for `retext`.
+ * @fileoverview Test suite for retext, retext-latin,
+ *   retext-english, retext-dutch, and retext-stringify.
  */
 
 'use strict';
 
 /* eslint-env node */
-
-/*
- * Dependencies.
- */
+/* jscs:disable jsDoc */
+/* jscs:disable maximumLineLength */
 
 var test = require('tape');
-var nlcstTest = require('nlcst-test');
-var retext = require('./');
+var clean = require('unist-util-remove-position');
+var nlcst = require('nlcst-test');
+var unified = require('./packages/retext/node_modules/unified');
+var retext = require('./packages/retext');
 
-/**
- * No-op.
- */
-function noop() {}
+var root = {
+    type: 'RootNode',
+    children: [{
+        type: 'ParagraphNode',
+        children: [{ type: 'SentenceNode',
+            children: [{
+                type: 'WordNode',
+                children: [{
+                    type: 'TextNode',
+                    value: 'Alfred',
+                    position: undefined
+                }],
+                position: undefined
+            }],
+            position: undefined
+        }],
+        position: undefined
+    }],
+    position: undefined
+};
 
-noop();
+/* Test `retext-latin`, `retext-english`, `retext-dutch`. */
+test('retext().parse(file)', function (t) {
+    t.test('retext', function (st) {
+        var tree = retext().parse('Alfred');
 
-/*
- * Tests.
- */
+        st.doesNotThrow(
+            function () {
+                nlcst(tree);
+            },
+            'should expose NLCST'
+        );
 
-test('retext', function (t) {
-    t.plan(5);
+        st.deepEqual(clean(tree), root, 'should give the corrent tree');
 
-    t.equal(
-        typeof retext,
-        'function',
-        'should be a `function`'
-    );
-
-    t.ok(
-        retext() instanceof retext,
-        'should return a newly initialized `Retext` object'
-    );
-
-    t.ok('Parser' in retext(), 'should set `Parser`');
-    t.ok('Compiler' in retext(), 'should set `Compiler`');
-
-    t.test('should create new constructors', function (st) {
-        var P1 = retext().Parser;
-        var P2 = retext().Parser;
-        var C1 = retext().Compiler;
-        var C2 = retext().Compiler;
-
-        st.plan(4);
-
-        st.notOk(new P1() instanceof P2);
-        st.notOk(new P2() instanceof P1);
-
-        st.notOk(new C1() instanceof C2);
-        st.notOk(new C2() instanceof C1);
-    });
-});
-
-test('retext#use()', function (t) {
-    var processor;
-    var options;
-    var count;
-
-    t.plan(11);
-
-    t.test('should be a `function`', function (st) {
-        st.plan(2);
-
-        st.equal(typeof retext().use, 'function');
-        st.equal(typeof retext.use, 'function');
+        st.end();
     });
 
-    processor = retext();
+    ['latin', 'english', 'dutch'].forEach(function (name) {
+        var lib = require('./packages/retext-' + name);
+        var tree = unified().use(lib).parse('Alfred');
 
-    t.equal(
-        processor.use(noop),
-        processor,
-        'should return self'
-    );
+        t.test('retext-' + name, function (st) {
+            st.doesNotThrow(
+                function () {
+                    nlcst(tree);
+                },
+                'should expose NLCST'
+            );
 
-    t.throws(function () {
-        retext().use();
-    }, 'should throw when not given a function');
+            st.deepEqual(clean(tree), root, 'should give the corrent tree');
 
-    t.equal(
-        retext().use(noop).ware.attachers.length,
-        1,
-        'should attach a plugin'
-    );
-
-    processor = retext();
-    options = {};
-
-    processor.use(function () {
-        t.equal(
-            arguments.length,
-            2,
-            'should invoke attacher with two arguments'
-        );
-
-        t.equal(
-            arguments[0],
-            processor,
-            'should invoke attacher with `processor`'
-        );
-
-        t.equal(
-            arguments[1],
-            options,
-            'should invoke attacher with `options`'
-        );
-    }, options);
-
-    count = 0;
-
-    retext()
-        .use(function () {
-            t.equal(count, 0, 'invoke order A');
-            count = 1;
+            st.end();
         })
-        .use(function () {
-            t.equal(count, 1, 'invoke order B');
-            count = 2;
-        })
-        .use(function () {
-            t.equal(count, 2, 'invoke order C');
-            count = 3;
-        });
-
-    t.equal(count, 3, 'invoke order D');
-});
-
-test('retext#parse()', function (t) {
-    t.plan(2);
-
-    t.test('should be a `function`', function (st) {
-        st.plan(2);
-        st.equal(typeof retext().parse, 'function');
-        st.equal(typeof retext.parse, 'function');
     });
 
-    t.doesNotThrow(function () {
-        nlcstTest(retext().parse('Foo'));
-    }, 'should return NLCST');
+    t.end();
 });
 
-test('retext#run()', function (t) {
-    var root;
-
-    t.plan(6);
-
-    t.test('should be a `function`', function (st) {
-        st.plan(2);
-        st.equal(typeof retext().run, 'function');
-        st.equal(typeof retext.run, 'function');
-    });
-
-    root = {
-        'type': 'RootNode',
-        'children': []
-    };
-
-    t.equal(
-        retext().run(root),
-        root,
-        'should return the cst'
+/* Test `retext-stringify`. */
+test('retext().stringify(ast, file, options?)', function (t) {
+    t.throws(
+        function () {
+            retext().stringify(false);
+        },
+        /false/,
+        'should throw when `ast` is not given'
     );
 
-    retext().run(root, function (err, tree, file) {
-        t.ifError(err, 'should accept `done`');
-        t.equal(root, tree, 'should pass `tree`');
-        t.equal(file.hasFailed(), false, 'should pass `file`');
-    });
-
-    retext().use(function () {
-        /**
-         * Spy.
-         */
-        return function () {
-            t.pass('should invoke a transformer');
-        };
-    }).run(root);
-});
-
-test('retext#stringify()', function (t) {
-    t.plan(2);
-
-    t.test('should be a `function`', function (st) {
-        st.plan(2);
-        st.equal(typeof retext().stringify, 'function');
-        st.equal(typeof retext.stringify, 'function');
-    });
-
-    t.equal(
-        retext.stringify({
-            'type': 'TextNode',
-            'value': 'foo'
-        }),
-        'foo',
-        'should return string'
+    t.throws(
+        function () {
+            retext().stringify({});
+        },
+        /Expected node, got `\[object Object\]`/,
+        'should throw when `ast` is not a node'
     );
-});
 
-test('retext#process()', function (t) {
-    t.plan(2);
-
-    t.test('should be a `function`', function (st) {
-        st.plan(2);
-
-        st.equal(typeof retext().process, 'function');
-        st.equal(typeof retext.process, 'function');
-    });
-
-    t.equal(
-        retext.process('Foo bar baz.'),
-        'Foo bar baz.',
-        'should return string'
+    t.throws(
+        function () {
+            retext().stringify({
+                type: 'unicorn'
+            });
+        },
+        /Cannot read property 'length' of undefined/,
+        'should throw when `ast` is not a valid node'
     );
+
+    t.deepEqual(
+        retext().stringify(root),
+        'Alfred',
+        'should stringify'
+    );
+
+    t.end();
 });

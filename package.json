@@ -1,60 +1,49 @@
 {
-  "name": "retext",
-  "version": "2.0.0",
-  "description": "Extensible system for analysing and manipulating natural language",
+  "private": true,
   "license": "MIT",
-  "keywords": [
-    "natural",
-    "language",
-    "parser",
-    "analyse",
-    "manipulate",
-    "nlcst"
-  ],
-  "dependencies": {
-    "nlcst-to-string": "^1.0.0",
-    "parse-latin": "^3.0.0",
-    "unified": "^3.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wooorm/retext.git"
-  },
+  "homepage": "https://github.com/wooorm/retext",
+  "repository": "https://github.com/wooorm/retext",
   "bugs": "https://github.com/wooorm/retext/issues",
-  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
-  "contributors": [
-    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
-    "Blake Embrey <hello@blakeembrey.com> (http://blakeembrey.me)"
-  ],
-  "files": [
-    "index.js",
-    "lib"
-  ],
   "devDependencies": {
+    "bail": "^1.0.0",
     "browserify": "^13.0.0",
+    "bundle-collapser": "^1.2.1",
+    "chalk": "^1.1.3",
+    "escodegen": "^1.7.0",
     "eslint": "^2.0.0",
     "esmangle": "^1.0.0",
-    "istanbul": "^0.4.0",
-    "jscs": "^2.0.0",
-    "jscs-jsdoc": "^1.0.0",
+    "esprima": "^2.6.0",
+    "jscs": "^3.0.0",
+    "jscs-jsdoc": "^2.0.0",
+    "lerna": "2.0.0-beta.20",
     "nlcst-test": "^0.2.1",
-    "remark": "^4.0.0",
-    "remark-comment-config": "^3.0.0",
-    "remark-github": "^4.0.1",
-    "remark-lint": "^3.0.0",
-    "remark-validate-links": "^3.0.0",
-    "tape": "^4.4.0"
+    "nyc": "^6.4.4",
+    "remark-cli": "^1.0.0",
+    "remark-comment-config": "^4.0.0",
+    "remark-github": "^5.0.0",
+    "remark-lint": "^4.0.0",
+    "remark-toc": "^3.0.0",
+    "remark-validate-links": "^4.0.0",
+    "tape": "^4.5.1",
+    "uglifyify": "^3.0.1",
+    "unist-util-remove-position": "^1.0.0"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
   },
   "scripts": {
-    "build-md": "remark . --quiet --frail",
-    "build-bundle": "browserify index.js -s Retext > retext.js",
-    "build-mangle": "esmangle retext.js > retext.min.js",
-    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "postinstall": "lerna bootstrap",
+    "build-md": "remark . --frail --quiet",
+    "build-bundle": "node script/build-bundle.js",
+    "build": "npm run build-md && npm run build-bundle",
     "lint-api": "eslint .",
     "lint-style": "jscs --reporter inline .",
     "lint": "npm run lint-api && npm run lint-style",
-    "test-api": "node test.js",
-    "test-coverage": "istanbul cover test.js",
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test.js",
     "test": "npm run build && npm run lint && npm run test-coverage"
   }
 }
