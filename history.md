@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+3.0.0 / 2016-06-22
+==================
+
+*   Refactor project to monorepo ([`7225215`](https://github.com/wooorm/retext/commit/7225215))
+*   Add `retext-overuse` to list of plug-ins ([`96c7dca`](https://github.com/wooorm/retext/commit/96c7dca))
+
 2.0.0 / 2016-03-02
 ==================
 

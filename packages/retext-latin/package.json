@@ -1,6 +1,6 @@
 {
   "name": "retext-latin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "retext parser for Latin-script natural languages",
   "license": "MIT",
   "keywords": [

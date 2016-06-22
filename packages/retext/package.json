@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Natural language processor powered by plugins",
   "license": "MIT",
   "keywords": [
@@ -15,8 +15,8 @@
     "process"
   ],
   "dependencies": {
-    "retext-latin": "^0.0.0",
-    "retext-stringify": "^0.0.0",
+    "retext-latin": "^1.0.0",
+    "retext-stringify": "^1.0.0",
     "unified": "^4.1.1"
   },
   "homepage": "https://github.com/wooorm/retext",
