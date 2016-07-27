@@ -42,7 +42,9 @@
 *   [`wooorm/retext-smartypants`](https://github.com/wooorm/retext-smartypants)
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
 *   [`wooorm/retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
-    — Compile back to text.
+    — Compile back to text;
+*   [`admhlt/retext-usage`](https://github.com/admhlt/retext-usage)
+    — Check incorrect English usage.
 
 ## List of Utilities
 
