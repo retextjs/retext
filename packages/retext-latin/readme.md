@@ -21,11 +21,11 @@ var stringify = require('retext-stringify');
 var emoji = require('retext-emoji');
 
 process.stdin
-    .pipe(unified())
-    .use(latin)
-    .use(emoji, {convert: 'encode'})
-    .use(stringify)
-    .pipe(process.stdout);
+  .pipe(unified())
+  .use(latin)
+  .use(emoji, {convert: 'encode'})
+  .use(stringify)
+  .pipe(process.stdout);
 ```
 
 ## Table of Contents

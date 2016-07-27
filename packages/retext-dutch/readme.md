@@ -20,11 +20,11 @@ var stringify = require('retext-stringify');
 var emoji = require('retext-emoji');
 
 process.stdin
-    .pipe(unified())
-    .use(dutch)
-    .use(emoji, {convert: 'encode'})
-    .use(stringify)
-    .pipe(process.stdout);
+  .pipe(unified())
+  .use(dutch)
+  .use(emoji, {convert: 'encode'})
+  .use(stringify)
+  .pipe(process.stdout);
 ```
 
 ## Table of Contents

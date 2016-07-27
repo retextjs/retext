@@ -9,11 +9,13 @@
 
 'use strict';
 
-/* eslint-env commonjs */
-
 /* Dependencies. */
 var unherit = require('unherit');
 var Latin = require('parse-latin');
+
+/* Expose. */
+module.exports = parse;
+parse.Parser = Latin;
 
 /**
  * Attacher.
@@ -21,9 +23,5 @@ var Latin = require('parse-latin');
  * @param {unified} processor - Unified processor.
  */
 function parse(processor) {
-    processor.Parser = unherit(Latin);
+  processor.Parser = unherit(Latin);
 }
-
-/* Expose. */
-parse.Parser = Latin;
-module.exports = parse;

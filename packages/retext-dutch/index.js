@@ -8,11 +8,13 @@
 
 'use strict';
 
-/* eslint-env commonjs */
-
 /* Dependencies. */
 var unherit = require('unherit');
 var Dutch = require('parse-dutch');
+
+/* Expose. */
+module.exports = parse;
+parse.Parser = Dutch;
 
 /**
  * Attacher.
@@ -20,9 +22,5 @@ var Dutch = require('parse-dutch');
  * @param {unified} processor - Unified processor.
  */
 function parse(processor) {
-    processor.Parser = unherit(Dutch);
+  processor.Parser = unherit(Dutch);
 }
-
-/* Expose. */
-parse.Parser = Dutch;
-module.exports = parse;

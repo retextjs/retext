@@ -28,14 +28,14 @@ var emoji = require('retext-emoji');
 var report = require('vfile-reporter');
 
 retext()
-    .use(profanities)
-    .use(emoji, {convert: 'encode'})
-    .process('He’s set on beating your butt for sheriff! :cop:', function (err, file) {
-        file.filename = 'example';
-        file.extension = 'txt';
-        console.log(file.toString());
-        console.error(report(file));
-    });
+  .use(profanities)
+  .use(emoji, {convert: 'encode'})
+  .process('He’s set on beating your butt for sheriff! :cop:', function (err, file) {
+    file.filename = 'example';
+    file.extension = 'txt';
+    console.log(file.toString());
+    console.error(report(file));
+  });
 ```
 
 Yields:

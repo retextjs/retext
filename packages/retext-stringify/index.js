@@ -8,10 +8,11 @@
 
 'use strict';
 
-/* eslint-env commonjs */
-
 /* Dependencies. */
 var toString = require('nlcst-to-string');
+
+/* Expose plugin. */
+module.exports = stringify;
 
 /**
  * Attacher.
@@ -20,27 +21,24 @@ var toString = require('nlcst-to-string');
  * @param {Object?} [config={}] - Configuration.
  */
 function stringify(processor) {
-    /**
-     * Construct a new compiler.
-     */
-    function Compiler() {}
+  /* Attach. */
+  processor.Compiler = Compiler;
 
-    /**
-     * Compile the bound file.
-     *
-     * @param {Node} tree - NLCST node.
-     * @return {string} - text.
-     */
-    function compile(tree) {
-        return toString(tree);
-    }
+  /* Expose methods. */
+  Compiler.prototype.compile = compile;
 
-    /* Expose methods. */
-    Compiler.prototype.compile = compile;
+  /**
+   * Construct a new compiler.
+   */
+  function Compiler() {}
 
-    /* Expose parser. */
-    processor.Compiler = Compiler;
+  /**
+   * Compile the bound file.
+   *
+   * @param {Node} tree - NLCST node.
+   * @return {string} - text.
+   */
+  function compile(tree) {
+    return toString(tree);
+  }
 }
-
-/* Expose plugin. */
-module.exports = stringify;
