@@ -14,7 +14,7 @@
     "esprima": "^2.6.0",
     "lerna": "2.0.0-beta.20",
     "nlcst-test": "^0.2.1",
-    "nyc": "^7.0.0",
+    "nyc": "^8.0.0",
     "remark-cli": "^1.0.0",
     "remark-comment-config": "^4.0.0",
     "remark-github": "^5.0.0",
