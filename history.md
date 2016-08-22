@@ -1,6 +1,6 @@
 <!--remark setext-->
 
-<!--lint disable no-multiple-toplevel-headings-->
+<!--lint disable no-multiple-toplevel-headings heading-style-->
 
 3.0.0 / 2016-06-22
 ==================

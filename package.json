@@ -12,32 +12,15 @@
     "escodegen": "^1.7.0",
     "esmangle": "^1.0.0",
     "esprima": "^2.6.0",
-    "lerna": "2.0.0-beta.20",
+    "lerna": "2.0.0-beta.26",
     "nlcst-test": "^0.2.1",
-    "nyc": "^7.0.0",
-    "remark-cli": "^1.0.0",
-    "remark-comment-config": "^4.0.0",
-    "remark-github": "^5.0.0",
-    "remark-lint": "^4.0.0",
-    "remark-toc": "^3.0.0",
-    "remark-validate-links": "^4.0.0",
+    "nyc": "^8.0.0",
+    "remark-cli": "^2.0.0",
+    "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.5.1",
     "uglifyify": "^3.0.1",
     "unist-util-remove-position": "^1.0.0",
     "xo": "^0.16.0"
-  },
-  "xo": {
-    "space": true,
-    "ignores": [
-      "retext.js",
-      "retext.min.js"
-    ]
-  },
-  "nyc": {
-    "check-coverage": true,
-    "lines": 100,
-    "functions": 100,
-    "branches": 100
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
@@ -48,5 +31,21 @@
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
     "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "xo": {
+    "space": true,
+    "ignores": [
+      "retext.js"
+    ]
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
+  "remarkConfig": {
+    "output": true,
+    "presets": "wooorm"
   }
 }

@@ -1,7 +1,7 @@
 # retext-latin [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status] [![Chat][chat-badge]][chat]
 
 [Parser][] for [**unified**][unified].  Parses Latin-script natural
-language to an [**nlcst**][nlcst] syntax tree.  Used in the [**retext**
+language to an [**NLCST**][nlcst] syntax tree.  Used in the [**retext**
 processor][processor].
 
 ## Installation

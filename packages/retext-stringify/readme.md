@@ -1,7 +1,7 @@
 # retext-stringify [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status] [![Chat][chat-badge]][chat]
 
 [Compiler][] for [**unified**][unified].  Stringifies an
-[**nlcst**][nlcst] syntax tree to text.  Used in the [**retext**
+[**NLCST**][nlcst] syntax tree to text.  Used in the [**retext**
 processor][processor].
 
 ## Installation
