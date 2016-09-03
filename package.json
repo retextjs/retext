@@ -11,7 +11,7 @@
     "chalk": "^1.1.3",
     "escodegen": "^1.7.0",
     "esmangle": "^1.0.0",
-    "esprima": "^2.6.0",
+    "esprima": "^3.0.0",
     "lerna": "2.0.0-beta.26",
     "nlcst-test": "^0.2.1",
     "nyc": "^8.0.0",
