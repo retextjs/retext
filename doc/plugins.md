@@ -15,6 +15,8 @@
 
 *   [`dunckr/retext-cliches`](https://github.com/dunckr/retext-cliches)
     — Check phrases for cliches;
+*   [`wooorm/retext-contractions`](https://github.com/wooorm/retext-contractions)
+    — Check apostrophe use in contractions;
 *   [`wooorm/retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
     — Dutch language support;
 *   [`wooorm/retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
@@ -23,18 +25,24 @@
     — Encode or decode [Gemojis](https://github.com/github/gemoji);
 *   [`wooorm/retext-equality`](https://github.com/wooorm/retext-equality)
     — Warn about possible insensitive, inconsiderate language;
-*   [`wooorm/retext-intensify`](https://github.com/wooorm/retext-intensify)
-    — Check weak and mitigating wording;
-*   [`wooorm/retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
-    — Latin-script language support;
+*   [`wooorm/retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
+    — Classify `@mentions` as syntax;
+*   [`wooorm/retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
+    — Check if indefinite articles (`a`, `an`) are used correctly;
 *   [`wooorm/retext-keywords`](https://github.com/wooorm/retext-keywords)
     — Extract keywords and keyphrases;
+*   [`wooorm/retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
+    — Latin-script language support;
 *   [`dunckr/retext-overuse`](https://github.com/dunckr/retext-overuse)
     — Check words for overuse;
 *   [`wooorm/retext-profanities`](https://github.com/wooorm/retext-profanities)
     — Check profane and vulgar wording;
 *   [`wooorm/retext-readability`](https://github.com/wooorm/retext-readability)
     — Check readability;
+*   [`wooorm/retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
+    — Check `for for` repeated words;
+*   [`wooorm/retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
+    — Check spacing between sentences;
 *   [`wooorm/retext-sentiment`](https://github.com/wooorm/retext-sentiment)
     — Detect sentiment in text;
 *   [`wooorm/retext-simplify`](https://github.com/wooorm/retext-simplify)
@@ -43,8 +51,12 @@
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
 *   [`wooorm/retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
     — Compile back to text;
+*   [`wooorm/retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
+    — Classify `@mentions` as syntax;
 *   [`admhlt/retext-usage`](https://github.com/admhlt/retext-usage)
-    — Check incorrect English usage.
+    — Check incorrect English usage;
+*   [`wooorm/retext-quotes`](https://github.com/wooorm/retext-quotes)
+    — Check quote and apostrophe usage.
 
 ## List of Utilities
 
