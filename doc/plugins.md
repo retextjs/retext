@@ -17,6 +17,8 @@
     — Check phrases for cliches;
 *   [`wooorm/retext-contractions`](https://github.com/wooorm/retext-contractions)
     — Check apostrophe use in contractions;
+*   [`wooorm/retext-diacritics`](https://github.com/wooorm/retext-diacritics)
+    — Check for proper use of diacritics;
 *   [`wooorm/retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
     — Dutch language support;
 *   [`wooorm/retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
