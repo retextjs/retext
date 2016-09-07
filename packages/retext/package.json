@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Natural language processor powered by plugins",
   "license": "MIT",
   "keywords": [

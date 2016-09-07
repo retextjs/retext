@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings heading-style-->
 
+4.0.0 / 2016-09-07
+==================
+
+*   Update unified ([`98a4f60`](https://github.com/wooorm/retext/commit/98a4f60))
+*   Update code-style to use `xo` ([`21f6285`](https://github.com/wooorm/retext/commit/21f6285))
+
 3.0.0 / 2016-06-22
 ==================
 
