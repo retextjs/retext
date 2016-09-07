@@ -37,21 +37,20 @@ var equality = require('retext-equality');
 var report = require('vfile-reporter');
 
 retext()
-    .use(simplify)
-    .use(equality)
-    .process('Hey guys, utilize a shorter word.', function (err, file) {
-        console.log(file.toString());
-        console.error(report(file));
-    });
+  .use(simplify)
+  .use(equality)
+  .process('Hey guys, utilize a shorter word.', function (err, file) {
+    console.log(String(file));
+    console.error(report(err || file));
+  });
 ```
 
 `node index.js` yields:
 
 ```txt
 Hey guys, utilize a shorter word.
-<stdin>
-    1:5-1:9  warning  `guys` may be insensitive, use `people`, `persons`, `folks` instead  gals-men
-  1:11-1:18  warning  Replace “utilize” with “use”                                         utilize
+    1:5-1:9  warning  `guys` may be insensitive, use `people`, `persons`, `folks` instead  gals-men  retext-equality
+  1:11-1:18  warning  Replace “utilize” with “use”                                         utilize   retext-simplify
 
 ⚠ 2 warnings
 ```

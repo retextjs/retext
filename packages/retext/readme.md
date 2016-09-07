@@ -31,10 +31,8 @@ retext()
   .use(profanities)
   .use(emoji, {convert: 'encode'})
   .process('He’s set on beating your butt for sheriff! :cop:', function (err, file) {
-    file.filename = 'example';
-    file.extension = 'txt';
-    console.log(file.toString());
-    console.error(report(file));
+    console.log(String(file));
+    console.error(report(err || file));
   });
 ```
 
@@ -42,8 +40,7 @@ Yields:
 
 ```txt
 He’s set on beating your butt for sheriff! 👮
-example.txt
-    26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt
+  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
 
 ⚠ 1 warning
 ```
