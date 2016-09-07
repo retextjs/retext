@@ -1,13 +1,10 @@
 language: node_js
 node_js:
 - '0.11'
-- '0.12'
-- '4.0'
 - '5.0'
 - '6.0'
 sudo: false
-after_success:
-- bash <(curl -s https://codecov.io/bash)
+after_success: bash <(curl -s https://codecov.io/bash)
 deploy:
   - provider: releases
     api_key:
@@ -17,4 +14,4 @@ deploy:
       - "retext.min.js"
     on:
       tags: true
-      node: '6.0'
+      node: '5.0'
