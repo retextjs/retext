@@ -90,7 +90,7 @@ functionality and include `"retext"` in the list.
 
 <!--Definitions:-->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/master/logo.svg
+[logo]: https://cdn.rawgit.com/wooorm/retext/9845a25/logo.svg
 
 [plugins]: #list-of-plugins
 

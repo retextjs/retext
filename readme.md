@@ -23,7 +23,7 @@ natural language.
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/master/logo.svg?
+[logo]: https://cdn.rawgit.com/wooorm/retext/9845a25/logo.svg?
 
 [build-badge]: https://img.shields.io/travis/wooorm/retext.svg
 
