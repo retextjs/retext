@@ -37,10 +37,14 @@
     — Latin-script language support;
 *   [`dunckr/retext-overuse`](https://github.com/dunckr/retext-overuse)
     — Check words for overuse;
+*   [`wooorm/retext-passive`](https://github.com/wooorm/retext-passive)
+    — Check for passive voice;
 *   [`wooorm/retext-profanities`](https://github.com/wooorm/retext-profanities)
     — Check profane and vulgar wording;
 *   [`wooorm/retext-readability`](https://github.com/wooorm/retext-readability)
     — Check readability;
+*   [`wooorm/retext-redundant-acronyms`](https://github.com/wooorm/retext-redundant-acronyms)
+    — Check redundant acronyms (`ATM machine` > `ATM`);
 *   [`wooorm/retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
     — Check `for for` repeated words;
 *   [`wooorm/retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
