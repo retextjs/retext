@@ -27,8 +27,6 @@
     — Encode or decode [Gemojis](https://github.com/github/gemoji);
 *   [`wooorm/retext-equality`](https://github.com/wooorm/retext-equality)
     — Warn about possible insensitive, inconsiderate language;
-*   [`wooorm/retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
-    — Classify `@mentions` as syntax;
 *   [`wooorm/retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
     — Check if indefinite articles (`a`, `an`) are used correctly;
 *   [`wooorm/retext-keywords`](https://github.com/wooorm/retext-keywords)
@@ -55,6 +53,8 @@
     — Check phrases for simpler alternatives;
 *   [`wooorm/retext-smartypants`](https://github.com/wooorm/retext-smartypants)
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
+*   [`wooorm/retext-spell`](https://github.com/wooorm/retext-spell)
+    — Spelling checker;
 *   [`wooorm/retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
     — Compile back to text;
 *   [`wooorm/retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
