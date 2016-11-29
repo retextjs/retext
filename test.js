@@ -89,7 +89,7 @@ test('retext().stringify(ast, file, options?)', function (t) {
     function () {
       retext().stringify({});
     },
-    /Expected node, got `\[object Object\]`/,
+    /Expected node, got `\[object Object]`/,
     'should throw when `ast` is not a node'
   );
 
