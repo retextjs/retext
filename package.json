@@ -17,7 +17,7 @@
     "nyc": "^10.0.0",
     "remark-cli": "^2.0.0",
     "remark-preset-wooorm": "^1.0.0",
-    "tape": "^4.5.1",
+    "tape": "^4.6.1",
     "uglifyify": "^3.0.1",
     "unist-util-remove-position": "^1.0.0",
     "xo": "^0.17.0"
