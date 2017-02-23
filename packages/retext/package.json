@@ -17,7 +17,7 @@
   "dependencies": {
     "retext-latin": "^1.0.0",
     "retext-stringify": "^1.0.0",
-    "unified": "^5.0.0"
+    "unified": "^6.0.0"
   },
   "homepage": "https://github.com/wooorm/retext",
   "repository": "https://github.com/wooorm/retext/tree/master/packages/retext",

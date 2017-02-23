@@ -44,7 +44,7 @@ test('retext().parse(file)', function (t) {
     st.deepEqual(
       clean(tree, true),
       root,
-      'should give the corrent tree'
+      'should give the correct tree'
     );
 
     st.end();

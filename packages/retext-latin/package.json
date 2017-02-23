@@ -27,7 +27,7 @@
     "index.js"
   ],
   "dependencies": {
-    "parse-latin": "^3.1.0",
+    "parse-latin": "^4.0.0",
     "unherit": "^1.0.4"
   }
 }
