@@ -15,7 +15,7 @@
     "lerna": "2.0.0-beta.26",
     "nlcst-test": "^1.0.0",
     "nyc": "^10.0.0",
-    "remark-cli": "^2.0.0",
+    "remark-cli": "^3.0.0",
     "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.5.1",
     "uglifyify": "^3.0.1",
