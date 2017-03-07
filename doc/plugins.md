@@ -71,7 +71,7 @@ the CST.  See [`unist`][unist-util] for other utilities which work with
 **nlcst** nodes, too.
 
 And finally, see [`wooorm/vfile`][vfile-util] for a list of utilities
-for working with virtual files and
+for working with virtual files.
 
 ## Using plugins
 
