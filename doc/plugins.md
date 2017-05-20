@@ -98,15 +98,15 @@ functionality and include `"retext"` in the list.
 
 [plugins]: #list-of-plugins
 
-[nlcst-util]: https://github.com/wooorm/nlcst#list-of-utilities
+[nlcst-util]: https://github.com/syntax-tree/nlcst#list-of-utilities
 
-[unist-util]: https://github.com/wooorm/unist#unist-node-utilties
+[unist-util]: https://github.com/syntax-tree/unist#unist-node-utilties
 
-[vfile-util]: https://github.com/wooorm/vfile#related-tools
+[vfile-util]: https://github.com/vfile/vfile#utilities
 
-[unified-use]: https://github.com/wooorm/unified#processoruseplugin-options
+[unified-use]: https://github.com/unifiedjs/unified#processoruseplugin-options
 
-[unified-plugins]: https://github.com/wooorm/unified#plugin
+[unified-plugins]: https://github.com/unifiedjs/unified#plugin
 
 [npm-publish]: https://docs.npmjs.com/getting-started/publishing-npm-packages
 

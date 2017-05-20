@@ -68,10 +68,10 @@ There is no configuration for the parser.
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[unified]: https://github.com/wooorm/unified
+[unified]: https://github.com/unifiedjs/unified
 
 [processor]: https://github.com/wooorm/retext
 
-[compiler]: https://github.com/wooorm/unified#processorcompiler
+[compiler]: https://github.com/unifiedjs/unified#processorcompiler
 
-[nlcst]: https://github.com/wooorm/nlcst
+[nlcst]: https://github.com/syntax-tree/nlcst

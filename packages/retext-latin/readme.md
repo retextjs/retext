@@ -46,7 +46,7 @@ There is no configuration for the parser.
 
 ### `latin.Parser`
 
-Access to the [parser][] ([`wooorm/parse-latin`][parse-latin]).
+Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 ## License
 
@@ -72,12 +72,12 @@ Access to the [parser][] ([`wooorm/parse-latin`][parse-latin]).
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[unified]: https://github.com/wooorm/unified
+[unified]: https://github.com/unifiedjs/unified
 
 [processor]: https://github.com/wooorm/retext/blob/master/packages/retext
 
-[nlcst]: https://github.com/wooorm/nlcst
+[nlcst]: https://github.com/syntax-tree/nlcst
 
-[parser]: https://github.com/wooorm/unified#processorparser
+[parser]: https://github.com/unifiedjs/unified#processorparser
 
 [parse-latin]: https://github.com/wooorm/parse-latin

@@ -69,7 +69,7 @@ Hey guys, utilize a shorter word.
 
 [plugins]: https://github.com/wooorm/retext/tree/master/doc/plugins.md
 
-[unified]: https://github.com/wooorm/unified
+[unified]: https://github.com/unifiedjs/unified
 
 [latin]: https://github.com/wooorm/retext/tree/master/packages/retext-latin
 

@@ -13,7 +13,7 @@ natural language.
 
 ## Related
 
-*   [`nlcst`](https://github.com/wooorm/nlcst)
+*   [`nlcst`](https://github.com/syntax-tree/nlcst)
 *   [`remark`](https://github.com/wooorm/remark)
 *   [`rehype`](https://github.com/wooorm/rehype)
 

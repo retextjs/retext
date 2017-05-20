@@ -71,9 +71,9 @@ He’s set on beating your butt for sheriff! 👮
 
 [retext]: https://github.com/wooorm/retext
 
-[unified]: https://github.com/wooorm/unified
+[unified]: https://github.com/unifiedjs/unified
 
-[nlcst]: https://github.com/wooorm/nlcst
+[nlcst]: https://github.com/syntax-tree/nlcst
 
 [latin]: https://github.com/wooorm/retext/blob/master/packages/retext-latin
 
@@ -81,4 +81,4 @@ He’s set on beating your butt for sheriff! 👮
 
 [plugins]: https://github.com/wooorm/retext/blob/master/doc/plugins.md
 
-[unified-usage]: https://github.com/wooorm/unified#usage
+[unified-usage]: https://github.com/unifiedjs/unified#usage

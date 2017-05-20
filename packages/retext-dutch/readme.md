@@ -45,7 +45,7 @@ There is no configuration for the parser.
 
 ### `dutch.Parser`
 
-Access to the [parser][] ([`wooorm/parse-dutch`][parse-dutch]).
+Access to the [parser][] ([`parse-dutch`][parse-dutch]).
 
 ## License
 
@@ -71,10 +71,10 @@ Access to the [parser][] ([`wooorm/parse-dutch`][parse-dutch]).
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[unified]: https://github.com/wooorm/unified
+[unified]: https://github.com/unifiedjs/unified
 
-[nlcst]: https://github.com/wooorm/nlcst
+[nlcst]: https://github.com/syntax-tree/nlcst
 
-[parser]: https://github.com/wooorm/unified#processorparser
+[parser]: https://github.com/unifiedjs/unified#processorparser
 
 [parse-dutch]: https://github.com/wooorm/parse-dutch
