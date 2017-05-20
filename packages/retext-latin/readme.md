@@ -16,16 +16,17 @@ npm install retext-latin
 
 ```js
 var unified = require('unified');
+var stream = require('unified-stream');
 var latin = require('retext-latin');
 var stringify = require('retext-stringify');
 var emoji = require('retext-emoji');
 
-process.stdin
-  .pipe(unified())
+var processor = unified()
   .use(latin)
   .use(emoji, {convert: 'encode'})
-  .use(stringify)
-  .pipe(process.stdout);
+  .use(stringify);
+
+process.stdin.pipe(stream(processor)).pipe(process.stdout);
 ```
 
 ## Table of Contents

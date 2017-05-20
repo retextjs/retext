@@ -15,16 +15,17 @@ npm install retext-dutch
 
 ```js
 var unified = require('unified');
+var stream = require('unified-stream');
 var dutch = require('retext-dutch');
 var stringify = require('retext-stringify');
 var emoji = require('retext-emoji');
 
-process.stdin
-  .pipe(unified())
+var processor = unified()
   .use(dutch)
   .use(emoji, {convert: 'encode'})
-  .use(stringify)
-  .pipe(process.stdout);
+  .use(stringify);
+
+process.stdin.pipe(stream(processor)).pipe(process.stdout);
 ```
 
 ## Table of Contents
