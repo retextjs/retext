@@ -13,55 +13,55 @@
 
 ## List of Plugins
 
-*   [`dunckr/retext-cliches`](https://github.com/dunckr/retext-cliches)
+*   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
     — Check phrases for cliches;
-*   [`wooorm/retext-contractions`](https://github.com/wooorm/retext-contractions)
+*   [`retext-contractions`](https://github.com/wooorm/retext-contractions)
     — Check apostrophe use in contractions;
-*   [`wooorm/retext-diacritics`](https://github.com/wooorm/retext-diacritics)
+*   [`retext-diacritics`](https://github.com/wooorm/retext-diacritics)
     — Check for proper use of diacritics;
-*   [`wooorm/retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
+*   [`retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
     — Dutch language support;
-*   [`wooorm/retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
+*   [`retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
     — English language support;
-*   [`wooorm/retext-emoji`](https://github.com/wooorm/retext-emoji)
+*   [`retext-emoji`](https://github.com/wooorm/retext-emoji)
     — Encode or decode [Gemojis](https://github.com/github/gemoji);
-*   [`wooorm/retext-equality`](https://github.com/wooorm/retext-equality)
+*   [`retext-equality`](https://github.com/wooorm/retext-equality)
     — Warn about possible insensitive, inconsiderate language;
-*   [`wooorm/retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
+*   [`retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
     — Check if indefinite articles (`a`, `an`) are used correctly;
-*   [`wooorm/retext-keywords`](https://github.com/wooorm/retext-keywords)
+*   [`retext-keywords`](https://github.com/wooorm/retext-keywords)
     — Extract keywords and keyphrases;
-*   [`wooorm/retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
+*   [`retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
     — Latin-script language support;
-*   [`dunckr/retext-overuse`](https://github.com/dunckr/retext-overuse)
+*   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
     — Check words for overuse;
-*   [`wooorm/retext-passive`](https://github.com/wooorm/retext-passive)
+*   [`retext-passive`](https://github.com/wooorm/retext-passive)
     — Check for passive voice;
-*   [`wooorm/retext-profanities`](https://github.com/wooorm/retext-profanities)
+*   [`retext-profanities`](https://github.com/wooorm/retext-profanities)
     — Check profane and vulgar wording;
-*   [`wooorm/retext-readability`](https://github.com/wooorm/retext-readability)
+*   [`retext-readability`](https://github.com/wooorm/retext-readability)
     — Check readability;
-*   [`wooorm/retext-redundant-acronyms`](https://github.com/wooorm/retext-redundant-acronyms)
+*   [`retext-redundant-acronyms`](https://github.com/wooorm/retext-redundant-acronyms)
     — Check redundant acronyms (`ATM machine` > `ATM`);
-*   [`wooorm/retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
+*   [`retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
     — Check `for for` repeated words;
-*   [`wooorm/retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
+*   [`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
     — Check spacing between sentences;
-*   [`wooorm/retext-sentiment`](https://github.com/wooorm/retext-sentiment)
+*   [`retext-sentiment`](https://github.com/wooorm/retext-sentiment)
     — Detect sentiment in text;
-*   [`wooorm/retext-simplify`](https://github.com/wooorm/retext-simplify)
+*   [`retext-simplify`](https://github.com/wooorm/retext-simplify)
     — Check phrases for simpler alternatives;
-*   [`wooorm/retext-smartypants`](https://github.com/wooorm/retext-smartypants)
+*   [`retext-smartypants`](https://github.com/wooorm/retext-smartypants)
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
-*   [`wooorm/retext-spell`](https://github.com/wooorm/retext-spell)
+*   [`retext-spell`](https://github.com/wooorm/retext-spell)
     — Spelling checker;
-*   [`wooorm/retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
+*   [`retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
     — Compile back to text;
-*   [`wooorm/retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
+*   [`retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
     — Classify `@mentions` as syntax;
-*   [`admhlt/retext-usage`](https://github.com/admhlt/retext-usage)
+*   [`retext-usage`](https://github.com/admhlt/retext-usage)
     — Check incorrect English usage;
-*   [`wooorm/retext-quotes`](https://github.com/wooorm/retext-quotes)
+*   [`retext-quotes`](https://github.com/wooorm/retext-quotes)
     — Check quote and apostrophe usage.
 
 ## List of Utilities
@@ -70,7 +70,7 @@ See [**nlcst**][nlcst-util] for a list of utilities for working with
 the CST.  See [`unist`][unist-util] for other utilities which work with
 **nlcst** nodes, too.
 
-And finally, see [`wooorm/vfile`][vfile-util] for a list of utilities
+And finally, see [`vfile`][vfile-util] for a list of utilities
 for working with virtual files.
 
 ## Using plugins
