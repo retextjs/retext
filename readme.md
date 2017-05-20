@@ -7,7 +7,7 @@
 **retext** is an ecosystem of [plug-ins][plugins] for processing
 natural language.
 
-*   [`retext`][api] — Programmatic interface.
+*   [`retext`][api] — Programmatic interface
 
 [Get started »][getting-started]
 

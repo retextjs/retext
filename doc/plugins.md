@@ -14,55 +14,55 @@
 ## List of Plugins
 
 *   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
-    — Check phrases for cliches;
+    — Check phrases for cliches
 *   [`retext-contractions`](https://github.com/wooorm/retext-contractions)
-    — Check apostrophe use in contractions;
+    — Check apostrophe use in contractions
 *   [`retext-diacritics`](https://github.com/wooorm/retext-diacritics)
-    — Check for proper use of diacritics;
+    — Check for proper use of diacritics
 *   [`retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
-    — Dutch language support;
+    — Dutch language support
 *   [`retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
-    — English language support;
+    — English language support
 *   [`retext-emoji`](https://github.com/wooorm/retext-emoji)
-    — Encode or decode [Gemojis](https://github.com/github/gemoji);
+    — Encode or decode [Gemojis](https://github.com/github/gemoji)
 *   [`retext-equality`](https://github.com/wooorm/retext-equality)
-    — Warn about possible insensitive, inconsiderate language;
+    — Warn about possible insensitive, inconsiderate language
 *   [`retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
-    — Check if indefinite articles (`a`, `an`) are used correctly;
+    — Check if indefinite articles (`a`, `an`) are used correctly
 *   [`retext-keywords`](https://github.com/wooorm/retext-keywords)
-    — Extract keywords and keyphrases;
+    — Extract keywords and keyphrases
 *   [`retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
-    — Latin-script language support;
+    — Latin-script language support
 *   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
-    — Check words for overuse;
+    — Check words for overuse
 *   [`retext-passive`](https://github.com/wooorm/retext-passive)
-    — Check for passive voice;
+    — Check for passive voice
 *   [`retext-profanities`](https://github.com/wooorm/retext-profanities)
-    — Check profane and vulgar wording;
+    — Check profane and vulgar wording
 *   [`retext-readability`](https://github.com/wooorm/retext-readability)
-    — Check readability;
+    — Check readability
 *   [`retext-redundant-acronyms`](https://github.com/wooorm/retext-redundant-acronyms)
-    — Check redundant acronyms (`ATM machine` > `ATM`);
+    — Check redundant acronyms (`ATM machine` > `ATM`)
 *   [`retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
-    — Check `for for` repeated words;
+    — Check `for for` repeated words
 *   [`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
-    — Check spacing between sentences;
+    — Check spacing between sentences
 *   [`retext-sentiment`](https://github.com/wooorm/retext-sentiment)
-    — Detect sentiment in text;
+    — Detect sentiment in text
 *   [`retext-simplify`](https://github.com/wooorm/retext-simplify)
-    — Check phrases for simpler alternatives;
+    — Check phrases for simpler alternatives
 *   [`retext-smartypants`](https://github.com/wooorm/retext-smartypants)
-    — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/);
+    — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/)
 *   [`retext-spell`](https://github.com/wooorm/retext-spell)
-    — Spelling checker;
+    — Spelling checker
 *   [`retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
-    — Compile back to text;
+    — Compile back to text
 *   [`retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
-    — Classify `@mentions` as syntax;
+    — Classify `@mentions` as syntax
 *   [`retext-usage`](https://github.com/admhlt/retext-usage)
-    — Check incorrect English usage;
+    — Check incorrect English usage
 *   [`retext-quotes`](https://github.com/wooorm/retext-quotes)
-    — Check quote and apostrophe usage.
+    — Check quote and apostrophe usage
 
 ## List of Utilities
 
