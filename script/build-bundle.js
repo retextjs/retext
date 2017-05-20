@@ -1,16 +1,4 @@
-/**
- * @author Titus Wormer
- * @copyright 2014 Titus Wormer
- * @license MIT
- * @module retext:script
- * @fileoverview Bundle and mangle `retext`.
- */
-
 'use strict';
-
-/*
- * Dependencies.
- */
 
 var fs = require('fs');
 var path = require('path');
@@ -23,7 +11,6 @@ var escodegen = require('escodegen');
 var collapser = require('bundle-collapser/plugin');
 var pack = require('../packages/retext/package.json');
 
-/* Methods. */
 var write = fs.writeFileSync;
 
 var comment = [

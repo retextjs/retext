@@ -1,12 +1,3 @@
-/**
- * @author Titus Wormer
- * @copyright 2014 Titus Wormer
- * @license MIT
- * @module retext
- * @fileoverview Test suite for retext, retext-latin,
- *   retext-english, retext-dutch, and retext-stringify.
- */
-
 'use strict';
 
 var test = require('tape');
