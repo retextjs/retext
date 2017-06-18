@@ -2,7 +2,7 @@
 
 # Plugins
 
-**retext** plug-ins lie at the core of **retext**’s vision.
+**retext** is an ecosystem of [plug-ins][plugins].
 
 ## Table of Contents
 
@@ -80,17 +80,19 @@ function.
 
 ## Creating plugins
 
-First, read up on the [concept of plug-ins][unified-plugins].
-Then, I suggest taking one of existing [plug-ins][plugins], which looks
-similar to what you’re about to do, and work from there.  If you get
-stuck, [issues][] and [Gitter][] are good places to get help.
-
-A good place for publishing plug-ins is [npm][npm-publish].
+First, read up on the [concept of plug-ins][unified-plugins].  Then, read the
+[guide on “Creating a plugin with unified”][guide].  Finally, take one of
+existing [plug-ins][plugins], which looks similar to what you’re about to do,
+and work from there.  If you get stuck, [issues][] and [Gitter][] are good
+places to get help.
 
 You should pick a name prefixed by `"retext-"`, such as `retext-lint`.
 
-When publishing a plug-in, you should use the package manager’s keywords
-functionality and include `"retext"` in the list.
+Note that, if the thing you create cannot be given to `retext().use()`,
+it isn’t a “plug-in”.  Don’t use the `retext-` prefix as that could
+confuse users.  If it works with the NLCST tree, use `'nlcst-'`, if
+it works with any Unist tree, use `unist-util-`, if it works with virtual
+files, use `vfile-`.
 
 <!--Definitions:-->
 
@@ -108,8 +110,8 @@ functionality and include `"retext"` in the list.
 
 [unified-plugins]: https://github.com/unifiedjs/unified#plugin
 
-[npm-publish]: https://docs.npmjs.com/getting-started/publishing-npm-packages
-
 [issues]: https://github.com/wooorm/retext/issues
 
 [gitter]: https://gitter.im/wooorm/retext
+
+[guide]: https://unifiedjs.github.io/create-a-plugin.html

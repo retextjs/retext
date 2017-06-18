@@ -6,6 +6,8 @@
 [plug-ins][plugins].  If you get stuck, [issues][] and [Gitter][] are
 good places to get help.
 
+It’s built on [unified][], make sure to read it and its [website][] too.
+
 ## Table of Contents
 
 *   [Introduction](#introduction)
@@ -70,6 +72,8 @@ Hey guys, utilize a shorter word.
 [plugins]: https://github.com/wooorm/retext/tree/master/doc/plugins.md
 
 [unified]: https://github.com/unifiedjs/unified
+
+[website]: https://unifiedjs.github.io
 
 [latin]: https://github.com/wooorm/retext/tree/master/packages/retext-latin
 

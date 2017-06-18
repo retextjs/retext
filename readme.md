@@ -7,6 +7,8 @@
 **retext** is an ecosystem of [plug-ins][plugins] for processing
 natural language.
 
+It’s built on [unified][], make sure to read it and its [website][] too.
+
 *   [`retext`][api] — Programmatic interface
 
 [Get started »][getting-started]
@@ -42,3 +44,7 @@ natural language.
 [plugins]: https://github.com/wooorm/retext/tree/master/doc/plugins.md
 
 [getting-started]: https://github.com/wooorm/retext/tree/master/doc/getting-started.md
+
+[unified]: https://github.com/unifiedjs/unified
+
+[website]: https://unifiedjs.github.io
