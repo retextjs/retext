@@ -96,7 +96,7 @@ files, use `vfile-`.
 
 <!--Definitions:-->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/9845a25/logo.svg
+[logo]: https://cdn.rawgit.com/wooorm/retext/3879855/logo.svg
 
 [plugins]: #list-of-plugins
 
