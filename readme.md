@@ -19,6 +19,20 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 *   [`remark`](https://github.com/wooorm/remark)
 *   [`rehype`](https://github.com/wooorm/rehype)
 
+## Contribute
+
+**retext** is built by people just like you!  Check out
+[`contribute.md`][contribute] for ways to get started.
+
+This project has a [Code of Conduct][coc].  By interacting with this repository,
+organisation, or community you agree to abide by its terms.
+
+Want to chat with the community and contributors?  Join us in [Gitter][chat]!
+
+Have an idea for a cool new utility or tool?  That’s great!  If you want
+feedback, help, or just to share it with the world you can do so by creating
+an issue in the [`retextjs/ideas`][ideas] repository!
+
 ## License
 
 [MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
@@ -48,3 +62,9 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 [unified]: https://github.com/unifiedjs/unified
 
 [website]: https://unifiedjs.github.io
+
+[contribute]: contributing.md
+
+[coc]: code-of-conduct.md
+
+[ideas]: https://github.com/retextjs/ideas
