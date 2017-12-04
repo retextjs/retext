@@ -54,19 +54,19 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
-[build-status]: https://travis-ci.org/wooorm/retext
+[build-status]: https://travis-ci.org/retextjs/retext
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/retext.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/retextjs/retext.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/retext
+[coverage-status]: https://codecov.io/github/retextjs/retext
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/retext.svg
+[chat-badge]: https://img.shields.io/gitter/room/retextjs/Lobby.svg
 
-[chat]: https://gitter.im/wooorm/retext
+[chat]: https://gitter.im/retextjs/Lobby
 
-[license]: https://github.com/wooorm/retext/blob/master/LICENSE
+[license]: https://github.com/retextjs/retext/blob/master/LICENSE
 
 [author]: http://wooorm.com
 
@@ -74,7 +74,7 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 [unified]: https://github.com/unifiedjs/unified
 
-[processor]: https://github.com/wooorm/retext/blob/master/packages/retext
+[processor]: https://github.com/retextjs/retext/blob/master/packages/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 

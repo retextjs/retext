@@ -19,9 +19,9 @@
     "retext-stringify": "^2.0.0",
     "unified": "^6.0.0"
   },
-  "homepage": "https://github.com/wooorm/retext",
-  "repository": "https://github.com/wooorm/retext/tree/master/packages/retext",
-  "bugs": "https://github.com/wooorm/retext/issues",
+  "homepage": "https://github.com/retextjs/retext",
+  "repository": "https://github.com/retextjs/retext/tree/master/packages/retext",
+  "bugs": "https://github.com/retextjs/retext/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"

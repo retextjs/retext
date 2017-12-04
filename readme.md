@@ -17,7 +17,7 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 
 *   [`nlcst`](https://github.com/syntax-tree/nlcst)
 *   [`remark`](https://github.com/wooorm/remark)
-*   [`rehype`](https://github.com/wooorm/rehype)
+*   [`rehype`](https://github.com/rehypejs/rehype)
 
 ## Contribute
 
@@ -39,25 +39,25 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/3879855/logo.svg
+[logo]: https://cdn.rawgit.com/retextjs/retext/3879855/logo.svg
 
-[build-badge]: https://img.shields.io/travis/wooorm/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
-[build-status]: https://travis-ci.org/wooorm/retext
+[build-status]: https://travis-ci.org/retextjs/retext
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/retext.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/retextjs/retext.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/retext
+[coverage-status]: https://codecov.io/github/retextjs/retext
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/retext.svg
+[chat-badge]: https://img.shields.io/gitter/room/retextjs/Lobby.svg
 
-[chat]: https://gitter.im/wooorm/retext
+[chat]: https://gitter.im/retextjs/Lobby
 
-[api]: https://github.com/wooorm/retext/tree/master/packages/retext
+[api]: https://github.com/retextjs/retext/tree/master/packages/retext
 
-[plugins]: https://github.com/wooorm/retext/tree/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
 
-[getting-started]: https://github.com/wooorm/retext/tree/master/doc/getting-started.md
+[getting-started]: https://github.com/retextjs/retext/tree/master/doc/getting-started.md
 
 [unified]: https://github.com/unifiedjs/unified
 

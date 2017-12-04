@@ -51,34 +51,34 @@ He’s set on beating your butt for sheriff! 👮
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
-[build-status]: https://travis-ci.org/wooorm/retext
+[build-status]: https://travis-ci.org/retextjs/retext
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/retext.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/retextjs/retext.svg
 
-[coverage-status]: https://codecov.io/github/wooorm/retext
+[coverage-status]: https://codecov.io/github/retextjs/retext
 
-[chat-badge]: https://img.shields.io/gitter/room/wooorm/retext.svg
+[chat-badge]: https://img.shields.io/gitter/room/retextjs/Lobby.svg
 
-[chat]: https://gitter.im/wooorm/retext
+[chat]: https://gitter.im/retextjs/Lobby
 
-[license]: https://github.com/wooorm/retext/blob/master/LICENSE
+[license]: https://github.com/retextjs/Lobby/blob/master/LICENSE
 
 [author]: http://wooorm.com
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[retext]: https://github.com/wooorm/retext
+[retext]: https://github.com/retextjs/retext
 
 [unified]: https://github.com/unifiedjs/unified
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 
-[latin]: https://github.com/wooorm/retext/blob/master/packages/retext-latin
+[latin]: https://github.com/retextjs/retext/blob/master/packages/retext-latin
 
-[stringify]: https://github.com/wooorm/retext/blob/master/packages/retext-stringify
+[stringify]: https://github.com/retextjs/retext/blob/master/packages/retext-stringify
 
-[plugins]: https://github.com/wooorm/retext/blob/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/blob/master/doc/plugins.md
 
 [unified-usage]: https://github.com/unifiedjs/unified#usage

@@ -96,7 +96,7 @@ files, use `vfile-`.
 
 <!--Definitions:-->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/3879855/logo.svg
+[logo]: https://cdn.rawgit.com/retextjs/retext/3879855/logo.svg
 
 [plugins]: #list-of-plugins
 
@@ -110,8 +110,8 @@ files, use `vfile-`.
 
 [unified-plugins]: https://github.com/unifiedjs/unified#plugin
 
-[issues]: https://github.com/wooorm/retext/issues
+[issues]: https://github.com/retextjs/retext/issues
 
-[gitter]: https://gitter.im/wooorm/retext
+[gitter]: https://gitter.im/retextjs/Lobby
 
 [guide]: https://unifiedjs.github.io/create-a-plugin.html

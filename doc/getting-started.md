@@ -59,22 +59,22 @@ Hey guys, utilize a shorter word.
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/wooorm/retext/3879855/logo.svg
+[logo]: https://cdn.rawgit.com/retextjs/retext/3879855/logo.svg
 
-[issues]: https://github.com/wooorm/retext/issues
+[issues]: https://github.com/retextjs/retext/issues
 
-[gitter]: https://gitter.im/wooorm/retext
+[gitter]: https://gitter.im/retextjs/Lobby
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[api]: https://github.com/wooorm/retext/tree/master/packages/retext
+[api]: https://github.com/retextjs/retext/tree/master/packages/retext
 
-[plugins]: https://github.com/wooorm/retext/tree/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
 
 [unified]: https://github.com/unifiedjs/unified
 
 [website]: https://unifiedjs.github.io
 
-[latin]: https://github.com/wooorm/retext/tree/master/packages/retext-latin
+[latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
 
-[stringify]: https://github.com/wooorm/retext/tree/master/packages/retext-stringify
+[stringify]: https://github.com/retextjs/retext/tree/master/packages/retext-stringify
