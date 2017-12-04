@@ -15,53 +15,53 @@
 
 *   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
     — Check phrases for cliches
-*   [`retext-contractions`](https://github.com/wooorm/retext-contractions)
+*   [`retext-contractions`](https://github.com/retextjs/retext-contractions)
     — Check apostrophe use in contractions
-*   [`retext-diacritics`](https://github.com/wooorm/retext-diacritics)
+*   [`retext-diacritics`](https://github.com/retextjs/retext-diacritics)
     — Check for proper use of diacritics
-*   [`retext-dutch`](https://github.com/wooorm/retext/tree/master/packages/retext-dutch)
+*   [`retext-dutch`](https://github.com/retextjs/retext/tree/master/packages/retext-dutch)
     — Dutch language support
-*   [`retext-english`](https://github.com/wooorm/retext/tree/master/packages/retext-english)
+*   [`retext-english`](https://github.com/retextjs/retext/tree/master/packages/retext-english)
     — English language support
-*   [`retext-emoji`](https://github.com/wooorm/retext-emoji)
+*   [`retext-emoji`](https://github.com/retextjs/retext-emoji)
     — Encode or decode [Gemojis](https://github.com/github/gemoji)
-*   [`retext-equality`](https://github.com/wooorm/retext-equality)
+*   [`retext-equality`](https://github.com/retextjs/retext-equality)
     — Warn about possible insensitive, inconsiderate language
-*   [`retext-indefinite-article`](https://github.com/wooorm/retext-indefinite-article)
+*   [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
     — Check if indefinite articles (`a`, `an`) are used correctly
-*   [`retext-keywords`](https://github.com/wooorm/retext-keywords)
+*   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
     — Extract keywords and keyphrases
-*   [`retext-latin`](https://github.com/wooorm/retext/tree/master/packages/retext-latin)
+*   [`retext-latin`](https://github.com/retextjs/retext/tree/master/packages/retext-latin)
     — Latin-script language support
 *   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
     — Check words for overuse
-*   [`retext-passive`](https://github.com/wooorm/retext-passive)
+*   [`retext-passive`](https://github.com/retextjs/retext-passive)
     — Check for passive voice
-*   [`retext-profanities`](https://github.com/wooorm/retext-profanities)
+*   [`retext-profanities`](https://github.com/retextjs/retext-profanities)
     — Check profane and vulgar wording
-*   [`retext-readability`](https://github.com/wooorm/retext-readability)
+*   [`retext-readability`](https://github.com/retextjs/retext-readability)
     — Check readability
-*   [`retext-redundant-acronyms`](https://github.com/wooorm/retext-redundant-acronyms)
+*   [`retext-redundant-acronyms`](https://github.com/retextjs/retext-redundant-acronyms)
     — Check redundant acronyms (`ATM machine` > `ATM`)
-*   [`retext-repeated-words`](https://github.com/wooorm/retext-repeated-words)
+*   [`retext-repeated-words`](https://github.com/retextjs/retext-repeated-words)
     — Check `for for` repeated words
-*   [`retext-sentence-spacing`](https://github.com/wooorm/retext-sentence-spacing)
+*   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
     — Check spacing between sentences
-*   [`retext-sentiment`](https://github.com/wooorm/retext-sentiment)
+*   [`retext-sentiment`](https://github.com/retextjs/retext-sentiment)
     — Detect sentiment in text
-*   [`retext-simplify`](https://github.com/wooorm/retext-simplify)
+*   [`retext-simplify`](https://github.com/retextjs/retext-simplify)
     — Check phrases for simpler alternatives
-*   [`retext-smartypants`](https://github.com/wooorm/retext-smartypants)
+*   [`retext-smartypants`](https://github.com/retextjs/retext-smartypants)
     — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/)
-*   [`retext-spell`](https://github.com/wooorm/retext-spell)
+*   [`retext-spell`](https://github.com/retextjs/retext-spell)
     — Spelling checker
-*   [`retext-stringify`](https://github.com/wooorm/retext/tree/master/packages/retext-stringify)
+*   [`retext-stringify`](https://github.com/retextjs/retext/tree/master/packages/retext-stringify)
     — Compile back to text
-*   [`retext-syntax-mentions`](https://github.com/wooorm/retext-syntax-mentions)
+*   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
     — Classify `@mentions` as syntax
 *   [`retext-usage`](https://github.com/admhlt/retext-usage)
     — Check incorrect English usage
-*   [`retext-quotes`](https://github.com/wooorm/retext-quotes)
+*   [`retext-quotes`](https://github.com/retextjs/retext-quotes)
     — Check quote and apostrophe usage
 
 ## List of Utilities
