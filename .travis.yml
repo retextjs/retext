@@ -1,17 +1,3 @@
 language: node_js
 node_js:
-- '4.0'
 - '9.0'
-sudo: false
-after_success: bash <(curl -s https://codecov.io/bash)
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: f+niXC+P5aOAOx9uBudo+Qs+s77yRnoWmCTaMYTWbrULYYO8vqT7wHEeXSk5oXyr9fyUUUNsB+XQdxxGfB8RvBVJNUMAGneaF/iSo8r9lINFJ825l97wPtDV4BT+kNGFXKP4l7Kxq33Ld3FH73n3GAKOW337RZp6/rGqfRaJ4t8=
-    file:
-      - "retext.js"
-      - "retext.min.js"
-    on:
-      tags: true
-      node: '9.0'
