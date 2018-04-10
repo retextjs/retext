@@ -6,6 +6,7 @@
         "packages/retext-dutch/package.json",
         "packages/retext-english/package.json",
         "packages/retext-stringify/package.json",
+        "packages/retext-latin/package.json",
         "packages/retext/package.json"
       ]
     }
