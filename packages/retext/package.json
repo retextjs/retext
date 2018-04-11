@@ -15,7 +15,7 @@
     "process"
   ],
   "dependencies": {
-    "neighbourhoodie-test-package": "^12.1.0",
+    "neighbourhoodie-test-package": "^13.3.0",
     "retext-latin": "^2.0.0",
     "retext-stringify": "^2.0.0",
     "unified": "^6.0.0"
