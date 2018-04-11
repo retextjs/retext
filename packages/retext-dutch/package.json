@@ -24,7 +24,7 @@
     "index.js"
   ],
   "dependencies": {
-    "neighbourhoodie-test-package": "^12.1.0",
+    "neighbourhoodie-test-package": "^13.3.0",
     "parse-dutch": "^4.0.0",
     "unherit": "^1.0.4"
   }
