@@ -1,5 +1,7 @@
 # ![retext][logo]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/neighbourhoodie/gk-test-lerna.svg)](https://greenkeeper.io/)
+
 [![Build Status][build-badge]][build-status]
 [![Coverage Status][coverage-badge]][coverage-status]
 [![Chat][chat-badge]][chat]

@@ -24,6 +24,7 @@
     "index.js"
   ],
   "dependencies": {
+    "neighbourhoodie-test-package": "^13.3.0",
     "nlcst-to-string": "^2.0.0"
   }
 }

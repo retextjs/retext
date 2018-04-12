@@ -6,7 +6,7 @@
   "bugs": "https://github.com/retextjs/retext/issues",
   "devDependencies": {
     "bail": "^1.0.0",
-    "browserify": "^15.0.0",
+    "browserify": "^16.1.1",
     "bundle-collapser": "^1.2.1",
     "chalk": "^2.0.0",
     "escodegen": "^1.7.0",
@@ -19,7 +19,7 @@
     "remark-preset-wooorm": "^4.0.0",
     "tape": "^4.5.1",
     "unist-util-remove-position": "^1.0.0",
-    "xo": "^0.18.0"
+    "xo": "^0.20.3"
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
