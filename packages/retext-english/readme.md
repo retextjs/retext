@@ -14,18 +14,18 @@ npm install retext-english
 ## Usage
 
 ```js
-var unified = require('unified');
-var stream = require('unified-stream');
-var english = require('retext-english');
-var stringify = require('retext-stringify');
-var emoji = require('retext-emoji');
+var unified = require('unified')
+var stream = require('unified-stream')
+var english = require('retext-english')
+var stringify = require('retext-stringify')
+var emoji = require('retext-emoji')
 
 var processor = unified()
   .use(english)
   .use(emoji, {convert: 'encode'})
-  .use(stringify);
+  .use(stringify)
 
-process.stdin.pipe(stream(processor)).pipe(process.stdout);
+process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
 ## Table of Contents

@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-var toString = require('nlcst-to-string');
+var toString = require('nlcst-to-string')
 
-module.exports = stringify;
+module.exports = stringify
 
 function stringify() {
-  this.Compiler = compiler;
+  this.Compiler = compiler
 }
 
 function compiler(tree) {
-  return toString(tree);
+  return toString(tree)
 }

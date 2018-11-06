@@ -22,18 +22,20 @@ npm install retext
 ## Usage
 
 ```js
-var retext = require('retext');
-var profanities = require('retext-profanities');
-var emoji = require('retext-emoji');
-var report = require('vfile-reporter');
+var retext = require('retext')
+var profanities = require('retext-profanities')
+var emoji = require('retext-emoji')
+var report = require('vfile-reporter')
+
+var doc = 'He’s set on beating your butt for sheriff! :cop:'
 
 retext()
   .use(profanities)
   .use(emoji, {convert: 'encode'})
-  .process('He’s set on beating your butt for sheriff! :cop:', function (err, file) {
-    console.log(String(file));
-    console.error(report(err || file));
-  });
+  .process(doc, function(err, file) {
+    console.log(String(file))
+    console.error(report(err || file))
+  })
 ```
 
 Yields:
