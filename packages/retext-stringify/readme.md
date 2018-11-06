@@ -50,7 +50,7 @@ There is no configuration for the parser.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 

@@ -43,7 +43,7 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 
 [logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 

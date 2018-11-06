@@ -54,7 +54,7 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 
