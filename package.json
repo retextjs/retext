@@ -6,20 +6,20 @@
   "bugs": "https://github.com/retextjs/retext/issues",
   "devDependencies": {
     "bail": "^1.0.0",
-    "browserify": "^15.0.0",
+    "browserify": "^16.0.0",
     "bundle-collapser": "^1.2.1",
     "chalk": "^2.0.0",
     "escodegen": "^1.7.0",
     "esmangle": "^1.0.0",
     "esprima": "^4.0.0",
-    "lerna": "^2.0.0",
-    "nlcst-test": "^1.0.0",
-    "nyc": "^11.0.0",
-    "remark-cli": "^5.0.0",
+    "lerna": "^3.0.0",
+    "nlcst-test": "^1.0.2",
+    "nyc": "^13.0.0",
+    "remark-cli": "^6.0.0",
     "remark-preset-wooorm": "^4.0.0",
     "tape": "^4.5.1",
     "unist-util-remove-position": "^1.0.0",
-    "xo": "^0.18.0"
+    "xo": "^0.23.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
