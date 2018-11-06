@@ -22,7 +22,7 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 ## Contribute
 
 **retext** is built by people just like you!  Check out
-[`contribute.md`][contribute] for ways to get started.
+[`contributing.md`][contribute] for ways to get started.
 
 This project has a [Code of Conduct][coc].  By interacting with this repository,
 organisation, or community you agree to abide by its terms.
@@ -63,7 +63,7 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 
 [website]: https://unifiedjs.github.io
 
-[contribute]: contributing.md
+[contributing]: contributing.md
 
 [coc]: code-of-conduct.md
 
