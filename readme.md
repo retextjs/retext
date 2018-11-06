@@ -71,7 +71,7 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 
 [unified]: https://github.com/unifiedjs/unified
 
-[website]: https://unifiedjs.github.io
+[website]: https://unified.js.org
 
 [license]: license
 

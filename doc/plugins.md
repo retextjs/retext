@@ -113,4 +113,4 @@ tree, use `unist-util-`, if it works with virtual files, use `vfile-`.
 
 [spectrum]: https://spectrum.chat/unified/retext
 
-[guide]: https://unifiedjs.github.io/create-a-plugin.html
+[guide]: https://unified.js.org/create-a-plugin.html
