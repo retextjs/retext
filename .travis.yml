@@ -8,7 +8,7 @@ deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: f+niXC+P5aOAOx9uBudo+Qs+s77yRnoWmCTaMYTWbrULYYO8vqT7wHEeXSk5oXyr9fyUUUNsB+XQdxxGfB8RvBVJNUMAGneaF/iSo8r9lINFJ825l97wPtDV4BT+kNGFXKP4l7Kxq33Ld3FH73n3GAKOW337RZp6/rGqfRaJ4t8=
+    secure: IqPiKBV35U7oSqDrMs9aVSVjGPJ6M3S9c4nPTUBbDNSl4iUjyOsHm5hQoT4EGs66Qkaj2uRlDSdz44Majba/N2mPnYZTFBAvj+V3oCodmaF0PhMvFUVlKzA38ooDbZf6df9Hi1wxwb70QZbwxBw0vE4YmiumMiYWe1Eck3LZd2M=
   file:
     - "retext.js"
     - "retext.min.js"
