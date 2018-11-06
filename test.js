@@ -35,7 +35,7 @@ test('retext().parse(file)', function(t) {
 
     st.doesNotThrow(function() {
       nlcst(tree)
-    }, 'should expose NLCST')
+    }, 'should expose nlcst')
 
     st.deepEqual(clean(tree, true), root, 'should give the correct tree')
 
@@ -51,7 +51,7 @@ test('retext().parse(file)', function(t) {
     t.test('retext-' + name, function(st) {
       st.doesNotThrow(function() {
         nlcst(tree)
-      }, 'should expose NLCST')
+      }, 'should expose nlcst')
 
       st.deepEqual(clean(tree, true), root, 'should give the corrent tree')
 

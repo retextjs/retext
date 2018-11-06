@@ -1,7 +1,7 @@
 {
   "name": "retext-stringify",
   "version": "2.0.0",
-  "description": "NLCST to text compiler for retext",
+  "description": "nlcst to text compiler for retext",
   "license": "MIT",
   "keywords": [
     "natural",

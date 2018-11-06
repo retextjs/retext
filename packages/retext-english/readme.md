@@ -1,7 +1,7 @@
 # retext-english [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
-[Parser][] for [**unified**][unified].  Parses the English language to
-an [**NLCST**][nlcst] syntax tree.
+[Parser][] for [**unified**][unified].
+Parses the English language to a syntax tree ([**nlcst**][nlcst]).
 
 ## Installation
 

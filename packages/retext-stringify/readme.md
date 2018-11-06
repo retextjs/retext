@@ -1,8 +1,8 @@
 # retext-stringify [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
-[Compiler][] for [**unified**][unified].  Stringifies an
-[**NLCST**][nlcst] syntax tree to text.  Used in the [**retext**
-processor][processor].
+[Compiler][] for [**unified**][unified].
+Stringifies a syntax tree ([**nlcst**][nlcst]) to text.
+Used in the [**retext** processor][processor].
 
 ## Installation
 
