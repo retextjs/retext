@@ -1,4 +1,4 @@
-# retext-stringify [![Build Status][build-badge]][build-status] [![Coverage Status][coverage-badge]][coverage-status] [![Chat][chat-badge]][chat]
+# retext-stringify [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
 [Compiler][] for [**unified**][unified].  Stringifies an
 [**NLCST**][nlcst] syntax tree to text.  Used in the [**retext**
@@ -52,15 +52,23 @@ There is no configuration for the parser.
 
 [build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
-[build-status]: https://travis-ci.org/retextjs/retext
+[build]: https://travis-ci.org/retextjs/retext
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/retextjs/retext.svg
 
-[coverage-status]: https://codecov.io/github/retextjs/retext
+[coverage]: https://codecov.io/github/retextjs/retext
 
-[chat-badge]: https://img.shields.io/gitter/room/retextjs/Lobby.svg
+[downloads-badge]: https://img.shields.io/npm/dm/retext-stringify.svg
 
-[chat]: https://gitter.im/retextjs/Lobby
+[downloads]: https://www.npmjs.com/package/retext-stringify
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/retext-stringify.svg
+
+[size]: https://bundlephobia.com/result?p=retext-stringify
+
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+
+[chat]: https://spectrum.chat/unified/retext
 
 [license]: https://github.com/retextjs/retext/blob/master/license
 
