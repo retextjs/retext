@@ -6,7 +6,7 @@
 [![Size][size-badge]][size]
 [![Chat][chat-badge]][chat]
 
-**retext** is an ecosystem of [plug-ins][plugins] for processing
+**retext** is an ecosystem of [plugins][plugins] for processing
 natural language.
 
 It’s built on [unified][], make sure to read it and its [website][] too.

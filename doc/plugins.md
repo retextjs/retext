@@ -2,7 +2,7 @@
 
 # Plugins
 
-**retext** is an ecosystem of [plug-ins][plugins].
+**retext** is an ecosystem of [plugins][plugins].
 
 ## Table of Contents
 
@@ -75,20 +75,20 @@ virtual files.
 
 ## Using plugins
 
-To use a plug-in programmatically, invoke the [`use()`][unified-use] function.
+To use a plugin programmatically, invoke the [`use()`][unified-use] function.
 
 ## Creating plugins
 
-First, read up on the [concept of plug-ins][unified-plugins].
+First, read up on the [concept of plugins][unified-plugins].
 Then, read the [guide on “Creating a plugin with unified”][guide].
-Finally, take one of existing [plug-ins][plugins], which looks similar to what
+Finally, take one of existing [plugins][plugins], which looks similar to what
 you’re about to do, and work from there.
 If you get stuck, [issues][] and [spectrum][] are good places to get help.
 
 You should pick a name prefixed by `retext-` (such as `retext-lint`).
 
 Note that, if the thing you create cannot be given to `retext().use()`,
-it isn’t a “plug-in”.
+it isn’t a “plugin”.
 Don’t use the `retext-` prefix as that could confuse users.
 If it works with the nlcst tree, use `'nlcst-'`, if it works with any Unist
 tree, use `unist-util-`, if it works with virtual files, use `vfile-`.

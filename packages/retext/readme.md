@@ -1,12 +1,12 @@
 # retext [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
 The [**retext**][retext] processor is a natural language processor
-powered by [plug-ins][plugins].
+powered by [plugins][plugins].
 
 *   Interface by [**unified**][unified]
 *   [**nlcst**][nlcst] syntax tree
 *   Parses natural language to the tree with [**retext-latin**][latin]
-*   [Plug-ins][plugins] transform the tree
+*   [Plugins][plugins] transform the tree
 *   Compiles the tree to text using [**retext-stringify**][stringify]
 
 Don’t need the parser, or another parser?  [That’s OK][unified-usage].

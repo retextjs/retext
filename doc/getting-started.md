@@ -3,7 +3,7 @@
 # Getting Started
 
 **retext** transforms natural language.
-It’s an ecosystem of [plug-ins][plugins].
+It’s an ecosystem of [plugins][plugins].
 If you get stuck, [issues][] and [spectrum][] are good places to get help.
 
 retext is built on [unified][], make sure to read it and its [website][] too.
@@ -16,12 +16,12 @@ retext is built on [unified][], make sure to read it and its [website][] too.
 ## Introduction
 
 Out of the box, **retext** doesn’t do anything.
-But, much can be done, [through plug-ins][plugins].
+But, much can be done, [through plugins][plugins].
 
 ## Programmatic usage
 
 The programmatic interface of **retext** is provided by [**unified**][unified].
-In fact, [`retext`][api] is two plug-ins:
+In fact, [`retext`][api] is two plugins:
 [`retext-latin`][latin] and [`retext-stringify`][stringify].
 
 Install [`retext`][api] with [npm][]:
