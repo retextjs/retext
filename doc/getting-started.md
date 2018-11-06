@@ -59,7 +59,7 @@ Hey guys, utilize a shorter word.
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/retextjs/retext/3879855/logo.svg
+[logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
 
 [issues]: https://github.com/retextjs/retext/issues
 

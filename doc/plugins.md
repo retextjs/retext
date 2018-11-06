@@ -96,7 +96,7 @@ files, use `vfile-`.
 
 <!--Definitions:-->
 
-[logo]: https://cdn.rawgit.com/retextjs/retext/3879855/logo.svg
+[logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
 
 [plugins]: #list-of-plugins
 
