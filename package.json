@@ -7,10 +7,8 @@
   "devDependencies": {
     "bail": "^1.0.0",
     "browserify": "^16.0.0",
-    "bundle-collapser": "^1.2.1",
     "chalk": "^2.0.0",
     "escodegen": "^1.7.0",
-    "esmangle": "^1.0.0",
     "esprima": "^4.0.0",
     "lerna": "^3.0.0",
     "nlcst-test": "^1.0.2",
@@ -19,14 +17,15 @@
     "remark-cli": "^6.0.0",
     "remark-preset-wooorm": "^4.0.0",
     "tape": "^4.5.1",
+    "tinyify": "^2.4.3",
     "unist-util-remove-position": "^1.0.0",
     "xo": "^0.23.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
     "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
-    "build-bundle": "browserify -p bundle-collapser/plugin packages/retext > retext.js",
-    "build-mangle": "esmangle < retext.js > retext.min.js",
+    "build-bundle": "browserify packages/retext -s retext > retext.js",
+    "build-mangle": "browserify packages/retext -s retext -p tinyify > retext.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
