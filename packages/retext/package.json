@@ -17,7 +17,7 @@
   "dependencies": {
     "retext-latin": "^2.0.0",
     "retext-stringify": "^2.0.0",
-    "unified": "^6.0.0"
+    "unified": "^7.0.0"
   },
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext/tree/master/packages/retext",
