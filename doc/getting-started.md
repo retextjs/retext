@@ -2,11 +2,11 @@
 
 # Getting Started
 
-**retext** transforms natural language.  It’s an ecosystem of
-[plug-ins][plugins].  If you get stuck, [issues][] and [Gitter][] are
-good places to get help.
+**retext** transforms natural language.
+It’s an ecosystem of [plug-ins][plugins].
+If you get stuck, [issues][] and [spectrum][] are good places to get help.
 
-It’s built on [unified][], make sure to read it and its [website][] too.
+retext is built on [unified][], make sure to read it and its [website][] too.
 
 ## Table of Contents
 
@@ -15,13 +15,13 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 
 ## Introduction
 
-Out of the box, **retext** doesn’t do anything.  But, much can be
-done, [through plug-ins][plugins].
+Out of the box, **retext** doesn’t do anything.
+But, much can be done, [through plug-ins][plugins].
 
 ## Programmatic usage
 
-The programmatic interface of **retext** is provided by
-[**unified**][unified].  In fact, [`retext`][api] is two plug-ins:
+The programmatic interface of **retext** is provided by [**unified**][unified].
+In fact, [`retext`][api] is two plug-ins:
 [`retext-latin`][latin] and [`retext-stringify`][stringify].
 
 Install [`retext`][api] with [npm][]:
@@ -33,18 +33,18 @@ npm install retext retext-equality retext-simplify
 `index.js` contains:
 
 ```js
-var retext = require('retext');
-var simplify = require('retext-simplify');
-var equality = require('retext-equality');
-var report = require('vfile-reporter');
+var retext = require('retext')
+var simplify = require('retext-simplify')
+var equality = require('retext-equality')
+var report = require('vfile-reporter')
 
 retext()
   .use(simplify)
   .use(equality)
-  .process('Hey guys, utilize a shorter word.', function (err, file) {
-    console.log(String(file));
-    console.error(report(err || file));
-  });
+  .process('Hey guys, utilize a shorter word.', function(err, file) {
+    console.log(String(file))
+    console.error(report(err || file))
+  })
 ```
 
 `node index.js` yields:
@@ -63,7 +63,7 @@ Hey guys, utilize a shorter word.
 
 [issues]: https://github.com/retextjs/retext/issues
 
-[gitter]: https://gitter.im/retextjs/Lobby
+[spectrum]: https://spectrum.chat/unified/retext
 
 [npm]: https://docs.npmjs.com/cli/install
 

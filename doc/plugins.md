@@ -66,33 +66,32 @@
 
 ## List of Utilities
 
-See [**nlcst**][nlcst-util] for a list of utilities for working with
-the CST.  See [`unist`][unist-util] for other utilities which work with
-**nlcst** nodes, too.
+See [**nlcst**][nlcst-util] for a list of utilities for working with the CST.
+See [`unist`][unist-util] for other utilities which work with **nlcst** nodes,
+too.
 
-And finally, see [`vfile`][vfile-util] for a list of utilities
-for working with virtual files.
+And finally, see [`vfile`][vfile-util] for a list of utilities for working with
+virtual files.
 
 ## Using plugins
 
-To use a plug-in programmatically, invoke the [`use()`][unified-use]
-function.
+To use a plug-in programmatically, invoke the [`use()`][unified-use] function.
 
 ## Creating plugins
 
-First, read up on the [concept of plug-ins][unified-plugins].  Then, read the
-[guide on “Creating a plugin with unified”][guide].  Finally, take one of
-existing [plug-ins][plugins], which looks similar to what you’re about to do,
-and work from there.  If you get stuck, [issues][] and [Gitter][] are good
-places to get help.
+First, read up on the [concept of plug-ins][unified-plugins].
+Then, read the [guide on “Creating a plugin with unified”][guide].
+Finally, take one of existing [plug-ins][plugins], which looks similar to what
+you’re about to do, and work from there.
+If you get stuck, [issues][] and [spectrum][] are good places to get help.
 
-You should pick a name prefixed by `"retext-"`, such as `retext-lint`.
+You should pick a name prefixed by `retext-` (such as `retext-lint`).
 
 Note that, if the thing you create cannot be given to `retext().use()`,
-it isn’t a “plug-in”.  Don’t use the `retext-` prefix as that could
-confuse users.  If it works with the NLCST tree, use `'nlcst-'`, if
-it works with any Unist tree, use `unist-util-`, if it works with virtual
-files, use `vfile-`.
+it isn’t a “plug-in”.
+Don’t use the `retext-` prefix as that could confuse users.
+If it works with the nlcst tree, use `'nlcst-'`, if it works with any Unist
+tree, use `unist-util-`, if it works with virtual files, use `vfile-`.
 
 <!--Definitions:-->
 
@@ -112,6 +111,6 @@ files, use `vfile-`.
 
 [issues]: https://github.com/retextjs/retext/issues
 
-[gitter]: https://gitter.im/retextjs/Lobby
+[spectrum]: https://spectrum.chat/unified/retext
 
 [guide]: https://unifiedjs.github.io/create-a-plugin.html
