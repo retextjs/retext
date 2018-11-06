@@ -62,7 +62,7 @@ There is no configuration for the parser.
 
 [chat]: https://gitter.im/retextjs/Lobby
 
-[license]: https://github.com/retextjs/retext/blob/master/LICENSE
+[license]: https://github.com/retextjs/retext/blob/master/license
 
 [author]: http://wooorm.com
 

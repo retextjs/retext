@@ -65,7 +65,7 @@ Access to the [parser][] ([`parse-english`][parse-english]).
 
 [chat]: https://gitter.im/retextjs/Lobby
 
-[license]: https://github.com/retextjs/retext/blob/master/LICENSE
+[license]: https://github.com/retextjs/retext/blob/master/license
 
 [author]: http://wooorm.com
 

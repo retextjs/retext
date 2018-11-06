@@ -63,7 +63,7 @@ He’s set on beating your butt for sheriff! 👮
 
 [chat]: https://gitter.im/retextjs/Lobby
 
-[license]: https://github.com/retextjs/Lobby/blob/master/LICENSE
+[license]: https://github.com/retextjs/Lobby/blob/master/license
 
 [author]: http://wooorm.com
 
