@@ -5,3 +5,4 @@ node_modules
 coverage
 retext.js
 retext.min.js
+yarn.lock
