@@ -52,7 +52,7 @@
 *   [`retext-simplify`](https://github.com/retextjs/retext-simplify)
     — Check phrases for simpler alternatives
 *   [`retext-smartypants`](https://github.com/retextjs/retext-smartypants)
-    — Implementation of [SmartyPants](http://daringfireball.net/projects/smartypants/)
+    — Implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
 *   [`retext-spell`](https://github.com/retextjs/retext-spell)
     — Spelling checker
 *   [`retext-stringify`](https://github.com/retextjs/retext/tree/master/packages/retext-stringify)

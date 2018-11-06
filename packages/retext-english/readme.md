@@ -67,7 +67,7 @@ Access to the [parser][] ([`parse-english`][parse-english]).
 
 [license]: https://github.com/retextjs/retext/blob/master/license
 
-[author]: http://wooorm.com
+[author]: https://wooorm.com
 
 [npm]: https://docs.npmjs.com/cli/install
 

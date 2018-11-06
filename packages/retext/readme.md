@@ -65,7 +65,7 @@ He’s set on beating your butt for sheriff! 👮
 
 [license]: https://github.com/retextjs/Lobby/blob/master/license
 
-[author]: http://wooorm.com
+[author]: https://wooorm.com
 
 [npm]: https://docs.npmjs.com/cli/install
 

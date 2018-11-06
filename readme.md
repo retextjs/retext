@@ -22,7 +22,7 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 ## Contribute
 
 **retext** is built by people just like you!  Check out
-[`contributing.md`][contribute] for ways to get started.
+[`contributing.md`][contributing] for ways to get started.
 
 This project has a [Code of Conduct][coc].  By interacting with this repository,
 organisation, or community you agree to abide by its terms.
@@ -35,7 +35,7 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 
 ## License
 
-[MIT](license) © [Titus Wormer](http://wooorm.com)
+[MIT][license] © [Titus Wormer][author]
 
 <!-- Definitions -->
 
@@ -62,6 +62,10 @@ an issue in the [`retextjs/ideas`][ideas] repository!
 [unified]: https://github.com/unifiedjs/unified
 
 [website]: https://unifiedjs.github.io
+
+[license]: license
+
+[author]: https://wooorm.com
 
 [contributing]: contributing.md
 
