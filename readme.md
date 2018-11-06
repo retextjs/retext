@@ -17,9 +17,10 @@ It’s built on [unified][], make sure to read it and its [website][] too.
 
 ## Related
 
-*   [`nlcst`](https://github.com/syntax-tree/nlcst)
-*   [`remark`](https://github.com/wooorm/remark)
-*   [`rehype`](https://github.com/rehypejs/rehype)
+*   [awesome-retext](https://github.com/retextjs/awesome)
+*   [nlcst](https://github.com/syntax-tree/nlcst)
+*   [remark](https://github.com/wooorm/remark)
+*   [rehype](https://github.com/rehypejs/rehype)
 
 ## Contribute
 
