@@ -2,7 +2,8 @@
 
 # Plugins
 
-**retext** is an ecosystem of [plugins][plugins].
+**retext** is a natural language processor powered by plugins part of the
+[unified][] [collective][].
 
 ## Table of Contents
 
@@ -13,91 +14,99 @@
 
 ## List of Plugins
 
+See [awesome retext][awesome] for the most awesome projects in the ecosystem.
+More plugins can be found on GitHub tagged with the
+[`retext-plugin` topic][topic].
+
+Have a good idea for a new plugin?
+See [Creating plugins][create] below.
+
 *   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
-    — Check phrases for cliches
+    — check phrases for cliches
 *   [`retext-contractions`](https://github.com/retextjs/retext-contractions)
-    — Check apostrophe use in contractions
+    — check apostrophe use in contractions
 *   [`retext-diacritics`](https://github.com/retextjs/retext-diacritics)
-    — Check for proper use of diacritics
+    — check for proper use of diacritics
 *   [`retext-dutch`](https://github.com/retextjs/retext/tree/master/packages/retext-dutch)
-    — Dutch language support
+    — dutch language support
 *   [`retext-english`](https://github.com/retextjs/retext/tree/master/packages/retext-english)
     — English language support
 *   [`retext-emoji`](https://github.com/retextjs/retext-emoji)
-    — Encode or decode [Gemojis](https://github.com/github/gemoji)
+    — encode or decode [gemoji](https://github.com/github/gemoji)
 *   [`retext-equality`](https://github.com/retextjs/retext-equality)
-    — Warn about possible insensitive, inconsiderate language
+    — warn about possible insensitive, inconsiderate language
 *   [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
-    — Check if indefinite articles (`a`, `an`) are used correctly
+    — check if indefinite articles (`a`, `an`) are used correctly
 *   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
-    — Extract keywords and keyphrases
+    — extract keywords and keyphrases
 *   [`retext-latin`](https://github.com/retextjs/retext/tree/master/packages/retext-latin)
     — Latin-script language support
 *   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
-    — Check words for overuse
+    — check words for overuse
 *   [`retext-passive`](https://github.com/retextjs/retext-passive)
-    — Check for passive voice
+    — check for passive voice
 *   [`retext-profanities`](https://github.com/retextjs/retext-profanities)
-    — Check profane and vulgar wording
+    — check profane and vulgar wording
 *   [`retext-readability`](https://github.com/retextjs/retext-readability)
-    — Check readability
+    — check readability
 *   [`retext-redundant-acronyms`](https://github.com/retextjs/retext-redundant-acronyms)
-    — Check redundant acronyms (`ATM machine` > `ATM`)
+    — check redundant acronyms (`ATM machine` > `ATM`)
 *   [`retext-repeated-words`](https://github.com/retextjs/retext-repeated-words)
-    — Check `for for` repeated words
+    — check `for for` repeated words
 *   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
-    — Check spacing between sentences
+    — check spacing between sentences
 *   [`retext-sentiment`](https://github.com/retextjs/retext-sentiment)
-    — Detect sentiment in text
+    — detect sentiment in text
 *   [`retext-simplify`](https://github.com/retextjs/retext-simplify)
-    — Check phrases for simpler alternatives
+    — check phrases for simpler alternatives
 *   [`retext-smartypants`](https://github.com/retextjs/retext-smartypants)
-    — Implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
+    — implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
 *   [`retext-spell`](https://github.com/retextjs/retext-spell)
-    — Spelling checker
+    — check spelling
 *   [`retext-stringify`](https://github.com/retextjs/retext/tree/master/packages/retext-stringify)
-    — Compile back to text
+    — compile back to text
 *   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
-    — Classify `@mentions` as syntax
+    — classify `@mentions` as syntax
 *   [`retext-usage`](https://github.com/admhlt/retext-usage)
-    — Check incorrect English usage
+    — check incorrect English usage
 *   [`retext-quotes`](https://github.com/retextjs/retext-quotes)
-    — Check quote and apostrophe usage
+    — check quote and apostrophe usage
 
 ## List of Utilities
 
-See [**nlcst**][nlcst-util] for a list of utilities for working with the CST.
-See [`unist`][unist-util] for other utilities which work with **nlcst** nodes,
-too.
-
-And finally, see [`vfile`][vfile-util] for a list of utilities for working with
+See [**nlcst**][nlcst-util] for a list of utilities for working with the syntax
+tree.
+See [`unist`][unist-util] for other utilities which work with **nlcst**
+nodes, too.
+Finally, see [**vfile**][vfile-util] for a list of utilities working with
 virtual files.
 
 ## Using plugins
 
-To use a plugin programmatically, invoke the [`use()`][unified-use] function.
+To use a plugin invoke the [`use()`][unified-use] function.
 
 ## Creating plugins
 
-First, read up on the [concept of plugins][unified-plugins].
+Have an idea for a plugin?
+Post it on [spectrum][] or in [ideas][] and make it happen!
+
+To create a plugin, first read up on the [concept of plugins][unified-plugins].
 Then, read the [guide on “Creating a plugin with unified”][guide].
-Finally, take one of existing [plugins][plugins], which looks similar to what
-you’re about to do, and work from there.
-If you get stuck, [issues][] and [spectrum][] are good places to get help.
+Finally, take one of existing plugins, which looks similar to what you’re about
+to make, and work from there.
+If you get stuck, [spectrum][], [ideas][], and [issues][] are good places to get
+help.
 
-You should pick a name prefixed by `retext-` (such as `retext-lint`).
+You should pick a name prefixed by `'retext-'`, such as `retext-spell`.
 
-Note that, if the thing you create cannot be given to `retext().use()`,
-it isn’t a “plugin”.
-Don’t use the `retext-` prefix as that could confuse users.
-If it works with the nlcst tree, use `'nlcst-'`, if it works with any Unist
-tree, use `unist-util-`, if it works with virtual files, use `vfile-`.
+**Do not use the `retext-` prefix** if the thing you create doesn’t work with
+`retext().use()`: it isn’t a “plugin” and will confuse users.
+If it works with nlcst, use `'nlcst-util-'`, if it works with any unist tree,
+use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 <!--Definitions:-->
 
 [logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
-
-[plugins]: #list-of-plugins
 
 [nlcst-util]: https://github.com/syntax-tree/nlcst#list-of-utilities
 
@@ -114,3 +123,15 @@ tree, use `unist-util-`, if it works with virtual files, use `vfile-`.
 [spectrum]: https://spectrum.chat/unified/retext
 
 [guide]: https://unified.js.org/create-a-plugin.html
+
+[unified]: https://github.com/unifiedjs/unified
+
+[collective]: https://opencollective.com/unified
+
+[create]: #creating-plugins
+
+[awesome]: https://github.com/retextjs/awesome
+
+[ideas]: https://github.com/retextjs/ideas
+
+[topic]: https://github.com/topics/retext-plugin

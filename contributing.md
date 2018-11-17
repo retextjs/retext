@@ -1,7 +1,8 @@
 # Contributing
 
-> This project has a [Code of Conduct][coc].  By interacting with this
-> repository, organisation, or community you agree to abide by its terms.
+> This project has a [Code of Conduct][coc].
+> By interacting with this repository, organisation, or community you agree to
+> abide by its terms.
 
 Hi!  👋
 We’re excited that you’re interested in contributing!
@@ -31,8 +32,8 @@ The ecosystem consists of several organisations and separate projects: most of
 them are tiny, and many of them have a utility
 ([`mdast-util-to-hast`][mdast-util-to-hast]), a plugin
 ([`remark-rehype`][remark-rehype]), and relate to an ecosystem
-([`remark`][remark]).  Try and pick the right place to contribute to so we can
-help you faster.
+([`remark`][remark]).
+Try and pick the right place to contribute to so we can help you faster.
 
 ## Questions
 
@@ -52,6 +53,16 @@ Jump in there and lurk, talk to us, and help others.
 ## Contributions
 
 There’s several ways to contribute, not just by writing code.
+
+### Financial support
+
+It’s possible to support us financially by becoming a backer or sponsor through
+[Open Collective][collective].
+With this support, we can pay for project leadership, finance non-coding work,
+or to do fun things for the community like getting stickers for contributors.
+You’ll be helping unified’s maintainers manage and improve existing projects,
+and additionally support our work to develop new and exciting projects, such
+as [micromark][].
 
 ### Improve documentation
 
@@ -128,3 +139,7 @@ prevent you from doing unnecessary work.
 [remark-rehype]: https://github.com/remarkjs/remark-rehype
 
 [unit-test]: https://twitter.com/sindresorhus/status/579306280495357953
+
+[collective]: https://opencollective.com/unified
+
+[micromark]: https://github.com/micromark/micromark

@@ -1,8 +1,46 @@
 # retext-latin [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
 
 [Parser][] for [**unified**][unified].
-Parses Latin-script natural language to a syntax tree ([**nlcst**][nlcst]).
-Used in the [**retext** processor][processor].
+Parses Latin-script language to [**nlcst**][nlcst] syntax trees.
+Used in the [**retext** processor][processor] but can be used on its own as
+well.
+
+* * *
+
+**Announcing the unified collective!  🎉
+[Read more about it on Medium »][announcement]**
+
+## Sponsors
+
+<!--lint ignore no-html maximum-line-length-->
+
+<table>
+  <tr valign="top">
+    <td width="20%" align="center">
+      <a href="https://zeit.co"><img src="https://avatars1.githubusercontent.com/u/14985020?s=400&v=4"></a>
+      <br><br>🥇
+      <a href="https://zeit.co">ZEIT</a>
+    </td>
+    <td width="20%" align="center">
+      <a href="https://www.gatsbyjs.org"><img src="https://avatars1.githubusercontent.com/u/12551863?s=400&v=4"></a>
+      <br><br>🥇
+      <a href="https://www.gatsbyjs.org">Gatsby</a></td>
+    <td width="20%" align="center">
+      <a href="https://compositor.io"><img src="https://avatars1.githubusercontent.com/u/19245838?s=400&v=4"></a>
+      <br><br>🥉
+      <a href="https://compositor.io">Compositor</a>
+    </td>
+    <td width="20%" align="center">
+      <a href="https://www.holloway.com"><img src="https://avatars1.githubusercontent.com/u/35904294?s=400&v=4"></a>
+      <br><br>
+      <a href="https://www.holloway.com">Holloway</a>
+    </td>
+    <td width="20%" align="center">
+      <br><br><br><br>
+      <a href="https://opencollective.com/unified"><strong>You?</strong>
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
@@ -89,3 +127,5 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 [parser]: https://github.com/unifiedjs/unified#processorparser
 
 [parse-latin]: https://github.com/wooorm/parse-latin
+
+[announcement]: https://medium.com/unifiedjs/collectively-evolving-through-crowdsourcing-22c359ea95cc

@@ -16,7 +16,7 @@ retext is built on [unified][], make sure to read it and its [website][] too.
 ## Introduction
 
 Out of the box, **retext** doesn’t do anything.
-But, much can be done, [through plugins][plugins].
+But much can be done [through plugins][plugins].
 
 ## Programmatic usage
 
