@@ -37,6 +37,8 @@ See [Creating plugins][create] below.
     — warn about possible insensitive, inconsiderate language
 *   [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
     — check if indefinite articles (`a`, `an`) are used correctly
+*   [`retext-intensify`](https://github.com/retextjs/retext-intensify) 
+    — check for weak and mitigating wording
 *   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
     — extract keywords and keyphrases
 *   [`retext-latin`](https://github.com/retextjs/retext/tree/master/packages/retext-latin)
