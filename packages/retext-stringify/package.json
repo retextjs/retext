@@ -1,6 +1,6 @@
 {
   "name": "retext-stringify",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "nlcst to text compiler for retext",
   "license": "MIT",
   "keywords": [
