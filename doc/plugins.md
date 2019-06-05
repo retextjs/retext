@@ -21,6 +21,8 @@ More plugins can be found on GitHub tagged with the
 Have a good idea for a new plugin?
 See [Creating plugins][create] below.
 
+*   [`retext-assuming`](https://github.com/davidhund/retext-assuming)
+    — check for unhelpful phrases such as `just`, `simply`, `obviously`
 *   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
     — check phrases for cliches
 *   [`retext-contractions`](https://github.com/retextjs/retext-contractions)
