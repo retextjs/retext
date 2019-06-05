@@ -16,6 +16,7 @@
     "remark-preset-wooorm": "^5.0.0",
     "tape": "^4.0.0",
     "tinyify": "^2.0.0",
+    "unist-builder": "^1.0.4",
     "unist-util-remove-position": "^1.0.0",
     "xo": "^0.24.0"
   },
