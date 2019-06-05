@@ -1,20 +1,23 @@
-# retext [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# retext
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
 [**retext**][retext] is a natural language processor powered by [plugins][]
 part of the [unified][] [collective][].
 
-*   API by [`unified`][unified]
+*   API by [**unified**][unified]
 *   Parses natural language to the tree with [`retext-latin`][latin]
 *   [**nlcst**][nlcst] syntax tree
 *   [Plugins][] transform the tree
 *   Compiles the tree to markdown using [`retext-stringify`][stringify]
 
 Don’t need the parser?  Or the compiler?  [That’s OK][unified-usage].
-
-* * *
-
-**Announcing the unified collective!  🎉
-[Read more about it on Medium »][announcement]**
 
 ## Sponsors
 
@@ -48,15 +51,17 @@ Don’t need the parser?  Or the compiler?  [That’s OK][unified-usage].
   </tr>
 </table>
 
-## Installation
+[**Read more about the unified collective on Medium »**][announcement]
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install retext
 ```
 
-## Usage
+## Use
 
 ```js
 var retext = require('retext')
@@ -64,12 +69,10 @@ var profanities = require('retext-profanities')
 var emoji = require('retext-emoji')
 var report = require('vfile-reporter')
 
-var doc = 'He’s set on beating your butt for sheriff! :cop:'
-
 retext()
   .use(profanities)
   .use(emoji, {convert: 'encode'})
-  .process(doc, function(err, file) {
+  .process('He’s set on beating your butt for sheriff! :cop:', function(err, file) {
     console.log(String(file))
     console.error(report(err || file))
   })
@@ -84,13 +87,27 @@ He’s set on beating your butt for sheriff! 👮
 ⚠ 1 warning
 ```
 
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
+
+A curated list of awesome retext resources can be found in [**awesome
+retext**][awesome].
+
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 
@@ -106,9 +123,27 @@ He’s set on beating your butt for sheriff! 👮
 
 [size]: https://bundlephobia.com/result?p=retext
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
+
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+
+[ideas]: https://github.com/retextjs/ideas
+
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [license]: https://github.com/retextjs/Lobby/blob/master/license
 
@@ -116,20 +151,18 @@ He’s set on beating your butt for sheriff! 👮
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[retext]: https://github.com/retextjs/retext
-
 [unified]: https://github.com/unifiedjs/unified
+
+[announcement]: https://medium.com/unifiedjs/collectively-evolving-through-crowdsourcing-22c359ea95cc
+
+[latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
+
+[stringify]: https://github.com/retextjs/retext/tree/master/packages/retext-stringify
+
+[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
+
+[retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 
-[latin]: https://github.com/retextjs/retext/blob/master/packages/retext-latin
-
-[stringify]: https://github.com/retextjs/retext/blob/master/packages/retext-stringify
-
-[plugins]: https://github.com/retextjs/retext/blob/master/doc/plugins.md
-
 [unified-usage]: https://github.com/unifiedjs/unified#usage
-
-[collective]: https://opencollective.com/unified
-
-[announcement]: https://medium.com/unifiedjs/collectively-evolving-through-crowdsourcing-22c359ea95cc

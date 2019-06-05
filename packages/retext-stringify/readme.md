@@ -1,14 +1,16 @@
-# retext-stringify [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# retext-stringify
 
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
+
+[**retext**][retext] plugin to stringify natural language.
 [Compiler][] for [**unified**][unified].
-Stringifies [**nlcst**][nlcst] syntax trees to text.
-Used in the [**retext** processor][processor] but can be used on its own as
-well.
-
-* * *
-
-**Announcing the unified collective!  🎉
-[Read more about it on Medium »][announcement]**
+Stringifies [**nlcst**][nlcst] syntax trees.
 
 ## Sponsors
 
@@ -42,15 +44,17 @@ well.
   </tr>
 </table>
 
-## Installation
+[**Read more about the unified collective on Medium »**][announcement]
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install retext-stringify
 ```
 
-## Usage
+## Use
 
 ```js
 var unified = require('unified')
@@ -67,20 +71,26 @@ var processor = unified()
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
-## Table of Contents
-
-*   [API](#api)
-    *   [processor.use(stringify)](#processorusestringify)
-*   [License](#license)
-
 ## API
 
 ### `processor.use(stringify)`
 
-Configure the `processor` to stringify [**nlcst**][nlcst] syntax trees
-to text.
+Compile [**nlcst**][nlcst] syntax trees.
+There is no configuration for the compiler.
 
-There is no configuration for the parser.
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
+
+A curated list of awesome retext resources can be found in [**awesome
+retext**][awesome].
+
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -104,9 +114,27 @@ There is no configuration for the parser.
 
 [size]: https://bundlephobia.com/result?p=retext-stringify
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
+
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+
+[ideas]: https://github.com/retextjs/ideas
+
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [license]: https://github.com/retextjs/retext/blob/master/license
 
@@ -116,9 +144,9 @@ There is no configuration for the parser.
 
 [unified]: https://github.com/unifiedjs/unified
 
-[processor]: https://github.com/retextjs/retext
-
 [compiler]: https://github.com/unifiedjs/unified#processorcompiler
+
+[retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 

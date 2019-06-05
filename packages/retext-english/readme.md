@@ -1,12 +1,16 @@
-# retext-english [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# retext-english
 
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
+
+[**retext**][retext] plugin to parse English natural language.
 [Parser][] for [**unified**][unified].
-Parses the English language to [**nlcst**][nlcst] syntax trees.
-
-* * *
-
-**Announcing the unified collective!  🎉
-[Read more about it on Medium »][announcement]**
+Parses English language prose to [**nlcst**][nlcst] syntax trees.
 
 ## Sponsors
 
@@ -40,15 +44,17 @@ Parses the English language to [**nlcst**][nlcst] syntax trees.
   </tr>
 </table>
 
-## Installation
+[**Read more about the unified collective on Medium »**][announcement]
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install retext-english
 ```
 
-## Usage
+## Use
 
 ```js
 var unified = require('unified')
@@ -65,24 +71,30 @@ var processor = unified()
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
-## Table of Contents
-
-*   [API](#api)
-    *   [processor.use(english)](#processoruseenglish)
-    *   [english.Parser](#englishparser)
-*   [License](#license)
-
 ## API
 
 ### `processor.use(english)`
 
-Configure the `processor` to read English text as input.
-
+Parse English natural language.
 There is no configuration for the parser.
 
 ### `english.Parser`
 
 Access to the [parser][] ([`parse-english`][parse-english]).
+
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
+
+A curated list of awesome retext resources can be found in [**awesome
+retext**][awesome].
+
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -106,9 +118,27 @@ Access to the [parser][] ([`parse-english`][parse-english]).
 
 [size]: https://bundlephobia.com/result?p=retext-english
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
+
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+
+[ideas]: https://github.com/retextjs/ideas
+
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [license]: https://github.com/retextjs/retext/blob/master/license
 
@@ -117,6 +147,8 @@ Access to the [parser][] ([`parse-english`][parse-english]).
 [npm]: https://docs.npmjs.com/cli/install
 
 [unified]: https://github.com/unifiedjs/unified
+
+[retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 

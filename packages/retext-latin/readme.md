@@ -1,14 +1,16 @@
-# retext-latin [![Build][build-badge]][build] [![Coverage][coverage-badge]][coverage] [![Downloads][downloads-badge]][downloads] [![Size][size-badge]][size] [![Chat][chat-badge]][chat]
+# retext-latin
 
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
+
+[**retext**][retext] plugin to parse Latin-script natural language.
 [Parser][] for [**unified**][unified].
-Parses Latin-script language to [**nlcst**][nlcst] syntax trees.
-Used in the [**retext** processor][processor] but can be used on its own as
-well.
-
-* * *
-
-**Announcing the unified collective!  🎉
-[Read more about it on Medium »][announcement]**
+Parses Latin-script prose to [**nlcst**][nlcst] syntax trees.
 
 ## Sponsors
 
@@ -42,15 +44,17 @@ well.
   </tr>
 </table>
 
-## Installation
+[**Read more about the unified collective on Medium »**][announcement]
+
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install retext-latin
 ```
 
-## Usage
+## Use
 
 ```js
 var unified = require('unified')
@@ -67,24 +71,30 @@ var processor = unified()
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
-## Table of Contents
-
-*   [API](#api)
-    *   [processor.use(latin)](#processoruselatin)
-    *   [latin.Parser](#latinparser)
-*   [License](#license)
-
 ## API
 
 ### `processor.use(latin)`
 
-Configure the `processor` to read Latin-script text as input.
-
+Parse Latin-script natural language.
 There is no configuration for the parser.
 
 ### `latin.Parser`
 
 Access to the [parser][] ([`parse-latin`][parse-latin]).
+
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
+
+A curated list of awesome retext resources can be found in [**awesome
+retext**][awesome].
+
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -108,9 +118,27 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 [size]: https://bundlephobia.com/result?p=retext-latin
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
+
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+
+[ideas]: https://github.com/retextjs/ideas
+
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [license]: https://github.com/retextjs/retext/blob/master/license
 
@@ -120,7 +148,7 @@ Access to the [parser][] ([`parse-latin`][parse-latin]).
 
 [unified]: https://github.com/unifiedjs/unified
 
-[processor]: https://github.com/retextjs/retext/blob/master/packages/retext
+[retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
 

@@ -37,7 +37,7 @@ See [Creating plugins][create] below.
     — warn about possible insensitive, inconsiderate language
 *   [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
     — check if indefinite articles (`a`, `an`) are used correctly
-*   [`retext-intensify`](https://github.com/retextjs/retext-intensify) 
+*   [`retext-intensify`](https://github.com/retextjs/retext-intensify)
     — check for weak and mitigating wording
 *   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
     — extract keywords and keyphrases
@@ -78,8 +78,8 @@ See [Creating plugins][create] below.
 
 See [**nlcst**][nlcst-util] for a list of utilities for working with the syntax
 tree.
-See [`unist`][unist-util] for other utilities which work with **nlcst**
-nodes, too.
+See [**unist**][unist-util] for other utilities which work with **nlcst** nodes,
+too.
 Finally, see [**vfile**][vfile-util] for a list of utilities working with
 virtual files.
 

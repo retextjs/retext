@@ -1,18 +1,35 @@
-# ![retext][logo]
+# [![retext][logo]][unified]
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
 [![Downloads][downloads-badge]][downloads]
 [![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
 **retext** is a natural language processor powered by [plugins][] part of the
 [unified][] [collective][].
 
-* * *
+## Intro
 
-**Announcing the unified collective!  🎉
-[Read more about it on Medium »][announcement]**
+**retext** is an ecosystem of [plugins][plugins] for processing
+natural language to do all kinds of things: [check spelling][spell],
+[fix typography][smartypants], or [make sure text is readable][readability].
+
+*   Visit [`unified.js.org`][website] and try its [guides][] for an overview
+*   Read [unified][]’s readme for a technical intro
+*   Browse [awesome retext][awesome] to find out more about the ecosystem
+*   Follow us on [Medium][] and [Twitter][] to see what we’re up to
+*   Check out [Contribute][] below to find out how to help out
+
+This repository contains the following projects:
+
+*   [`retext-english`][english] — Parse English prose to a syntax tree
+*   [`retext-dutch`][dutch] — Parse Dutch prose to a syntax tree
+*   [`retext-latin`][latin] — Parse any Latin-script prose to a syntax tree
+*   [`retext-stringify`][stringify] — Stringify a syntax tree to text
+*   [`retext`][api] — Programmatic interface with both `retext-latin` and `retext-stringify`
 
 ## Sponsors
 
@@ -46,42 +63,21 @@
   </tr>
 </table>
 
-## Intro
-
-**retext** is an ecosystem of [plugins][plugins] for processing
-natural language to do all kinds of things: [check spelling][spell],
-[fix typography][smartypants], or [make sure text is readable][readability].
-
-*   Visit [`unified.js.org`][website] and try its [guides][] for an overview
-*   Read [unified][]’s readme for a technical intro
-*   Browse [awesome retext][awesome] to find out more about the ecosystem
-*   Follow us on [Medium][] and [Twitter][] to see what we’re up to
-*   Check out [Contribute][] below to find out how to help out
-
-This repository contains the following projects:
-
-*   [`retext-english`][english] — Parse English prose to a syntax tree
-*   [`retext-dutch`][dutch] — Parse Dutch prose to a syntax tree
-*   [`retext-latin`][latin] — Parse any Latin-script prose to a syntax tree
-*   [`retext-stringify`][stringify] — Stringify a syntax tree to text
-*   [`retext`][api] — Programmatic interface with both `retext-latin` and `retext-stringify`
+[**Read more about the unified collective on Medium »**][announcement]
 
 ## Contribute
 
-**retext** is built by people just like you!
-Check out [`contributing.md`][contributing] for ways to get started.
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
+
+A curated list of awesome retext resources can be found in [**awesome
+retext**][awesome].
 
 This project has a [Code of Conduct][coc].
 By interacting with this repository, organisation, or community you agree to
 abide by its terms.
-
-Want to chat with the community and contributors?
-Join us in [spectrum][chat]!
-
-Have an idea for a cool new utility or tool?
-That’s great!
-If you want feedback, help, or just to share it with the world you can do so by
-creating an issue in the [`retextjs/ideas`][ideas] repository!
 
 ## License
 
@@ -91,7 +87,7 @@ creating an issue in the [`retextjs/ideas`][ideas] repository!
 
 [logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 
@@ -107,27 +103,33 @@ creating an issue in the [`retextjs/ideas`][ideas] repository!
 
 [size]: https://bundlephobia.com/result?p=retext
 
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
 [chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
 
+[health]: https://github.com/retextjs/.github
+
+[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+
+[support]: https://github.com/retextjs/.github/blob/master/support.md
+
+[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+
 [license]: license
 
 [author]: https://wooorm.com
-
-[contribute]: #contribute
-
-[contributing]: contributing.md
-
-[coc]: code-of-conduct.md
 
 [unified]: https://github.com/unifiedjs/unified
 
 [website]: https://unified.js.org
 
 [guides]: https://unified.js.org/#guides
-
-[collective]: https://opencollective.com/unified
 
 [medium]: https://medium.com/unifiedjs
 
@@ -156,3 +158,5 @@ creating an issue in the [`retextjs/ideas`][ideas] repository!
 [smartypants]: https://github.com/retextjs/retext-smartypants
 
 [readability]: https://github.com/retextjs/retext-readability
+
+[contribute]: #contribute
