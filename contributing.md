@@ -18,6 +18,7 @@ free customer service.
 *   [Ecosystem](#ecosystem)
 *   [Questions](#questions)
 *   [Contributions](#contributions)
+    *   [Financial support](#financial-support)
     *   [Improve documentation](#improve-documentation)
     *   [Improve issues](#improve-issues)
     *   [Give feedback on issues](#give-feedback-on-issues)
