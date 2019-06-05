@@ -71,6 +71,8 @@ See [Creating plugins][create] below.
     — compile back to text
 *   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
     — classify `@mentions` as syntax
+*   [`retext-syntax-urls`](https://github.com/retextjs/retext-syntax-urls)
+    — Classify url-like values (example.com, example.md, etc) as syntax
 *   [`retext-usage`](https://github.com/admhlt/retext-usage)
     — check incorrect English usage
 *   [`retext-quotes`](https://github.com/retextjs/retext-quotes)
