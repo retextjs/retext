@@ -136,7 +136,7 @@ use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 [create]: #creating-plugins
 
-[awesome]: https://github.com/retextjs/awesome
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [ideas]: https://github.com/retextjs/ideas
 
