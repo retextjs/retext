@@ -149,7 +149,7 @@ abide by its terms.
 
 [ideas]: https://github.com/retextjs/ideas
 
-[awesome]: https://github.com/retextjs/awesome
+[awesome]: https://github.com/retextjs/awesome-retext
 
 [plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
 
