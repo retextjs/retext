@@ -128,7 +128,7 @@ use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 [spectrum]: https://spectrum.chat/unified/retext
 
-[guide]: https://unified.js.org/create-a-plugin.html
+[guide]: https://unifiedjs.com/create-a-plugin.html
 
 [unified]: https://github.com/unifiedjs/unified
 

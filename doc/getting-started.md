@@ -73,7 +73,7 @@ Hey guys, utilize a shorter word.
 
 [unified]: https://github.com/unifiedjs/unified
 
-[website]: https://unified.js.org
+[website]: https://unifiedjs.com
 
 [latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
 

@@ -17,7 +17,7 @@
 natural language to do all kinds of things: [check spelling][spell],
 [fix typography][smartypants], or [make sure text is readable][readability].
 
-*   Visit [`unified.js.org`][website] and try its [guides][] for an overview
+*   Visit [`unifiedjs.com`][website] and try its [guides][] for an overview
 *   Read [unified][]’s readme for a technical intro
 *   Browse [awesome retext][awesome] to find out more about the ecosystem
 *   Follow us on [Medium][] and [Twitter][] to see what we’re up to
@@ -128,9 +128,9 @@ abide by its terms.
 
 [unified]: https://github.com/unifiedjs/unified
 
-[website]: https://unified.js.org
+[website]: https://unifiedjs.com
 
-[guides]: https://unified.js.org/#guides
+[guides]: https://unifiedjs.com/#guides
 
 [medium]: https://medium.com/unifiedjs
 
