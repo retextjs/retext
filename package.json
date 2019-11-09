@@ -4,6 +4,10 @@
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext",
   "bugs": "https://github.com/retextjs/retext/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "devDependencies": {
     "bail": "^1.0.0",
     "browserify": "^16.0.0",

@@ -22,6 +22,10 @@
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext/tree/master/packages/retext",
   "bugs": "https://github.com/retextjs/retext/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
   "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
