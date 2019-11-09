@@ -7,18 +7,18 @@
   "devDependencies": {
     "bail": "^1.0.0",
     "browserify": "^16.0.0",
-    "chalk": "^2.0.0",
+    "chalk": "^3.0.0",
     "lerna": "^3.0.0",
     "nlcst-test": "^1.0.0",
     "nyc": "^14.0.0",
     "prettier": "^1.0.0",
-    "remark-cli": "^6.0.0",
-    "remark-preset-wooorm": "^5.0.0",
+    "remark-cli": "^7.0.0",
+    "remark-preset-wooorm": "^6.0.0",
     "tape": "^4.0.0",
     "tinyify": "^2.0.0",
-    "unist-builder": "^1.0.4",
+    "unist-builder": "^2.0.0",
     "unist-util-remove-position": "^1.0.0",
-    "xo": "^0.24.0"
+    "xo": "^0.25.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",

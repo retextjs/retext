@@ -13,7 +13,7 @@
 
 ## Intro
 
-**retext** is an ecosystem of [plugins][plugins] for processing
+**retext** is an ecosystem of [plugins][] for processing
 natural language to do all kinds of things: [check spelling][spell],
 [fix typography][smartypants], or [make sure text is readable][readability].
 
