@@ -52,7 +52,7 @@ retext()
 ```txt
 Hey guys, utilize a shorter word.
     1:5-1:9  warning  `guys` may be insensitive, use `people`, `persons`, `folks` instead  gals-men  retext-equality
-  1:11-1:18  warning  Replace “utilize” with “use”                                         utilize   retext-simplify
+  1:11-1:18  warning  Replace `utilize` with `use`                                         utilize   retext-simplify
 
 ⚠ 2 warnings
 ```

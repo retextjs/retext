@@ -8,9 +8,9 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**retext**][retext] plugin to stringify natural language.
+[**retext**][retext] plugin to serialize natural language.
 [Compiler][] for [**unified**][unified].
-Stringifies [**nlcst**][nlcst] syntax trees.
+Serializes [**nlcst**][nlcst] syntax trees.
 
 ## Sponsors
 
@@ -76,8 +76,8 @@ process.stdin.pipe(stream(processor)).pipe(process.stdout)
 
 ### `processor.use(stringify)`
 
-Compile [**nlcst**][nlcst] syntax trees.
-There is no configuration for the compiler.
+Serialize [**nlcst**][nlcst] syntax trees.
+There is no configuration.
 
 ## Contribute
 
@@ -89,8 +89,8 @@ Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
 A curated list of awesome retext resources can be found in [**awesome
 retext**][awesome].
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -121,7 +121,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
 

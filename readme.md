@@ -13,11 +13,12 @@
 
 ## Intro
 
-**retext** is an ecosystem of [plugins][] for processing
-natural language to do all kinds of things: [check spelling][spell],
-[fix typography][smartypants], or [make sure text is readable][readability].
+**retext** is an ecosystem of [plugins][] for processing natural language to do
+all kinds of things: [check spelling][spell], [fix typography][smartypants], or
+[make sure text is readable][readability].
 
-*   Visit [`unifiedjs.com`][website] and try its [guides][] for an overview
+*   Visit [`unifiedjs.com`][website] and peruse its [Learn][] section for an
+    overview
 *   Read [unified][]’s readme for a technical intro
 *   Browse [awesome retext][awesome] to find out more about the ecosystem
 *   Follow us on [Medium][] and [Twitter][] to see what we’re up to
@@ -28,7 +29,7 @@ This repository contains the following projects:
 *   [`retext-english`][english] — Parse English prose to a syntax tree
 *   [`retext-dutch`][dutch] — Parse Dutch prose to a syntax tree
 *   [`retext-latin`][latin] — Parse any Latin-script prose to a syntax tree
-*   [`retext-stringify`][stringify] — Stringify a syntax tree to text
+*   [`retext-stringify`][stringify] — Serialize a syntax tree
 *   [`retext`][api] — Programmatic interface with both `retext-latin` and `retext-stringify`
 
 ## Sponsors
@@ -76,8 +77,8 @@ Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
 A curated list of awesome retext resources can be found in [**awesome
 retext**][awesome].
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -110,7 +111,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
 
@@ -130,7 +131,7 @@ abide by its terms.
 
 [website]: https://unifiedjs.com
 
-[guides]: https://unifiedjs.com/#guides
+[learn]: https://unifiedjs.com/learn/
 
 [medium]: https://medium.com/unifiedjs
 

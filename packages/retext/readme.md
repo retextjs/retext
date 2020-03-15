@@ -15,9 +15,11 @@ part of the [unified][] [collective][].
 *   Parses natural language to the tree with [`retext-latin`][latin]
 *   [**nlcst**][nlcst] syntax tree
 *   [Plugins][] transform the tree
-*   Compiles the tree to markdown using [`retext-stringify`][stringify]
+*   Serialize the tree to natural language using [`retext-stringify`][stringify]
 
-Don’t need the parser?  Or the compiler?  [That’s OK][unified-usage].
+Don’t need the parser?
+Or the compiler?
+[That’s OK][unified-usage].
 
 ## Sponsors
 
@@ -98,8 +100,8 @@ Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
 A curated list of awesome retext resources can be found in [**awesome
 retext**][awesome].
 
-This project has a [Code of Conduct][coc].
-By interacting with this repository, organisation, or community you agree to
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
 abide by its terms.
 
 ## License
@@ -130,7 +132,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/retext
 

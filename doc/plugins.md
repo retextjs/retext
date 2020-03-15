@@ -7,8 +7,8 @@
 
 ## Table of Contents
 
-*   [List of Plugins](#list-of-plugins)
-*   [List of Utilities](#list-of-utilities)
+*   [List of plugins](#list-of-plugins)
+*   [List of utilities](#list-of-utilities)
 *   [Using plugins](#using-plugins)
 *   [Creating plugins](#creating-plugins)
 
@@ -68,7 +68,7 @@ See [Creating plugins][create] below.
 *   [`retext-spell`](https://github.com/retextjs/retext-spell)
     — check spelling
 *   [`retext-stringify`](https://github.com/retextjs/retext/tree/master/packages/retext-stringify)
-    — compile back to text
+    — serialize back to text
 *   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
     — classify `@mentions` as syntax
 *   [`retext-syntax-urls`](https://github.com/retextjs/retext-syntax-urls)
