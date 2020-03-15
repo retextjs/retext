@@ -1,9 +1,13 @@
 {
   "name": "retext-english",
   "version": "3.0.4",
-  "description": "retext parser for the English language",
+  "description": "retext plugin to parse English prose",
   "license": "MIT",
   "keywords": [
+    "unified",
+    "retext",
+    "retext-plugin",
+    "plugin",
     "natural",
     "language",
     "english",

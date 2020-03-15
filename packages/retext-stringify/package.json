@@ -1,9 +1,13 @@
 {
   "name": "retext-stringify",
   "version": "2.0.4",
-  "description": "nlcst to text compiler for retext",
+  "description": "retext plugin to serialize prose",
   "license": "MIT",
   "keywords": [
+    "unified",
+    "retext",
+    "retext-plugin",
+    "plugin",
     "natural",
     "language",
     "text",
@@ -11,7 +15,9 @@
     "syntax",
     "tree",
     "cst",
-    "stringify"
+    "stringify",
+    "serialize",
+    "compile"
   ],
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext/tree/master/packages/retext-stringify",
