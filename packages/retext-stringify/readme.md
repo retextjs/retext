@@ -19,9 +19,9 @@ Serializes [**nlcst**][nlcst] syntax trees.
 <table>
   <tr valign="top">
     <td width="20%" align="center">
-      <a href="https://zeit.co"><img src="https://avatars1.githubusercontent.com/u/14985020?s=400&v=4"></a>
+      <a href="https://vercel.com"><img src="https://avatars1.githubusercontent.com/u/14985020?s=400&v=4"></a>
       <br><br>🥇
-      <a href="https://zeit.co">ZEIT</a>
+      <a href="https://vercel.com">Vercel</a>
     </td>
     <td width="20%" align="center">
       <a href="https://www.gatsbyjs.org"><img src="https://avatars1.githubusercontent.com/u/12551863?s=400&v=4"></a>
