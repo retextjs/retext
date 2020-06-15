@@ -9,10 +9,10 @@ var retext = require('./packages/retext')
 
 var parsers = ['latin', 'english', 'dutch']
 
-test('.parse', function(t) {
+test('.parse', function (t) {
   var tree = retext().parse('Alfred')
 
-  t.doesNotThrow(function() {
+  t.doesNotThrow(function () {
     nlcst(tree)
   }, 'should parse to valid nlcst')
 
@@ -29,13 +29,13 @@ test('.parse', function(t) {
   t.end()
 })
 
-parsers.forEach(function(name) {
+parsers.forEach(function (name) {
   var tree = unified()
     .use(require('./packages/retext-' + name))
     .parse('Alfred')
 
-  test('retext-' + name, function(t) {
-    t.doesNotThrow(function() {
+  test('retext-' + name, function (t) {
+    t.doesNotThrow(function () {
       nlcst(tree)
     }, 'should parse to valid nlcst')
 
@@ -53,9 +53,9 @@ parsers.forEach(function(name) {
   })
 })
 
-test('.stringify', function(t) {
+test('.stringify', function (t) {
   t.throws(
-    function() {
+    function () {
       retext().stringify(false)
     },
     /false/,
@@ -63,7 +63,7 @@ test('.stringify', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       retext().stringify({})
     },
     /Expected node, got `\[object Object]`/,
@@ -71,7 +71,7 @@ test('.stringify', function(t) {
   )
 
   t.throws(
-    function() {
+    function () {
       retext().stringify({type: 'unicorn'})
     },
     /Cannot read property 'length' of undefined/,

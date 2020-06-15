@@ -5,14 +5,14 @@
 **retext** is a natural language processor powered by plugins part of the
 [unified][] [collective][].
 
-## Table of Contents
+## Contents
 
 *   [List of plugins](#list-of-plugins)
 *   [List of utilities](#list-of-utilities)
 *   [Using plugins](#using-plugins)
 *   [Creating plugins](#creating-plugins)
 
-## List of Plugins
+## List of plugins
 
 See [awesome retext][awesome] for the most awesome projects in the ecosystem.
 More plugins can be found on GitHub tagged with the
@@ -78,7 +78,7 @@ See [Creating plugins][create] below.
 *   [`retext-quotes`](https://github.com/retextjs/retext-quotes)
     — check quote and apostrophe usage
 
-## List of Utilities
+## List of utilities
 
 See [**nlcst**][nlcst-util] for a list of utilities for working with the syntax
 tree.

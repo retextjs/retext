@@ -8,7 +8,7 @@ If you get stuck, [issues][] and [spectrum][] are good places to get help.
 
 retext is built on [unified][], make sure to read it and its [website][] too.
 
-## Table of Contents
+## Contents
 
 *   [Introduction](#introduction)
 *   [Programmatic usage](#programmatic-usage)

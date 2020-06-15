@@ -1,3 +1,5 @@
 coverage
 retext.js
 retext.min.js
+*.json
+*.md
