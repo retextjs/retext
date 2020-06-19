@@ -127,11 +127,11 @@ abide by its terms.
 
 [health]: https://github.com/retextjs/.github
 
-[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/retextjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/retextjs/.github/blob/master/support.md
+[support]: https://github.com/retextjs/.github/blob/main/support.md
 
-[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
 
 [license]: license
 
@@ -147,21 +147,21 @@ abide by its terms.
 
 [twitter]: https://twitter.com/unifiedjs
 
-[english]: https://github.com/retextjs/retext/tree/master/packages/retext-english
+[english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
 
-[dutch]: https://github.com/retextjs/retext/tree/master/packages/retext-dutch
+[dutch]: https://github.com/retextjs/retext/tree/main/packages/retext-dutch
 
-[latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
+[latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
 
-[stringify]: https://github.com/retextjs/retext/tree/master/packages/retext-stringify
+[stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
 
-[api]: https://github.com/retextjs/retext/tree/master/packages/retext
+[api]: https://github.com/retextjs/retext/tree/main/packages/retext
 
 [ideas]: https://github.com/retextjs/ideas
 
 [awesome]: https://github.com/retextjs/awesome-retext
 
-[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
 
 [spell]: https://github.com/retextjs/retext-spell
 

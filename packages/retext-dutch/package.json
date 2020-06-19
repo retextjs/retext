@@ -18,7 +18,7 @@
     "parse"
   ],
   "homepage": "https://github.com/retextjs/retext",
-  "repository": "https://github.com/retextjs/retext/tree/master/packages/retext-dutch",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-dutch",
   "bugs": "https://github.com/retextjs/retext/issues",
   "funding": {
     "type": "opencollective",

@@ -109,7 +109,7 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/retextjs/retext/master.svg
+[build-badge]: https://img.shields.io/travis/retextjs/retext/main.svg
 
 [build]: https://travis-ci.org/retextjs/retext
 
@@ -137,17 +137,17 @@ abide by its terms.
 
 [health]: https://github.com/retextjs/.github
 
-[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/retextjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/retextjs/.github/blob/master/support.md
+[support]: https://github.com/retextjs/.github/blob/main/support.md
 
-[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
 
 [ideas]: https://github.com/retextjs/ideas
 
 [awesome]: https://github.com/retextjs/awesome-retext
 
-[license]: https://github.com/retextjs/retext/blob/master/license
+[license]: https://github.com/retextjs/retext/blob/main/license
 
 [author]: https://wooorm.com
 

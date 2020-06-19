@@ -67,14 +67,14 @@ Hey guys, utilize a shorter word.
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[api]: https://github.com/retextjs/retext/tree/master/packages/retext
+[api]: https://github.com/retextjs/retext/tree/main/packages/retext
 
-[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
 
 [unified]: https://github.com/unifiedjs/unified
 
 [website]: https://unifiedjs.com
 
-[latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
+[latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
 
-[stringify]: https://github.com/retextjs/retext/tree/master/packages/retext-stringify
+[stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify

@@ -29,9 +29,9 @@ See [Creating plugins][create] below.
     — check apostrophe use in contractions
 *   [`retext-diacritics`](https://github.com/retextjs/retext-diacritics)
     — check for proper use of diacritics
-*   [`retext-dutch`](https://github.com/retextjs/retext/tree/master/packages/retext-dutch)
+*   [`retext-dutch`](https://github.com/retextjs/retext/tree/main/packages/retext-dutch)
     — dutch language support
-*   [`retext-english`](https://github.com/retextjs/retext/tree/master/packages/retext-english)
+*   [`retext-english`](https://github.com/retextjs/retext/tree/main/packages/retext-english)
     — English language support
 *   [`retext-emoji`](https://github.com/retextjs/retext-emoji)
     — encode or decode [gemoji](https://github.com/github/gemoji)
@@ -43,7 +43,7 @@ See [Creating plugins][create] below.
     — check for weak and mitigating wording
 *   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
     — extract keywords and keyphrases
-*   [`retext-latin`](https://github.com/retextjs/retext/tree/master/packages/retext-latin)
+*   [`retext-latin`](https://github.com/retextjs/retext/tree/main/packages/retext-latin)
     — Latin-script language support
 *   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
     — check words for overuse
@@ -67,7 +67,7 @@ See [Creating plugins][create] below.
     — implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
 *   [`retext-spell`](https://github.com/retextjs/retext-spell)
     — check spelling
-*   [`retext-stringify`](https://github.com/retextjs/retext/tree/master/packages/retext-stringify)
+*   [`retext-stringify`](https://github.com/retextjs/retext/tree/main/packages/retext-stringify)
     — serialize back to text
 *   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
     — classify `@mentions` as syntax

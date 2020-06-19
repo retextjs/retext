@@ -17,7 +17,7 @@
     "process"
   ],
   "homepage": "https://github.com/retextjs/retext",
-  "repository": "https://github.com/retextjs/retext/tree/master/packages/retext",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext",
   "bugs": "https://github.com/retextjs/retext/issues",
   "funding": {
     "type": "opencollective",

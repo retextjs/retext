@@ -148,17 +148,17 @@ abide by its terms.
 
 [health]: https://github.com/retextjs/.github
 
-[contributing]: https://github.com/retextjs/.github/blob/master/contributing.md
+[contributing]: https://github.com/retextjs/.github/blob/main/contributing.md
 
-[support]: https://github.com/retextjs/.github/blob/master/support.md
+[support]: https://github.com/retextjs/.github/blob/main/support.md
 
-[coc]: https://github.com/retextjs/.github/blob/master/code-of-conduct.md
+[coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
 
 [ideas]: https://github.com/retextjs/ideas
 
 [awesome]: https://github.com/retextjs/awesome-retext
 
-[license]: https://github.com/retextjs/Lobby/blob/master/license
+[license]: https://github.com/retextjs/retext/blob/main/license
 
 [author]: https://wooorm.com
 
@@ -168,11 +168,11 @@ abide by its terms.
 
 [unified-usage]: https://github.com/unifiedjs/unified#usage
 
-[latin]: https://github.com/retextjs/retext/tree/master/packages/retext-latin
+[latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
 
-[stringify]: https://github.com/retextjs/retext/tree/master/packages/retext-stringify
+[stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
 
-[plugins]: https://github.com/retextjs/retext/tree/master/doc/plugins.md
+[plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
 
 [retext]: https://github.com/retextjs/retext
 
