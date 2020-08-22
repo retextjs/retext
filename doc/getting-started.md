@@ -4,7 +4,7 @@
 
 **retext** transforms natural language.
 It’s an ecosystem of [plugins][].
-If you get stuck, [issues][] and [spectrum][] are good places to get help.
+If you get stuck, [issues][] and [discussions][] are good places to get help.
 
 retext is built on [unified][], make sure to read it and its [website][] too.
 
@@ -63,7 +63,7 @@ Hey guys, utilize a shorter word.
 
 [issues]: https://github.com/retextjs/retext/issues
 
-[spectrum]: https://spectrum.chat/unified/retext
+[discussions]: https://github.com/retextjs/retext/discussions
 
 [npm]: https://docs.npmjs.com/cli/install
 

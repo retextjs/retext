@@ -94,14 +94,14 @@ To use a plugin invoke the [`use()`][unified-use] function.
 ## Creating plugins
 
 Have an idea for a plugin?
-Post it on [spectrum][] or in [ideas][] and make it happen!
+Post it in [ideas][] and make it happen!
 
 To create a plugin, first read up on the [concept of plugins][unified-plugins].
 Then, read the [guide on “Creating a plugin with unified”][guide].
 Finally, take one of existing plugins, which looks similar to what you’re about
 to make, and work from there.
-If you get stuck, [spectrum][], [ideas][], and [issues][] are good places to get
-help.
+If you get stuck, [ideas][], [discussions][], and [issues][] are good places to
+get help.
 
 You should pick a name prefixed by `'retext-'`, such as `retext-spell`.
 
@@ -126,7 +126,7 @@ use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 [issues]: https://github.com/retextjs/retext/issues
 
-[spectrum]: https://spectrum.chat/unified/retext
+[discussions]: https://github.com/retextjs/retext/discussions
 
 [guide]: https://unifiedjs.com/create-a-plugin.html
 
