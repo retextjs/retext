@@ -19,10 +19,10 @@
     "remark-cli": "^8.0.0",
     "remark-preset-wooorm": "^7.0.0",
     "tape": "^5.0.0",
-    "tinyify": "^2.0.0",
+    "tinyify": "^3.0.0",
     "unist-builder": "^2.0.0",
-    "unist-util-remove-position": "^2.0.0",
-    "xo": "^0.32.0"
+    "unist-util-remove-position": "^3.0.0",
+    "xo": "^0.33.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
