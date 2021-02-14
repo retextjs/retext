@@ -112,7 +112,7 @@ use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 <!--Definitions:-->
 
-[logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
+[logo]: https://raw.githubusercontent.com/retextjs/retext/3420f05/logo.svg?sanitize=true
 
 [nlcst-util]: https://github.com/syntax-tree/nlcst#list-of-utilities
 

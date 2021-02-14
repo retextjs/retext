@@ -99,7 +99,7 @@ abide by its terms.
 
 <!-- Definitions -->
 
-[logo]: https://raw.githubusercontent.com/retextjs/retext/976354b/logo.svg?sanitize=true
+[logo]: https://raw.githubusercontent.com/retextjs/retext/3420f05/logo.svg?sanitize=true
 
 [build-badge]: https://img.shields.io/travis/retextjs/retext.svg
 
