@@ -4,8 +4,8 @@ var test = require('tape')
 var clean = require('unist-util-remove-position')
 var nlcst = require('nlcst-test')
 var u = require('unist-builder')
-var unified = require('./packages/retext/node_modules/unified')
-var retext = require('./packages/retext')
+var unified = require('./packages/retext/node_modules/unified/index.js')
+var retext = require('./packages/retext/index.js')
 
 var parsers = ['latin', 'english', 'dutch']
 
@@ -29,7 +29,12 @@ test('.parse', function (t) {
   t.end()
 })
 
-parsers.forEach(function (name) {
+let index = -1
+while (++index < parsers.length) {
+  eachParser(parsers[index])
+}
+
+function eachParser(name) {
   var tree = unified()
     .use(require('./packages/retext-' + name))
     .parse('Alfred')
@@ -51,7 +56,7 @@ parsers.forEach(function (name) {
 
     t.end()
   })
-})
+}
 
 test('.stringify', function (t) {
   t.throws(
