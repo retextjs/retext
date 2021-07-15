@@ -8,6 +8,14 @@
     "type": "opencollective",
     "url": "https://opencollective.com/unified"
   },
+  "type": "module",
+  "dependencies": {
+    "retext": "file:packages/retext",
+    "retext-dutch": "file:packages/retext-dutch",
+    "retext-english": "file:packages/retext-english",
+    "retext-latin": "file:packages/retext-latin",
+    "retext-stringify": "file:packages/retext-stringify"
+  },
   "devDependencies": {
     "bail": "^1.0.0",
     "c8": "^7.0.0",
@@ -24,7 +32,8 @@
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
-    "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
+    "todo": "remark -qfo && ",
+    "format": "prettier . -w --loglevel warn && xo --fix",
     "test-api": "node --conditions development test.js",
     "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node --conditions development test.js",
     "test": "npm run format && npm run test-coverage"

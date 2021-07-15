@@ -1,11 +1,8 @@
-'use strict'
+import unherit from 'unherit'
+import English from 'parse-english'
 
-var unherit = require('unherit')
-var English = require('parse-english')
+export {English as Parser}
 
-module.exports = parse
-parse.Parser = English
-
-function parse() {
+export default function retextEnglish() {
   this.Parser = unherit(English)
 }

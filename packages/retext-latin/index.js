@@ -1,11 +1,8 @@
-'use strict'
+import unherit from 'unherit'
+import Latin from 'parse-latin'
 
-var unherit = require('unherit')
-var Latin = require('parse-latin')
+export {Latin as Parser}
 
-module.exports = parse
-parse.Parser = Latin
-
-function parse() {
+export default function retextLatin() {
   this.Parser = unherit(Latin)
 }

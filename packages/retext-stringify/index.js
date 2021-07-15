@@ -1,13 +1,9 @@
-'use strict'
+import toString from 'nlcst-to-string'
 
-var toString = require('nlcst-to-string')
-
-module.exports = stringify
-
-function stringify() {
+export default function retextStringify() {
   this.Compiler = compiler
 }
 
-function compiler(tree) {
+export function compiler(tree) {
   return toString(tree)
 }

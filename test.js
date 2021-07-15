@@ -1,11 +1,9 @@
-'use strict'
-
-var test = require('tape')
-var clean = require('unist-util-remove-position')
-var nlcst = require('nlcst-test')
-var u = require('unist-builder')
-var unified = require('./packages/retext/node_modules/unified/index.js')
-var retext = require('./packages/retext/index.js')
+import test from 'tape'
+import clean from 'unist-util-remove-position'
+import nlcst from 'nlcst-test'
+import u from 'unist-builder'
+import unified from './packages/retext/node_modules/unified/index.js'
+import {retext} from './packages/retext/index.js'
 
 var parsers = ['latin', 'english', 'dutch']
 
@@ -35,11 +33,13 @@ while (++index < parsers.length) {
 }
 
 function eachParser(name) {
-  var tree = unified()
-    .use(require('./packages/retext-' + name))
-    .parse('Alfred')
+  test('retext-' + name, async function (t) {
+    t.plan(2)
 
-  test('retext-' + name, function (t) {
+    const plugin = (await import('retext-' + name)).default
+
+    var tree = unified().use(plugin).parse('Alfred')
+
     t.doesNotThrow(function () {
       nlcst(tree)
     }, 'should parse to valid nlcst')
@@ -53,8 +53,6 @@ function eachParser(name) {
       ]),
       'should give the corrent tree'
     )
-
-    t.end()
   })
 }
 
