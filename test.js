@@ -5,12 +5,12 @@ import u from 'unist-builder'
 import unified from './packages/retext/node_modules/unified/index.js'
 import {retext} from './packages/retext/index.js'
 
-var parsers = ['latin', 'english', 'dutch']
+const parsers = ['latin', 'english', 'dutch']
 
-test('.parse', function (t) {
-  var tree = retext().parse('Alfred')
+test('.parse', (t) => {
+  const tree = retext().parse('Alfred')
 
-  t.doesNotThrow(function () {
+  t.doesNotThrow(() => {
     nlcst(tree)
   }, 'should parse to valid nlcst')
 
@@ -33,14 +33,14 @@ while (++index < parsers.length) {
 }
 
 function eachParser(name) {
-  test('retext-' + name, async function (t) {
+  test('retext-' + name, async (t) => {
     t.plan(2)
 
     const plugin = (await import('retext-' + name)).default
 
-    var tree = unified().use(plugin).parse('Alfred')
+    const tree = unified().use(plugin).parse('Alfred')
 
-    t.doesNotThrow(function () {
+    t.doesNotThrow(() => {
       nlcst(tree)
     }, 'should parse to valid nlcst')
 
@@ -56,9 +56,9 @@ function eachParser(name) {
   })
 }
 
-test('.stringify', function (t) {
+test('.stringify', (t) => {
   t.throws(
-    function () {
+    () => {
       retext().stringify(false)
     },
     /false/,
@@ -66,7 +66,7 @@ test('.stringify', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       retext().stringify({})
     },
     /Expected node, got `\[object Object]`/,
@@ -74,7 +74,7 @@ test('.stringify', function (t) {
   )
 
   t.throws(
-    function () {
+    () => {
       retext().stringify({type: 'unicorn'})
     },
     /Cannot read property 'length' of undefined/,

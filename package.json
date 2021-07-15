@@ -28,7 +28,7 @@
     "tape": "^5.0.0",
     "unist-builder": "^2.0.0",
     "unist-util-remove-position": "^3.0.0",
-    "xo": "^0.38.0"
+    "xo": "^0.39.0"
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
@@ -47,11 +47,7 @@
     "trailingComma": "none"
   },
   "xo": {
-    "prettier": true,
-    "esnext": false,
-    "rules": {
-      "import/no-dynamic-require": "off"
-    }
+    "prettier": true
   },
   "remarkConfig": {
     "plugins": [
