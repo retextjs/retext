@@ -17,17 +17,16 @@
     "retext-stringify": "file:packages/retext-stringify"
   },
   "devDependencies": {
-    "bail": "^1.0.0",
     "c8": "^7.0.0",
     "chalk": "^4.0.0",
     "lerna": "^4.0.0",
-    "nlcst-test": "^2.0.0",
+    "nlcst-test": "^3.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^9.0.0",
     "remark-preset-wooorm": "^8.0.0",
     "tape": "^5.0.0",
-    "unist-builder": "^2.0.0",
-    "unist-util-remove-position": "^3.0.0",
+    "unist-builder": "^3.0.0",
+    "unist-util-remove-position": "^4.0.0",
     "xo": "^0.39.0"
   },
   "scripts": {

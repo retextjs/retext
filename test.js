@@ -1,7 +1,7 @@
 import test from 'tape'
-import clean from 'unist-util-remove-position'
-import nlcst from 'nlcst-test'
-import u from 'unist-builder'
+import {removePosition} from 'unist-util-remove-position'
+import {assert} from 'nlcst-test'
+import {u} from 'unist-builder'
 import unified from './packages/retext/node_modules/unified/index.js'
 import {retext} from './packages/retext/index.js'
 
@@ -11,11 +11,11 @@ test('.parse', (t) => {
   const tree = retext().parse('Alfred')
 
   t.doesNotThrow(() => {
-    nlcst(tree)
+    assert(tree)
   }, 'should parse to valid nlcst')
 
   t.deepEqual(
-    clean(tree, true),
+    removePosition(tree, true),
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
@@ -41,11 +41,11 @@ function eachParser(name) {
     const tree = unified().use(plugin).parse('Alfred')
 
     t.doesNotThrow(() => {
-      nlcst(tree)
+      assert(tree)
     }, 'should parse to valid nlcst')
 
     t.deepEqual(
-      clean(tree, true),
+      removePosition(tree, true),
       u('RootNode', [
         u('ParagraphNode', [
           u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
