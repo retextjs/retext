@@ -1,4 +1,4 @@
-import unified from 'unified'
+import {unified} from 'unified'
 import retextLatin from 'retext-latin'
 import retextStringify from 'retext-stringify'
 

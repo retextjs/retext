@@ -1,8 +1,8 @@
-import unherit from 'unherit'
-import Latin from 'parse-latin'
+import {unherit} from 'unherit'
+import {ParseLatin} from 'parse-latin'
 
-export {Latin as Parser}
+export {ParseLatin as Parser}
 
 export default function retextLatin() {
-  this.Parser = unherit(Latin)
+  this.Parser = unherit(ParseLatin)
 }

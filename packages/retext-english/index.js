@@ -1,8 +1,8 @@
-import unherit from 'unherit'
-import English from 'parse-english'
+import {unherit} from 'unherit'
+import {ParseEnglish} from 'parse-english'
 
-export {English as Parser}
+export {ParseEnglish as Parser}
 
 export default function retextEnglish() {
-  this.Parser = unherit(English)
+  this.Parser = unherit(ParseEnglish)
 }

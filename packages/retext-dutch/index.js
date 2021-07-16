@@ -1,8 +1,8 @@
-import unherit from 'unherit'
-import Dutch from 'parse-dutch'
+import {unherit} from 'unherit'
+import {ParseDutch} from 'parse-dutch'
 
-export {Dutch as Parser}
+export {ParseDutch as Parser}
 
 export default function retextDutch() {
-  this.Parser = unherit(Dutch)
+  this.Parser = unherit(ParseDutch)
 }

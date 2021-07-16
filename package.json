@@ -9,13 +9,6 @@
     "url": "https://opencollective.com/unified"
   },
   "type": "module",
-  "dependencies": {
-    "retext": "file:packages/retext",
-    "retext-dutch": "file:packages/retext-dutch",
-    "retext-english": "file:packages/retext-english",
-    "retext-latin": "file:packages/retext-latin",
-    "retext-stringify": "file:packages/retext-stringify"
-  },
   "devDependencies": {
     "c8": "^7.0.0",
     "chalk": "^4.0.0",

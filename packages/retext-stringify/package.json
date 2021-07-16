@@ -37,6 +37,6 @@
     "index.js"
   ],
   "dependencies": {
-    "nlcst-to-string": "^2.0.0"
+    "nlcst-to-string": "^3.0.0"
   }
 }
