@@ -33,10 +33,24 @@
   "sideEffects": false,
   "type": "module",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
+    "index.d.ts",
     "index.js"
   ],
   "dependencies": {
-    "nlcst-to-string": "^3.0.0"
+    "@types/unist": "^2.0.0",
+    "nlcst-to-string": "^3.0.0",
+    "unified": "^10.0.0"
+  },
+  "scripts": {
+    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
+  },
+  "xo": false,
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "ignoreCatch": true
   }
 }

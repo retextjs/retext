@@ -32,12 +32,16 @@ while (++index < parsers.length) {
   eachParser(parsers[index])
 }
 
+/** @param {string} name */
 function eachParser(name) {
   test('retext-' + name, async (t) => {
     t.plan(2)
 
-    const plugin = (await import('./packages/retext-' + name + '/index.js'))
-      .default
+    const fp = './packages/retext-' + name + '/index.js'
+
+    /** @type {import('./packages/retext/node_modules/unified').Plugin<[]>} */
+    // type-coverage:ignore-next-line
+    const plugin = (await import(fp)).default
 
     const tree = unified().use(plugin).parse('Alfred')
 
@@ -60,6 +64,7 @@ function eachParser(name) {
 test('.stringify', (t) => {
   t.throws(
     () => {
+      // @ts-expect-error: runtime.
       retext().stringify(false)
     },
     /false/,
@@ -68,6 +73,7 @@ test('.stringify', (t) => {
 
   t.throws(
     () => {
+      // @ts-expect-error: runtime.
       retext().stringify({})
     },
     /Expected node, got `\[object Object]`/,
@@ -76,6 +82,7 @@ test('.stringify', (t) => {
 
   t.throws(
     () => {
+      // @ts-expect-error: runtime.
       retext().stringify()
     },
     /Expected node, got `undefined`/,

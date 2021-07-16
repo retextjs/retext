@@ -1,8 +1,16 @@
+/**
+ * @typedef {import('unified').Plugin<[]>} Plugin
+ */
+
 import {unherit} from 'unherit'
-import {ParseDutch} from 'parse-dutch'
+// @ts-expect-error: untyped.
+import {ParseDutch as Parser} from 'parse-dutch'
 
-export {ParseDutch as Parser}
+// Untyped.
+// type-coverage:ignore-next-line
+export {Parser}
 
+/** @type {Plugin} */
 export default function retextDutch() {
-  this.Parser = unherit(ParseDutch)
+  Object.assign(this, {Parser: unherit(Parser)})
 }

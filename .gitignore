@@ -1,5 +1,7 @@
+node_modules/
+coverage/
+packages/*/*.d.ts
 .DS_Store
 *.log
-node_modules
-coverage
+*.d.ts
 yarn.lock
