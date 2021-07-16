@@ -1,6 +1,6 @@
 {
   "name": "retext",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "natural language processor powered by plugins part of the unified collective",
   "license": "MIT",
   "keywords": [
@@ -36,8 +36,8 @@
     "index.js"
   ],
   "dependencies": {
-    "retext-latin": "^2.0.0",
-    "retext-stringify": "^2.0.0",
+    "retext-latin": "^3.0.0",
+    "retext-stringify": "^3.0.0",
     "unified": "^10.0.0"
   },
   "scripts": {

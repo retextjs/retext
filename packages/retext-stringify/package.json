@@ -1,6 +1,6 @@
 {
   "name": "retext-stringify",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "description": "retext plugin to serialize prose",
   "license": "MIT",
   "keywords": [

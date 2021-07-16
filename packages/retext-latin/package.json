@@ -1,6 +1,6 @@
 {
   "name": "retext-latin",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "description": "retext plugin to parse Latin-script prose",
   "license": "MIT",
   "keywords": [
