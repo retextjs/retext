@@ -33,17 +33,18 @@ npm install retext retext-equality retext-simplify
 `index.js` contains:
 
 ```js
-var retext = require('retext')
-var simplify = require('retext-simplify')
-var equality = require('retext-equality')
-var report = require('vfile-reporter')
+import {retext} from 'retext'
+import {reporter} from 'vfile-reporter'
+import retextSimplify from 'retext-simplify'
+import retextEquality from 'retext-equality'
 
 retext()
-  .use(simplify)
-  .use(equality)
-  .process('Hey guys, utilize a shorter word.', function(err, file) {
+  .use(retextSimplify)
+  .use(retextEquality)
+  .process('Hey guys, utilize a shorter word.')
+  .then((file) => {
     console.log(String(file))
-    console.error(report(err || file))
+    console.error(reporter(file))
   })
 ```
 

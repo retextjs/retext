@@ -61,6 +61,9 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -70,23 +73,26 @@ npm install retext-stringify
 ## Use
 
 ```js
-var unified = require('unified')
-var stream = require('unified-stream')
-var english = require('retext-english')
-var stringify = require('retext-stringify')
-var emoji = require('retext-emoji')
+import {unified} from 'unified'
+import {stream} from 'unified-stream'
+import retextEnglish from 'retext-english'
+import retextStringify from 'retext-stringify'
+import retextEmoji from 'retext-emoji'
 
-var processor = unified()
-  .use(english)
-  .use(emoji, {convert: 'encode'})
-  .use(stringify)
+const processor = unified()
+  .use(retextEnglish)
+  .use(retextEmoji, {convert: 'encode'})
+  .use(retextStringify)
 
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
 ## API
 
-### `processor.use(stringify)`
+This package exports no identifiers.
+`retextStringify` is the default export.
+
+### `unified().use(retextStringify)`
 
 Serialize [**nlcst**][nlcst] syntax trees.
 There is no configuration.

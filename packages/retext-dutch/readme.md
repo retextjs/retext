@@ -61,6 +61,9 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -70,28 +73,31 @@ npm install retext-dutch
 ## Use
 
 ```js
-var unified = require('unified')
-var stream = require('unified-stream')
-var dutch = require('retext-dutch')
-var stringify = require('retext-stringify')
-var emoji = require('retext-emoji')
+import {unified} from 'unified'
+import {stream} from 'unified-stream'
+import retextDutch from 'retext-dutch'
+import retextStringify from 'retext-stringify'
+import retextEmoji from 'retext-emoji'
 
-var processor = unified()
-  .use(dutch)
-  .use(emoji, {convert: 'encode'})
-  .use(stringify)
+const processor = unified()
+  .use(retextDutch)
+  .use(retextEmoji, {convert: 'encode'})
+  .use(retextStringify)
 
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
 ## API
 
-### `processor.use(dutch)`
+This package exports the following identifiers: `Parser`.
+`retextDutch` is the default export.
+
+### `unified().use(retextDutch)`
 
 Parse Dutch natural language.
 There is no configuration for the parser.
 
-### `dutch.Parser`
+### `Parser`
 
 Access to the [parser][] ([`parse-dutch`][parse-dutch]).
 

@@ -61,6 +61,9 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -70,28 +73,31 @@ npm install retext-latin
 ## Use
 
 ```js
-var unified = require('unified')
-var stream = require('unified-stream')
-var latin = require('retext-latin')
-var stringify = require('retext-stringify')
-var emoji = require('retext-emoji')
+import {unified} from 'unified'
+import {stream} from 'unified-stream'
+import retextLatin from 'retext-latin'
+import retextStringify from 'retext-stringify'
+import retextEmoji from 'retext-emoji'
 
-var processor = unified()
-  .use(latin)
-  .use(emoji, {convert: 'encode'})
-  .use(stringify)
+const processor = unified()
+  .use(retextLatin)
+  .use(retextEmoji, {convert: 'encode'})
+  .use(retextStringify)
 
 process.stdin.pipe(stream(processor)).pipe(process.stdout)
 ```
 
 ## API
 
-### `processor.use(latin)`
+This package exports the following identifiers: `Parser`.
+`retextLatin` is the default export.
+
+### `unified().use(retextLatin)`
 
 Parse Latin-script natural language.
 There is no configuration for the parser.
 
-### `latin.Parser`
+### `Parser`
 
 Access to the [parser][] ([`parse-latin`][parse-latin]).
 

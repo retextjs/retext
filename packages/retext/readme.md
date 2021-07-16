@@ -79,17 +79,18 @@ npm install retext
 ## Use
 
 ```js
-var retext = require('retext')
-var profanities = require('retext-profanities')
-var emoji = require('retext-emoji')
-var report = require('vfile-reporter')
+import {retext} from 'retext'
+import retextProfanities from 'retext-profanities'
+import retextEmoji from 'retext-emoji'
+import {reporter} from 'vfile-reporter'
 
 retext()
-  .use(profanities)
-  .use(emoji, {convert: 'encode'})
-  .process('He’s set on beating your butt for sheriff! :cop:', function(err, file) {
+  .use(retextProfanities)
+  .use(retextEmoji, {convert: 'encode'})
+  .process('He’s set on beating your butt for sheriff! :cop:')
+  .then((file) => {
     console.log(String(file))
-    console.error(report(err || file))
+    console.error(reporter(file))
   })
 ```
 
