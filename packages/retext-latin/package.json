@@ -33,16 +33,18 @@
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
+    "lib/",
     "index.d.ts",
     "index.js"
   ],
   "dependencies": {
+    "@types/nlcst": "^1.0.0",
     "parse-latin": "^5.0.0",
     "unherit": "^3.0.0",
     "unified": "^10.0.0"
   },
   "scripts": {
-    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
+    "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
   },
   "xo": false,
   "typeCoverage": {

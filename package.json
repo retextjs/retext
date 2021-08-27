@@ -10,12 +10,12 @@
   },
   "type": "module",
   "workspaces": [
-     "packages/retext-latin",
-     "packages/retext-english",
-     "packages/retext-dutch",
-     "packages/retext-stringify",
-     "packages/retext"
-   ],
+    "packages/retext-latin",
+    "packages/retext-english",
+    "packages/retext-dutch",
+    "packages/retext-stringify",
+    "packages/retext"
+  ],
   "devDependencies": {
     "@types/tape": "^4.0.0",
     "c8": "^7.0.0",
@@ -33,7 +33,6 @@
     "xo": "^0.44.0"
   },
   "scripts": {
-    "postinstall": "lerna bootstrap --no-ci",
     "build": "npm run build --workspaces && rimraf \"*.d.ts\" && tsc && type-coverage",
     "todo": "remark -qfo && ",
     "format": "prettier . -w --loglevel warn && xo --fix",

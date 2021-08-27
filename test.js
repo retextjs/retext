@@ -1,9 +1,15 @@
+/**
+ * @typedef {import('nlcst').Root} Root
+ * @typedef {import('nlcst').Content} Content
+ * @typedef {Root|Content} Node
+ */
+
 import test from 'tape'
 import {removePosition} from 'unist-util-remove-position'
 import {assert} from 'nlcst-test'
 import {u} from 'unist-builder'
-import {unified} from './packages/retext/node_modules/unified/index.js'
-import {retext} from './packages/retext/index.js'
+import {unified} from 'unified'
+import {retext} from 'retext'
 
 const parsers = ['latin', 'english', 'dutch']
 
@@ -39,7 +45,7 @@ function eachParser(name) {
 
     const fp = './packages/retext-' + name + '/index.js'
 
-    /** @type {import('./packages/retext/node_modules/unified').Plugin<[]>} */
+    /** @type {import('unified').Plugin<void[], string, Root>} */
     // type-coverage:ignore-next-line
     const plugin = (await import(fp)).default
 

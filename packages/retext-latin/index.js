@@ -1,16 +1,4 @@
-/**
- * @typedef {import('unified').Plugin<[]>} Plugin
- */
+import retextLatin, {Parser} from './lib/index.js'
 
-import {unherit} from 'unherit'
-// @ts-expect-error: untyped.
-import {ParseLatin as Parser} from 'parse-latin'
-
-// Untyped.
-// type-coverage:ignore-next-line
 export {Parser}
-
-/** @type {Plugin} */
-export default function retextLatin() {
-  Object.assign(this, {Parser: unherit(Parser)})
-}
+export default retextLatin
