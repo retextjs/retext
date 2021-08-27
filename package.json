@@ -9,11 +9,17 @@
     "url": "https://opencollective.com/unified"
   },
   "type": "module",
+  "workspaces": [
+     "packages/retext-latin",
+     "packages/retext-english",
+     "packages/retext-dutch",
+     "packages/retext-stringify",
+     "packages/retext"
+   ],
   "devDependencies": {
     "@types/tape": "^4.0.0",
     "c8": "^7.0.0",
     "chalk": "^4.0.0",
-    "lerna": "^4.0.0",
     "nlcst-test": "^3.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^10.0.0",
@@ -28,9 +34,7 @@
   },
   "scripts": {
     "postinstall": "lerna bootstrap --no-ci",
-    "build-workspace": "lerna run build",
-    "build-monorepo": "rimraf \"*.d.ts\" && tsc && type-coverage",
-    "build": "npm run build-workspace && npm run build-monorepo",
+    "build": "npm run build --workspaces && rimraf \"*.d.ts\" && tsc && type-coverage",
     "todo": "remark -qfo && ",
     "format": "prettier . -w --loglevel warn && xo --fix",
     "test-api": "node --conditions development test.js",
