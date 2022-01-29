@@ -1,3 +1,1 @@
-import retextStringify from './lib/index.js'
-
-export default retextStringify
+export {default} from './lib/index.js'

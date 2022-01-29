@@ -1,4 +1,1 @@
-import retextDutch, {Parser} from './lib/index.js'
-
-export {Parser}
-export default retextDutch
+export {default, Parser} from './lib/index.js'

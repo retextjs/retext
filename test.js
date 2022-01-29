@@ -45,9 +45,11 @@ function eachParser(name) {
 
     const fp = './packages/retext-' + name + '/index.js'
 
-    /** @type {import('unified').Plugin<void[], string, Root>} */
+    /** @type {{default: import('unified').Plugin<void[], string, Root>}} */
     // type-coverage:ignore-next-line
-    const plugin = (await import(fp)).default
+    const mod = await import(fp)
+
+    const plugin = mod.default
 
     const tree = unified().use(plugin).parse('Alfred')
 

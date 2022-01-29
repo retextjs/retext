@@ -1,4 +1,1 @@
-import retextEnglish, {Parser} from './lib/index.js'
-
-export {Parser}
-export default retextEnglish
+export {default, Parser} from './lib/index.js'

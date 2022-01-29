@@ -7,9 +7,11 @@ import {unherit} from 'unherit'
 import {ParseLatin} from 'parse-latin'
 
 /** @type {import('unified').ParserClass<Root>} */
-export const Parser = ParseLatin
 
 /** @type {import('unified').Plugin<void[], string, Root>} */
 export default function retextLatin() {
   Object.assign(this, {Parser: unherit(ParseLatin)})
 }
+
+// @ts-expect-error: untyped.
+export {ParseLatin as Parser} from 'parse-latin'

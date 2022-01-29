@@ -7,9 +7,11 @@ import {unherit} from 'unherit'
 import {ParseEnglish} from 'parse-english'
 
 /** @type {import('unified').ParserClass<Root>} */
-export const Parser = ParseEnglish
 
 /** @type {import('unified').Plugin<void[], string, Root>} */
 export default function retextEnglish() {
   Object.assign(this, {Parser: unherit(ParseEnglish)})
 }
+
+// @ts-expect-error: untyped.
+export {ParseEnglish as Parser} from 'parse-english'

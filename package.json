@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/tape": "^4.0.0",
     "c8": "^7.0.0",
-    "chalk": "^4.0.0",
+    "chalk": "^5.0.0",
     "nlcst-test": "^3.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^10.0.0",
@@ -30,7 +30,7 @@
     "typescript": "^4.0.0",
     "unist-builder": "^3.0.0",
     "unist-util-remove-position": "^4.0.0",
-    "xo": "^0.44.0"
+    "xo": "^0.47.0"
   },
   "scripts": {
     "build": "npm run build --workspaces && rimraf \"*.d.ts\" && tsc && type-coverage",
@@ -49,7 +49,10 @@
     "trailingComma": "none"
   },
   "xo": {
-    "prettier": true
+    "prettier": true,
+    "rules": {
+      "@typescript-eslint/naming-convention": "off"
+    }
   },
   "remarkConfig": {
     "plugins": [
