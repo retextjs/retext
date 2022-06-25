@@ -8,7 +8,7 @@ import {ParseDutch} from 'parse-dutch'
 
 /** @type {import('unified').ParserClass<Root>} */
 
-/** @type {import('unified').Plugin<void[], string, Root>} */
+/** @type {import('unified').Plugin<[], string, Root>} */
 export default function retextDutch() {
   Object.assign(this, {Parser: unherit(ParseDutch)})
 }

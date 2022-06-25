@@ -4,7 +4,7 @@
 
 import {toString} from 'nlcst-to-string'
 
-/** @type {import('unified').Plugin<void[], Root, string>} */
+/** @type {import('unified').Plugin<[], Root, string>} */
 export default function retextStringify() {
   Object.assign(this, {Compiler})
 }

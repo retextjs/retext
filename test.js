@@ -45,7 +45,7 @@ function eachParser(name) {
 
     const fp = './packages/retext-' + name + '/index.js'
 
-    /** @type {{default: import('unified').Plugin<void[], string, Root>}} */
+    /** @type {{default: import('unified').Plugin<[], string, Root>}} */
     // type-coverage:ignore-next-line
     const mod = await import(fp)
 
