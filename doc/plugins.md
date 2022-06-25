@@ -2,8 +2,9 @@
 
 # Plugins
 
-**retext** is a natural language processor powered by plugins part of the
-[unified][] [collective][].
+**retext** is a tool that transforms natural language with plugins.
+See [the monorepo readme][retext] for info on what the retext ecosystem is.
+This page lists existing plugins.
 
 ## Contents
 
@@ -14,12 +15,12 @@
 
 ## List of plugins
 
-See [awesome retext][awesome] for the most awesome projects in the ecosystem.
+See [`awesome-retext`][awesome-retext] for the most awesome projects in the
+ecosystem.
 More plugins can be found on GitHub tagged with the
 [`retext-plugin` topic][topic].
 
-Have a good idea for a new plugin?
-See [Creating plugins][create] below.
+The list of plugins:
 
 *   [`retext-assuming`](https://github.com/davidhund/retext-assuming)
     — check for unhelpful phrases such as `just`, `simply`, `obviously`
@@ -80,39 +81,41 @@ See [Creating plugins][create] below.
 
 ## List of utilities
 
-See [**nlcst**][nlcst-util] for a list of utilities for working with the syntax
-tree.
-See [**unist**][unist-util] for other utilities which work with **nlcst** nodes,
-too.
-Finally, see [**vfile**][vfile-util] for a list of utilities working with
-virtual files.
+See [nlcst][nlcst-util] for a list of utilities that work with the syntax tree.
+See [unist][unist-util] for other utilities which work with nlcst and other
+syntax trees too.
+Finally, see [vfile][vfile-util] for a list of utilities working with virtual
+files.
 
 ## Using plugins
 
-To use a plugin invoke the [`use()`][unified-use] function.
+To use a plugin programmatically, call the [`use()`][unified-use] function.
 
 ## Creating plugins
-
-Have an idea for a plugin?
-Post it in [ideas][] and make it happen!
 
 To create a plugin, first read up on the [concept of plugins][unified-plugins].
 Then, read the [guide on “Creating a plugin with unified”][guide].
 Finally, take one of existing plugins, which looks similar to what you’re about
 to make, and work from there.
-If you get stuck, [ideas][], [discussions][], and [issues][] are good places to
-get help.
+If you get stuck, [discussions][] is a good place to get help.
 
-You should pick a name prefixed by `'retext-'`, such as `retext-spell`.
-
+You should pick a name prefixed by `'retext-'` (such as `retext-emoji`).
 **Do not use the `retext-` prefix** if the thing you create doesn’t work with
 `retext().use()`: it isn’t a “plugin” and will confuse users.
-If it works with nlcst, use `'nlcst-util-'`, if it works with any unist tree,
-use `unist-util-`, and if it works with virtual files, use `vfile-`.
+If it works with nlcst, use `'nlcst-'`, if it works with any unist tree, use
+`unist-util-`, and if it works with virtual files, use `vfile-`.
+
+Use default exports to expose plugins from your packages, add `retext-plugin`
+keywords in `package.json`, add a `retext-plugin` topic to your repo on GitHub,
+and create a pull request to add the plugin here on this page!
 
 <!--Definitions:-->
 
 [logo]: https://raw.githubusercontent.com/retextjs/retext/3420f05/logo.svg?sanitize=true
+
+[retext]: https://github.com/retextjs/retext
+
+[awesome-retext]: https://github.com/retextjs/awesome-retext
 
 [nlcst-util]: https://github.com/syntax-tree/nlcst#list-of-utilities
 
@@ -124,20 +127,8 @@ use `unist-util-`, and if it works with virtual files, use `vfile-`.
 
 [unified-plugins]: https://github.com/unifiedjs/unified#plugin
 
-[issues]: https://github.com/retextjs/retext/issues
-
 [discussions]: https://github.com/retextjs/retext/discussions
 
 [guide]: https://unifiedjs.com/learn/guide/create-a-plugin/
-
-[unified]: https://github.com/unifiedjs/unified
-
-[collective]: https://opencollective.com/unified
-
-[create]: #creating-plugins
-
-[awesome]: https://github.com/retextjs/awesome-retext
-
-[ideas]: https://github.com/retextjs/ideas
 
 [topic]: https://github.com/topics/retext-plugin
