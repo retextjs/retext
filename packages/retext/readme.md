@@ -8,20 +8,131 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**retext**][retext] is a natural language processor powered by [plugins][]
-part of the [unified][] [collective][].
+**[unified][]** processor with support for parsing Latin-script natural
+language as input and serializing it as output.
 
-*   API by [**unified**][unified]
-*   Parses natural language to the tree with [`retext-latin`][latin]
-*   [**nlcst**][nlcst] syntax tree
-*   [Plugins][] transform the tree
-*   Serialize the tree to natural language using [`retext-stringify`][stringify]
+## Contents
 
-Don’t need the parser?
-Or the compiler?
-[That’s OK][unified-usage].
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`retext()`](#retext-1)
+*   [Syntax tree](#syntax-tree)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [Sponsor](#sponsor)
+*   [License](#license)
 
-## Sponsors
+## What is this?
+
+This package is a [unified][] processor with support for parsing Latin-script
+natural language as input and serializing it as output by using unified with
+[`retext-latin`][retext-latin] and [`retext-stringify`][retext-stringify].
+
+See [the monorepo readme][retext] for info on what the retext ecosystem is.
+
+## When should I use this?
+
+You can use this package when you want to use unified, have Latin-script as
+input, and as output.
+This package is a shortcut for
+`unified().use(retextLatin).use(retextStringify)`.
+When the input isn’t Latin-script (meaning you don’t need `retext-latin`), it’s
+recommended to use `unified` directly.
+
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+
+```sh
+npm install retext
+```
+
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import {retext} from 'https://esm.sh/retext@8'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import {retext} from 'https://esm.sh/retext@8?bundle'
+</script>
+```
+
+## Use
+
+```js
+import {reporter} from 'vfile-reporter'
+import {retext} from 'retext'
+import retextProfanities from 'retext-profanities'
+import retextEmoji from 'retext-emoji'
+
+const file = await retext()
+  .use(retextProfanities)
+  .use(retextEmoji, {convert: 'encode'})
+  .process('He’s set on beating your butt for sheriff! :cop:')
+
+console.log(String(file))
+console.error(reporter(file))
+```
+
+Yields:
+
+```txt
+He’s set on beating your butt for sheriff! 👮
+```
+
+```txt
+  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+
+⚠ 1 warning
+```
+
+## API
+
+This package exports the identifier `retext`.
+There is no default export.
+
+### `retext()`
+
+Create a new (unfrozen) unified processor that already uses `retext-latin` and
+`retext-stringify` and you can add more plugins to.
+See [`unified`][unified] for more information.
+
+## Syntax tree
+
+The syntax tree format used in retext is [nlcst][].
+
+## Types
+
+This package is fully typed with [TypeScript][].
+There are no extra exported types.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
+abide by its terms.
+
+## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
@@ -91,55 +202,6 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 </tr>
 </table>
 
-## Install
-
-[npm][]:
-
-```sh
-npm install retext
-```
-
-## Use
-
-```js
-import {retext} from 'retext'
-import retextProfanities from 'retext-profanities'
-import retextEmoji from 'retext-emoji'
-import {reporter} from 'vfile-reporter'
-
-retext()
-  .use(retextProfanities)
-  .use(retextEmoji, {convert: 'encode'})
-  .process('He’s set on beating your butt for sheriff! :cop:')
-  .then((file) => {
-    console.log(String(file))
-    console.error(reporter(file))
-  })
-```
-
-Yields:
-
-```txt
-He’s set on beating your butt for sheriff! 👮
-  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
-
-⚠ 1 warning
-```
-
-## Contribute
-
-See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
-to get started.
-See [`support.md`][support] for ways to get help.
-Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
-
-A curated list of awesome retext resources can be found in [**awesome
-retext**][awesome].
-
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
-
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -180,25 +242,23 @@ abide by its terms.
 
 [coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
 
-[ideas]: https://github.com/retextjs/ideas
-
-[awesome]: https://github.com/retextjs/awesome-retext
-
 [license]: https://github.com/retextjs/retext/blob/main/license
 
 [author]: https://wooorm.com
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
 [unified]: https://github.com/unifiedjs/unified
 
-[unified-usage]: https://github.com/unifiedjs/unified#usage
+[retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
 
-[latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
-
-[stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
-
-[plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
+[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
 
 [retext]: https://github.com/retextjs/retext
 

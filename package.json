@@ -34,8 +34,7 @@
   },
   "scripts": {
     "build": "npm run build --workspaces && rimraf \"*.d.ts\" && tsc && type-coverage",
-    "todo": "remark -qfo && ",
-    "format": "prettier . -w --loglevel warn && xo --fix",
+    "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
     "test-api": "node --conditions development test.js",
     "test-coverage": "c8 --check-coverage --branches 100 --functions 100 --lines 100 --statements 100 --reporter lcov node --conditions development test.js",
     "test": "npm run build && npm run format && npm run test-coverage"

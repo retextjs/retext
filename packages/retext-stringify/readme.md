@@ -8,11 +8,131 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[**retext**][retext] plugin to serialize natural language.
-[Compiler][] for [**unified**][unified].
-Serializes [**nlcst**][nlcst] syntax trees.
+**[retext][]** plugin to add support for serializing natural language.
 
-## Sponsors
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`unified().use(retextStringify)`](#unifieduseretextstringify)
+*   [Syntax tree](#syntax-tree)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [Sponsor](#sponsor)
+*   [License](#license)
+
+## What is this?
+
+This package is a [unified][] ([retext][]) plugin that defines how to take a
+syntax tree as input and turn it into serialized natural language.
+When it’s used, natural language is serialized as the final result.
+
+See [the monorepo readme][retext] for info on what the retext ecosystem is.
+
+## When should I use this?
+
+This plugin adds support to unified for serializing natural language.
+You can alternatively use [`retext`][retext-core] instead, which combines
+unified, [`retext-latin`][retext-latin], and this plugin.
+
+## Install
+
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+
+```sh
+npm install retext-stringify
+```
+
+In Deno with [`esm.sh`][esmsh]:
+
+```js
+import retextStringify from 'https://esm.sh/retext-stringify@3'
+```
+
+In browsers with [`esm.sh`][esmsh]:
+
+```html
+<script type="module">
+  import retextStringify from 'https://esm.sh/retext-stringify@3?bundle'
+</script>
+```
+
+## Use
+
+```js
+import {reporter} from 'vfile-reporter'
+import {unified} from 'unified'
+import retextEnglish from 'retext-english'
+import retextProfanities from 'retext-profanities'
+import retextEmoji from 'retext-emoji'
+import retextStringify from 'retext-stringify'
+
+const file = await unified()
+  .use(retextEnglish)
+  .use(retextProfanities)
+  .use(retextEmoji, {convert: 'encode'})
+  .use(retextStringify)
+  .process('He’s set on beating your butt for sheriff! :cop:')
+
+console.log(String(file))
+console.error(reporter(file))
+```
+
+Yields:
+
+```txt
+He’s set on beating your butt for sheriff! 👮
+```
+
+```txt
+  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+
+⚠ 1 warning
+```
+
+## API
+
+This package exports no identifiers.
+The default export is `retextStringify`.
+
+### `unified().use(retextStringify)`
+
+Add support for serializing natural language.
+
+There are no options.
+
+## Syntax tree
+
+The syntax tree format used in retext is [nlcst][].
+
+## Types
+
+This package is fully typed with [TypeScript][].
+There are no extra exported types.
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
+abide by its terms.
+
+## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
@@ -82,58 +202,6 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 </tr>
 </table>
 
-## Install
-
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
-Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
-
-[npm][]:
-
-```sh
-npm install retext-stringify
-```
-
-## Use
-
-```js
-import {unified} from 'unified'
-import {stream} from 'unified-stream'
-import retextEnglish from 'retext-english'
-import retextStringify from 'retext-stringify'
-import retextEmoji from 'retext-emoji'
-
-const processor = unified()
-  .use(retextEnglish)
-  .use(retextEmoji, {convert: 'encode'})
-  .use(retextStringify)
-
-process.stdin.pipe(stream(processor)).pipe(process.stdout)
-```
-
-## API
-
-This package exports no identifiers.
-`retextStringify` is the default export.
-
-### `unified().use(retextStringify)`
-
-Serialize [**nlcst**][nlcst] syntax trees.
-There is no configuration.
-
-## Contribute
-
-See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
-to get started.
-See [`support.md`][support] for ways to get help.
-Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
-
-A curated list of awesome retext resources can be found in [**awesome
-retext**][awesome].
-
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
-
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -174,20 +242,24 @@ abide by its terms.
 
 [coc]: https://github.com/retextjs/.github/blob/main/code-of-conduct.md
 
-[ideas]: https://github.com/retextjs/ideas
-
-[awesome]: https://github.com/retextjs/awesome-retext
-
 [license]: https://github.com/retextjs/retext/blob/main/license
 
 [author]: https://wooorm.com
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[unified]: https://github.com/unifiedjs/unified
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[compiler]: https://github.com/unifiedjs/unified#processorcompiler
+[esmsh]: https://esm.sh
+
+[typescript]: https://www.typescriptlang.org
+
+[unified]: https://github.com/unifiedjs/unified
 
 [retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
+
+[retext-core]: https://github.com/retextjs/retext/tree/main/packages/retext
+
+[retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin

@@ -8,31 +8,166 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**retext** is a natural language processor powered by [plugins][] part of the
-[unified][] [collective][].
+**retext** is a tool that transforms natural language with plugins.
+These plugins can inspect and change the natural language.
+You can use retext on the server, the client, deno, etc.
 
 ## Intro
 
-**retext** is an ecosystem of [plugins][] for processing natural language to do
-all kinds of things: [check spelling][spell], [fix typography][smartypants], or
-[make sure text is readable][readability].
+retext is an ecosystem of plugins that work with natural language as structured
+data, specifically ASTs (abstract syntax trees).
+ASTs make it easy for programs to deal with prose.
+We call those programs plugins.
+Plugins inspect and change trees.
+You can use the many existing plugins or you can make your own.
+Some example use cases are to [check spelling][retext-spell],
+[fix typography][retext-smartypants], or
+[make sure text is readable][retext-readability].
 
-*   Visit [`unifiedjs.com`][website] and peruse its [Learn][] section for an
-    overview
-*   Read [unified][]’s readme for a technical intro
-*   Browse [awesome retext][awesome] to find out more about the ecosystem
-*   Follow us on [Twitter][] to see what we’re up to
-*   Check out [Contribute][] below to find out how to help out
+*   for more about us, see [`unifiedjs.com`][site]
+*   for updates, see [Twitter][]
+*   for questions, see [support][]
+*   to help, see [contribute][] or [sponsor][] below
 
-This repository contains the following projects:
+## Contents
 
-*   [`retext-english`][english] — Parse English prose to a syntax tree
-*   [`retext-dutch`][dutch] — Parse Dutch prose to a syntax tree
-*   [`retext-latin`][latin] — Parse any Latin-script prose to a syntax tree
-*   [`retext-stringify`][stringify] — Serialize a syntax tree
-*   [`retext`][api] — Programmatic interface with both `retext-latin` and `retext-stringify`
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Plugins](#plugins)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Contribute](#contribute)
+*   [Sponsor](#sponsor)
+*   [License](#license)
 
-## Sponsors
+## What is this?
+
+You can use plugins to fix typography.
+**In**:
+
+```text
+He said, "A 'simple' english sentence. . .
+```
+
+**Out**:
+
+```text
+He said, “A ‘simple’ english sentence…”
+```
+
+You can use plugins to check natural language.
+**In**:
+
+```text
+He’s pretty set on beating your butt for sheriff.
+```
+
+**Out**:
+
+```text
+example.txt
+  1:1-1:5    warning  `He’s` may be insensitive, use `They`, `It` instead  he-she  retext-equality
+  1:33-1:37  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+
+⚠ 1 warning
+```
+
+And you can make your own plugins.
+You can use retext for many different things.
+**[unified][]** is the core project that transforms content with ASTs.
+**retext** adds support for natural language to unified.
+**[nlcst][]** is the natural language AST that retext uses.
+
+This GitHub repository is a monorepo that contains the following packages:
+
+*   [`retext-english`][retext-english]
+    — parse English prose to a syntax tree
+*   [`retext-dutch`][retext-dutch]
+    — parse Dutch prose to a syntax tree
+*   [`retext-latin`][retext-latin]
+    — parse any Latin-script prose to a syntax tree
+*   [`retext-stringify`][retext-stringify]
+    — serialize a syntax tree
+*   [`retext`][api]
+    — programmatic interface with both `retext-latin` and `retext-stringify`
+
+## When should I use this?
+
+It is recommended to use `unified` with `retext-english` (or `retext-dutch`)
+and `retext-stringify` if your content is in English (or Dutch).
+Otherwise, if your content is in another Latin-script language, use `retext`.
+
+## Plugins
+
+retext plugins deal with natural language.
+You can choose from the many plugins that already exist.
+Here are three good ways to find plugins:
+
+*   [`awesome-retext`][awesome-retext]
+    — selection of the most awesome projects
+*   [List of plugins][list-of-plugins]
+    — list of all plugins
+*   [`retext-plugin` topic][topic]
+    — any tagged repo on GitHub
+
+Some plugins are maintained by us here in the `@retextjs` organization while
+others are maintained by folks elsewhere.
+Anyone can make retext plugins, so as always when choosing whether to include
+dependencies in your project, make sure to carefully assess the quality of
+retext plugins too.
+
+## Types
+
+The retext organization and the unified collective as a whole is fully typed
+with [TypeScript][].
+Types for nlcst are available in [`@types/nlcst`][types-nlcst].
+
+For TypeScript to work, it is particularly important to type your plugins
+correctly.
+We strongly recommend using the `Plugin` type from `unified` with its generics
+and to use the node types for the syntax trees provided by `@types/nlcst`.
+
+```js
+/**
+ * @typedef {import('nlcst').Root} Root
+ *
+ * @typedef Options
+ *   Configuration (optional).
+ * @property {boolean} [someField]
+ *   Some option.
+ */
+
+// To type options and that the it works with `nlcst`:
+/** @type {import('unified').Plugin<[Options?], Root>} */
+export function myRetextPluginAcceptingOptions(options) {
+  // `options` is `Options?`.
+  return function (tree, file) {
+    // `tree` is `Root`.
+  }
+}
+```
+
+## Compatibility
+
+Projects maintained by the unified collective are compatible with all maintained
+versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+Our projects sometimes work with older versions, but this is not guaranteed.
+
+## Contribute
+
+See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
+to get started.
+See [`support.md`][support] for ways to get help.
+
+This project has a [code of conduct][coc].
+By interacting with this repository, organization, or community you agree to
+abide by its terms.
+
+For info on how to submit a security report, see our
+[security policy][security].
+
+## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
@@ -102,20 +237,6 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 </tr>
 </table>
 
-## Contribute
-
-See [`contributing.md`][contributing] in [`retextjs/.github`][health] for ways
-to get started.
-See [`support.md`][support] for ways to get help.
-Ideas for new plugins and tools can be posted in [`retextjs/ideas`][ideas].
-
-A curated list of awesome retext resources can be found in [**awesome
-retext**][awesome].
-
-This project has a [code of conduct][coc].
-By interacting with this repository, organization, or community you agree to
-abide by its terms.
-
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -146,11 +267,13 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
-
 [chat]: https://github.com/retextjs/retext/discussions
 
+[chat-badge]: https://img.shields.io/badge/chat-discussions-success.svg
+
 [health]: https://github.com/retextjs/.github
+
+[security]: https://github.com/retextjs/.github/blob/main/security.md
 
 [contributing]: https://github.com/retextjs/.github/blob/main/contributing.md
 
@@ -164,32 +287,38 @@ abide by its terms.
 
 [unified]: https://github.com/unifiedjs/unified
 
-[website]: https://unifiedjs.com
+[types-nlcst]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/nlcst
 
-[learn]: https://unifiedjs.com/learn/
+[typescript]: https://www.typescriptlang.org
 
 [twitter]: https://twitter.com/unifiedjs
 
-[english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
+[site]: https://unifiedjs.com
 
-[dutch]: https://github.com/retextjs/retext/tree/main/packages/retext-dutch
+[topic]: https://github.com/topics/retext-plugin
 
-[latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
+[nlcst]: https://github.com/syntax-tree/nlcst
 
-[stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
+[awesome-retext]: https://github.com/retextjs/awesome-retext
+
+[retext-english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
+
+[retext-dutch]: https://github.com/retextjs/retext/tree/main/packages/retext-dutch
+
+[retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
+
+[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
 
 [api]: https://github.com/retextjs/retext/tree/main/packages/retext
 
-[ideas]: https://github.com/retextjs/ideas
+[list-of-plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
 
-[awesome]: https://github.com/retextjs/awesome-retext
+[retext-spell]: https://github.com/retextjs/retext-spell
 
-[plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
+[retext-smartypants]: https://github.com/retextjs/retext-smartypants
 
-[spell]: https://github.com/retextjs/retext-spell
-
-[smartypants]: https://github.com/retextjs/retext-smartypants
-
-[readability]: https://github.com/retextjs/retext-readability
+[retext-readability]: https://github.com/retextjs/retext-readability
 
 [contribute]: #contribute
+
+[sponsor]: #sponsor
