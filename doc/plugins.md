@@ -48,6 +48,8 @@ The list of plugins:
     — extract keywords and keyphrases
 *   [`retext-latin`](https://github.com/retextjs/retext/tree/main/packages/retext-latin)
     — Latin-script language support
+*   [`retext-lexrank`](https://github.com/gorango/retext-lexrank)
+    — add Lexrank scores to sentences
 *   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
     — check words for overuse
 *   [`retext-passive`](https://github.com/retextjs/retext-passive)
