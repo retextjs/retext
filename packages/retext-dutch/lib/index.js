@@ -3,7 +3,6 @@
  */
 
 import {unherit} from 'unherit'
-// @ts-expect-error: untyped.
 import {ParseDutch} from 'parse-dutch'
 
 /**
@@ -14,5 +13,4 @@ export default function retextDutch() {
   Object.assign(this, {Parser: unherit(ParseDutch)})
 }
 
-// @ts-expect-error: untyped.
 export {ParseDutch as Parser} from 'parse-dutch'

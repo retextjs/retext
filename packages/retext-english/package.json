@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "@types/nlcst": "^1.0.0",
-    "parse-english": "^5.0.0",
+    "parse-english": "^6.0.0",
     "unherit": "^3.0.0",
     "unified": "^10.0.0"
   },

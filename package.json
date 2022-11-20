@@ -54,8 +54,13 @@
     }
   },
   "remarkConfig": {
+    "To do": "enable `remark-retext` after major",
     "plugins": [
-      "preset-wooorm"
+      "remark-preset-wooorm",
+      [
+        "remark-retext",
+        false
+      ]
     ]
   },
   "typeCoverage": {
