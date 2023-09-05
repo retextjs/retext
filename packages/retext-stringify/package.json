@@ -47,11 +47,13 @@
   "scripts": {
     "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
   },
-  "xo": false,
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
     "strict": true,
     "ignoreCatch": true
+  },
+  "xo": {
+    "prettier": true
   }
 }
