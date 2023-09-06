@@ -56,14 +56,14 @@ npm install retext-english
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import retextEnglish from 'https://esm.sh/retext-english@4'
+import retextEnglish from 'https://esm.sh/retext-english@5'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import retextEnglish from 'https://esm.sh/retext-english@4?bundle'
+  import retextEnglish from 'https://esm.sh/retext-english@5?bundle'
 </script>
 ```
 
