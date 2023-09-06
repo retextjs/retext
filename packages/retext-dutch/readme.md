@@ -56,14 +56,14 @@ npm install retext-dutch
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import retextDutch from 'https://esm.sh/retext-dutch@4'
+import retextDutch from 'https://esm.sh/retext-dutch@5'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import retextDutch from 'https://esm.sh/retext-dutch@4?bundle'
+  import retextDutch from 'https://esm.sh/retext-dutch@5?bundle'
 </script>
 ```
 
