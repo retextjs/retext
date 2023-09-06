@@ -51,14 +51,14 @@ npm install retext-stringify
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import retextStringify from 'https://esm.sh/retext-stringify@3'
+import retextStringify from 'https://esm.sh/retext-stringify@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import retextStringify from 'https://esm.sh/retext-stringify@3?bundle'
+  import retextStringify from 'https://esm.sh/retext-stringify@4?bundle'
 </script>
 ```
 
