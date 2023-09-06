@@ -55,14 +55,14 @@ npm install retext
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {retext} from 'https://esm.sh/retext@8'
+import {retext} from 'https://esm.sh/retext@9'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {retext} from 'https://esm.sh/retext@8?bundle'
+  import {retext} from 'https://esm.sh/retext@9?bundle'
 </script>
 ```
 
