@@ -18,7 +18,6 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(retextLatin)`](#unifieduseretextlatin)
-    *   [`Parser`](#parser)
 *   [Syntax tree](#syntax-tree)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -37,20 +36,19 @@ See [the monorepo readme][retext] for info on what the retext ecosystem is.
 
 ## When should I use this?
 
-This plugin adds support to unified for parsing Latin-script.
-You can alternatively use [`retext`][retext-core] instead, which combines
-unified, this plugin, and [`retext-stringify`][retext-stringify].
-If the prose is in English or Dutch, use `unified` itself with
-[`retext-english`][retext-english] or [`retext-dutch`][retext-dutch],
-respectively.
+This plugin adds support to unified for parsing Latin-script natural language.
+If the prose is English or Dutch, use `unified` itself with
+[`retext-stringify`][retext-stringify] and either
+[`retext-english`][retext-english] or [`retext-dutch`][retext-dutch].
+Or, use [`retext`][retext-core] directly.
 
-This plugin is built on [`parse-latin`][parse-latin], which is a level lower,
-but you could use that manually too.
+If you just want the syntax tree, you can use [`parse-latin`][parse-latin]
+directly.
 
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install retext-latin
@@ -73,12 +71,12 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {reporter} from 'vfile-reporter'
-import {unified} from 'unified'
+import retextEmoji from 'retext-emoji'
 import retextLatin from 'retext-latin'
 import retextProfanities from 'retext-profanities'
-import retextEmoji from 'retext-emoji'
 import retextStringify from 'retext-stringify'
+import {unified} from 'unified'
+import {reporter} from 'vfile-reporter'
 
 const file = await unified()
   .use(retextLatin)
@@ -98,41 +96,46 @@ He’s set on beating your butt for sheriff! 👮
 ```
 
 ```txt
-  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+1:26-1:30 warning Be careful with `butt`, it’s profane in some cases butt retext-profanities
 
 ⚠ 1 warning
 ```
 
 ## API
 
-This package exports the identifier `Parser`.
-The default export is `retextLatin`.
+This package exports no identifiers.
+The default export is [`retextLatin`][api-retext-latin].
 
 ### `unified().use(retextLatin)`
 
-Add support for parsing Latin-script input.
+Add support for parsing Latin-script natural language.
 
-There are no options.
+###### Parameters
 
-### `Parser`
+There are no parameters.
 
-Access to the [parser][] ([`parse-latin`][parse-latin]).
+###### Returns
+
+Nothing (`undefined`).
 
 ## Syntax tree
 
-The syntax tree format used in retext is [nlcst][].
+The syntax tree used in retext is [nlcst][].
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-There are no extra exported types.
+It exports no additional types.
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `retext-latin@^3`,
+compatible with Node.js 12.
 
 ## Contribute
 
@@ -147,8 +150,6 @@ abide by its terms.
 ## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
-
-<!--lint ignore no-html-->
 
 <table>
 <tr valign="middle">
@@ -267,22 +268,22 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [esmsh]: https://esm.sh
 
-[typescript]: https://www.typescriptlang.org
-
-[unified]: https://github.com/unifiedjs/unified
-
 [retext]: https://github.com/retextjs/retext
 
 [nlcst]: https://github.com/syntax-tree/nlcst
-
-[parser]: https://github.com/unifiedjs/unified#processorparser
 
 [parse-latin]: https://github.com/wooorm/parse-latin
 
 [retext-core]: https://github.com/retextjs/retext/tree/main/packages/retext
 
-[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
+[retext-dutch]: https://github.com/retextjs/retext/tree/main/packages/retext-dutch
 
 [retext-english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
 
-[retext-dutch]: https://github.com/retextjs/retext/tree/main/packages/retext-dutch
+[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
+
+[typescript]: https://www.typescriptlang.org
+
+[unified]: https://github.com/unifiedjs/unified
+
+[api-retext-latin]: #unifieduseretextlatin

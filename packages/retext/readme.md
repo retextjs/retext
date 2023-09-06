@@ -8,8 +8,8 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-**[unified][]** processor with support for parsing Latin-script natural
-language as input and serializing it as output.
+**[unified][]** processor to add support for parsing and serializing
+Latin-script natural language.
 
 ## Contents
 
@@ -40,13 +40,13 @@ You can use this package when you want to use unified, have Latin-script as
 input, and as output.
 This package is a shortcut for
 `unified().use(retextLatin).use(retextStringify)`.
-When the input isn’t Latin-script (meaning you don’t need `retext-latin`), it’s
-recommended to use `unified` directly.
+When the input isn’t Latin-script or is English or Dutch (meaning you don’t
+need `retext-latin`), it’s recommended to use `unified` directly.
 
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install retext
@@ -69,14 +69,14 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {reporter} from 'vfile-reporter'
 import {retext} from 'retext'
-import retextProfanities from 'retext-profanities'
 import retextEmoji from 'retext-emoji'
+import retextProfanities from 'retext-profanities'
+import {reporter} from 'vfile-reporter'
 
 const file = await retext()
-  .use(retextProfanities)
   .use(retextEmoji, {convert: 'encode'})
+  .use(retextProfanities)
   .process('He’s set on beating your butt for sheriff! :cop:')
 
 console.log(String(file))
@@ -90,37 +90,42 @@ He’s set on beating your butt for sheriff! 👮
 ```
 
 ```txt
-  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+1:26-1:30 warning Be careful with `butt`, it’s profane in some cases butt retext-profanities
 
 ⚠ 1 warning
 ```
 
 ## API
 
-This package exports the identifier `retext`.
+This package exports the identifier [`retext`][api-retext].
 There is no default export.
 
 ### `retext()`
 
-Create a new (unfrozen) unified processor that already uses `retext-latin` and
-`retext-stringify` and you can add more plugins to.
+Create a new unified processor that already uses
+[`retext-latin`][retext-latin] and [`retext-stringify`][retext-stringify].
+
+You can add more plugins with `use`.
 See [`unified`][unified] for more information.
 
 ## Syntax tree
 
-The syntax tree format used in retext is [nlcst][].
+The syntax tree used in retext is [nlcst][].
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-There are no extra exported types.
+It exports no additional types.
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `retext@^8`, compatible
+with Node.js 12.
 
 ## Contribute
 
@@ -135,8 +140,6 @@ abide by its terms.
 ## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
-
-<!--lint ignore no-html-->
 
 <table>
 <tr valign="middle">
@@ -223,9 +226,9 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [downloads]: https://www.npmjs.com/package/retext
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/retext.svg
+[size-badge]: https://img.shields.io/bundlejs/size/retext
 
-[size]: https://bundlephobia.com/result?p=retext
+[size]: https://bundlejs.com/?q=retext
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -255,9 +258,7 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [esmsh]: https://esm.sh
 
-[typescript]: https://www.typescriptlang.org
-
-[unified]: https://github.com/unifiedjs/unified
+[nlcst]: https://github.com/syntax-tree/nlcst
 
 [retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
 
@@ -265,4 +266,8 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [retext]: https://github.com/retextjs/retext
 
-[nlcst]: https://github.com/syntax-tree/nlcst
+[typescript]: https://www.typescriptlang.org
+
+[unified]: https://github.com/unifiedjs/unified
+
+[api-retext]: #retext-1

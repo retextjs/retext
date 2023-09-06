@@ -15,8 +15,8 @@ You can use retext on the server, the client, deno, etc.
 ## Intro
 
 retext is an ecosystem of plugins that work with natural language as structured
-data, specifically ASTs (abstract syntax trees).
-ASTs make it easy for programs to deal with prose.
+data, specifically CSTs (concrete syntax trees).
+Syntax trees make it easy for programs to deal with prose.
 We call those programs plugins.
 Plugins inspect and change trees.
 You can use the many existing plugins or you can make your own.
@@ -42,37 +42,75 @@ Some example use cases are to [check spelling][retext-spell],
 
 ## What is this?
 
-You can use plugins to fix typography.
-**In**:
+With this project and a plugin, you can turn simple punctuation:
 
 ```text
 He said, "A 'simple' english sentence. . .
 ```
 
-**Out**:
+…into smart punctuation:
 
 ```text
 He said, “A ‘simple’ english sentence…”
 ```
 
-You can use plugins to check natural language.
+<details><summary>Show example code</summary>
+
+```js
+import retextLatin from 'retext-latin'
+import retextSmartyPants from 'retext-smartypants'
+import retextStringify from 'retext-stringify'
+import {unified} from 'unified'
+
+const file = await unified()
+  .use(retextLatin)
+  .use(retextSmartyPants)
+  .use(retextStringify)
+  .process("He said, \"A 'simple' english sentence. . .")
+
+console.log(String(file))
+```
+
+</details>
+
+With another plugin, you can check natural language:
+
 **In**:
 
 ```text
-He’s pretty set on beating your butt for sheriff.
+Where can I find an ATM machine?
 ```
 
 **Out**:
 
 ```text
-example.txt
-  1:1-1:5    warning  `He’s` may be insensitive, use `They`, `It` instead  he-she  retext-equality
-  1:33-1:37  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+1:21-1:32 warning Expected `ATM` instead of `ATM machine` atm retext-redundant-acronyms
 
 ⚠ 1 warning
 ```
 
-And you can make your own plugins.
+<details><summary>Show example code</summary>
+
+```js
+import retextEnglish from 'retext-english'
+import retextRedundantAcronyms from 'retext-redundant-acronyms'
+import retextStringify from 'retext-stringify'
+import {unified} from 'unified'
+import {reporter} from 'vfile-reporter'
+
+const file = await unified()
+  .use(retextEnglish)
+  .use(retextRedundantAcronyms)
+  .use(retextStringify)
+  .process('Where can I find an ATM machine?')
+
+console.log(reporter(file))
+```
+
+</details>
+
+…and you can make your own plugins.
+
 You can use retext for many different things.
 **[unified][]** is the core project that transforms content with ASTs.
 **retext** adds support for natural language to unified.
@@ -80,10 +118,10 @@ You can use retext for many different things.
 
 This GitHub repository is a monorepo that contains the following packages:
 
-*   [`retext-english`][retext-english]
-    — parse English prose to a syntax tree
 *   [`retext-dutch`][retext-dutch]
     — parse Dutch prose to a syntax tree
+*   [`retext-english`][retext-english]
+    — parse English prose to a syntax tree
 *   [`retext-latin`][retext-latin]
     — parse any Latin-script prose to a syntax tree
 *   [`retext-stringify`][retext-stringify]
@@ -122,37 +160,52 @@ The retext organization and the unified collective as a whole is fully typed
 with [TypeScript][].
 Types for nlcst are available in [`@types/nlcst`][types-nlcst].
 
-For TypeScript to work, it is particularly important to type your plugins
-correctly.
-We strongly recommend using the `Plugin` type from `unified` with its generics
-and to use the node types for the syntax trees provided by `@types/nlcst`.
+For TypeScript to work, it is important to type your plugins.
+For example:
 
 ```js
 /**
  * @typedef {import('nlcst').Root} Root
- *
+ */
+
+/**
  * @typedef Options
  *   Configuration (optional).
- * @property {boolean} [someField]
+ * @property {boolean | null | undefined} [someField]
  *   Some option.
  */
 
-// To type options and that the it works with `nlcst`:
-/** @type {import('unified').Plugin<[Options?], Root>} */
+/**
+ * My plugin.
+ *
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
+ * @returns
+ *   Transform.
+ */
 export function myRetextPluginAcceptingOptions(options) {
-  // `options` is `Options?`.
+  /**
+   * @param {Root} tree
+   *   Tree.
+   * @param {VFile} file
+   *   File.
+   * @returns {undefined}
+   *   Nothing.
+   */
   return function (tree, file) {
-    // `tree` is `Root`.
+    // Do things.
   }
 }
 ```
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line compatible with Node.js 12.
 
 ## Contribute
 
@@ -170,8 +223,6 @@ For info on how to submit a security report, see our
 ## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
-
-<!--lint ignore no-html-->
 
 <table>
 <tr valign="middle">
@@ -260,9 +311,9 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [downloads]: https://www.npmjs.com/package/retext
 
-[size-badge]: https://img.shields.io/bundlephobia/minzip/retext.svg
+[size-badge]: https://img.shields.io/bundlejs/size/retext
 
-[size]: https://bundlephobia.com/result?p=retext
+[size]: https://bundlejs.com/?q=retext
 
 [sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
 
@@ -316,11 +367,11 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [list-of-plugins]: https://github.com/retextjs/retext/tree/main/doc/plugins.md
 
-[retext-spell]: https://github.com/retextjs/retext-spell
+[retext-readability]: https://github.com/retextjs/retext-readability
 
 [retext-smartypants]: https://github.com/retextjs/retext-smartypants
 
-[retext-readability]: https://github.com/retextjs/retext-readability
+[retext-spell]: https://github.com/retextjs/retext-spell
 
 [contribute]: #contribute
 

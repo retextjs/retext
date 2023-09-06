@@ -42,7 +42,7 @@ unified, [`retext-latin`][retext-latin], and this plugin.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install retext-stringify
@@ -65,15 +65,15 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {reporter} from 'vfile-reporter'
-import {unified} from 'unified'
-import retextEnglish from 'retext-english'
-import retextProfanities from 'retext-profanities'
 import retextEmoji from 'retext-emoji'
+import retextLatin from 'retext-latin'
+import retextProfanities from 'retext-profanities'
 import retextStringify from 'retext-stringify'
+import {unified} from 'unified'
+import {reporter} from 'vfile-reporter'
 
 const file = await unified()
-  .use(retextEnglish)
+  .use(retextLatin)
   .use(retextProfanities)
   .use(retextEmoji, {convert: 'encode'})
   .use(retextStringify)
@@ -90,7 +90,7 @@ He’s set on beating your butt for sheriff! 👮
 ```
 
 ```txt
-  1:26-1:30  warning  Be careful with “butt”, it’s profane in some cases  butt  retext-profanities
+1:26-1:30 warning Be careful with `butt`, it’s profane in some cases butt retext-profanities
 
 ⚠ 1 warning
 ```
@@ -98,29 +98,38 @@ He’s set on beating your butt for sheriff! 👮
 ## API
 
 This package exports no identifiers.
-The default export is `retextStringify`.
+The default export is [`retextStringify`][api-retext-stringify].
 
 ### `unified().use(retextStringify)`
 
 Add support for serializing natural language.
 
-There are no options.
+###### Parameters
+
+There are no parameters.
+
+###### Returns
+
+Nothing (`undefined`).
 
 ## Syntax tree
 
-The syntax tree format used in retext is [nlcst][].
+The syntax tree used in retext is [nlcst][].
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-There are no extra exported types.
+It exports no additional types.
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `retext-stringify@^3`,
+compatible with Node.js 12.
 
 ## Contribute
 
@@ -135,8 +144,6 @@ abide by its terms.
 ## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
-
-<!--lint ignore no-html-->
 
 <table>
 <tr valign="middle">
@@ -255,14 +262,16 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [esmsh]: https://esm.sh
 
-[typescript]: https://www.typescriptlang.org
-
-[unified]: https://github.com/unifiedjs/unified
+[nlcst]: https://github.com/syntax-tree/nlcst
 
 [retext]: https://github.com/retextjs/retext
-
-[nlcst]: https://github.com/syntax-tree/nlcst
 
 [retext-core]: https://github.com/retextjs/retext/tree/main/packages/retext
 
 [retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
+
+[typescript]: https://www.typescriptlang.org
+
+[unified]: https://github.com/unifiedjs/unified
+
+[api-retext-stringify]: #unifieduseretextstringify

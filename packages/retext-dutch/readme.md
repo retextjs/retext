@@ -18,7 +18,6 @@
 *   [Use](#use)
 *   [API](#api)
     *   [`unified().use(retextDutch)`](#unifieduseretextdutch)
-    *   [`Parser`](#parser)
 *   [Syntax tree](#syntax-tree)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
@@ -38,19 +37,17 @@ See [the monorepo readme][retext] for info on what the retext ecosystem is.
 ## When should I use this?
 
 This plugin adds support to unified for parsing Dutch.
-You can alternatively use [`retext`][retext-core] instead, which combines
-unified, this plugin, and [`retext-stringify`][retext-stringify].
-If the prose is in English, or any Latin-script language, use `unified` itself
-with [`retext-english`][retext-english] or [`retext-latin`][retext-latin],
-respectively.
+If the prose is not Dutch, use [`retext`][retext-core] for any Latin-script
+text, or for English use `unified` itself with
+[`retext-english`][retext-english] and [`retext-stringify`][retext-stringify].
 
-This plugin is built on [`parse-dutch`][parse-dutch], which is a level lower,
-but you could use that manually too.
+If you just want the syntax tree, you can use [`parse-dutch`][parse-dutch]
+directly.
 
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 16+), install with [npm][]:
 
 ```sh
 npm install retext-dutch
@@ -73,10 +70,10 @@ In browsers with [`esm.sh`][esmsh]:
 ## Use
 
 ```js
-import {reporter} from 'vfile-reporter'
-import {unified} from 'unified'
 import retextDutch from 'retext-dutch'
 import retextStringify from 'retext-stringify'
+import {unified} from 'unified'
+import {reporter} from 'vfile-reporter'
 
 const file = await unified()
   .use(retextDutch)
@@ -100,34 +97,39 @@ no issues found
 
 ## API
 
-This package exports the identifier `Parser`.
-The default export is `retextDutch`.
+This package exports no identifiers.
+The default export is [`retextDutch`][api-retext-dutch].
 
 ### `unified().use(retextDutch)`
 
-Add support for parsing Dutch input.
+Add support for parsing Dutch natural language.
 
-There are no options.
+###### Parameters
 
-### `Parser`
+There are no parameters.
 
-Access to the [parser][] ([`parse-dutch`][parse-dutch]).
+###### Returns
+
+Nothing (`undefined`).
 
 ## Syntax tree
 
-The syntax tree format used in retext is [nlcst][].
+The syntax tree used in retext is [nlcst][].
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-There are no extra exported types.
+It exports no additional types.
 
 ## Compatibility
 
-Projects maintained by the unified collective are compatible with all maintained
+Projects maintained by the unified collective are compatible with maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
-Our projects sometimes work with older versions, but this is not guaranteed.
+
+When we cut a new major release, we drop support for unmaintained versions of
+Node.
+This means we try to keep the current release line, `retext-dutch@^4`,
+compatible with Node.js 12.
 
 ## Contribute
 
@@ -142,8 +144,6 @@ abide by its terms.
 ## Sponsor
 
 Support this effort and give back by sponsoring on [OpenCollective][collective]!
-
-<!--lint ignore no-html-->
 
 <table>
 <tr valign="middle">
@@ -262,22 +262,20 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 
 [esmsh]: https://esm.sh
 
+[nlcst]: https://github.com/syntax-tree/nlcst
+
+[parse-dutch]: https://github.com/wooorm/parse-dutch
+
+[retext]: https://github.com/retextjs/retext
+
+[retext-core]: https://github.com/retextjs/retext/tree/main/packages/retext
+
+[retext-english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
+
+[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
+
 [typescript]: https://www.typescriptlang.org
 
 [unified]: https://github.com/unifiedjs/unified
 
-[retext]: https://github.com/retextjs/retext
-
-[nlcst]: https://github.com/syntax-tree/nlcst
-
-[parser]: https://github.com/unifiedjs/unified#processorparser
-
-[parse-dutch]: https://github.com/wooorm/parse-dutch
-
-[retext-core]: https://github.com/retextjs/retext/tree/main/packages/retext
-
-[retext-stringify]: https://github.com/retextjs/retext/tree/main/packages/retext-stringify
-
-[retext-latin]: https://github.com/retextjs/retext/tree/main/packages/retext-latin
-
-[retext-english]: https://github.com/retextjs/retext/tree/main/packages/retext-english
+[api-retext-dutch]: #unifieduseretextdutch

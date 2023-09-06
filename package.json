@@ -49,6 +49,10 @@
     "plugins": [
       "remark-preset-wooorm",
       [
+        "remark-lint-no-html",
+        false
+      ],
+      [
         "remark-retext",
         false
       ]
