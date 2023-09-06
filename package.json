@@ -20,7 +20,8 @@
     "@types/tape": "^5.0.0",
     "c8": "^8.0.0",
     "chalk": "^5.0.0",
-    "nlcst-test": "^3.0.0",
+    "nlcst-emoji-modifier": "^6.0.0",
+    "nlcst-test": "^4.0.0",
     "prettier": "^3.0.0",
     "remark-cli": "^11.0.0",
     "remark-preset-wooorm": "^9.0.0",
@@ -28,8 +29,9 @@
     "tape": "^5.0.0",
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
-    "unist-builder": "^3.0.0",
-    "unist-util-remove-position": "^4.0.0",
+    "unified": "^11.0.0",
+    "unist-builder": "^4.0.0",
+    "unist-util-remove-position": "^5.0.0",
     "xo": "^0.56.0"
   },
   "scripts": {
@@ -52,7 +54,11 @@
   },
   "remarkConfig": {
     "plugins": [
-      "preset-wooorm"
+      "preset-wooorm",
+      [
+        "remark-retext",
+        false
+      ]
     ]
   },
   "typeCoverage": {

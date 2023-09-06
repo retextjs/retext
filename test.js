@@ -1,12 +1,12 @@
 /**
  * @typedef {import('nlcst').Root} Root
- * @typedef {import('nlcst').Content} Content
- * @typedef {Root|Content} Node
  */
 
+import assert from 'node:assert/strict'
 import test from 'tape'
 import {removePosition} from 'unist-util-remove-position'
-import {assert} from 'nlcst-test'
+import {emojiModifier} from 'nlcst-emoji-modifier'
+import {assert as nlcstAssert} from 'nlcst-test'
 import {u} from 'unist-builder'
 import {unified} from 'unified'
 import {retext} from 'retext'
@@ -17,11 +17,13 @@ test('.parse', (t) => {
   const tree = retext().parse('Alfred')
 
   t.doesNotThrow(() => {
-    assert(tree)
+    nlcstAssert(tree)
   }, 'should parse to valid nlcst')
 
+  removePosition(tree, {force: true})
+
   t.deepEqual(
-    removePosition(tree, true),
+    tree,
     u('RootNode', [
       u('ParagraphNode', [
         u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
@@ -54,11 +56,13 @@ function eachParser(name) {
     const tree = unified().use(plugin).parse('Alfred')
 
     t.doesNotThrow(() => {
-      assert(tree)
+      nlcstAssert(tree)
     }, 'should parse to valid nlcst')
 
+    removePosition(tree, {force: true})
+
     t.deepEqual(
-      removePosition(tree, true),
+      tree,
       u('RootNode', [
         u('ParagraphNode', [
           u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
@@ -66,6 +70,19 @@ function eachParser(name) {
       ]),
       'should give the corrent tree'
     )
+
+    const emojiTree = unified()
+      .use(plugin)
+      .use(function () {
+        this.data('nlcstSentenceExtensions', [emojiModifier])
+      })
+      .parse(':+1:')
+    const paragraph = emojiTree.children[0]
+    assert(paragraph.type === 'ParagraphNode')
+    const sentence = paragraph.children[0]
+    assert(sentence.type === 'SentenceNode')
+    const emoji = sentence.children[0]
+    assert(emoji.type === 'EmoticonNode')
   })
 }
 

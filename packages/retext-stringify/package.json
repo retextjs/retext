@@ -40,9 +40,9 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/nlcst": "^1.0.0",
-    "nlcst-to-string": "^3.0.0",
-    "unified": "^10.0.0"
+    "@types/nlcst": "^2.0.0",
+    "nlcst-to-string": "^4.0.0",
+    "unified": "^11.0.0"
   },
   "scripts": {
     "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
@@ -54,6 +54,16 @@
     "ignoreCatch": true
   },
   "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/ban-types": "off"
+        }
+      }
+    ],
     "prettier": true
   }
 }

@@ -36,13 +36,13 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/nlcst": "^1.0.0",
+    "@types/nlcst": "^2.0.0",
     "retext-latin": "^3.0.0",
     "retext-stringify": "^3.0.0",
-    "unified": "^10.0.0"
+    "unified": "^11.0.0"
   },
   "scripts": {
-    "build": "rimraf \"*.d.ts\" && tsc && type-coverage"
+    "build": "tsc && type-coverage"
   },
   "typeCoverage": {
     "atLeast": 100,
@@ -51,6 +51,16 @@
     "ignoreCatch": true
   },
   "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/triple-slash-reference": "off"
+        }
+      }
+    ],
     "prettier": true
   }
 }

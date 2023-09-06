@@ -1,18 +1,41 @@
+/// <reference types="../index.js" />
 /**
  * @typedef {import('nlcst').Root} Root
  */
 
-import {unherit} from 'unherit'
-// @ts-expect-error: untyped.
 import {ParseLatin} from 'parse-latin'
 
 /**
- * @this {import('unified').Processor}
- * @type {import('unified').Plugin<[], string, Root>}
+ * Add support for parsing Latin-script natural language.
+ *
+ * @returns {undefined}
+ *   Nothing.
  */
 export default function retextLatin() {
-  Object.assign(this, {Parser: unherit(ParseLatin)})
+  // @ts-expect-error -- TS in JSDoc doesn’t understand `this`.
+  // eslint-disable-next-line unicorn/no-this-assignment
+  const self = /** @type {import('unified').Processor<Root>} */ (this)
+
+  self.parser = parser
+
+  /** @type {import('unified').Parser<Root>} */
+  function parser(value) {
+    const parser = new ParseLatin()
+    add(parser.tokenizeParagraphPlugins, self.data('nlcstParagraphExtensions'))
+    add(parser.tokenizeRootPlugins, self.data('nlcstRootExtensions'))
+    add(parser.tokenizeSentencePlugins, self.data('nlcstSentenceExtensions'))
+    return parser.parse(value)
+  }
 }
 
-// @ts-expect-error: untyped.
+// To do: remove.
 export {ParseLatin as Parser} from 'parse-latin'
+
+/**
+ * @template T
+ * @param {Array<T>} list
+ * @param {Array<T> | undefined} values
+ */
+function add(list, values) {
+  if (values) list.unshift(...values)
+}

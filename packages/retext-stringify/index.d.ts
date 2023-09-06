@@ -1,6 +1,14 @@
-// This wrapper exists because JS in TS can’t export a `@type` of a function.
 import type {Root} from 'nlcst'
 import type {Plugin} from 'unified'
 
-declare const retextStringify: Plugin<void[], Root, string>
+/**
+ * Add support for serializing natural language.
+ *
+ * @this
+ *   Unified processor.
+ * @returns
+ *   Nothing.
+ */
+declare const retextStringify: Plugin<[], Root, string>
+
 export default retextStringify

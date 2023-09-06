@@ -38,10 +38,9 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/nlcst": "^1.0.0",
-    "parse-dutch": "^5.0.0",
-    "unherit": "^3.0.0",
-    "unified": "^10.0.0"
+    "@types/nlcst": "^2.0.0",
+    "parse-dutch": "^7.0.0",
+    "unified": "^11.0.0"
   },
   "scripts": {
     "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
@@ -53,9 +52,17 @@
     "ignoreCatch": true
   },
   "xo": {
-    "prettier": true,
-    "rules": {
-      "@typescript-eslint/naming-convention": "off"
-    }
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/ban-types": "off",
+          "@typescript-eslint/consistent-type-definitions": "off"
+        }
+      }
+    ],
+    "prettier": true
   }
 }
