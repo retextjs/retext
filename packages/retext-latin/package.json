@@ -4,18 +4,19 @@
   "description": "retext plugin to parse Latin-script prose",
   "license": "MIT",
   "keywords": [
-    "unified",
-    "retext",
-    "retext-plugin",
-    "plugin",
-    "natural",
+    "concrete",
+    "cst",
     "language",
     "latin",
-    "concrete",
+    "natural",
+    "parse",
+    "plugin",
+    "process",
+    "retext",
+    "retext-plugin",
     "syntax",
     "tree",
-    "cst",
-    "parse"
+    "unified"
   ],
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-latin",
@@ -46,8 +47,8 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true,
-    "ignoreCatch": true
+    "ignoreCatch": true,
+    "strict": true
   },
   "xo": {
     "overrides": [

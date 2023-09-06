@@ -4,18 +4,19 @@
   "description": "retext plugin to parse Dutch prose",
   "license": "MIT",
   "keywords": [
-    "unified",
+    "concrete",
+    "cst",
+    "dutch",
+    "language",
+    "natural",
+    "parse",
+    "plugin",
+    "process",
     "retext",
     "retext-plugin",
-    "plugin",
-    "natural",
-    "language",
-    "dutch",
-    "concrete",
     "syntax",
     "tree",
-    "cst",
-    "parse"
+    "unified"
   ],
   "homepage": "https://github.com/retextjs/retext",
   "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-dutch",
@@ -46,8 +47,8 @@
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,
-    "strict": true,
-    "ignoreCatch": true
+    "ignoreCatch": true,
+    "strict": true
   },
   "xo": {
     "overrides": [

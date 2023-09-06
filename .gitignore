@@ -8,3 +8,4 @@ yarn.lock
 !/packages/retext-dutch/index.d.ts
 !/packages/retext-english/index.d.ts
 !/packages/retext-latin/index.d.ts
+!/packages/retext-stringify/index.d.ts
