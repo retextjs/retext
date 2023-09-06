@@ -1,5 +1,4 @@
 /// <reference types="retext-latin" />
-/// <reference types="retext-stringify" />
 
 import type {Root} from 'nlcst'
 import type {Processor} from 'unified'

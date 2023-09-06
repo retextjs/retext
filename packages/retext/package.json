@@ -41,9 +41,7 @@
     "retext-stringify": "^3.0.0",
     "unified": "^11.0.0"
   },
-  "scripts": {
-    "build": "tsc && type-coverage"
-  },
+  "scripts": {},
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

@@ -1,4 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["*.js", "index.d.ts"]
+  "references": [{"path": "../retext-latin/"}, {"path": "../retext-stringify/"}]
 }

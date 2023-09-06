@@ -1,4 +1,3 @@
-/// <reference types="../index.js" />
 /**
  * @typedef {import('nlcst').Root} Root
  */

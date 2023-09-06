@@ -42,9 +42,7 @@
     "parse-english": "^7.0.0",
     "unified": "^11.0.0"
   },
-  "scripts": {
-    "build": "rimraf \"lib/**/*.d.ts\" && tsc && type-coverage"
-  },
+  "scripts": {},
   "typeCoverage": {
     "atLeast": 100,
     "detail": true,

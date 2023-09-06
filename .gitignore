@@ -1,5 +1,5 @@
-node_modules/
 coverage/
+node_modules/
 *.d.ts
 *.log
 .DS_Store
@@ -8,4 +8,3 @@ yarn.lock
 !/packages/retext-dutch/index.d.ts
 !/packages/retext-english/index.d.ts
 !/packages/retext-latin/index.d.ts
-!/packages/retext-stringify/index.d.ts
