@@ -57,14 +57,14 @@ npm install retext-latin
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import retextLatin from 'https://esm.sh/retext-latin@3'
+import retextLatin from 'https://esm.sh/retext-latin@4'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import retextLatin from 'https://esm.sh/retext-latin@3?bundle'
+  import retextLatin from 'https://esm.sh/retext-latin@4?bundle'
 </script>
 ```
 
