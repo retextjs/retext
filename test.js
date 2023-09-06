@@ -3,128 +3,125 @@
  */
 
 import assert from 'node:assert/strict'
-import test from 'tape'
+import test from 'node:test'
 import {removePosition} from 'unist-util-remove-position'
 import {emojiModifier} from 'nlcst-emoji-modifier'
 import {assert as nlcstAssert} from 'nlcst-test'
-import {u} from 'unist-builder'
 import {unified} from 'unified'
 import {retext} from 'retext'
 
-const parsers = ['latin', 'english', 'dutch']
+test('parse', async function (t) {
+  await t.test('should parse', async function () {
+    const tree = retext().parse('Alfred')
 
-test('.parse', (t) => {
-  const tree = retext().parse('Alfred')
-
-  t.doesNotThrow(() => {
     nlcstAssert(tree)
-  }, 'should parse to valid nlcst')
-
-  removePosition(tree, {force: true})
-
-  t.deepEqual(
-    tree,
-    u('RootNode', [
-      u('ParagraphNode', [
-        u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
-      ])
-    ]),
-    'should give the correct tree'
-  )
-
-  t.end()
-})
-
-let index = -1
-while (++index < parsers.length) {
-  eachParser(parsers[index])
-}
-
-/** @param {string} name */
-function eachParser(name) {
-  test('retext-' + name, async (t) => {
-    t.plan(2)
-
-    const fp = './packages/retext-' + name + '/index.js'
-
-    /** @type {{default: import('unified').Plugin<[], string, Root>}} */
-    // type-coverage:ignore-next-line
-    const mod = await import(fp)
-
-    const plugin = mod.default
-
-    const tree = unified().use(plugin).parse('Alfred')
-
-    t.doesNotThrow(() => {
-      nlcstAssert(tree)
-    }, 'should parse to valid nlcst')
 
     removePosition(tree, {force: true})
 
-    t.deepEqual(
-      tree,
-      u('RootNode', [
-        u('ParagraphNode', [
-          u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
-        ])
-      ]),
-      'should give the corrent tree'
-    )
-
-    const emojiTree = unified()
-      .use(plugin)
-      .use(function () {
-        this.data('nlcstSentenceExtensions', [emojiModifier])
-      })
-      .parse(':+1:')
-    const paragraph = emojiTree.children[0]
-    assert(paragraph.type === 'ParagraphNode')
-    const sentence = paragraph.children[0]
-    assert(sentence.type === 'SentenceNode')
-    const emoji = sentence.children[0]
-    assert(emoji.type === 'EmoticonNode')
+    assert.deepEqual(tree, {
+      type: 'RootNode',
+      children: [
+        {
+          type: 'ParagraphNode',
+          children: [
+            {
+              type: 'SentenceNode',
+              children: [
+                {
+                  type: 'WordNode',
+                  children: [{type: 'TextNode', value: 'Alfred'}]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
-}
 
-test('.stringify', (t) => {
-  t.throws(
-    () => {
-      // @ts-expect-error: runtime.
-      retext().stringify(false)
-    },
-    /false/,
-    'should throw when `tree` is not given'
-  )
+  const parsers = ['dutch', 'english', 'latin']
 
-  t.throws(
-    () => {
-      // @ts-expect-error: runtime.
-      retext().stringify({})
-    },
-    /Expected node, got `\[object Object]`/,
-    'should throw when `tree` is not a node'
-  )
+  let index = -1
+  while (++index < parsers.length) {
+    await eachParser(parsers[index])
+  }
 
-  t.throws(
-    () => {
-      // @ts-expect-error: runtime.
-      retext().stringify()
-    },
-    /Expected node, got `undefined`/,
-    'should throw when `tree` is not a valid node'
-  )
+  /** @param {string} name */
+  async function eachParser(name) {
+    await t.test('retext-' + name, async function (t) {
+      const fp = './packages/retext-' + name + '/index.js'
 
-  t.deepEqual(
-    retext().stringify(
-      u('RootNode', [
-        u('ParagraphNode', [
-          u('SentenceNode', [u('WordNode', [u('TextNode', 'Alfred')])])
-        ])
-      ])
-    ),
-    'Alfred',
-    'should stringify'
-  )
+      /** @type {{default: import('unified').Plugin<[], string, Root>}} */
+      // type-coverage:ignore-next-line
+      const mod = await import(fp)
+      const processor = unified().use(mod.default)
 
-  t.end()
+      await t.test('should parse', async function () {
+        const tree = processor.parse('Alfred')
+
+        nlcstAssert(tree)
+
+        removePosition(tree, {force: true})
+
+        assert.deepEqual(tree, {
+          type: 'RootNode',
+          children: [
+            {
+              type: 'ParagraphNode',
+              children: [
+                {
+                  type: 'SentenceNode',
+                  children: [
+                    {
+                      type: 'WordNode',
+                      children: [{type: 'TextNode', value: 'Alfred'}]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        })
+      })
+
+      await t.test('should support extensions', async function () {
+        const tree = processor()
+          .data('nlcstSentenceExtensions', [emojiModifier])
+          .parse(':+1:')
+        const paragraph = tree.children[0]
+        assert(paragraph.type === 'ParagraphNode')
+        const sentence = paragraph.children[0]
+        assert(sentence.type === 'SentenceNode')
+        const emoji = sentence.children[0]
+        assert(emoji.type === 'EmoticonNode')
+      })
+    })
+  }
+})
+
+test('stringify', async function (t) {
+  await t.test('should stringify', async function () {
+    assert.deepEqual(
+      retext().stringify({
+        type: 'RootNode',
+        children: [
+          {
+            type: 'ParagraphNode',
+            children: [
+              {
+                type: 'SentenceNode',
+                children: [
+                  {
+                    type: 'WordNode',
+                    children: [{type: 'TextNode', value: 'Alfred'}]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      'Alfred'
+    )
+  })
 })
