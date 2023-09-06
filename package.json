@@ -27,7 +27,6 @@
     "type-coverage": "^2.0.0",
     "typescript": "^5.0.0",
     "unified": "^11.0.0",
-    "unist-builder": "^4.0.0",
     "unist-util-remove-position": "^5.0.0",
     "xo": "^0.56.0"
   },
