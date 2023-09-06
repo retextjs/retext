@@ -82,12 +82,12 @@ while (++index < parsers.length) {
 
 /** @param {string} name */
 async function eachParser(name) {
-  await test('retext-' + name, async function (t) {
-    const fp = './packages/retext-' + name + '/index.js'
+  const id = 'retext-' + name
 
+  await test(id, async function (t) {
     /** @type {{default: import('unified').Plugin<[], string, Root>}} */
     // type-coverage:ignore-next-line
-    const mod = await import(fp)
+    const mod = await import(id)
 
     await t.test('should expose the public api', async function () {
       assert.deepEqual(Object.keys(mod).sort(), ['default'])
