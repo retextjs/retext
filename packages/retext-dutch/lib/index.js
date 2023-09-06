@@ -27,9 +27,6 @@ export default function retextDutch() {
   }
 }
 
-// To do: remove.
-export {ParseDutch as Parser} from 'parse-dutch'
-
 /**
  * @template T
  * @param {Array<T>} list

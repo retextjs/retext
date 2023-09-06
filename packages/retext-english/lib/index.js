@@ -27,9 +27,6 @@ export default function retextEnglish() {
   }
 }
 
-// To do: remove.
-export {ParseEnglish as Parser} from 'parse-english'
-
 /**
  * @template T
  * @param {Array<T>} list

@@ -27,9 +27,6 @@ export default function retextLatin() {
   }
 }
 
-// To do: remove.
-export {ParseLatin as Parser} from 'parse-latin'
-
 /**
  * @template T
  * @param {Array<T>} list
