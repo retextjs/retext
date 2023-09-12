@@ -84,7 +84,7 @@ Where can I find an ATM machine?
 **Out**:
 
 ```text
-1:21-1:32 warning Expected `ATM` instead of `ATM machine` atm retext-redundant-acronyms
+1:21-1:32 warning Unexpected redundant `ATM machine`, expected `ATM` atm retext-redundant-acronyms
 
 ⚠ 1 warning
 ```
