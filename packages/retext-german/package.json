@@ -1,0 +1,66 @@
+{
+  "name": "retext-german",
+  "version": "5.0.0",
+  "description": "retext plugin to parse German prose",
+  "license": "MIT",
+  "keywords": [
+    "concrete",
+    "cst",
+    "german",
+    "language",
+    "natural",
+    "parse",
+    "plugin",
+    "process",
+    "retext",
+    "retext-plugin",
+    "syntax",
+    "tree",
+    "unified"
+  ],
+  "homepage": "https://github.com/retextjs/retext",
+  "repository": "https://github.com/retextjs/retext/tree/main/packages/retext-german",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "bugs": "https://github.com/retextjs/retext/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/nlcst": "^2.0.0",
+    "parse-german": "^0.0.1",
+    "unified": "^11.0.0"
+  },
+  "scripts": {},
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/ban-types": "off",
+          "@typescript-eslint/consistent-type-definitions": "off"
+        }
+      }
+    ],
+    "prettier": true
+  }
+}
