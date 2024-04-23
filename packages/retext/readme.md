@@ -13,18 +13,18 @@ Latin-script natural language.
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`retext()`](#retext-1)
-*   [Syntax tree](#syntax-tree)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [Sponsor](#sponsor)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`retext()`](#retext-1)
+* [Syntax tree](#syntax-tree)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [Sponsor](#sponsor)
+* [License](#license)
 
 ## What is this?
 

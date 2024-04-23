@@ -8,10 +8,10 @@ This page lists existing plugins.
 
 ## Contents
 
-*   [List of plugins](#list-of-plugins)
-*   [List of utilities](#list-of-utilities)
-*   [Using plugins](#using-plugins)
-*   [Creating plugins](#creating-plugins)
+* [List of plugins](#list-of-plugins)
+* [List of utilities](#list-of-utilities)
+* [Using plugins](#using-plugins)
+* [Creating plugins](#creating-plugins)
 
 ## List of plugins
 
@@ -22,66 +22,66 @@ More plugins can be found on GitHub tagged with the
 
 The list of plugins:
 
-*   [`retext-assuming`](https://github.com/davidhund/retext-assuming)
-    — check for unhelpful phrases such as `just`, `simply`, `obviously`
-*   [`retext-case-police`](https://github.com/JulianCataldo/retext-case-police)
-    — check for popular names casing (`github` → `GitHub`)
-*   [`retext-cliches`](https://github.com/dunckr/retext-cliches)
-    — check phrases for cliches
-*   [`retext-contractions`](https://github.com/retextjs/retext-contractions)
-    — check apostrophe use in contractions
-*   [`retext-diacritics`](https://github.com/retextjs/retext-diacritics)
-    — check for proper use of diacritics
-*   [`retext-dutch`](https://github.com/retextjs/retext/tree/main/packages/retext-dutch)
-    — dutch language support
-*   [`retext-english`](https://github.com/retextjs/retext/tree/main/packages/retext-english)
-    — English language support
-*   [`retext-emoji`](https://github.com/retextjs/retext-emoji)
-    — encode or decode [gemoji](https://github.com/github/gemoji)
-*   [`retext-equality`](https://github.com/retextjs/retext-equality)
-    — warn about possible insensitive, inconsiderate language
-*   [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
-    — check if indefinite articles (`a`, `an`) are used correctly
-*   [`retext-intensify`](https://github.com/retextjs/retext-intensify)
-    — check for weak and mitigating wording
-*   [`retext-keywords`](https://github.com/retextjs/retext-keywords)
-    — extract keywords and keyphrases
-*   [`retext-latin`](https://github.com/retextjs/retext/tree/main/packages/retext-latin)
-    — Latin-script language support
-*   [`retext-lexrank`](https://github.com/gorango/retext-lexrank)
-    — add Lexrank scores to sentences
-*   [`retext-overuse`](https://github.com/dunckr/retext-overuse)
-    — check words for overuse
-*   [`retext-passive`](https://github.com/retextjs/retext-passive)
-    — check for passive voice
-*   [`retext-profanities`](https://github.com/retextjs/retext-profanities)
-    — check profane and vulgar wording
-*   [`retext-readability`](https://github.com/retextjs/retext-readability)
-    — check readability
-*   [`retext-redundant-acronyms`](https://github.com/retextjs/retext-redundant-acronyms)
-    — check redundant acronyms (`ATM machine` > `ATM`)
-*   [`retext-repeated-words`](https://github.com/retextjs/retext-repeated-words)
-    — check `for for` repeated words
-*   [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
-    — check spacing between sentences
-*   [`retext-sentiment`](https://github.com/retextjs/retext-sentiment)
-    — detect sentiment in text
-*   [`retext-simplify`](https://github.com/retextjs/retext-simplify)
-    — check phrases for simpler alternatives
-*   [`retext-smartypants`](https://github.com/retextjs/retext-smartypants)
-    — implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
-*   [`retext-spell`](https://github.com/retextjs/retext-spell)
-    — check spelling
-*   [`retext-stringify`](https://github.com/retextjs/retext/tree/main/packages/retext-stringify)
-    — serialize back to text
-*   [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
-    — classify `@mentions` as syntax
-*   [`retext-syntax-urls`](https://github.com/retextjs/retext-syntax-urls)
-    — classify url-like values (example.com, example.md, etc) as syntax
-*   [`retext-usage`](https://github.com/admhlt/retext-usage)
-    — check incorrect English usage
-*   [`retext-quotes`](https://github.com/retextjs/retext-quotes)
-    — check quote and apostrophe usage
+* [`retext-assuming`](https://github.com/davidhund/retext-assuming)
+  — check for unhelpful phrases such as `just`, `simply`, `obviously`
+* [`retext-case-police`](https://github.com/JulianCataldo/retext-case-police)
+  — check for popular names casing (`github` → `GitHub`)
+* [`retext-cliches`](https://github.com/dunckr/retext-cliches)
+  — check phrases for cliches
+* [`retext-contractions`](https://github.com/retextjs/retext-contractions)
+  — check apostrophe use in contractions
+* [`retext-diacritics`](https://github.com/retextjs/retext-diacritics)
+  — check for proper use of diacritics
+* [`retext-dutch`](https://github.com/retextjs/retext/tree/main/packages/retext-dutch)
+  — dutch language support
+* [`retext-english`](https://github.com/retextjs/retext/tree/main/packages/retext-english)
+  — English language support
+* [`retext-emoji`](https://github.com/retextjs/retext-emoji)
+  — encode or decode [gemoji](https://github.com/github/gemoji)
+* [`retext-equality`](https://github.com/retextjs/retext-equality)
+  — warn about possible insensitive, inconsiderate language
+* [`retext-indefinite-article`](https://github.com/retextjs/retext-indefinite-article)
+  — check if indefinite articles (`a`, `an`) are used correctly
+* [`retext-intensify`](https://github.com/retextjs/retext-intensify)
+  — check for weak and mitigating wording
+* [`retext-keywords`](https://github.com/retextjs/retext-keywords)
+  — extract keywords and keyphrases
+* [`retext-latin`](https://github.com/retextjs/retext/tree/main/packages/retext-latin)
+  — Latin-script language support
+* [`retext-lexrank`](https://github.com/gorango/retext-lexrank)
+  — add Lexrank scores to sentences
+* [`retext-overuse`](https://github.com/dunckr/retext-overuse)
+  — check words for overuse
+* [`retext-passive`](https://github.com/retextjs/retext-passive)
+  — check for passive voice
+* [`retext-profanities`](https://github.com/retextjs/retext-profanities)
+  — check profane and vulgar wording
+* [`retext-readability`](https://github.com/retextjs/retext-readability)
+  — check readability
+* [`retext-redundant-acronyms`](https://github.com/retextjs/retext-redundant-acronyms)
+  — check redundant acronyms (`ATM machine` > `ATM`)
+* [`retext-repeated-words`](https://github.com/retextjs/retext-repeated-words)
+  — check `for for` repeated words
+* [`retext-sentence-spacing`](https://github.com/retextjs/retext-sentence-spacing)
+  — check spacing between sentences
+* [`retext-sentiment`](https://github.com/retextjs/retext-sentiment)
+  — detect sentiment in text
+* [`retext-simplify`](https://github.com/retextjs/retext-simplify)
+  — check phrases for simpler alternatives
+* [`retext-smartypants`](https://github.com/retextjs/retext-smartypants)
+  — implementation of [SmartyPants](https://daringfireball.net/projects/smartypants/)
+* [`retext-spell`](https://github.com/retextjs/retext-spell)
+  — check spelling
+* [`retext-stringify`](https://github.com/retextjs/retext/tree/main/packages/retext-stringify)
+  — serialize back to text
+* [`retext-syntax-mentions`](https://github.com/retextjs/retext-syntax-mentions)
+  — classify `@mentions` as syntax
+* [`retext-syntax-urls`](https://github.com/retextjs/retext-syntax-urls)
+  — classify url-like values (example.com, example.md, etc) as syntax
+* [`retext-usage`](https://github.com/admhlt/retext-usage)
+  — check incorrect English usage
+* [`retext-quotes`](https://github.com/retextjs/retext-quotes)
+  — check quote and apostrophe usage
 
 ## List of utilities
 

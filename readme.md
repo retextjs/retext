@@ -24,21 +24,21 @@ Some example use cases are to [check spelling][retext-spell],
 [fix typography][retext-smartypants], or
 [make sure text is readable][retext-readability].
 
-*   for more about us, see [`unifiedjs.com`][site]
-*   for updates, see [Twitter][]
-*   for questions, see [support][]
-*   to help, see [contribute][] or [sponsor][] below
+* for more about us, see [`unifiedjs.com`][site]
+* for updates, see [Twitter][]
+* for questions, see [support][]
+* to help, see [contribute][] or [sponsor][] below
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Plugins](#plugins)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [Sponsor](#sponsor)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Plugins](#plugins)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [Sponsor](#sponsor)
+* [License](#license)
 
 ## What is this?
 
@@ -118,16 +118,16 @@ You can use retext for many different things.
 
 This GitHub repository is a monorepo that contains the following packages:
 
-*   [`retext-dutch`][retext-dutch]
-    — parse Dutch prose to a syntax tree
-*   [`retext-english`][retext-english]
-    — parse English prose to a syntax tree
-*   [`retext-latin`][retext-latin]
-    — parse any Latin-script prose to a syntax tree
-*   [`retext-stringify`][retext-stringify]
-    — serialize a syntax tree
-*   [`retext`][api]
-    — programmatic interface with both `retext-latin` and `retext-stringify`
+* [`retext-dutch`][retext-dutch]
+  — parse Dutch prose to a syntax tree
+* [`retext-english`][retext-english]
+  — parse English prose to a syntax tree
+* [`retext-latin`][retext-latin]
+  — parse any Latin-script prose to a syntax tree
+* [`retext-stringify`][retext-stringify]
+  — serialize a syntax tree
+* [`retext`][api]
+  — programmatic interface with both `retext-latin` and `retext-stringify`
 
 ## When should I use this?
 
@@ -141,12 +141,12 @@ retext plugins deal with natural language.
 You can choose from the many plugins that already exist.
 Here are three good ways to find plugins:
 
-*   [`awesome-retext`][awesome-retext]
-    — selection of the most awesome projects
-*   [List of plugins][list-of-plugins]
-    — list of all plugins
-*   [`retext-plugin` topic][topic]
-    — any tagged repo on GitHub
+* [`awesome-retext`][awesome-retext]
+  — selection of the most awesome projects
+* [List of plugins][list-of-plugins]
+  — list of all plugins
+* [`retext-plugin` topic][topic]
+  — any tagged repo on GitHub
 
 Some plugins are maintained by us here in the `@retextjs` organization while
 others are maintained by folks elsewhere.

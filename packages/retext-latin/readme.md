@@ -12,18 +12,18 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`unified().use(retextLatin)`](#unifieduseretextlatin)
-*   [Syntax tree](#syntax-tree)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [Sponsor](#sponsor)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`unified().use(retextLatin)`](#unifieduseretextlatin)
+* [Syntax tree](#syntax-tree)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [Sponsor](#sponsor)
+* [License](#license)
 
 ## What is this?
 

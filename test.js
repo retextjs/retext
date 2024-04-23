@@ -86,14 +86,13 @@ async function eachParser(name) {
 
   await test(id, async function (t) {
     /** @type {{default: import('unified').Plugin<[], string, Root>}} */
-    // type-coverage:ignore-next-line
-    const mod = await import(id)
+    const result = await import(id)
 
     await t.test('should expose the public api', async function () {
-      assert.deepEqual(Object.keys(mod).sort(), ['default'])
+      assert.deepEqual(Object.keys(result).sort(), ['default'])
     })
 
-    const processor = unified().use(mod.default)
+    const processor = unified().use(result.default)
 
     await t.test('should parse', async function () {
       const tree = processor.parse('Alfred')
