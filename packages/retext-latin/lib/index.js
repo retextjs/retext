@@ -1,5 +1,6 @@
 /**
- * @typedef {import('nlcst').Root} Root
+ * @import {Root} from 'nlcst'
+ * @import {Parser, Processor} from 'unified'
  */
 
 import {ParseLatin} from 'parse-latin'
@@ -13,11 +14,11 @@ import {ParseLatin} from 'parse-latin'
 export default function retextLatin() {
   // @ts-expect-error -- TS in JSDoc doesn’t understand `this`.
   // eslint-disable-next-line unicorn/no-this-assignment
-  const self = /** @type {import('unified').Processor<Root>} */ (this)
+  const self = /** @type {Processor<Root>} */ (this)
 
   self.parser = parser
 
-  /** @type {import('unified').Parser<Root>} */
+  /** @type {Parser<Root>} */
   function parser(value) {
     const parser = new ParseLatin()
     add(parser.tokenizeParagraphPlugins, self.data('nlcstParagraphExtensions'))

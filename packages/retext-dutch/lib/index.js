@@ -1,5 +1,6 @@
 /**
- * @typedef {import('nlcst').Root} Root
+ * @import {Root} from 'nlcst'
+ * @import {Parser, Processor} from 'unified'
  */
 
 import {ParseDutch} from 'parse-dutch'
@@ -13,11 +14,11 @@ import {ParseDutch} from 'parse-dutch'
 export default function retextDutch() {
   // @ts-expect-error -- TS in JSDoc doesn’t understand `this`.
   // eslint-disable-next-line unicorn/no-this-assignment
-  const self = /** @type {import('unified').Processor<Root>} */ (this)
+  const self = /** @type {Processor<Root>} */ (this)
 
   self.parser = parser
 
-  /** @type {import('unified').Parser<Root>} */
+  /** @type {Parser<Root>} */
   function parser(value) {
     const parser = new ParseDutch()
     add(parser.tokenizeParagraphPlugins, self.data('nlcstParagraphExtensions'))

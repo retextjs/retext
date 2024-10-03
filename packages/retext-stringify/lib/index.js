@@ -1,5 +1,6 @@
 /**
- * @typedef {import('nlcst').Root} Root
+ * @import {Root} from 'nlcst'
+ * @import {Compiler, Processor} from 'unified'
  */
 
 import {toString} from 'nlcst-to-string'
@@ -13,7 +14,7 @@ import {toString} from 'nlcst-to-string'
 export default function retextStringify() {
   // eslint-disable-next-line unicorn/no-this-assignment
   const self =
-    /** @type {import('unified').Processor<undefined, undefined, undefined, Root, string>} */ (
+    /** @type {Processor<undefined, undefined, undefined, Root, string>} */ (
       // @ts-expect-error -- TS in JSDoc doesn’t understand `this`.
       this
     )
@@ -21,7 +22,7 @@ export default function retextStringify() {
   self.compiler = compiler
 }
 
-/** @type {import('unified').Compiler<Root, string>} */
+/** @type {Compiler<Root, string>} */
 function compiler(tree) {
   return toString(tree)
 }

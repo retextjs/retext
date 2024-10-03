@@ -1,5 +1,6 @@
 /**
- * @typedef {import('nlcst').Root} Root
+ * @import {Root} from 'nlcst'
+ * @import {Plugin} from 'unified'
  */
 
 import assert from 'node:assert/strict'
@@ -85,7 +86,7 @@ async function eachParser(name) {
   const id = 'retext-' + name
 
   await test(id, async function (t) {
-    /** @type {{default: import('unified').Plugin<[], string, Root>}} */
+    /** @type {{default: Plugin<[], string, Root>}} */
     const result = await import(id)
 
     await t.test('should expose the public api', async function () {

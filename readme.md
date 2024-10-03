@@ -165,7 +165,7 @@ For example:
 
 ```js
 /**
- * @typedef {import('nlcst').Root} Root
+ * @import {Root} from 'nlcst'
  */
 
 /**
