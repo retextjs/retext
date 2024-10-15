@@ -8,17 +8,22 @@ import {ParseLatin} from 'parse-latin'
 /**
  * Add support for parsing Latin-script natural language.
  *
+ * @this {Processor<Root>}
+ *   Processor.
  * @returns {undefined}
  *   Nothing.
  */
 export default function retextLatin() {
-  // @ts-expect-error -- TS in JSDoc doesn’t understand `this`.
-  // eslint-disable-next-line unicorn/no-this-assignment
-  const self = /** @type {Processor<Root>} */ (this)
+  const self = this
 
   self.parser = parser
 
-  /** @type {Parser<Root>} */
+  /**
+   * @param {string} value
+   *   Document.
+   * @returns {Root}
+   *   Tree.
+   */
   function parser(value) {
     const parser = new ParseLatin()
     add(parser.tokenizeParagraphPlugins, self.data('nlcstParagraphExtensions'))

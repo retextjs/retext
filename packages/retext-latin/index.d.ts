@@ -4,6 +4,10 @@ import type {Plugin} from 'unified'
 // See `parse-latin`.
 type Extension<Node extends Nodes> = (node: Node) => undefined | void
 
+// Note: we have to use manual types here,
+// instead of getting them from `lib/index.js`,
+// because TS generates wrong types for functions that use `this`.
+// TS makes them into classes which is incorrect.
 /**
  * Add support for parsing Latin-script natural language.
  *
