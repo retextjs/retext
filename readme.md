@@ -25,7 +25,6 @@ Some example use cases are to [check spelling][retext-spell],
 [make sure text is readable][retext-readability].
 
 * for more about us, see [`unifiedjs.com`][site]
-* for updates, see [Twitter][]
 * for questions, see [support][]
 * to help, see [contribute][] or [sponsor][] below
 
@@ -344,8 +343,6 @@ Support this effort and give back by sponsoring on [OpenCollective][collective]!
 [types-nlcst]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/HEAD/types/nlcst
 
 [typescript]: https://www.typescriptlang.org
-
-[twitter]: https://twitter.com/unifiedjs
 
 [site]: https://unifiedjs.com
 
